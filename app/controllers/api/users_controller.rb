@@ -12,10 +12,20 @@ class Api::UsersController < ApplicationController
         end
     end
 
+
+    def destroy
+        @user = User.find_by_email(params[:email])
+        if @user&.valid_password?(params[:password]) && @user.destroy
+            render :destroy
+        else
+            head(:unauthorized)
+        end
+    end
+
     private
 
     def user_params
-        params.require(:user).permit(:email, :password, :password_cofirmation)
+        params.permit(:email, :password, :password_cofirmation)
     end
     
 end
