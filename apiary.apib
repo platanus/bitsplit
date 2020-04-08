@@ -26,3 +26,47 @@ Polls is a simple API allowing consumers to view polls and vote in them.
                 }
             }
         }
+        
+## Users [/users]
+
+### Create a new user [POST]
+
++ Request (application/json)
+
+        {
+            "email": "example@example.com",
+            "password": "bestPa55W0rd3ver",
+            "password_confirmation": "bestPa55W0rd3ver"
+        }
+
++ Response 200 (application/json)
+
+        {
+            "data": {
+                "user": {
+                    "id": 1,
+                    "email": "example@example.com"
+                }
+            }
+        }
+        
+        
+### Delete an existing user [DELETE]
+
++ Request (application/json)
+
+        {
+            "email": "example@example.com",
+            "password": "bestPa55W0rd3ver"
+        }
+        
+        
++ Response 200 (application/json)
+
+        {
+            "data": {
+                "user": {
+                    "email": "example@example.com"
+                }
+            }
+        }
