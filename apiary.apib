@@ -1,5 +1,5 @@
 FORMAT: 1A
-HOST: https://polls.apiblueprint.org/
+HOST: https://localhost:5000/api/
 
 # Bitsplit
 
@@ -38,6 +38,32 @@ HOST: https://polls.apiblueprint.org/
 
         
 ## Users [/users]
+
+### Get current user [GET]
+
+
++ Request (application/json)
+
+    + Headers
+
+            X-User-Email: example@example.com
+            X-User-Token: smnozAAbYnEX2xVRfS5R
+
+            
++ Response 200 (application/json)
+
+        {
+            "data": {
+                "user": {
+                    "id": 1,
+                    "email": "example@gmail.com",
+                    "api_key": "th3b3stAP1K3Y",
+                    "api_secret": "th3B3s1S3Cr31"
+                }
+            }
+        }
+        
+
 
 ### Create a new user [POST]
 
