@@ -1,6 +1,7 @@
 class Api::UsersController < ApplicationController
 
-    skip_before_action :verify_authenticity_token
+    # exclude the creation of a user for token auth
+    acts_as_token_authentication_handler_for User, except: [:create]
 
     def create
         @user = User.new(user_params)
