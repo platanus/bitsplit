@@ -14,6 +14,17 @@ class Api::UsersController < ApplicationController
     end
 
 
+    def show
+        @user = current_user
+
+        if @user
+            render :show
+        else
+            head(:unprocessable_entity)
+        end
+    end
+
+
     def update
         @user = current_user
         # checks if the email exists already in the database
