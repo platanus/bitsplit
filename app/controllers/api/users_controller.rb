@@ -18,7 +18,7 @@ class Api::UsersController < ApplicationController
         @user = current_user
         # checks if the email exists already in the database
         if user_params.has_key?(:email)
-            if validate_email(:email)
+            if not email_in_use(:email)
                 if @user.update user_params
                     render :update
                 else
@@ -52,7 +52,7 @@ class Api::UsersController < ApplicationController
         params.permit(:email, :password, :password_confirmation, :api_key, :api_secret)
     end
 
-    def validate_email(email)
+    def email_in_use(email)
         return User.exists?(:email => email)
     end
     
