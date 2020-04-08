@@ -1,7 +1,7 @@
 class Api::SessionsController < ApplicationController
 
-    # TODO: check authenticity token
-    skip_before_action :verify_authenticity_token
+    # exclude the creation of a session for token auth
+    acts_as_token_authentication_handler_for User, except: [:create]
 
     def create
         @user = User.where(email: params[:email]).first
