@@ -1,9 +1,7 @@
 FORMAT: 1A
 HOST: https://polls.apiblueprint.org/
 
-# buda-trans
-
-Polls is a simple API allowing consumers to view polls and vote in them.
+# Bitsplit
 
 ## Sessions [/sessions]
 
@@ -26,6 +24,18 @@ Polls is a simple API allowing consumers to view polls and vote in them.
                 }
             }
         }
+        
+### Delete session [DELETE]
+
++ Request (application/json)
+
+    + Headers
+
+            X-User-Email: example@example.com
+            X-User-Token: smnozAAbYnEX2xVRfS5R
+            
++ Response 200
+
         
 ## Users [/users]
 
@@ -55,10 +65,17 @@ Polls is a simple API allowing consumers to view polls and vote in them.
 
 + Request (application/json)
 
-        {
-            "email": "example@example.com",
-            "password": "bestPa55W0rd3ver"
-        }
+    + Headers
+
+            X-User-Email: example@example.com
+            X-User-Token: smnozAAbYnEX2xVRfS5R
+            
+    + Body
+
+            {
+                "email": "example@example.com",
+                "password": "bestPa55W0rd3ver"
+            }
         
         
 + Response 200 (application/json)
