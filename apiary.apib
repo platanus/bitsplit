@@ -59,6 +59,37 @@ HOST: https://polls.apiblueprint.org/
                 }
             }
         }
+
+
+### Update existing user [PATCH]
+
++ Request (application/json)
+
+    + Headers
+
+            X-User-Email: example@example.com
+            X-User-Token: smnozAAbYnEX2xVRfS5R
+            
+    + Body
+
+            {
+                "email": "new_example@example.com",
+                "password": "bestPa55W0rd3ver",
+                "api_key": "th3b3stAP1K3Y",
+                "api_secret": "th3B3s1S3Cr31"
+            }
+            
++ Response 200 (application/json)
+
+        {
+            "data": {
+                "user": {
+                    "email": "new_example@gmail.com",
+                    "api_key": "th3b3stAP1K3Y",
+                    "api_secret": "th3B3s1S3Cr31"
+                }
+            }
+        }
         
         
 ### Delete an existing user [DELETE]
