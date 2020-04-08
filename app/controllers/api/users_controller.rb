@@ -14,6 +14,29 @@ class Api::UsersController < ApplicationController
     end
 
 
+    def update
+        @user = current_user
+        # checks if the email exists already in the database
+        if user_params.has_key?(:email)
+            if validate_email(:email)
+                if @user.update user_params
+                    render :update
+                else
+                    head(:unprocessable_entity)
+                end
+            else
+                head(:unprocessable_entity)
+            end
+        else            
+            if @user.update user_params
+                render :update
+            else
+                head(:unprocessable_entity)
+            end
+        end
+    end
+
+
     def destroy
         @user = User.find_by_email(params[:email])
         if @user&.valid_password?(params[:password]) && @user.destroy
@@ -26,7 +49,11 @@ class Api::UsersController < ApplicationController
     private
 
     def user_params
-        params.permit(:email, :password, :password_cofirmation)
+        params.permit(:email, :password, :password_confirmation, :api_key, :api_secret)
+    end
+
+    def validate_email(email)
+        return User.exists?(:email => email)
     end
     
 end
