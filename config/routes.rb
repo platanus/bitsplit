@@ -7,6 +7,7 @@ Rails.application.routes.draw do
       resource :sessions, only: [:create, :destroy]
       resource :users, only: [:show, :create, :destroy, :update]
     end
+
   end
   mount Rswag::Api::Engine => '/api-docs'
   mount Rswag::Ui::Engine => '/api-docs'
