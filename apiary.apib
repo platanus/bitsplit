@@ -1,0 +1,146 @@
+FORMAT: 1A
+HOST: https://localhost:5000/api/
+
+# Bitsplit
+
+## Sessions [/sessions]
+
+### Create new session [POST]
+
++ Request (application/json)
+
+        {
+            "email": "example@example.com",
+            "password": "bestPa55W0rd3ver"
+        }
+
++ Response 200 (application/json)
+
+        {
+            "data": {
+                "user": {
+                    "email": "example@example.com",
+                    "authentication_token": "smnozAAbYnEX2xVRfS5R"
+                }
+            }
+        }
+        
+### Delete session [DELETE]
+
++ Request (application/json)
+
+    + Headers
+
+            X-User-Email: example@example.com
+            X-User-Token: smnozAAbYnEX2xVRfS5R
+            
++ Response 200
+
+        
+## Users [/users]
+
+### Get current user [GET]
+
+
++ Request (application/json)
+
+    + Headers
+
+            X-User-Email: example@example.com
+            X-User-Token: smnozAAbYnEX2xVRfS5R
+
+            
++ Response 200 (application/json)
+
+        {
+            "data": {
+                "user": {
+                    "id": 1,
+                    "email": "example@gmail.com",
+                    "api_key": "th3b3stAP1K3Y",
+                    "api_secret": "th3B3s1S3Cr31"
+                }
+            }
+        }
+        
+
+
+### Create a new user [POST]
+
++ Request (application/json)
+
+        {
+            "email": "example@example.com",
+            "password": "bestPa55W0rd3ver",
+            "password_confirmation": "bestPa55W0rd3ver"
+        }
+
++ Response 200 (application/json)
+
+        {
+            "data": {
+                "user": {
+                    "id": 1,
+                    "email": "example@example.com"
+                }
+            }
+        }
+
+
+### Update existing user [PATCH]
+
++ Request (application/json)
+
+    + Headers
+
+            X-User-Email: example@example.com
+            X-User-Token: smnozAAbYnEX2xVRfS5R
+            
+    + Body
+
+            {
+                "email": "new_example@example.com",
+                "password": "bestPa55W0rd3ver",
+                "api_key": "th3b3stAP1K3Y",
+                "api_secret": "th3B3s1S3Cr31"
+            }
+            
++ Response 200 (application/json)
+
+        {
+            "data": {
+                "user": {
+                    "email": "new_example@gmail.com",
+                    "api_key": "th3b3stAP1K3Y",
+                    "api_secret": "th3B3s1S3Cr31"
+                }
+            }
+        }
+        
+        
+### Delete an existing user [DELETE]
+
++ Request (application/json)
+
+    + Headers
+
+            X-User-Email: example@example.com
+            X-User-Token: smnozAAbYnEX2xVRfS5R
+            
+    + Body
+
+            {
+                "email": "example@example.com",
+                "password": "bestPa55W0rd3ver"
+            }
+        
+        
++ Response 200 (application/json)
+
+        {
+            "data": {
+                "user": {
+                    "email": "example@example.com"
+                }
+            }
+        }
