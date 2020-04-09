@@ -27,23 +27,39 @@ class Api::UsersController < ApplicationController
 
     def update
         @user = current_user
-        # checks if the email exists already in the database
-        if user_params.has_key?(:email)
-            if not email_in_use(:email)
+
+        if @user&.valid_password?(params[:password])
+            @password = params[:password]
+            # special case if updating api_key or api_secret
+            # reassign encrypted values in params
+            # so that the user objects updates with the encrypted data
+            if user_params.has_key?(:api_key)
+                params[:api_key] = @user.encrypt(params[:api_key], params[:password])
+            end
+            if user_params.has_key?(:api_secret)
+                params[:api_secret] = @user.encrypt(params[:api_secret], params[:password])
+            end
+
+            # checks if the email exists already in the database
+            if user_params.has_key?(:email)
+                if not email_in_use(:email)
+                    if @user.update user_params
+                        render :update
+                    else
+                        head(:unprocessable_entity)
+                    end
+                else
+                    head(:unprocessable_entity)
+                end
+            else            
                 if @user.update user_params
                     render :update
                 else
                     head(:unprocessable_entity)
                 end
-            else
-                head(:unprocessable_entity)
             end
-        else            
-            if @user.update user_params
-                render :update
-            else
-                head(:unprocessable_entity)
-            end
+        else
+            head(:unauthorized)
         end
     end
 
