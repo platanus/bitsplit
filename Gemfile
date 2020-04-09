@@ -4,6 +4,7 @@ gem 'bootsnap', require: false
 gem 'data_migrate'
 gem 'devise'
 gem 'devise-i18n'
+gem 'simple_token_authentication', '~> 1.0'
 gem 'enumerize'
 gem 'jbuilder', '~> 2.7'
 gem 'pg'
