@@ -26,6 +26,29 @@ class User < ApplicationRecord
     crypt.decrypt_and_verify data
   end
 
+  def as_json(options={})
+    # one option is the password that has to be passed
+    # to decrypt the api_key
+    json = super(options)
+
+    if options.has_key?(:password)
+      # replace the encrypted api_key with decrypted one
+      json[:api_key] = decrypt(json["api_key"], options[:password])
+
+    # if the password is not provided, then the api_key is removed
+    # from the json output, as this is sensitive information
+    else
+      json.delete("api_key")
+    end
+    # delete null fields (private ones) and returns the cleaned data
+    json.compact
+  end
+
+  private
+
+  # private readers will not be rendered in json
+  attr_reader :api_secret, :id, :created_at, :updated_at
+
 end
 
 # == Schema Information
