@@ -1,5 +1,3 @@
 json.data do
-    json.user do
-        json.email @user.email
-    end
+    json.user @user.as_json({:password => @password})
 end
