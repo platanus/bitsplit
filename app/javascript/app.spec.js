@@ -6,9 +6,4 @@ describe('app', () => {
     const wrapper = shallowMount(app)
     expect(wrapper.isVueInstance()).toBeTruthy()
   })
-
-  // it('displays message on load', () => {
-  //   const wrapper = shallowMount(app)
-  //   expect(wrapper.find('p').text()).toEqual('Hello Vue!')
-  // })
 })
