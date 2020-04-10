@@ -33,7 +33,7 @@ export default {
         })
         .catch(err => {
           // Aviso de que hubo un error se muestra globalmente
-          console.err(err)
+          console.error(err)
         })
     }
   },
@@ -43,4 +43,3 @@ export default {
   }
 }
 </script>
-
