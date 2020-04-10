@@ -1,9 +1,7 @@
 <template>
   <div id="vue-app">
-    <header></header>
-    <div v-if="alert.message" :class="`alert ${alert.type}`">
-      {{ alert.message }}
-    </div>
+    <navBar></navBar>
+    <alert-message></alert-message>
     <router-view></router-view>
   </div>
 </template>
@@ -24,7 +22,6 @@ export default {
   methods: {
     ...mapActions('alert', ['clear_alert'])
   },
-
   watch: {
     $route(to, from) {
       // clear alert on location change
