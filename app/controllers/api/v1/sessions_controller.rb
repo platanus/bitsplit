@@ -1,4 +1,4 @@
-class Api::SessionsController < ApplicationController
+class Api::V1::SessionsController < Api::V1::BaseController
 
     # exclude the creation of a session for token auth
     acts_as_token_authentication_handler_for User, except: [:create]
