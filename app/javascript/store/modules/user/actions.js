@@ -45,7 +45,7 @@ export default {
       })
   },
   [signOut]({ commit, dispatch }, payload) {
-    logoutApi(payload)
+    return logoutApi(payload)
       .then(res => {
         localStorage.removeItem('currentUser')
         commit(SIGNOUT)

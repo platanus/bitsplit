@@ -1,14 +1,14 @@
 import { shallowMount } from '@vue/test-utils'
-import App from 'app'
+import app from 'app'
 
-describe('App', () => {
+describe('app', () => {
   test('is a Vue instance', () => {
-    const wrapper = shallowMount(App)
+    const wrapper = shallowMount(app)
     expect(wrapper.isVueInstance()).toBeTruthy()
   })
 
   it('displays message on load', () => {
-    const wrapper = shallowMount(App)
+    const wrapper = shallowMount(app)
     expect(wrapper.find('p').text()).toEqual('Hello Vue!')
   })
 })
