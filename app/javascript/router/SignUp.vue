@@ -1,5 +1,7 @@
 <template>
-  <div>{{ test }}</div>
+  <div>
+    <p>Route: {{routeName}}</p>
+  </div>
 </template>
 
 <script>
@@ -7,7 +9,7 @@ export default {
   name: 'SignUp',
   data() {
     return {
-      test: 'hola from signUp'
+      routeName: 'SignUp'
     }
   }
 }

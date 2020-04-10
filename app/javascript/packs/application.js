@@ -1,8 +1,8 @@
 import Vue from 'vue/dist/vue.esm'
 
-import App from './../app.vue'
-import store from './../store'
-import router from './../router'
+import App from '../app.vue'
+import store from '../store'
+import router from '../router'
 
 import '../css/application.css'
 
