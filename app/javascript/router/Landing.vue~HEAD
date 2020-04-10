@@ -1,13 +1,15 @@
 <template>
-  <div>{{ test }}</div>
+  <div>
+    <p>Route: {{ routeName }}</p>
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'SignUp',
+  name: 'Landing',
   data() {
     return {
-      test: 'hola from signUp'
+      routeName: 'Landing'
     }
   }
 }
