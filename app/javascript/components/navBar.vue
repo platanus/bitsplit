@@ -27,9 +27,14 @@ export default {
   methods: {
     ...mapActions('user', ['signOut']),
     handleLogOut() {
-      this.signOut().then(() => {
-        this.$router.push('/')
-      })
+      this.signOut()
+        .then(() => {
+          this.$router.push('/')
+        })
+        .catch(err => {
+          // Aviso de que hubo un error se muestra globalmente
+          console.log(err)
+        })
     }
   },
   computed: {

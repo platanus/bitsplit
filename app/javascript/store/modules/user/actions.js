@@ -57,13 +57,13 @@ export default {
         dispatch('alert/success_alert', 'Sesion cerrada correctamente', {
           root: true
         })
+        return res
       })
       .catch(err => {
-        localStorage.removeItem('currentUser')
-        commit(SIGNOUT)
-        dispatch('alert/success_alert', 'Sesion cerrada correctamente', {
+        dispatch('alert/error_alert', 'Error cerrando sesion', {
           root: true
         })
+        return Promise.reject(err)
       })
   }
 }
