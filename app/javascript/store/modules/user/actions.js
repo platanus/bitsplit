@@ -1,13 +1,13 @@
-import { signIn, signOut } from './../../action-types'
+import { signIn, signOut } from '../../action-types'
 
 import {
   SIGNIN_FAIL,
   SIGNIN_SUCCESS,
   SIGNIN_ATTEMPT,
   SIGNOUT
-} from './../../mutation-types'
+} from '../../mutation-types'
 
-import { loginApi, logoutApi } from './../../../api/user.js'
+import { loginApi, logoutApi } from '../../../api/user.js'
 
 export default {
   [signIn]({ commit, dispatch }, payload) {

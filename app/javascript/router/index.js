@@ -6,7 +6,7 @@ import SignUp from './SignUp.vue'
 import Landing from './Landing.vue'
 import Home from './Home.vue'
 
-import { checkAuth, checkNoAuth } from './../helpers'
+import { checkAuth, checkNoAuth } from '../helpers'
 
 Vue.use(Router)
 

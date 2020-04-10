@@ -9,8 +9,8 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 
-import navBar from './components/navBar.vue'
-import alertMessage from './components/alertMessage.vue'
+import navBar from 'components/navBar.vue'
+import alertMessage from 'components/alertMessage.vue'
 
 export default {
   name: 'app',
