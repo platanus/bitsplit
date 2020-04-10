@@ -57,7 +57,7 @@ export default {
         dispatch('alert/success_alert', 'Sesion cerrada correctamente', {
           root: true
         })
-        return res
+        return Promise.resolve(res)
       })
       .catch(err => {
         dispatch('alert/error_alert', 'Error cerrando sesion', {
