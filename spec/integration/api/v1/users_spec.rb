@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+=begin
+
 require 'swagger_helper'
 
 describe 'API V1 Users', swagger_doc: 'v1/swagger.json' do
@@ -114,3 +116,6 @@ describe 'API V1 Users', swagger_doc: 'v1/swagger.json' do
     end
   end
 end
+
+
+=end
