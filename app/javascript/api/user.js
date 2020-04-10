@@ -1,6 +1,6 @@
-import api from './api'
-
 const loginApi = payload => {
+  // TODO add real interaction with backend
+
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       resolve({
@@ -16,6 +16,8 @@ const loginApi = payload => {
   })
 }
 const logoutApi = payload => {
+  // TODO add real interaction with backend
+
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       resolve({})
