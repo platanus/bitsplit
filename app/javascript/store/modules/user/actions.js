@@ -15,7 +15,6 @@ export default {
 
     commit(SIGNIN_ATTEMPT)
 
-    // Simulamos success o fail
     const fetchPromise = loginApi(payload)
 
     return fetchPromise
@@ -29,6 +28,7 @@ export default {
 
           return Promise.resolve()
         } else {
+          // TODO parse errors and send said alert
           // Algun error de contraseña o usuario no existente
           commit(SIGNIN_FAIL)
           dispatch('alert/error_alert', 'Error al ingresar datos', {
@@ -39,11 +39,16 @@ export default {
       })
       .catch(e => {
         // Hay un error en el fetch
+        // TODO parse errors and send said alert
+
         commit(SIGNIN_FAIL)
-        dispatch('alert/error_alert', 'Error desconocido', { root: true })
+        dispatch('alert/error_alert', 'Error desconocido', {
+          root: true
+        })
         return Promise.reject()
       })
   },
+
   [signOut]({ commit, dispatch }, payload) {
     return logoutApi(payload)
       .then(res => {
