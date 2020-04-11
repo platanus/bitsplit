@@ -1,0 +1,8 @@
+export const SIGNIN_ATTEMPT = 'SIGNIN_ATTEMPT'
+export const SIGNIN_FAIL = 'SIGNIN_FAIL'
+export const SIGNIN_SUCCESS = 'SIGNIN_SUCCESS'
+export const SIGNOUT = 'SIGNOUT'
+
+export const SUCCESS_ALERT = 'SUCCESS_ALERT'
+export const ERROR_ALERT = 'ERROR_ALERT'
+export const CLEAR_ALERT = 'CLEAR_ALERT'

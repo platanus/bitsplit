@@ -1,22 +1,32 @@
 <template>
-  <div id="app">
-    <p>{{ message }}</p>
+  <div id="vue-app">
+    <navBar></navBar>
+    <alert-message></alert-message>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
+
+import navBar from 'components/navBar.vue'
+import alertMessage from 'components/alertMessage.vue'
+
 export default {
-  data: function () {
-    return {
-      message: "Hello Vue!"
+  name: 'app',
+
+  components: {
+    navBar,
+    alertMessage
+  },
+  methods: {
+    ...mapActions('alert', ['clear_alert'])
+  },
+  watch: {
+    $route(to, from) {
+      // clear alert on location change
+      this.clear_alert()
     }
   }
 }
 </script>
-
-<style scoped>
-p {
-  font-size: 2em;
-  text-align: center;
-}
-</style>

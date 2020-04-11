@@ -1,12 +1,18 @@
-import Vue from 'vue/dist/vue.esm';
-import App from '../app.vue';
-import '../css/application.css';
+import Vue from 'vue/dist/vue.esm'
+
+import App from '../app.vue'
+import store from '../store'
+import router from '../router'
+
+import '../css/application.css'
 
 document.addEventListener('DOMContentLoaded', () => {
   const app = new Vue({
+    router,
+    store,
     el: '#vue-app',
-    components: { App },
-  });
+    render: h => h(App)
+  })
 
-  return app;
-});
+  return app
+})
