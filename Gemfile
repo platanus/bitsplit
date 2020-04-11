@@ -18,6 +18,19 @@ gem 'strong_migrations'
 gem 'turbolinks', '~> 5'
 gem 'webpacker', '~> 4.0'
 
+
+#Power_API https://github.com/platanus/power_api#installation
+
+gem 'power_api'
+
+group :development, :test do
+  gem 'rswag-specs'
+  gem 'rubocop'
+  gem 'rubocop-rspec'
+end
+
+##
+
 group :development do
   gem 'annotate', '~> 3.0'
   gem 'listen'

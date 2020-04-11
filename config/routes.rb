@@ -1,8 +1,20 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
-  devise_for :users
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-  namespace :api, defaults: { format: :json } do
-    resource :sessions, only: [:create, :destroy]
-    resource :users, only: [:show, :create, :destroy, :update]
+
+  scope path: '/api' do
+    api_version(module: 'Api::V1', path: { value: 'v1' }, defaults: { format: 'json' }) do
+      resource :sessions, only: [:create, :destroy]
+      resource :users, only: [:show, :create, :destroy, :update]
+    end
   end
+  mount Rswag::Api::Engine => '/api-docs'
+  mount Rswag::Ui::Engine => '/api-docs'
+
+  root 'home#index'
+
+  get '/*path', to: 'home#index'
+
+  devise_for :users
+
 end
