@@ -17,6 +17,7 @@ gem 'sass-rails', '~> 5'
 gem 'strong_migrations'
 gem 'turbolinks', '~> 5'
 gem 'webpacker', '~> 4.0'
+gem 'httparty'
 
 
 #Power_API https://github.com/platanus/power_api#installation
