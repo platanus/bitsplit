@@ -1,15 +1,25 @@
 class Api::V1::QuotationsController < ApplicationController
    
     def create 
-        type = 'bid_given_value'
         market_id = 'BTC-CLP'
-        quotation = (HTTParty.post('https://www.buda.com/api/v2/markets/'+ market_id +'/quotations',
+        quotation_agv = make_buda_quotation_request(market_id, 'ask_given_value', params[:amount])
+        quotation_bgs = make_buda_quotation_request(market_id, 'bid_given_size', quotation_agv['quotation']['base_exchanged'][0])
+        return set_success_params(quotation_bgs) if quotation_bgs.has_key? "quotation"
+        @error_message = quotation_bgs
+        render "error"
+    end
+
+    def make_buda_quotation_request(market_id, type, amount)
+        HTTParty.post('https://www.buda.com/api/v2/markets/'+ market_id +'/quotations',
         :body => {
             'type': type,
-            'amount': params[:amount],
-        }.to_json, :headers => {'Content-Type' => 'application/json'}))
-       @amount = quotation['quotation']['amount']
-       @base_balance_change = quotation['quotation']['base_balance_change']   
+            'amount': amount,
+        }.to_json, :headers => {'Content-Type' => 'application/json'})
+    end
+
+    def set_success_params(quotation_bgs)
+        @amount_clp = quotation_bgs['quotation']['quote_exchanged']
+        @amount_btc = quotation_bgs['quotation']['amount'] 
     end
 
     private
