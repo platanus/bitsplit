@@ -1,5 +1,5 @@
-import { success_alert, error_alert, clear_alert } from '../../action-types'
-import { SUCCESS_ALERT, ERROR_ALERT, CLEAR_ALERT } from '../../mutation-types'
+import { success_alert, error_alert, clear_alert } from './../../action-types'
+import { SUCCESS_ALERT, ERROR_ALERT, CLEAR_ALERT } from './../../mutation-types'
 
 const state = {
   type: null,
@@ -32,7 +32,7 @@ const mutations = {
   [CLEAR_ALERT](state) {
     state.type = null
     state.message = null
-  }
+  },
 }
 
 export default alert = {

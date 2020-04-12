@@ -1,5 +1,6 @@
 export const signIn = 'signIn'
 export const signOut = 'signOut'
+export const signUp = 'signUp'
 
 export const success_alert = 'success_alert'
 export const error_alert = 'error_alert'

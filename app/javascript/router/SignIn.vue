@@ -21,7 +21,6 @@
 
 <script>
 import { mapActions, mapState } from 'vuex'
-
 export default {
   name: 'SignIn',
   data() {
@@ -46,7 +45,7 @@ export default {
             this.$router.push('/home')
           })
           .catch(() => {
-            console.error('error')
+            console.log('error')
           })
       }
     }
