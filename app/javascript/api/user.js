@@ -57,8 +57,8 @@ const signUpApi = payload => {
             console.log(response)
             return response
           })
-          .catch(e => {
-            console.log(e)
+          .catch(err => {
+            console.error(err)
           })
       )
     }, 1000)
