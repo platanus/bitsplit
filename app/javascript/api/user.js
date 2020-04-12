@@ -16,7 +16,9 @@ const loginApi = payload => {
             }
           )
           .then(response => {
+            // TODO: Add logger that only logs in development
             console.log(response)
+            return response
           })
           .catch(e => {
             console.log(e)
