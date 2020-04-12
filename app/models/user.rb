@@ -75,6 +75,7 @@ end
 #  authentication_token   :string(30)
 #  api_key                :string
 #  api_secret             :string
+#  logged                 :boolean          default(FALSE)
 #
 # Indexes
 #
