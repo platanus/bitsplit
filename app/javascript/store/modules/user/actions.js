@@ -1,4 +1,4 @@
-import { signIn, signOut, signUp } from './../../action-types'
+import { signIn, signOut, signUp } from '../../action-types'
 
 import {
   SIGNIN_FAIL,
@@ -8,9 +8,9 @@ import {
   SIGNUP_ATTEMPT,
   SIGNUP_FAIL,
   SIGNUP_SUCCESS
-} from './../../mutation-types'
+} from '../../mutation-types'
 
-import { loginApi, logoutApi, signUpApi } from './../../../api/user.js'
+import { loginApi, logoutApi, signUpApi } from '../../../api/user.js'
 
 export default {
   [signIn]({ commit, dispatch }, payload) {
