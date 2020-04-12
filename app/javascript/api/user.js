@@ -21,7 +21,7 @@ const loginApi = payload => {
             return response
           })
           .catch(e => {
-            console.log(e)
+            console.error(e)
           })
       )
     }, 1000)
