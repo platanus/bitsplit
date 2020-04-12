@@ -18,6 +18,7 @@ class User < ApplicationRecord
   end
   
   def decrypt text, password
+    # note that to decrypt the api_secret the password is Rails.application.secrets.secret_key_base
     # if user has not yet setted a api_key or api_secret
     if text.nil?
       nil
