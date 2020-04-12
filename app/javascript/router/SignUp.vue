@@ -109,8 +109,8 @@ export default {
           .then(() => {
             console.log('success')
           })
-          .catch(() => {
-            console.log('error')
+          .catch(err => {
+            console.log(err)
           })
       }
     }
