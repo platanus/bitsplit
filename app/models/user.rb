@@ -57,7 +57,7 @@ class User < ApplicationRecord
   private
 
   # private readers will not be rendered in json
-  attr_reader :api_secret, :created_at, :updated_at
+  attr_reader :api_secret, :created_at, :updated_at, :logged
 
 end
 
