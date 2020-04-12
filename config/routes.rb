@@ -6,7 +6,7 @@ Rails.application.routes.draw do
     api_version(module: 'Api::V1', path: { value: 'v1' }, defaults: { format: 'json' }) do
       resource :sessions, only: [:create, :destroy]
       resource :users, only: [:show, :create, :destroy, :update]
-
+      resource :quotations, only: [:create]
     end
 
   end
@@ -19,7 +19,6 @@ Rails.application.routes.draw do
 
   get '/*path', to: 'home#index'
 
-  get 'api/v1/quotations/index', to:'api/v1/quotations#index'
   devise_for :users
 
 end
