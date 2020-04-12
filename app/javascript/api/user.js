@@ -16,6 +16,7 @@ const loginApi = payload => {
             }
           )
           .then(response => {
+            
             // TODO: Add logger that only logs in development
             console.log(response)
             return response
@@ -28,6 +29,7 @@ const loginApi = payload => {
   })
 }
 const logoutApi = payload => {
+  // TODO add real interaction with backend
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       resolve({})
