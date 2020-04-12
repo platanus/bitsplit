@@ -7,6 +7,7 @@ class Api::V1::SessionsController < Api::V1::BaseController
         @user = User.where(email: params[:email]).first
 
         if @user&.valid_password?(params[:password])
+            @user.update_attribute(:logged, true)
             @password = params[:password]
             render :create, status: :created
         else
@@ -17,6 +18,7 @@ class Api::V1::SessionsController < Api::V1::BaseController
     def destroy
         current_user&.authentication_token = nil
         if current_user.save
+            @current_user.update_attribute(:logged, false)
             head(:ok)
         else
             head(:unauthorized)
