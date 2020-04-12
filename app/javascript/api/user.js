@@ -16,7 +16,11 @@ const loginApi = payload => {
             }
           )
           .then(response => {
+<<<<<<< HEAD
             // TODO: Add logger that only logs in development
+=======
+            // TODO add real interaction with backend
+>>>>>>> [web]: fix: add TODO
             console.log(response)
             return response
           })
@@ -58,7 +62,11 @@ const signUpApi = payload => {
             return response
           })
           .catch(err => {
+<<<<<<< HEAD
             console.error(err)
+=======
+            console.log(err)
+>>>>>>> [web]: fix: add TODO
           })
       )
     }, 1000)
