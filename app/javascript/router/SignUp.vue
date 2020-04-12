@@ -107,9 +107,14 @@ export default {
         console.log('Correct confirmation')
         this.signUp({ email, password, buda_user })
           .then(() => {
+            // TODO logger  
             console.log('success')
           })
+<<<<<<< HEAD
           .catch(err => {
+=======
+          .catch((err) => {
+>>>>>>> [web] update: signup
             console.log(err)
           })
       }
