@@ -39,20 +39,24 @@ class Api::V1::UsersController < Api::V1::BaseController
               params[:api_key] = @user.encrypt(params[:api_key], params[:password])
           end
           if user_params.has_key?(:api_secret)
-              params[:api_secret] = @user.encrypt(params[:api_secret], params[:password])
+            params[:api_secret] = @user.encrypt(params[:api_secret], Rails.application.secrets.secret_key_base)
           end
+      end
 
-          # checks if the email exists already in the database
-          if user_params.has_key?(:email)
-              if not email_in_use(:email)
+      if (user_params.has_key?(:api_key) || user_params.has_key?(:api_secret))
+        # has fields and valid password => can correctly update fields
+        if @user&.valid_password?(params[:password])
                   if @user.update user_params
                       render :update
                   else
                       head(:unprocessable_entity)
                   end
+
+        # user does not have the correct password => cannot update correctly
               else
-                  head(:unprocessable_entity)
+          head(:bad_request)        
               end
+
           else            
               if @user.update user_params
                   render :update
@@ -60,9 +64,6 @@ class Api::V1::UsersController < Api::V1::BaseController
                   head(:unprocessable_entity)
               end
           end
-      else
-          head(:unauthorized)
-      end
   end
 
 
