@@ -4,5 +4,6 @@ export default {
   currentUser: user, // Si no esta es null
   userLoading: false,
   token: null,
-  buda: ''
+  buda: '',
+  api_key: ''
 }
