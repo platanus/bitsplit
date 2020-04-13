@@ -13,13 +13,12 @@
             >
               Email
             </label>
-            <input
-              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="email"
-              type="text"
-              placeholder="Email"
-              v-model="email"
-              name="email"
+            <inputForm
+              fieldId="email"
+              fieldType="text"
+              fieldPlaceholder="Email"
+              fieldName="email"
+              v-model = "email"
             />
           </div>
           <div class="mb-4">
@@ -29,20 +28,13 @@
             >
               Password
             </label>
-            <input
-              class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-              id="password"
-              type="password"
-              v-model="password"
-              name="password"
-              placeholder="******************"
+            <passwordInput
+              fieldId="password"
+              fieldPlaceholder="******************"
+              fieldName="password"
+              v-model = "password"
             />
-            <button
-              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              :disabled="loading"
-            >
-              Log In
-            </button>
+            <submitButton :fieldDisabled="false" fieldPlaceholder="Log In" />
           </div>
         </form>
       </div>
@@ -51,9 +43,11 @@
 </template>
 
 <script>
-
-
 import { mapActions, mapState } from 'vuex'
+import inputForm from '../components/Input'
+import passwordInput from '../components/PasswordInput'
+import submitButton from '../components/SubmitButton'
+
 export default {
   name: 'SignIn',
   data() {
@@ -63,6 +57,11 @@ export default {
       password: '',
       loading: false
     }
+  },
+  components: {
+    inputForm,
+    passwordInput,
+    submitButton
   },
   computed: {
     ...mapState('user', ['currentUser'])

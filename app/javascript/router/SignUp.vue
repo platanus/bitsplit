@@ -13,13 +13,12 @@
             >
               Email
             </label>
-            <input
-              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="email"
-              type="text"
-              placeholder="Email"
-              v-model="email"
-              name="email"
+            <inputForm
+              fieldId="email"
+              fieldType="text"
+              fieldPlaceholder="Email"
+              fieldName="email"
+              v-model = "email"
             />
           </div>
           <div class="mb-4">
@@ -29,13 +28,11 @@
             >
               Password
             </label>
-            <input
-              class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-              id="confirm_password"
-              type="password"
-              v-model="confirm_password"
-              name="confirm_password"
-              placeholder="******************"
+            <passwordInput
+              fieldId="password"
+              fieldPlaceholder="******************"
+              fieldName="password"
+              v-model = "password"
             />
 
             <label
@@ -44,37 +41,28 @@
             >
               Repeat your password
             </label>
-            <input
-              class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-              id="password"
-              type="password"
-              v-model="password"
-              name="password"
-              placeholder="******************"
+            <passwordInput
+              fieldId="confirm_password"
+              fieldPlaceholder="******************"
+              fieldName="confirm_password"
+              v-model = "confirm_password"
             />
           </div>
           <div class="mb-6">
-          <label
+            <label
               class="block text-gray-700 text-sm font-bold mb-2"
               for="buda_user"
             >
               Buda User
             </label>
-            <input
-              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="buda_user"
-              type="text"
-              placeholder="Buda User"
-              v-model="buda_user"
-              name="buda_user"
+            <inputForm
+              fieldId="buda_user"
+              fieldType="text"
+              fieldPlaceholder="Buda User"
+              fieldName="buda_user"
             />
           </div>
-            <button
-              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              :disabled="loading"
-            >
-              Sign Up
-            </button>
+          <submitButton :fieldDisabled="false" fieldPlaceholder="Sign Up" />
         </form>
       </div>
     </center>
@@ -82,6 +70,9 @@
 </template>
 <script>
 import { mapActions, mapState } from 'vuex'
+import inputForm from '../components/Input'
+import passwordInput from '../components/PasswordInput'
+import submitButton from '../components/SubmitButton'
 
 export default {
   name: 'SignUp',
@@ -95,19 +86,24 @@ export default {
       loading: false
     }
   },
+  components: {
+    inputForm,
+    passwordInput,
+    submitButton
+  },
   computed: {
     ...mapState('user', ['currentUser'])
   },
   methods: {
     ...mapActions('user', ['signUp']),
     handleSubmit(e) {
-      const { email, password , confirm_password} = this
-      console.log(e)
-      if (email && password && (password === confirm_password)) {
+      const { email, password, confirm_password } = this
+      console.log('cosas', email,password, confirm_password)
+      if (email && password && password === confirm_password) {
         console.log('Correct confirmation')
         this.signUp({ email, password, buda_user })
           .then(() => {
-            // TODO logger  
+            // TODO logger
             console.log('success')
           })
           .catch(err => {
