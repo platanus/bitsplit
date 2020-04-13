@@ -9,9 +9,17 @@ class Api::V1::UsersController < Api::V1::BaseController
       @user = User.new(user_params)
 
       if @user.save
-          render :create
+        # user can create with initial api information
+        # updates user information directly with the corresponding encryption
+        if user_params.has_key?(:api_key)
+          @user.update_attribute(:api_key, @user.encrypt(user_params[:api_key], user_params[:password]))
+        end
+        if user_params.has_key?(:api_secret)
+          @user.update_attribute(:api_secret, @user.encrypt(user_params[:api_secret,], Rails.application.secrets.secret_key_base))
+        end
+        render :create
       else
-          head(:unprocessable_entity)
+        head(:unprocessable_entity)
       end
   end
 
@@ -31,37 +39,38 @@ class Api::V1::UsersController < Api::V1::BaseController
       @user = current_user
 
       if @user&.valid_password?(params[:password])
-          @password = params[:password]
-          # special case if updating api_key or api_secret
-          # reassign encrypted values in params
-          # so that the user objects updates with the encrypted data
-          if user_params.has_key?(:api_key)
-              params[:api_key] = @user.encrypt(params[:api_key], params[:password])
-          end
-          if user_params.has_key?(:api_secret)
-              params[:api_secret] = @user.encrypt(params[:api_secret], params[:password])
+        @password = params[:password]
+        # special case if updating api_key or api_secret
+        # reassign encrypted values in params
+        # so that the user objects updates with the encrypted data
+        if user_params.has_key?(:api_key)
+            params[:api_key] = @user.encrypt(params[:api_key], params[:password])
+        end
+        if user_params.has_key?(:api_secret)
+            params[:api_secret] = @user.encrypt(params[:api_secret], Rails.application.secrets.secret_key_base)
+        end
+      end
+
+      if (user_params.has_key?(:api_key) || user_params.has_key?(:api_secret))
+        # has fields and valid password => can correctly update fields
+        if @user&.valid_password?(params[:password])
+          if @user.update user_params
+            render :update
+          else
+            head(:unprocessable_entity)
           end
 
-          # checks if the email exists already in the database
-          if user_params.has_key?(:email)
-              if not email_in_use(:email)
-                  if @user.update user_params
-                      render :update
-                  else
-                      head(:unprocessable_entity)
-                  end
-              else
-                  head(:unprocessable_entity)
-              end
-          else            
-              if @user.update user_params
-                  render :update
-              else
-                  head(:unprocessable_entity)
-              end
-          end
+        # user does not have the correct password => cannot update correctly
+        else
+          head(:bad_request)        
+        end
+
       else
-          head(:unauthorized)
+        if @user.update user_params
+          render :update
+        else
+          head(:unprocessable_entity)
+        end
       end
   end
 

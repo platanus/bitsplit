@@ -18,6 +18,7 @@ class User < ApplicationRecord
   end
   
   def decrypt text, password
+    # note that to decrypt the api_secret the password is Rails.application.secrets.secret_key_base
     # if user has not yet setted a api_key or api_secret
     if text.nil?
       nil
@@ -56,7 +57,7 @@ class User < ApplicationRecord
   private
 
   # private readers will not be rendered in json
-  attr_reader :api_secret, :created_at, :updated_at
+  attr_reader :api_secret, :created_at, :updated_at, :logged
 
 end
 
@@ -75,6 +76,7 @@ end
 #  authentication_token   :string(30)
 #  api_key                :string
 #  api_secret             :string
+#  logged                 :boolean          default(FALSE)
 #
 # Indexes
 #
