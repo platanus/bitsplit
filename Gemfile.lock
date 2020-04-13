@@ -382,7 +382,7 @@ DEPENDENCIES
   faker
   guard-rspec
   heroku-stage
-  httparty
+  httparty (~> 0.18.0)
   jbuilder (~> 2.7)
   listen
   pg

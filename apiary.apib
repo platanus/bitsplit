@@ -71,7 +71,9 @@ HOST: https://localhost:5000/api/v1/
         {
             "email": "example@example.com",
             "password": "bestPa55W0rd3ver",
-            "password_confirmation": "bestPa55W0rd3ver"
+            "password_confirmation": "bestPa55W0rd3ver",
+            "api_key": "th3b3stAP1K3Y",
+            "api_secret": "th3B3s1S3Cr31"
         }
 
 + Response 200 (application/json)
@@ -87,8 +89,8 @@ HOST: https://localhost:5000/api/v1/
 
 
 ### Update existing user [PATCH]
-
 + Request (application/json)
+The `password` field is only required if the `api_key` or `api_secret` fields are being updated.
 
     + Headers
 
@@ -140,6 +142,32 @@ HOST: https://localhost:5000/api/v1/
             "data": {
                 "user": {
                     "email": "example@example.com"
+                }
+            }
+        }
+        
+## Quotations [/quotations]
+### Create new quotation [POST]
+
++ Request (application/json)
+
+        {
+            "amount": 100
+        }
+
++ Response 200 (application/json)
+
+        {
+            "data": {
+                "quotation": {
+                    "amount": [
+                      "100.0",
+                      "CLP"
+                    ],
+                    "base_balance_change": [
+                    "0.00001657",
+                    "BTC"
+                    ]
                 }
             }
         }
