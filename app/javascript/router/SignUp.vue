@@ -110,11 +110,7 @@ export default {
             // TODO logger  
             console.log('success')
           })
-<<<<<<< HEAD
           .catch(err => {
-=======
-          .catch((err) => {
->>>>>>> [web] update: signup
             console.log(err)
           })
       }
