@@ -1,5 +1,5 @@
 FORMAT: 1A
-HOST: https://localhost:5000/api/v1/
+HOST: http://localhost:5000/api/v1/
 
 # Bitsplit
 
@@ -18,10 +18,12 @@ HOST: https://localhost:5000/api/v1/
 
         {
             "data": {
-                "user": {
-                    "authentication_token": "smnozAAbYnEX2xVRfS5R",
+                "id": "1",
+                "type": "session",
+                "attributes": {
                     "email": "example@example.com",
-                    "api_key": "th3b3stAP1K3Y"
+                    "api_key": "th3b3stAP1K3Y",
+                    "authentication_token": "smnozAAbYnEX2xVRfS5R"
                 }
             }
         }
@@ -35,7 +37,7 @@ HOST: https://localhost:5000/api/v1/
             X-User-Email: example@example.com
             X-User-Token: smnozAAbYnEX2xVRfS5R
             
-+ Response 200
++ Response 204
 
         
 ## Users [/users]
@@ -55,9 +57,12 @@ HOST: https://localhost:5000/api/v1/
 
         {
             "data": {
-                "user": {
+                "id": "1",
+                "type": "user",
+                "attributes": {
                     "email": "example@gmail.com",
-                    "authentication_token": "smnozAAbYnEX2xVRfS5R",
+                    "api_key": "th3b3stAP1K3Y",
+                    "authentication_token": "smnozAAbYnEX2xVRfS5R"
                 }
             }
         }
@@ -80,9 +85,12 @@ HOST: https://localhost:5000/api/v1/
 
         {
             "data": {
-                "user": {
+                "id": "1",
+                "type": "user",
+                "attributes": {
                     "email": "example@gmail.com",
-                    "authentication_token": "smnozAAbYnEX2xVRfS5R",
+                    "api_key": "th3b3stAP1K3Y",
+                    "authentication_token": "smnozAAbYnEX2xVRfS5R"
                 }
             }
         }
@@ -90,7 +98,6 @@ HOST: https://localhost:5000/api/v1/
 
 ### Update existing user [PATCH]
 + Request (application/json)
-The `password` field is only required if the `api_key` or `api_secret` fields are being updated.
 
     + Headers
 
@@ -108,15 +115,7 @@ The `password` field is only required if the `api_key` or `api_secret` fields ar
             
 + Response 200 (application/json)
 
-        {
-            "data": {
-                "user": {
-                    "authentication_token": "smnozAAbYnEX2xVRfS5R",
-                    "email": "new_example@gmail.com",
-                    "api_key": "th3b3stAP1K3Y"
-                }
-            }
-        }
+            true
         
         
 ### Delete an existing user [DELETE]
@@ -136,15 +135,8 @@ The `password` field is only required if the `api_key` or `api_secret` fields ar
             }
         
         
-+ Response 200 (application/json)
++ Response 204 (application/json)
 
-        {
-            "data": {
-                "user": {
-                    "email": "example@example.com"
-                }
-            }
-        }
         
 ## Quotations [/quotations]
 ### Create new quotation [POST]
