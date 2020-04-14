@@ -17,8 +17,6 @@ export default {
     // Hacemos fetch a la api con data de payload
 
     commit(SIGNIN_ATTEMPT)
-
-    // Simulamos success o fail
     const fetchPromise = loginApi(payload)
 
     return fetchPromise
@@ -47,43 +45,39 @@ export default {
         return Promise.reject()
       })
   },
-  [signOut]({ commit, dispatch }, payload) {
-    logoutApi(payload)
+   [signOut]({ commit, dispatch }, payload) {
+    return logoutApi(payload)
       .then(res => {
         localStorage.removeItem('currentUser')
         commit(SIGNOUT)
         dispatch('alert/success_alert', 'Sesion cerrada correctamente', {
           root: true
         })
+        return Promise.resolve(res)
       })
       .catch(err => {
-        localStorage.removeItem('currentUser')
-        commit(SIGNOUT)
-        dispatch('alert/success_alert', 'Sesion cerrada correctamente', {
+        dispatch('alert/error_alert', 'Error cerrando sesion', {
           root: true
         })
+        return Promise.reject(err)
       })
   },
-  [signUp]({ commit, dispatch }, payload) {
 
+  [signUp]({ commit, dispatch }, payload) {
     commit(SIGNUP_ATTEMPT)
 
     // Enviamos la información del Payload a la API para que verifique la validez
     // Hay que verificar que no exista ese email registrado y que tenga usuario buda.
 
     const fetchPromise = signUpApi(payload)
-    
-    console.log ('fetch',fetchPromise)
     return fetchPromise
       .then(res => {
         if (res.data.user) {
-          print('respuesta api', res.data.data.user)
           // Credenciales verificadas
           commit(SIGNUP_SUCCESS, res.data.user)
           dispatch('alert/success_alert', 'Sign in succesfull', { root: true })
           return Promise.resolve()
-        } 
-        else {
+        } else {
           // Algun error de contraseña o usuario no existente
           commit(SIGNUP_FAIL)
           dispatch('alert/error_alert', 'Error al ingresar datos', {
@@ -98,5 +92,5 @@ export default {
         dispatch('alert/error_alert', 'Error desconocido', { root: true })
         return Promise.reject()
       })
-  },
+  }
 }

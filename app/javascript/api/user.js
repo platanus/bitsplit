@@ -21,33 +21,17 @@ const logoutApi = payload => {
   })
 }
 const signUpApi = payload => {
-  console.log(payload)
-
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve(
-        axios
-          .post(
-            'http://localhost:3000/api/v1/users/',
-            {
-              email: payload.email,
-              password: payload.password,
-              password_confirmation: payload.password
-            },
-            {
-              headers: { 'Content-Type': 'application/json' }
-            }
-          )
-          .then(response => {
-            // TODO: Add logger that only logs in development
-            console.log(response)
-            return response
-          })
-          .catch(err => {
-            console.error(err)
-          })
-      )
-    }, 1000)
-  })
+    return axios
+    .post(
+      '/api/v1/users/',
+      {
+        email: payload.email,
+        password: payload.password,
+        password_confirmation: payload.password
+      },
+      {
+        headers: { 'Content-Type': 'application/json' }
+      }
+    )
 }
 export { loginApi, logoutApi, signUpApi }
