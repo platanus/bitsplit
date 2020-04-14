@@ -1,7 +1,7 @@
 <template>
   <div v-on:click="CLEAR_ALERT()">
-    <errorAlert v-if="alert.type==='error'"></errorAlert>
-    <successAlert v-if="alert.type==='success'"></successAlert>
+    <error-alert v-if="alert.type==='error'" />
+    <success-alert v-if="alert.type==='success'" />
   </div>
 </template>
 
@@ -14,8 +14,8 @@ import successAlert from './successAlert'
 export default {
   name: 'alertMessage',
   components: {
-    errorAlert,
-    successAlert
+    'error-alert': errorAlert,
+    'success-alert': successAlert
   },
   methods: {
     ...mapMutations('alert', ['CLEAR_ALERT'])

@@ -1,9 +1,8 @@
 <template>
-  <!-- <div v-if="alert.message" :class="`alert ${alert.type}`">{{ alert.message }}</div> -->
   <div
     class="flex flex-row items-center bg-red-600 hover:bg-red-700 fixed bottom-0 right-0 mb-16 mr-8 p-2 rounded-md cursor-pointer"
   >
-    <p class="text-white">{{alert.message}}</p>
+    <p class="text-white">{{ alert.message }}</p>
     <svg
       class="fill-current h-6 w-6 ml-4 text-gray-100"
       role="button"

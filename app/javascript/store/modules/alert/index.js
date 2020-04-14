@@ -6,18 +6,20 @@ const state = {
   message: null
 }
 
+const ALERT_TIMEOUT = 4000
+
 const actions = {
   [success_alert]({ commit }, message) {
     commit(SUCCESS_ALERT, message)
     setTimeout(() => {
       commit(CLEAR_ALERT)
-    }, 4000)
+    }, ALERT_TIMEOUT)
   },
   [error_alert]({ commit }, message) {
     commit(ERROR_ALERT, message)
     setTimeout(() => {
       commit(CLEAR_ALERT)
-    }, 4000)
+    }, ALERT_TIMEOUT)
   }
 }
 
