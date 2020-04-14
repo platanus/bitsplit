@@ -1,29 +1,23 @@
-  <template>
-  <div id="vue-app">
-    <navBar></navBar>
-    <alert-message></alert-message>
-    <router-view></router-view>
+<template>
+  <div>
+    <h1>Route: {{ routeName }}</h1>
+    <p>Current user: {{ currentUser }}</p>
   </div>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
-import navBar from 'components/navBar.vue'
-import alertMessage from 'components/alertMessage.vue'
+import { mapState, mapGetters, mapActions } from 'vuex'
 export default {
-  name: 'app',
-  components: {
-    navBar,
-    alertMessage
-  },
-  methods: {
-    ...mapActions('alert', ['clear_alert'])
-  },
-  watch: {
-    $route(to, from) {
-      // clear alert on location change
-      this.clear_alert()
+  name: 'Home',
+  data() {
+    return {
+      routeName: 'home'
     }
+  },
+  computed: {
+    ...mapState('user', ['currentUser'])
   }
 }
 </script>
+
+<style lang="scss"></style>
