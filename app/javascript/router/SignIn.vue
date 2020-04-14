@@ -65,6 +65,7 @@ export default {
       if (email && password) {
         this.signIn({ email, password })
           .then(() => {
+            // TODO logger
             console.log('success')
             this.$router.push('/home')
           })

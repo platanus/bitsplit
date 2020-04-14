@@ -87,6 +87,7 @@ export default {
           .then(() => {
             // TODO logger
             console.log('success')
+            this.$router.push('/home')
           })
           .catch(err => {
             console.error(err)

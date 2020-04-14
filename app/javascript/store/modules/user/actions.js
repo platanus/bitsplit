@@ -22,27 +22,26 @@ export default {
     return fetchPromise
       .then(res => {
         // Recibe un response correcto (usuario existe, usuario no existe, etc)
-        if (res.data.user) {
+        if (res.data.data.user) {
           // Usuario logeado correctamente
-          localStorage.setItem('currentUser', JSON.stringify(res.data.user))
-          commit(SIGNIN_SUCCESS, res.data.user)
+          localStorage.setItem('currentUser', JSON.stringify(res.data.data.user))
+          commit(SIGNIN_SUCCESS, res.data.data.user)
           dispatch('alert/success_alert', 'Sign in succesfull', { root: true })
-
-          return Promise.resolve()
+          return 
         } else {
           // Algun error de contraseña o usuario no existente
           commit(SIGNIN_FAIL)
           dispatch('alert/error_alert', 'Error al ingresar datos', {
             root: true
           })
-          return Promise.reject()
+          throw new Error("Error al ingresar datos")
         }
       })
       .catch(e => {
         // Hay un error en el fetch
         commit(SIGNIN_FAIL)
         dispatch('alert/error_alert', 'Error desconocido', { root: true })
-        return Promise.reject()
+        throw new Error('Error desconocido')
       })
   },
    [signOut]({ commit, dispatch }, payload) {
@@ -53,7 +52,7 @@ export default {
         dispatch('alert/success_alert', 'Sesion cerrada correctamente', {
           root: true
         })
-        return Promise.resolve(res)
+        return 
       })
       .catch(err => {
         dispatch('alert/error_alert', 'Error cerrando sesion', {
@@ -72,26 +71,26 @@ export default {
     const fetchPromise = signUpApi(payload)
     return fetchPromise
       .then(res => {
-        if (res.data.user) {
+        if (res.data.data.user) {
           // Credenciales verificadas
-          commit(SIGNUP_SUCCESS, res.data.user)
+          localStorage.setItem('currentUser', JSON.stringify(res.data.data.user))
+          commit(SIGNUP_SUCCESS, res.data.data.user)
           dispatch('alert/success_alert', 'Sign up succesfull', { root: true })
-          return Promise.resolve()
+          return 
         } else {
           // Algun error de contraseña o usuario no existente
           commit(SIGNUP_FAIL)
           dispatch('alert/error_alert', 'Error al ingresar datos', {
             root: true
           })
-          return Promise.reject()
+          throw new Error('Error al ingresar datos')
         }
       })
       .catch(err => {
         // Hay un error en el fetch
-        commit(SIGNIN_FAIL)
+        commit(SIGNUP_FAIL)
         dispatch('alert/error_alert', 'Error desconocido', { root: true })
-        console.error(err)
-        throw err
+        throw new Error('Error desconocido')
       })
   }
 }
