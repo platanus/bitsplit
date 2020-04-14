@@ -5,6 +5,14 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
          
+  def api_key=(text)
+    super(self.encrypt(text))
+  end
+     
+  def api_secret=(text)
+    super(self.encrypt(text))
+  end
+
   # source https://dev.to/shobhitic/simple-string-encryption-in-rails-36pi
   def encrypt text
     text = text.to_s unless text.is_a? String
