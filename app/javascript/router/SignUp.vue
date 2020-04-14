@@ -8,7 +8,7 @@
         >
           <div class="mb-4">
             <inputLabel fieldName="Email" fieldFor="email" />
-            <inputForm
+            <textInput
               fieldId="email"
               fieldType="text"
               fieldPlaceholder="Email"
@@ -33,7 +33,7 @@
           </div>
           <div class="mb-6">
             <inputLabel fieldName="Buda User" fieldFor="buda_user" />
-            <inputForm
+            <textInput
               fieldId="buda_user"
               fieldType="text"
               fieldPlaceholder="Buda User"
@@ -48,7 +48,7 @@
 </template>
 <script>
 import { mapActions, mapState } from 'vuex'
-import inputForm from '../components/Input'
+import textInput from '../components/Input'
 import passwordInput from '../components/PasswordInput'
 import submitButton from '../components/SubmitButton'
 import inputLabel from '../components/InputLabel'
@@ -66,7 +66,7 @@ export default {
     }
   },
   components: {
-    inputForm,
+    textInput,
     passwordInput,
     submitButton,
     inputLabel
@@ -89,7 +89,7 @@ export default {
             console.log('success')
           })
           .catch(err => {
-            console.err(err)
+            console.error(err)
           })
       }
     }
