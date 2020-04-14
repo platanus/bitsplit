@@ -18,12 +18,10 @@ HOST: http://localhost:5000/api/v1/
 
         {
             "data": {
-                "id": "1",
-                "type": "session",
-                "attributes": {
+                "user": {
+                    "authentication_token": "smnozAAbYnEX2xVRfS5R",
                     "email": "example@example.com",
-                    "api_key": "th3b3stAP1K3Y",
-                    "authentication_token": "smnozAAbYnEX2xVRfS5R"
+                    "api_key": "th3b3stAP1K3Y"
                 }
             }
         }
@@ -37,7 +35,7 @@ HOST: http://localhost:5000/api/v1/
             X-User-Email: example@example.com
             X-User-Token: smnozAAbYnEX2xVRfS5R
             
-+ Response 204
++ Response 200
 
         
 ## Users [/users]
@@ -57,12 +55,9 @@ HOST: http://localhost:5000/api/v1/
 
         {
             "data": {
-                "id": "1",
-                "type": "user",
-                "attributes": {
+                "user": {
                     "email": "example@gmail.com",
-                    "api_key": "th3b3stAP1K3Y",
-                    "authentication_token": "smnozAAbYnEX2xVRfS5R"
+                    "authentication_token": "smnozAAbYnEX2xVRfS5R",
                 }
             }
         }
@@ -85,12 +80,9 @@ HOST: http://localhost:5000/api/v1/
 
         {
             "data": {
-                "id": "1",
-                "type": "user",
-                "attributes": {
+                "user": {
                     "email": "example@gmail.com",
-                    "api_key": "th3b3stAP1K3Y",
-                    "authentication_token": "smnozAAbYnEX2xVRfS5R"
+                    "authentication_token": "smnozAAbYnEX2xVRfS5R",
                 }
             }
         }
@@ -98,6 +90,7 @@ HOST: http://localhost:5000/api/v1/
 
 ### Update existing user [PATCH]
 + Request (application/json)
+The `password` field is only required if the `api_key` or `api_secret` fields are being updated.
 
     + Headers
 
@@ -115,7 +108,15 @@ HOST: http://localhost:5000/api/v1/
             
 + Response 200 (application/json)
 
-            true
+        {
+            "data": {
+                "user": {
+                    "authentication_token": "smnozAAbYnEX2xVRfS5R",
+                    "email": "new_example@gmail.com",
+                    "api_key": "th3b3stAP1K3Y"
+                }
+            }
+        }
         
         
 ### Delete an existing user [DELETE]
@@ -135,29 +136,46 @@ HOST: http://localhost:5000/api/v1/
             }
         
         
-+ Response 204 (application/json)
++ Response 200 (application/json)
 
+        {
+            "data": {
+                "user": {
+                    "email": "example@example.com"
+                }
+            }
+        }
         
 ## Quotations [/quotations]
 ### Create new quotation [POST]
 
+
+
 + Request (application/json)
 
-        {
-            "amount": 100
-        }
+    + Headers
+
+            X-User-Email: example@example.com
+            X-User-Token: smnozAAbYnEX2xVRfS5R
+
+    + Body
+
+            {
+                "amount": 1000
+            }
+
 
 + Response 200 (application/json)
 
         {
             "data": {
                 "quotation": {
-                    "amount": [
-                      "100.0",
+                    "amount_clp": [
+                      "1004.09",
                       "CLP"
                     ],
                     "base_balance_change": [
-                    "0.00001657",
+                    "0.00016961",
                     "BTC"
                     ]
                 }
