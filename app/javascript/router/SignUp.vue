@@ -7,54 +7,32 @@
           class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
         >
           <div class="mb-4">
-            <label
-              class="block text-gray-700 text-sm font-bold mb-2"
-              for="email"
-            >
-              Email
-            </label>
+            <inputLabel fieldName="Email" fieldFor="email" />
             <inputForm
               fieldId="email"
               fieldType="text"
               fieldPlaceholder="Email"
               fieldName="email"
-              v-model = "email"
+              v-model="email"
             />
           </div>
           <div class="mb-4">
-            <label
-              class="block text-gray-700 text-sm font-bold mb-2"
-              for="password"
-            >
-              Password
-            </label>
+            <inputLabel fieldName="Password" fieldFor="password" />
+
             <passwordInput
               fieldId="password"
-              fieldPlaceholder="******************"
               fieldName="password"
-              v-model = "password"
+              v-model="password"
             />
-
-            <label
-              class="block text-gray-700 text-sm font-bold mb-2"
-              for="password"
-            >
-              Repeat your password
-            </label>
+            <inputLabel fieldName="Repeat your password" fieldFor="password" />
             <passwordInput
               fieldId="confirm_password"
-              fieldPlaceholder="******************"
               fieldName="confirm_password"
-              v-model = "confirm_password"
+              v-model="confirm_password"
             />
           </div>
           <div class="mb-6">
-            <label
-              class="block text-gray-700 text-sm font-bold mb-2"
-              for="buda_user"
-            >
-              Buda User
-            </label>
+            <inputLabel fieldName="Buda User" fieldFor="buda_user" />
             <inputForm
               fieldId="buda_user"
               fieldType="text"
@@ -73,6 +51,7 @@ import { mapActions, mapState } from 'vuex'
 import inputForm from '../components/Input'
 import passwordInput from '../components/PasswordInput'
 import submitButton from '../components/SubmitButton'
+import inputLabel from '../components/InputLabel'
 
 export default {
   name: 'SignUp',
@@ -89,7 +68,8 @@ export default {
   components: {
     inputForm,
     passwordInput,
-    submitButton
+    submitButton,
+    inputLabel
   },
   computed: {
     ...mapState('user', ['currentUser'])
@@ -98,7 +78,7 @@ export default {
     ...mapActions('user', ['signUp']),
     handleSubmit(e) {
       const { email, password, confirm_password } = this
-      console.log('cosas', email,password, confirm_password)
+      console.log('cosas', email, password, confirm_password)
       if (email && password && password === confirm_password) {
         console.log('Correct confirmation')
         this.signUp({ email, password, buda_user })

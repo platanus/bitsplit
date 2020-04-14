@@ -7,12 +7,7 @@
           class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
         >
           <div class="mb-4">
-            <label
-              class="block text-gray-700 text-sm font-bold mb-2"
-              for="email"
-            >
-              Email
-            </label>
+            <inputLabel fieldName="Email" fieldFor="email" />
             <inputForm
               fieldId="email"
               fieldType="text"
@@ -22,15 +17,10 @@
             />
           </div>
           <div class="mb-4">
-            <label
-              class="block text-gray-700 text-sm font-bold mb-2"
-              for="password"
-            >
-              Password
-            </label>
+            
+            <inputLabel fieldName="Password" fieldFor="password" />
             <passwordInput
               fieldId="password"
-              fieldPlaceholder="******************"
               fieldName="password"
               v-model = "password"
             />
@@ -47,6 +37,7 @@ import { mapActions, mapState } from 'vuex'
 import inputForm from '../components/Input'
 import passwordInput from '../components/PasswordInput'
 import submitButton from '../components/SubmitButton'
+import inputLabel from '../components/InputLabel'
 
 export default {
   name: 'SignIn',
@@ -61,7 +52,8 @@ export default {
   components: {
     inputForm,
     passwordInput,
-    submitButton
+    submitButton,
+    inputLabel
   },
   computed: {
     ...mapState('user', ['currentUser'])
