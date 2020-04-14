@@ -5,5 +5,6 @@ export default {
   userLoading: false,
   token: null,
   buda: '',
-  api_key: ''
+  api_key: '',
+  authToken: ''
 }

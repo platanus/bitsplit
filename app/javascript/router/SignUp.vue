@@ -78,8 +78,10 @@ export default {
     ...mapActions('user', ['signUp']),
     handleSubmit(e) {
       const { email, password, confirm_password } = this
+      // TODO logger
       console.log('cosas', email, password, confirm_password)
       if (email && password && password === confirm_password) {
+        // TODO logger
         console.log('Correct confirmation')
         this.signUp({ email, password, buda_user })
           .then(() => {
@@ -87,7 +89,7 @@ export default {
             console.log('success')
           })
           .catch(err => {
-            console.log(err)
+            console.err(err)
           })
       }
     }

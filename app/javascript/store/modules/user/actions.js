@@ -59,7 +59,7 @@ export default {
         dispatch('alert/error_alert', 'Error cerrando sesion', {
           root: true
         })
-        return Promise.reject(err)
+        throw new Error("Error al ingresar datos")
       })
   },
 
@@ -75,7 +75,7 @@ export default {
         if (res.data.user) {
           // Credenciales verificadas
           commit(SIGNUP_SUCCESS, res.data.user)
-          dispatch('alert/success_alert', 'Sign in succesfull', { root: true })
+          dispatch('alert/success_alert', 'Sign up succesfull', { root: true })
           return Promise.resolve()
         } else {
           // Algun error de contraseña o usuario no existente
@@ -86,11 +86,12 @@ export default {
           return Promise.reject()
         }
       })
-      .catch(e => {
+      .catch(err => {
         // Hay un error en el fetch
         commit(SIGNIN_FAIL)
         dispatch('alert/error_alert', 'Error desconocido', { root: true })
-        return Promise.reject()
+        console.error(err)
+        throw err
       })
   }
 }

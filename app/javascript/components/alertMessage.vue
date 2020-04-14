@@ -1,5 +1,7 @@
 <template>
-  <div v-if="alert.message" :class="`alert ${alert.type}`">{{ alert.message }}</div>
+  <div v-if="alert.message" :class="`alert ${alert.type}`">
+    {{ alert.message }}
+  </div>
 </template>
 
 <script>
