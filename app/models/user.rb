@@ -6,18 +6,18 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
          
   # source https://dev.to/shobhitic/simple-string-encryption-in-rails-36pi
-  def encrypt text, password
+  def encrypt text
     text = text.to_s unless text.is_a? String
   
     len   = ActiveSupport::MessageEncryptor.key_len
     salt  = SecureRandom.hex len
-    key   = ActiveSupport::KeyGenerator.new(password).generate_key salt, len
+    key   = ActiveSupport::KeyGenerator.new(Rails.application.secrets.secret_key_base).generate_key salt, len
     crypt = ActiveSupport::MessageEncryptor.new key
     encrypted_data = crypt.encrypt_and_sign text
     "#{salt}$$#{encrypted_data}"
   end
   
-  def decrypt text, password
+  def decrypt text
     # note that to decrypt the api_secret the password is Rails.application.secrets.secret_key_base
     # if user has not yet setted a api_key or api_secret
     if text.nil?
@@ -26,38 +26,11 @@ class User < ApplicationRecord
       salt, data = text.split "$$"
     
       len   = ActiveSupport::MessageEncryptor.key_len
-      key   = ActiveSupport::KeyGenerator.new(password).generate_key salt, len
+      key   = ActiveSupport::KeyGenerator.new(Rails.application.secrets.secret_key_base).generate_key salt, len
       crypt = ActiveSupport::MessageEncryptor.new key
       crypt.decrypt_and_verify data
     end
   end
-
-  def as_json(options={})
-    # one option is the password that has to be passed
-    # to decrypt the api_key
-    json = super(options)
-
-    if options.has_key?(:password)
-      # replace the encrypted api_key with decrypted one
-      json[:api_key] = decrypt(json["api_key"], options[:password])
-
-    # if the password is not provided, then the api_key is removed
-    # from the json output, as this is sensitive information
-    else
-      json.delete("api_key")
-    end
-
-    # always delete :id as it is only used internaly, but has to be exposed
-    # for the creation of the user
-    json.delete("id")
-    # delete null fields (private ones) and returns the cleaned data
-    json.compact
-  end
-
-  private
-
-  # private readers will not be rendered in json
-  attr_reader :api_secret, :created_at, :updated_at, :logged
 
 end
 
