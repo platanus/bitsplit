@@ -1,32 +1,16 @@
 import axios from 'axios'
 
 const loginApi = payload => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve(
-        axios
-          .post(
-            'http://localhost:3000/api/v1/sessions/',
-            {
-              email: payload.email,
-              password: payload.password
-            },
-            {
-              headers: { 'Content-Type': 'application/json' }
-            }
-          )
-          .then(response => {
-            // TODO add real interaction with backend
-            // TODO: Add logger that only logs in development
-            console.log(response)
-            return response
-          })
-          .catch(e => {
-            console.error(e)
-          })
-      )
-    }, 1000)
-  })
+  return axios.post(
+    '/api/v1/sessions/',
+    {
+      email: payload.email,
+      password: payload.password
+    },
+    {
+      headers: { 'Content-Type': 'application/json' }
+    }
+  )
 }
 const logoutApi = payload => {
   // TODO add real interaction with backend
