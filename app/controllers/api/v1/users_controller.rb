@@ -18,8 +18,8 @@ class Api::V1::UsersController < Api::V1::BaseController
   def update
     if (user_params.has_key?(:api_key) || user_params.has_key?(:api_secret))
       # has fields and valid password => can correctly update fields
-      if @user&.valid_password?(params[:password])
-        if @user.update user_params
+      if current_user&.valid_password?(params[:password])
+        if current_user.update user_params
           respond_with current_user.update!(user_params)
         else
           head(:unprocessable_entity)
