@@ -1,58 +1,29 @@
-<template>
-  <div >
-    <app-header>
-    </app-header>
-    <div id="content">
-    <h1>Route: {{ routeName }}</h1>
-    <p>Current user: {{ currentUser }}</p>
-    <button @click="signOut">Log Out</button>
-    </div>
-  <app-footer>
-  </app-footer>
+  <template>
+  <div id="vue-app">
+    <navBar></navBar>
+    <alert-message></alert-message>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions } from 'vuex'
-
-import Header from '../components/Layout/Header'
-import Footer from '../components/Layout/Footer'
-
+import { mapState, mapActions } from 'vuex'
+import navBar from 'components/navBar.vue'
+import alertMessage from 'components/alertMessage.vue'
 export default {
+  name: 'app',
   components: {
-    'app-header': Header,
-    'app-footer': Footer
-  },
-  name: 'Home',
-  data() {
-    return {
-      routeName: 'Home',
-      signInRoute: 'sign-in',
-      signUpRoute: 'sign-up'
-    }
-  },
-  computed: {
-    ...mapState('user', ['currentUser'])
+    navBar,
+    alertMessage
   },
   methods: {
-    ...mapActions('user', ['signOut']),
-    handleLogOut() {
-      this.logOut().then(() => {
-        this.$router.push('/')
-      })
+    ...mapActions('alert', ['clear_alert'])
+  },
+  watch: {
+    $route(to, from) {
+      // clear alert on location change
+      this.clear_alert()
     }
   }
 }
 </script>
-
-<style>
-#content {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-  margin-bottom: 60px;
-}
-</style>
