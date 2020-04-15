@@ -4,15 +4,13 @@ class Api::V1::UserSerializer < ActiveModel::Serializer
   type :user
 
   attributes(
+    :id,
     :email,
-    :encrypted_password,
-    :reset_password_token,
-    :reset_password_sent_at,
-    :remember_created_at,
-    :created_at,
-    :updated_at,
     :api_key,
-    :api_secret,
     :authentication_token
   )
+
+  def api_key
+    object.decrypt(object.api_key)
+  end
 end

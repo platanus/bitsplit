@@ -19,7 +19,7 @@ class Api::V1::SessionsController < Api::V1::BaseController
         current_user&.authentication_token = nil
         if current_user.save
             @current_user.update_attribute(:logged, false)
-            head(:ok)
+            head(:no_content)
         else
             head(:unauthorized)
         end
