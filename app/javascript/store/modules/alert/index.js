@@ -32,7 +32,7 @@ const mutations = {
   [CLEAR_ALERT](state) {
     state.type = null
     state.message = null
-  }
+  },
 }
 
 export default alert = {

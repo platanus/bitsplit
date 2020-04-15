@@ -1,28 +1,37 @@
-const loginApi = payload => {
-  // TODO add real interaction with backend
+import axios from 'axios'
 
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve({
-        data: {
-          user: {
-            authentication_token: 'smnozAAbYnEX2xVRfS5R',
-            email: 'example@example.com',
-            api_key: 'th3b3stAP1K3Y'
-          }
-        }
-      })
-    }, 1000)
-  })
+const loginApi = payload => {
+  return axios.post(
+    '/api/v1/sessions/',
+    {
+      email: payload.email,
+      password: payload.password
+    },
+    {
+      headers: { 'Content-Type': 'application/json' }
+    }
+  )
 }
 const logoutApi = payload => {
   // TODO add real interaction with backend
-
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       resolve({})
     }, 1000)
   })
 }
-
-export { loginApi, logoutApi }
+const signUpApi = payload => {
+    return axios
+    .post(
+      '/api/v1/users/',
+      {
+        email: payload.email,
+        password: payload.password,
+        password_confirmation: payload.password
+      },
+      {
+        headers: { 'Content-Type': 'application/json' }
+      }
+    )
+}
+export { loginApi, logoutApi, signUpApi }

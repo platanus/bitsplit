@@ -1,3 +1,5 @@
 export default {
-  signedIn: state => state.currentUser !== null
-}
+    signedIn: state => {
+      return state.currentUser !== null
+    }
+  }

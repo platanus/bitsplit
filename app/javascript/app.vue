@@ -1,4 +1,4 @@
-<template>
+  <template>
   <div id="vue-app">
     <navBar></navBar>
     <alert-message></alert-message>
@@ -8,13 +8,10 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-
 import navBar from 'components/navBar.vue'
 import alertMessage from 'components/alertMessage.vue'
-
 export default {
   name: 'app',
-
   components: {
     navBar,
     alertMessage
