@@ -22,10 +22,10 @@ export default {
     return fetchPromise
       .then(res => {
         // Recibe un response correcto (usuario existe, usuario no existe, etc)
-        if (res.data.data.user) {
+        if (res.data.data.attributes) {
           // Usuario logeado correctamente
-          localStorage.setItem('currentUser', JSON.stringify(res.data.data.user))
-          commit(SIGNIN_SUCCESS, res.data.data.user)
+          localStorage.setItem('currentUser', JSON.stringify(res.data.data.attributes))
+          commit(SIGNIN_SUCCESS, res.data.data.attributes)
           dispatch('alert/success_alert', 'Sign in succesfull', { root: true })
           return 
         } else {
@@ -71,10 +71,10 @@ export default {
     const fetchPromise = signUpApi(payload)
     return fetchPromise
       .then(res => {
-        if (res.data.data.user) {
+        if (res.data.data.attributes) {
           // Credenciales verificadas
-          localStorage.setItem('currentUser', JSON.stringify(res.data.data.user))
-          commit(SIGNUP_SUCCESS, res.data.data.user)
+          localStorage.setItem('currentUser', JSON.stringify(res.data.data.attributes))
+          commit(SIGNUP_SUCCESS, res.data.data.attributes)
           dispatch('alert/success_alert', 'Sign up succesfull', { root: true })
           return 
         } else {

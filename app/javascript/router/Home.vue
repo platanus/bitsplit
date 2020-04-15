@@ -1,7 +1,9 @@
 <template>
   <div>
     <h1>Route: {{ routeName }}</h1>
-    <p>Current user: {{ currentUser }}</p>
+    <div v-if= currentUser >
+      <p>Current user: {{ currentUser.email }}</p>
+    </div>
   </div>
 </template>
 
