@@ -15,11 +15,16 @@ Rails.application.routes.draw do
   mount Rswag::Api::Engine => '/api-docs'
   mount Rswag::Ui::Engine => '/api-docs'
 
+  if Rails.env.development?
+    mount RailsDb::Engine => '/rails/db', :as => 'rails_db'
+  end
+
+  devise_for :users
+
   root 'home#index'
 
   get '/*path', to: 'home#index'
 
-  devise_for :users
 
 end
 
