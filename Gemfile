@@ -27,6 +27,7 @@ group :development, :test do
   gem 'rswag-specs'
   gem 'rubocop'
   gem 'rubocop-rspec'
+  gem 'rails_db', '2.3.1'
 end
 
 ##
