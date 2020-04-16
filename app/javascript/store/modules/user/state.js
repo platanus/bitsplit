@@ -1,4 +1,4 @@
-const user = JSON.parse(localStorage.getItem('currentUser'))
+const user = JSON.parse(localStorage.getItem('currentUser','budaPerfilComp'))
 
 export default {
   currentUser: user, // Si no esta es null
