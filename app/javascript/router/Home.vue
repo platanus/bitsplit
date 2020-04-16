@@ -1,12 +1,19 @@
 <template>
   <div>
+    <div v-if= !budaSignedIn >
+      <BudaAlert></BudaAlert>
+    </div>
     <h1>Route: {{ routeName }}</h1>
-    <p>Current user: {{ currentUser }}</p>
+    <div v-if= currentUser >
+      <p>Current user: {{ currentUser.email }}</p>
+      <p>API_KEY: {{ currentUser.api_key }}</p>
+    </div>
   </div>
 </template>
 
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex'
+import BudaAlert from 'components/BudaAlert.vue'
 export default {
   name: 'Home',
   data() {
@@ -14,8 +21,12 @@ export default {
       routeName: 'home'
     }
   },
+  components: {
+    BudaAlert
+  },
   computed: {
-    ...mapState('user', ['currentUser'])
+    ...mapState('user', ['currentUser']),
+    ...mapGetters('user', ['budaSignedIn'])
   }
 }
 </script>
