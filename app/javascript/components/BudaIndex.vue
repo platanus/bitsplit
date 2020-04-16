@@ -7,10 +7,12 @@
         </div>
         <div class=inline>
           <div class="pb-6">
-            <bigButton @do-click="change('BudaForm')" :fieldDisabled="false" fieldPlaceholder="Actualizar Keys" />
+            <submitButton @do-click="change('BudaForm')" 
+            classmod="bg-indigo-600 hover:bg-indigo-700 w-full" :fieldDisabled="false" fieldPlaceholder="Actualizar Keys" />
           </div>
           <div class="pb-6">
-            <bigButton @do-click="change('BudaLogoutForm')" :fieldDisabled="false" fieldPlaceholder="Desconectar Buda" />
+            <submitButton @do-click="change('BudaLogoutForm')" 
+            classmod="bg-indigo-600 hover:bg-indigo-700 w-full" :fieldDisabled="false" fieldPlaceholder="Desconectar Buda" />
           </div>
         </div>
       </div>
@@ -23,7 +25,6 @@ import { mapActions, mapState, mapMutations } from 'vuex'
 import textInput from '../components/Input.vue'
 import passwordInput from '../components/PasswordInput'
 import submitButton from '../components/SubmitButton'
-import bigButton from '../components/BigButton'
 import inputLabel from '../components/InputLabel'
 
 export default {
@@ -40,8 +41,7 @@ export default {
     textInput,
     passwordInput,
     submitButton,
-    inputLabel,
-    bigButton
+    inputLabel
   },
   methods: {
     ...mapActions('component', ['changeProfileComp']),

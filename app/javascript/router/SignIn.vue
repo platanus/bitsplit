@@ -24,7 +24,8 @@
               fieldName="password"
               v-model = "password"
             />
-            <submitButton :fieldDisabled="false" fieldPlaceholder="Log In" />
+            <submitButton 
+            classmod='bg-blue-500 hover:bg-blue-700' :fieldDisabled="false" fieldPlaceholder="Log In" />
           </div>
         </form>
       </div>

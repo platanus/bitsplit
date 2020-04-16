@@ -40,7 +40,8 @@
               fieldName="buda_user"
             />
           </div>
-          <submitButton :fieldDisabled="false" fieldPlaceholder="Sign Up" />
+          <submitButton 
+          classmod='bg-blue-500 hover:bg-blue-700' :fieldDisabled="false" fieldPlaceholder="Sign Up" />
         </form>
       </div>
     </center>

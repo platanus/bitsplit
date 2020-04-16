@@ -19,7 +19,7 @@
             <passwordInput fieldId="password" fieldName="password" v-model="password"/>
           </div>
           <div>
-            <submitButton :fieldDisabled="false" fieldPlaceholder="Sincronizar Buda" />
+            <submitButton classmod='bg-blue-500 hover:bg-blue-700' :fieldDisabled="false" fieldPlaceholder="Sincronizar Buda" />
           </div>
         </form>
       </div>
