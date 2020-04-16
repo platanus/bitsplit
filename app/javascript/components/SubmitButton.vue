@@ -12,7 +12,10 @@ export default {
   props: {
     fieldDisabled: Boolean,
     fieldPlaceholder: String,
-    classmod: String
+    classmod: {
+        type: String,
+        default: ''
+      }
   }
 }
 </script>
