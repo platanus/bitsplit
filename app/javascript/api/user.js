@@ -34,7 +34,7 @@ const signUpApi = payload => {
       }
     )
 }
-const budaLoginApi = payload => {
+const budaSyncApi = payload => {
   console.log(payload)
   return axios.patch(
     '/api/v1/users/',
@@ -63,4 +63,4 @@ const getCurrentUserApi = payload => {
   )
 }
 
-export { loginApi, logoutApi, signUpApi, budaLoginApi, getCurrentUserApi }
+export { loginApi, logoutApi, signUpApi, budaSyncApi, getCurrentUserApi }

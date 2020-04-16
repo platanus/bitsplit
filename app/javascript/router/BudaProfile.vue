@@ -1,6 +1,6 @@
 <template>
   <div>
-    <component :is="budaPerfilComp"></component>
+    <component :is="budaProfileComp"></component>
   </div>
 </template>
 
@@ -8,40 +8,40 @@
 import { mapActions, mapState, mapGetters } from 'vuex'
 import BudaForm from '../components/BudaForm'
 import BudaLogoutForm from '../components/BudaLogoutForm'
-import BudaPerfil from '../components/BudaPerfil'
+import BudaIndex from '../components/BudaIndex'
 
 export default {
-  name: 'BudaAccount',
+  name: 'budaProfile',
   data() {
     return {
-      routeName: 'BudaAccount',
+      routeName: 'budaProfile',
     }
   },
   components: {
     BudaForm,
     BudaLogoutForm,
-    BudaPerfil
+    BudaIndex
   },
   computed: {
-    ...mapState('user', ['budaPerfilComp']),
+    ...mapState('user', ['budaProfileComp']),
   },
   methods: {
-    ...mapActions('user', ['changePerfilComp']),
+    ...mapActions('user', ['changeProfileComp']),
     ...mapGetters('user', ['budaSignedIn'])
   },
   created() {
     if (this.budaSignedIn()) {
-      localStorage.setItem('currentComponent','budaPerfil')
-      this.changePerfilComp('budaPerfil')
+      localStorage.setItem('currentComponent','budaIndex')
+      this.changeProfileComp('budaIndex')
     }
     else {
       localStorage.setItem('currentComponent','budaForm')
-      this.changePerfilComp('budaForm')
+      this.changeProfileComp('budaForm')
     }
   },
   beforeDestroy() {
-    localStorage.setItem('currentComponent','budaPerfil')
-    this.changePerfilComp('budaPerfil')
+    localStorage.setItem('currentComponent','budaIndex')
+    this.changeProfileComp('budaIndex')
   },
 }
 </script>

@@ -1,4 +1,4 @@
-import { signIn, signOut, signUp, budaSignIn, budaSignOut, changePerfilComp } from '../../action-types'
+import { signIn, signOut, signUp, budaSignIn, budaSignOut, changeProfileComp } from '../../action-types'
 
 import {
   SIGNIN_FAIL,
@@ -12,10 +12,10 @@ import {
   BUDA_SIGNIN_FAIL,
   BUDA_SIGNIN_SUCCESS,
   BUDA_SIGNOUT,
-  MUTATE_PERFIL_COMPONENT
+  MUTATE_PROFILE_COMPONENT
 } from '../../mutation-types'
 
-import { loginApi, logoutApi, signUpApi, budaLoginApi, getCurrentUserApi } from '../../../api/user.js'
+import { loginApi, logoutApi, signUpApi, budaSyncApi, getCurrentUserApi } from '../../../api/user.js'
 
 export default {
   [signIn]({ commit, dispatch }, payload) {
@@ -100,7 +100,7 @@ export default {
   },
   [budaSignIn]({ commit, dispatch }, payload) {
     // Hacemos fetch a la api con data de payload
-    const fetchPromise = budaLoginApi(payload)
+    const fetchPromise = budaSyncApi(payload)
     return fetchPromise
       .then(res => {
         if (res.data) {
@@ -133,7 +133,7 @@ export default {
   },
   [budaSignOut]({ commit, dispatch }, payload) {
     // Hacemos fetch a la api con data de payload (key y secret nulos)
-    return budaLoginApi(payload)
+    return budaSyncApi(payload)
       .then(res => {
         if (res.data) {
           // Cuenta buda desconectada correctamente
@@ -160,8 +160,8 @@ export default {
         throw new Error("Error ")
       })
   },
-  [changePerfilComp]({commit}, payload) {
-    commit(MUTATE_PERFIL_COMPONENT, payload)
+  [changeProfileComp]({commit}, payload) {
+    commit(MUTATE_PROFILE_COMPONENT, payload)
   }
 }
 

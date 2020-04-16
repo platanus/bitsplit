@@ -10,7 +10,7 @@ import {
   BUDA_SIGNIN_FAIL,
   BUDA_SIGNIN_SUCCESS,
   BUDA_SIGNOUT,
-  MUTATE_PERFIL_COMPONENT
+  MUTATE_PROFILE_COMPONENT
 } from '../../mutation-types'
 
 export default {
@@ -50,7 +50,7 @@ export default {
   [BUDA_SIGNOUT](state) {
     state.currentUser = null
   },
-  [MUTATE_PERFIL_COMPONENT](state, payload) {
-    state.budaPerfilComp = payload
+  [MUTATE_PROFILE_COMPONENT](state, payload) {
+    state.budaProfileComp = payload
   }
 }

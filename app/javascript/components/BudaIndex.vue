@@ -27,10 +27,10 @@ import bigButton from '../components/BigButton'
 import inputLabel from '../components/InputLabel'
 
 export default {
-  name: 'BudaPerfil',
+  name: 'budaIndex',
   data() {
     return {
-      routeName: 'BudaPerfil',
+      routeName: 'budaIndex',
       api_key: '',
       api_secret: '',
       password: '',
@@ -44,10 +44,10 @@ export default {
     bigButton
   },
   methods: {
-    ...mapActions('user', ['changePerfilComp']),
+    ...mapActions('user', ['changeProfileComp']),
     change(form) {
       localStorage.setItem('currentComponent',form)
-      this.changePerfilComp(form)
+      this.changeProfileComp(form)
     }
   }
 }

@@ -5,7 +5,7 @@ import SignIn from './SignIn.vue'
 import SignUp from './SignUp.vue'
 import Landing from './Landing.vue'
 import Home from './Home.vue'
-import BudaAccount from './BudaAccount.vue'
+import BudaProfile from './BudaProfile.vue'
 
 import { checkAuth, checkNoAuth } from '../helpers'
 
@@ -18,7 +18,7 @@ const router = new Router({
     { path: '/sign-in', component: SignIn, beforeEnter: checkNoAuth },
     { path: '/sign-up', component: SignUp, beforeEnter: checkNoAuth },
     { path: '/home', component: Home, beforeEnter: checkAuth },
-    { path: '/buda', component: BudaAccount, beforeEnter: checkAuth }
+    { path: '/buda', component: BudaProfile, beforeEnter: checkAuth }
   ]
 })
 
