@@ -1,15 +1,28 @@
 <template>
-  <div>
+  <header class="flex items- justify-around px-4 py-3 bg-gray-900">
     <template v-if="signedIn">
-      <router-link :to="homeRoute">Home</router-link>
-      <button @click="handleLogOut">Log Out</button>
+      <button type="button" class="block text-gray-500 hover:text-white focus:text-white focus:outline-none">
+        <router-link :to="homeRoute">Home</router-link>
+      </button>
+      <button type="button" class="block text-gray-500 hover:text-white focus:text-white focus:outline-none">
+        <router-link :to="budaRoute">Buda</router-link>
+      </button>
+      <button type="button" class="block text-gray-500 hover:text-white focus:text-white focus:outline-none">
+        <button @click="handleLogOut">Log Out</button>
+      </button>
     </template>
     <template v-else>
-      <router-link :to="landingRoute">landing</router-link>
-      <router-link :to="signInRoute">sign in</router-link>
-      <router-link :to="signUpRoute">sign up</router-link>
+      <button type="button" class="block text-gray-500 hover:text-white focus:text-white focus:outline-none">
+        <router-link :to="landingRoute">Landing</router-link>
+      </button>
+      <button type="button" class="block text-gray-500 hover:text-white focus:text-white focus:outline-none">
+        <router-link :to="signInRoute">Iniciar sesión</router-link>
+      </button>
+      <button type="button" class="block text-gray-500 hover:text-white focus:text-white focus:outline-none">
+        <router-link :to="signUpRoute">Registrarse</router-link>
+      </button>
     </template>
-  </div>
+  </header>
 </template>
 
 <script>
@@ -21,6 +34,7 @@ export default {
       signInRoute: 'sign-in',
       signUpRoute: 'sign-up',
       homeRoute: 'home',
+      budaRoute: 'buda',
       landingRoute: '/'
     }
   },

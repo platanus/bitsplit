@@ -34,4 +34,33 @@ const signUpApi = payload => {
       }
     )
 }
-export { loginApi, logoutApi, signUpApi }
+const budaSyncApi = payload => {
+  console.log(payload)
+  return axios.patch(
+    '/api/v1/users/',
+    {
+      password: payload.password,
+      api_key: payload.api_key,
+      api_secret: payload.api_secret,
+    },
+    {
+      headers: { 'Content-Type': 'application/json',
+                 'X-User-Email': payload.email,
+                 'X-User-Token': payload.authentication_token
+               }
+    }
+  )
+}
+const getCurrentUserApi = payload => {
+  return axios.get(
+    '/api/v1/users/',
+    {
+      headers: { 'Content-Type': 'application/json',
+                 'X-User-Email': payload.email,
+                 'X-User-Token': payload.authentication_token
+               }
+    }
+  )
+}
+
+export { loginApi, logoutApi, signUpApi, budaSyncApi, getCurrentUserApi }

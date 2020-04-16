@@ -1,4 +1,4 @@
-import { signIn, signOut, signUp } from '../../action-types'
+import { signIn, signOut, signUp, budaSignIn, budaSignOut } from '../../action-types'
 
 import {
   SIGNIN_FAIL,
@@ -7,10 +7,14 @@ import {
   SIGNOUT,
   SIGNUP_ATTEMPT,
   SIGNUP_FAIL,
-  SIGNUP_SUCCESS
+  SIGNUP_SUCCESS,
+  BUDA_SIGNIN_ATTEMPT,
+  BUDA_SIGNIN_FAIL,
+  BUDA_SIGNIN_SUCCESS,
+  BUDA_SIGNOUT
 } from '../../mutation-types'
 
-import { loginApi, logoutApi, signUpApi } from '../../../api/user.js'
+import { loginApi, logoutApi, signUpApi, budaSyncApi, getCurrentUserApi } from '../../../api/user.js'
 
 export default {
   [signIn]({ commit, dispatch }, payload) {
@@ -92,5 +96,68 @@ export default {
         dispatch('alert/error_alert', 'Error desconocido', { root: true })
         throw new Error('Error desconocido')
       })
+  },
+  [budaSignIn]({ commit, dispatch }, payload) {
+    // Hacemos fetch a la api con data de payload
+    const fetchPromise = budaSyncApi(payload)
+    return fetchPromise
+      .then(res => {
+        if (res.data) {
+          dispatch('alert/success_alert', 'Cuenta Buda sincronizada correctamente', { root: true })
+          const fetchPromiseUser = getCurrentUserApi(payload)
+          return fetchPromiseUser
+            .then(res => {
+              if (res.data.data.attributes){
+                localStorage.setItem('currentUser', JSON.stringify(res.data.data.attributes))
+                commit(SIGNIN_SUCCESS, res.data.data.attributes)
+              }
+              return
+            })
+        }
+        else {
+          // Error de contraseña
+          commit(SIGNUP_FAIL)
+          dispatch('alert/error_alert', 'Contraseña incorrecta', {
+            root: true
+          })
+          throw new Error('Contraseña incorrecta')
+        }
+        
+      })
+      .catch(err => {
+        // Hay un error en el fetch
+        dispatch('alert/error_alert', 'Error desconocido', { root: true })
+        throw new Error('Error desconocido')
+      })
+  },
+  [budaSignOut]({ commit, dispatch }, payload) {
+    // Hacemos fetch a la api con data de payload (key y secret nulos)
+    return budaSyncApi(payload)
+      .then(res => {
+        if (res.data) {
+          // Cuenta buda desconectada correctamente
+          localStorage.currentUser.api_key = ''
+          commit(BUDA_SIGNOUT)
+          dispatch('alert/error_alert', 'Cuenta Buda desconectada correctamente', {
+            root: true
+          })
+          return
+        }
+        else {
+          // Error de contraseña
+          commit(SIGNUP_FAIL)
+          dispatch('alert/error_alert', 'Contraseña incorrecta', {
+            root: true
+          })
+          throw new Error('Contraseña incorrecta')
+        }
+      })
+      .catch(err => {
+        dispatch('alert/error_alert', 'Error desconocido', {
+          root: true
+        })
+        throw new Error("Error ")
+      })
   }
 }
+
