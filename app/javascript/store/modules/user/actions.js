@@ -1,4 +1,4 @@
-import { signIn, signOut, signUp, budaSignIn, budaSignOut, changeProfileComp } from '../../action-types'
+import { signIn, signOut, signUp, budaSignIn, budaSignOut } from '../../action-types'
 
 import {
   SIGNIN_FAIL,
@@ -11,8 +11,7 @@ import {
   BUDA_SIGNIN_ATTEMPT,
   BUDA_SIGNIN_FAIL,
   BUDA_SIGNIN_SUCCESS,
-  BUDA_SIGNOUT,
-  MUTATE_PROFILE_COMPONENT
+  BUDA_SIGNOUT
 } from '../../mutation-types'
 
 import { loginApi, logoutApi, signUpApi, budaSyncApi, getCurrentUserApi } from '../../../api/user.js'
@@ -159,9 +158,6 @@ export default {
         })
         throw new Error("Error ")
       })
-  },
-  [changeProfileComp]({commit}, payload) {
-    commit(MUTATE_PROFILE_COMPONENT, payload)
   }
 }
 

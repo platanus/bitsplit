@@ -44,9 +44,8 @@ export default {
     bigButton
   },
   methods: {
-    ...mapActions('user', ['changeProfileComp']),
+    ...mapActions('component', ['changeProfileComp']),
     change(form) {
-      localStorage.setItem('currentComponent',form)
       this.changeProfileComp(form)
     }
   }

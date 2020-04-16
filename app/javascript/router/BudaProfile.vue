@@ -23,25 +23,19 @@ export default {
     BudaIndex
   },
   computed: {
-    ...mapState('user', ['budaProfileComp']),
+    ...mapState('component', ['budaProfileComp']),
   },
   methods: {
-    ...mapActions('user', ['changeProfileComp']),
+    ...mapActions('component', ['changeProfileComp']),
     ...mapGetters('user', ['budaSignedIn'])
   },
   created() {
     if (this.budaSignedIn()) {
-      localStorage.setItem('currentComponent','budaIndex')
-      this.changeProfileComp('budaIndex')
+      this.changeProfileComp('BudaIndex')
     }
     else {
-      localStorage.setItem('currentComponent','budaForm')
-      this.changeProfileComp('budaForm')
+      this.changeProfileComp('BudaForm')
     }
-  },
-  beforeDestroy() {
-    localStorage.setItem('currentComponent','budaIndex')
-    this.changeProfileComp('budaIndex')
-  },
+  }
 }
 </script>
