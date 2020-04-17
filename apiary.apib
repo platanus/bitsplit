@@ -190,24 +190,29 @@ The `password` field is only required if the `api_key` or `api_secret` fields ar
 
 
 + Response 200 (application/json)
+    
+    >>`amount`: Cantidad total asociada a la cuenta
+    >`available_amount`: Cantidad total asociada a la cuenta
+    >`frozen_amount`: Cantidad retenida en órdenes pendientes
+    >`pending_withdraw_amount`: Cantidad retenida en proceso de retiro
 
+    + body
 
-        
-        {
-            "data": {
-                "balance": {
-                    "CLP": {
-                        "amount": "0.0",
-                        "available_amount": "0.0",
-                        "frozen_amount": "0.0",
-                        "pending_withdraw_amount": "0.0"
-                    },
-                    "BTC": {
-                        "amount": "0.0",
-                        "available_amount": "0.0",
-                        "frozen_amount": "0.0",
-                        "pending_withdraw_amount": "0.0"
+            { 
+                "data": {
+                    "balance": {
+                        "CLP": {
+                            "amount": "0.0",
+                            "available_amount": "0.0",
+                            "frozen_amount": "0.0",
+                            "pending_withdraw_amount": "0.0"
+                        },
+                        "BTC": {
+                            "amount": "0.0",
+                            "available_amount": "0.0",
+                            "frozen_amount": "0.0",
+                            "pending_withdraw_amount": "0.0"
+                        }
                     }
                 }
             }
-        }
