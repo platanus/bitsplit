@@ -37,6 +37,28 @@ RSpec.describe "Users", type: :request do
       expect(response_body["data"]["attributes"]).not_to (have_key("password") && have_key("api_secret"))
     end
 
+    it "PATCH: current user" do
+      _response = create_user(user_params)
+      _response_body = get_response_body(_response)
+      auth_token = get_by_attribute(_response_body, "authentication_token")
+
+      patch "/api/v1/users", headers: create_headers(user_params["email"], auth_token), params: {"email" => "newuser@example.com", "api_key": "new_api_key", "password" => user_params["password"]}
+
+      response_body = get_response_body(response)
+
+      # test if data is modified the same
+      expect(response_body["data"]["attributes"]).to include("email" => "newuser@example.com", "api_key" => "new_api_key")
+      # must return auth_token
+      expect(response_body["data"]["attributes"]).to have_key("authentication_token")
+      
+      # do not include password or api_secret
+      expect(response_body["data"]["attributes"]).not_to (have_key("password") && have_key("api_secret"))
+
+      # cannot update as it does not have the password (or a password)
+      patch "/api/v1/users", headers: create_headers("newuser@example.com", auth_token), params: {"api_secret": "new_api_secret"}
+      expect(response).to have_http_status(:bad_request)
+    end
+
     it "DELETE: current user" do
       _response = create_user(user_params)
       response_body = get_response_body(_response)
