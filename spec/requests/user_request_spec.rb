@@ -6,10 +6,10 @@ RSpec.describe "Users", type: :request do
 
   describe "Expected responses (all correct)" do
 
-    it "Create a user and returns its corresponding data" do
-      post  "/api/v1/users", params: user_params
+    it "POST: create user and return its corresponding data" do
+      response = create_user(user_params)
       expect(response).to have_http_status(:created)
-      response_body = JSON.parse(response.body)
+      response_body = get_response_body(response)
       expect(response_body["data"]["type"]).to eq "user"
 
       # test if data is still the same
@@ -21,12 +21,12 @@ RSpec.describe "Users", type: :request do
       expect(response_body["data"]["attributes"]).not_to (have_key("password") && have_key("api_secret"))
     end
 
-    it "Delete a user" do
-      post  "/api/v1/users", params: user_params
-      response_body = JSON.parse(response.body)
+    it "DELETE: current user" do
+      _response = create_user(user_params)
+      response_body = get_response_body(_response)
       auth_token = get_by_attribute(response_body, "authentication_token")
 
-      delete "/api/v1/users", headers: { "X-User-Email" => user_params["email"], "X-User-Token": auth_token }, params: {"email" => user_params["email"], "password" => user_params["password"]}
+      delete "/api/v1/users", headers: create_headers(user_params["email"], auth_token), params: {"email" => user_params["email"], "password" => user_params["password"]}
       expect(response).to have_http_status(:no_content)
     end 
 
