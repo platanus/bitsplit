@@ -174,3 +174,40 @@ The `password` field is only required if the `api_key` or `api_secret` fields ar
                 }
             }
         }
+
+## Balances [/balances]
+### Get balance [GET]
+
+
+
++ Request (application/json)
+
+    + Headers
+
+            X-User-Email: example@example.com
+            X-User-Token: smnozAAbYnEX2xVRfS5R
+
+
+
++ Response 200 (application/json)
+
+
+        
+        {
+            "data": {
+                "balance": {
+                    "CLP": {
+                        "amount": "0.0",
+                        "available_amount": "0.0",
+                        "frozen_amount": "0.0",
+                        "pending_withdraw_amount": "0.0"
+                    },
+                    "BTC": {
+                        "amount": "0.0",
+                        "available_amount": "0.0",
+                        "frozen_amount": "0.0",
+                        "pending_withdraw_amount": "0.0"
+                    }
+                }
+            }
+        }
