@@ -1,6 +1,6 @@
 # Bitsplit [![Circle CI](https://circleci.com/gh/platanus/bitsplit.svg?style=svg)](https://circleci.com/gh/platanus/bitsplit)
 This is a Rails application, initially generated using [Potassium](https://github.com/platanus/potassium) by Platanus.
-
+test
 ## Local installation
 
 Assuming you've just cloned the repo, run this script to setup the project in your
