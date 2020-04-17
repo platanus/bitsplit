@@ -21,6 +21,22 @@ RSpec.describe "Users", type: :request do
       expect(response_body["data"]["attributes"]).not_to (have_key("password") && have_key("api_secret"))
     end
 
+    it "GET: current user" do
+      response = create_user(user_params)
+      response_body = get_response_body(response)
+      auth_token = get_by_attribute(response_body, "authentication_token")
+
+      get "/api/v1/users", headers: create_headers(user_params["email"], auth_token)
+
+      # test if data is still the same
+      expect(response_body["data"]["attributes"]).to include("email" => "user@example.com", "api_key" => "api_key")
+      # must return auth_token
+      expect(response_body["data"]["attributes"]).to have_key("authentication_token")
+      
+      # do not include password or api_secret
+      expect(response_body["data"]["attributes"]).not_to (have_key("password") && have_key("api_secret"))
+    end
+
     it "DELETE: current user" do
       _response = create_user(user_params)
       response_body = get_response_body(_response)
