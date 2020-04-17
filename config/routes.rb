@@ -7,6 +7,7 @@ Rails.application.routes.draw do
       resource :sessions, only: [:create, :destroy]
       resource :users, only: [:show, :create, :destroy, :update]
       resource :quotations, only: [:create]
+      resource :balances, only: [:show]
     end
 
   end
