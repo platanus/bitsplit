@@ -226,3 +226,38 @@ The `password` field is only required if the `api_key` or `api_secret` fields ar
                     }
                 }
             }
+
+
+## Payments [/payments]
+### Create new payment [POST]
+
+
+
++ Request (application/json)
+
+    + Headers
+
+            X-User-Email: example@example.com
+            X-User-Token: smnozAAbYnEX2xVRfS5R
+
+    + Body
+
+            {
+                "payment_amount": 0.00227014,
+                "receiver_email": receiver_example@example.com
+            }
+
+
++ Response 200 (application/json)
+
+        >`payment_state`: debería ser "confirmed" si se realiza el pago, en caso de simulación es "invalid"
+
+        {
+            "data": {
+                "payment_amount": [
+                    "0.00227014",
+                    "BTC"
+                ],
+                "payment_state": "invalid"
+            }
+        }

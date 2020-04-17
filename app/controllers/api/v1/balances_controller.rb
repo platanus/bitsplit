@@ -5,13 +5,13 @@ class Api::V1::BalancesController < ApplicationController
         api_key = user.decrypt(user.api_key)
         api_secret = user.decrypt(user.api_secret)
         currency = 'clp'
-        nonce = BudaAuthenticationsController.generate_nonce
-        signature = BudaAuthenticationsController.request_signature(
+        nonce = BudaRequestsController.generate_nonce
+        signature = BudaRequestsController.request_signature(
                     api_secret, nonce, 'GET', '/api/v2/balances/' + currency)
         balance_clp = make_buda_balance_request(api_key, nonce, signature, currency)
         currency = 'btc'
-        nonce = BudaAuthenticationsController.generate_nonce
-        signature = BudaAuthenticationsController.request_signature(
+        nonce = BudaRequestsController.generate_nonce
+        signature = BudaRequestsController.request_signature(
                     api_secret, nonce, 'GET', '/api/v2/balances/' + currency)
         balance_btc = make_buda_balance_request(api_key, nonce, signature, currency)
         return set_success_params(balance_clp, balance_btc) if balance_btc.has_key? "balance"
