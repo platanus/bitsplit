@@ -1,15 +1,15 @@
 require 'rails_helper'
 
 # Specs in this file have access to a helper object that includes
-# the Api::V1::Transaction::PaymentHelper. For example:
+# the Api::V1::QuotationsHelper. For example:
 #
-# describe Api::V1::Transaction::PaymentHelper do
+# describe Api::V1::QuotationsHelper do
 #   describe "string concat" do
 #     it "concats two strings with spaces" do
 #       expect(helper.concat_strings("this","that")).to eq("this that")
 #     end
 #   end
 # end
-RSpec.describe Api::V1::Transaction::PaymentHelper, type: :helper do
+RSpec.describe Api::V1::QuotationsHelper, type: :helper do
   pending "add some examples to (or delete) #{__FILE__}"
 end
