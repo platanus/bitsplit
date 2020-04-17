@@ -110,13 +110,23 @@ The `password` field is only required if the `api_key` or `api_secret` fields ar
             {
                 "email": "new_example@example.com",
                 "password": "bestPa55W0rd3ver",
-                "api_key": "th3b3stAP1K3Y",
+                "api_key": "th3b3stAP1K3Y_v2",
                 "api_secret": "th3B3s1S3Cr31"
             }
             
 + Response 200 (application/json)
 
-            true
+        {
+             "data": {
+                 "id": "1",
+                 "type": "user",
+                 "attributes": {
+                     "email": "new_example@gmail.com",
+                     "api_key": "th3b3stAP1K3Y_v2",
+                     "authentication_token": "smnozAAbYnEX2xVRfS5R"
+                 }
+             }
+         }
         
         
 ### Delete an existing user [DELETE]
