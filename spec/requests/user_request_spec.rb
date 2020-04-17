@@ -38,4 +38,16 @@ RSpec.describe "Users", type: :request do
     json["data"]["attributes"][param]
   end
 
+  def create_user(user_params)
+    post  "/api/v1/users", params: user_params
+    return response
+  end
+
+  def get_response_body(response)
+    return JSON.parse(response.body)
+  end
+
+  def create_headers(email, auth_token)
+    { "X-User-Email" => email, "X-User-Token": auth_token }
+  end
 end
