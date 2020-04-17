@@ -6,33 +6,36 @@ const state = {
   message: null
 }
 
+const ALERT_TIMEOUT = 4000
+
 const actions = {
   [success_alert]({ commit }, message) {
     commit(SUCCESS_ALERT, message)
+    setTimeout(() => {
+      commit(CLEAR_ALERT)
+    }, ALERT_TIMEOUT)
   },
   [error_alert]({ commit }, message) {
     commit(ERROR_ALERT, message)
-  },
-  [clear_alert]({ commit }) {
     setTimeout(() => {
       commit(CLEAR_ALERT)
-    }, 1000)
+    }, ALERT_TIMEOUT)
   }
 }
 
 const mutations = {
   [SUCCESS_ALERT](state, message) {
-    state.type = 'alert-success'
+    state.type = 'success'
     state.message = message
   },
   [ERROR_ALERT](state, message) {
-    state.type = 'alert-danger'
+    state.type = 'error'
     state.message = message
   },
   [CLEAR_ALERT](state) {
     state.type = null
     state.message = null
-  },
+  }
 }
 
 export default alert = {
