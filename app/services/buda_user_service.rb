@@ -1,4 +1,4 @@
-class BudaUserService < PowerTypes::Service.new(:api_key, :api_secret)
+class BudaUserService < PowerTypes::Service.new(api_key: nil, api_secret: nil)
 
 
   def generate_invoice(bitcoins_amount)
@@ -22,6 +22,23 @@ class BudaUserService < PowerTypes::Service.new(:api_key, :api_secret)
     post_request(url, body, headers)
 
   end 
+
+  def balance(currency)
+    path = '/api/v2/balances/'+ currency
+    url ='https://www.buda.com/api/v2/balances/' + currency
+    request_type = 'GET'
+    nonce = generate_nonce
+    headers = headers(@api_key, @api_secret, nonce, request_type, path)
+    get_request(url, headers)
+
+  end
+
+  def quotation(market_id, type, amount)
+    url ='https://www.buda.com/api/v2/markets/'+ market_id +'/quotations'
+    body = { type: type, amount: amount}
+    post_request(url, body)
+
+  end
 
   private
 
@@ -48,10 +65,8 @@ class BudaUserService < PowerTypes::Service.new(:api_key, :api_secret)
       end
   end
 
-
   def headers(api_key, api_secret, nonce, request_type, path, payload = nil)
     { 
-    #faltaria desencriptar la api_key
     'X-SBTC-APIKEY' => api_key ,
     'X-SBTC-NONCE' => nonce,
     'X-SBTC-SIGNATURE' => request_signature(api_secret, nonce, request_type, path, payload),
@@ -59,11 +74,16 @@ class BudaUserService < PowerTypes::Service.new(:api_key, :api_secret)
       }
   end
 
-  def post_request(path, body, header)
+  def post_request(path, body , header = nil)
     params = { body: body }
     params[:headers] = header unless header.nil?
     HTTParty.post(path, body: body, headers: header)
   end
 
+  def get_request(path, header)
+    params={}
+    params[:headers] = header unless header.nil?
+    HTTParty.get(path, headers: header)
+  end
 
 end
