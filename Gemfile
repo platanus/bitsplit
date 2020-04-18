@@ -67,4 +67,3 @@ group :production, :development, :test do
 end
 
 gem "httparty", "~> 0.18.0"
-gem "power-types"
