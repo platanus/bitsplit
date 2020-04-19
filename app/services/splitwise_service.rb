@@ -9,6 +9,12 @@ class SplitwiseService < PowerTypes::Service.new(:user)
     return request
   end
 
+  def grant_access(params)
+    request_token = OAuth::RequestToken.new(consumer, params[:oauth_token], @user.oauth_secret)
+    access = request_token.get_access_token(:oauth_verifier => params[:oauth_verifier])
+    update_user(:splitwise_token, access.token)
+    update_user(:splitwise_secret, access.secret)
+  end
   private
   def update_user(field, value)
     @user.update_attribute(field, value)
