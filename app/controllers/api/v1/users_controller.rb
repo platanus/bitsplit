@@ -20,7 +20,8 @@ class Api::V1::UsersController < Api::V1::BaseController
       # user does not have the correct password => cannot update correctly
       head(:bad_request)        
     else
-      respond_with current_user.update!(user_params)
+      current_user.update(user_params)
+      respond_with current_user
     end
   end
 
