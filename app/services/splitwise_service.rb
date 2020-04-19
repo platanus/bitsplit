@@ -10,6 +10,9 @@ class SplitwiseService < PowerTypes::Service.new(:user)
   end
 
   private
+  def update_user(field, value)
+    @user.update_attribute(field, value)
+  end
 
   def consumer
     _secrets = Rails.application.secrets
