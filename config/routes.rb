@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       resource :users, only: [:show, :create, :destroy, :update]
       resource :quotations, only: [:create]
       resource :balances, only: [:show]
+      resource :payments, only: [:create]
     end
 
   end
