@@ -31,17 +31,11 @@
               v-model="confirm_password"
             />
           </div>
-          <div class="mb-6">
-            <inputLabel fieldName="Buda User" fieldFor="buda_user" />
-            <textInput
-              fieldId="buda_user"
-              fieldType="text"
-              fieldPlaceholder="Buda User"
-              fieldName="buda_user"
-            />
-          </div>
-          <submitButton 
-          classmod='bg-blue-500 hover:bg-blue-700' :fieldDisabled="false" fieldPlaceholder="Sign Up" />
+          <submitButton
+            classmod="bg-blue-500 hover:bg-blue-700"
+            :fieldDisabled="false"
+            fieldPlaceholder="Sign Up"
+          />
         </form>
       </div>
     </center>
@@ -62,7 +56,6 @@ export default {
       email: '',
       password: '',
       confirm_password: '',
-      buda_user: '',
       loading: false
     }
   },
@@ -80,11 +73,11 @@ export default {
     handleSubmit(e) {
       const { email, password, confirm_password } = this
       // TODO logger
-      console.log('cosas', email, password, confirm_password)
+      console.log(email, password, confirm_password)
       if (email && password && password === confirm_password) {
         // TODO logger
         console.log('Correct confirmation')
-        this.signUp({ email, password, buda_user })
+        this.signUp({ email, password })
           .then(() => {
             // TODO logger
             console.log('success')
