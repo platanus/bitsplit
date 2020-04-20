@@ -1,6 +1,6 @@
 <template>
   <input
-    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+    :class= "[classmod, 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline']"
     :id="fieldId"
     :type="fieldType"
     :placeholder="fieldPlaceholder"
@@ -17,7 +17,11 @@ export default {
     fieldId: String,
     fieldType: String,
     fieldPlaceholder: String,
-    fieldName: String
+    fieldName: String,
+    classmod: {
+        type: String,
+        default: ''
+      }
   },
   model: {
     prop: 'value',
