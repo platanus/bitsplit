@@ -232,7 +232,6 @@ The `password` field is only required if the `api_key` or `api_secret` fields ar
 ### Create new payment [POST]
 
 
-
 + Request (application/json)
 
     + Headers
@@ -259,5 +258,27 @@ The `password` field is only required if the `api_key` or `api_secret` fields ar
                     "BTC"
                 ],
                 "payment_state": "invalid"
+            }
+        }
+        
+
+## Splitwise API connection [/splitwise]
+### Create new url for api connection [POST]
+
++ Request (application/json)
+
+    + Headers
+
+            X-User-Email: example@example.com
+            X-User-Token: smnozAAbYnEX2xVRfS5R
+            
++ Response 200 (application/json)
+
+        {
+            "data": {
+                "type": "splitwise",
+                "attributes": {
+                    "authorize_url": "https://secure.splitwise.com/authorize?oauth_token=th3B3s10Au1hT0k3n"
+                }
             }
         }
