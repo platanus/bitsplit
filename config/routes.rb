@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       resource :quotations, only: [:create]
       resource :balances, only: [:show]
       resource :payments, only: [:create]
+      resource :splitwise, only: [:show, :create]
     end
 
   end
