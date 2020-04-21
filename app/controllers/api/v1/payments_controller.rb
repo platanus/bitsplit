@@ -14,7 +14,11 @@ class Api::V1::PaymentsController < Api::V1::BaseController
             render "error"
         end
         sender_api_key, sender_api_secret = sender.get_buda_keys()
+<<<<<<< HEAD
         receiver_api_key, receiver_api_secret= receiver.get_buda_keys()
+=======
+        receiver_api_key, receiver_api_secret = receiver.get_buda_keys()
+>>>>>>> [backend]add: new env variable
         bitcoins_amount = params[:payment_amount]
         buda_receiver = BudaUserService.new(api_key: receiver_api_key, api_secret: receiver_api_secret)
         invoice = buda_receiver.generate_invoice(bitcoins_amount)
@@ -24,14 +28,14 @@ class Api::V1::PaymentsController < Api::V1::BaseController
         end
         invoice_body = JSON.parse(invoice.body)
         invoice_id = invoice_body["invoice"]["id"]
-        new_payment = Payment.create!(:sender => @user, 
-                        :receiver => @receiver_user, 
+        new_payment = Payment.create!(:sender => sender, 
+                        :receiver => receiver, 
                         :amount => bitcoins_amount,  
                         :completed => true, 
                         :invoice_id => invoice_id)
         invoice_code = invoice_body["invoice"]["encoded_payment_request"]
         buda_payer = BudaUserService.new(api_key: user_api_key, api_secret: user_api_secret)
-        invoice_payment = buda_payer.pay_invoice(bitcoins_amount, invoice_code, payment_simulation)
+        invoice_payment = buda_payer.pay_invoice(bitcoins_amount, invoice_code, _secrets.buda_payment_simulation)
         if !invoice_payment.has_key? "withdrawal"
             @error_message = invoice_payment 
             Payment.update(:completed => false)
@@ -39,6 +43,11 @@ class Api::V1::PaymentsController < Api::V1::BaseController
         return respond_with new_payment
     end
 
+
+    def set_success_params(invoice_payment)
+        @payment_amount = invoice_payment['withdrawal']['amount'] 
+        @payment_state = invoice_payment['withdrawal']['state'] 
+    end
 
     def show
         payments_record = current_user.payments_record
@@ -50,4 +59,6 @@ class Api::V1::PaymentsController < Api::V1::BaseController
     def payment_params
         params.require(:payment_amount)
     end
+
+ 
 end
