@@ -37,7 +37,7 @@ class Api::V1::PaymentsController < ApplicationController
         invoice_payment = buda_payer.pay_invoice(bitcoins_amount, invoice_code, payment_simulation)
         return set_success_params(invoice_payment) if invoice_payment.has_key? "withdrawal"
         @error_message = invoice_payment 
-        Payment.update(:status => 1)
+        Payment.update(:state => 1)
         render "error"
         
     end
@@ -74,6 +74,8 @@ class Api::V1::PaymentsController < ApplicationController
         @payment_state = invoice_payment['withdrawal']['state'] 
     end
 
+    private
+    
     def payment_params
         params.require(:payment_amount)
     end
