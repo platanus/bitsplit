@@ -4,14 +4,14 @@
       <div class="w-full max-w-xs">
         <form @submit.prevent="handleSubmit">
           <div>
-            <p class="block text-gray-700 text-sm font-bold mb-5">¿Estás seguro de querer desconectar tu cuenta Buda? Por favor ingresa tu contraseña para confirmar.</p>
+            <textField textvalue1="¿Estás seguro de querer desconectar tu cuenta Buda? Por favor ingresa tu contraseña para confirmar" />
           </div>
           <div>
             <inputLabel fieldName="Contraseña Bitsplit" fieldFor="password" />
             <passwordInput fieldId="password" fieldName="password" v-model="password"/>
           </div>
           <div>
-            <submitButton classmod='bg-blue-500 hover:bg-blue-700' :fieldDisabled="false" fieldPlaceholder="Confirmar" />
+            <submitButton :fieldDisabled="false" fieldPlaceholder="Confirmar" />
           </div>
         </form>
       </div>
@@ -25,6 +25,7 @@ import textInput from '../components/Input.vue'
 import passwordInput from '../components/PasswordInput'
 import submitButton from '../components/SubmitButton'
 import inputLabel from '../components/InputLabel'
+import textField from '../components/TextField'
 
 export default {
   name: 'BudaLogoutForm',
@@ -40,7 +41,8 @@ export default {
     textInput,
     passwordInput,
     submitButton,
-    inputLabel
+    inputLabel,
+    textField
   },
   computed: {
     ...mapState('user', ['currentUser'])
