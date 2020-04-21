@@ -8,6 +8,9 @@
         <router-link :to="budaRoute">Buda</router-link>
       </button>
       <button type="button" class="block text-gray-500 hover:text-white focus:text-white focus:outline-none">
+        <router-link :to="payRoute">Pay</router-link>
+      </button>
+      <button type="button" class="block text-gray-500 hover:text-white focus:text-white focus:outline-none">
         <button @click="handleLogOut">Log Out</button>
       </button>
     </template>
@@ -35,7 +38,8 @@ export default {
       signUpRoute: 'sign-up',
       homeRoute: 'home',
       budaRoute: 'buda',
-      landingRoute: '/'
+      landingRoute: '/',
+      payRoute: 'payment'
     }
   },
   methods: {

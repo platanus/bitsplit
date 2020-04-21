@@ -23,6 +23,9 @@ gem 'webpacker', '~> 4.0'
 
 gem 'power_api'
 
+# splitwise api requirements
+gem 'oauth-plugin'
+
 group :development, :test do
   gem 'rswag-specs'
   gem 'rubocop'

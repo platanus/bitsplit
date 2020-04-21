@@ -19,6 +19,22 @@ class User < ApplicationRecord
     super(self.encrypt(text))
   end
 
+  def splitwise_token
+    self.decrypt(self[:splitwise_token])
+  end
+
+  def splitwise_token=(text)
+    super(self.encrypt(text))
+  end
+
+  def splitwise_secret
+    self.decrypt(self[:splitwise_secret])
+  end
+
+  def splitwise_secret=(text)
+    super(self.encrypt(text))
+  end
+
   # source https://dev.to/shobhitic/simple-string-encryption-in-rails-36pi
   def encrypt text
     text = text.to_s unless text.is_a? String
@@ -64,6 +80,10 @@ end
 #  api_key                :string
 #  api_secret             :string
 #  logged                 :boolean          default(FALSE)
+#  splitwise_token        :string
+#  oauth_token            :string
+#  oauth_secret           :string
+#  splitwise_secret       :string
 #
 # Indexes
 #
