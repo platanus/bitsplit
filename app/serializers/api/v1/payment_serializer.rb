@@ -6,7 +6,7 @@ class Api::V1::PaymentSerializer < ActiveModel::Serializer
       :sender_email,
       :receiver_email,
       :amount,
-      :state,
+      :completed,
       :invoice_id,
       :created_at
     )

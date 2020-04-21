@@ -2,6 +2,7 @@ class Payment < ApplicationRecord
   belongs_to :sender, :class_name => 'User'
   belongs_to :receiver, :class_name => 'User'
   self.ignored_columns = ["date"]
+  self.ignored_columns = ["state"]
 
 
 end
@@ -14,10 +15,10 @@ end
 #  sender_id   :bigint(8)        not null
 #  receiver_id :bigint(8)        not null
 #  amount      :float
-#  state       :integer
 #  invoice_id  :integer
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  completed   :boolean
 #
 # Indexes
 #
