@@ -4,7 +4,7 @@
       <div class="w-full max-w-xs">
         <form @submit.prevent="handleSubmit">
           <div>
-            <p class="block text-gray-700 text-sm font-bold mb-5">Ingresa el API_KEY y API_SECRET de tu cuenta Buda. Puedes acceder a ellos en tu perfil de <a href="https://www.buda.com" target="_blank">www.buda.com</a></p>
+            <textField textvalue1="Ingresa el API_KEY y API_SECRET de tu cuenta Buda. Puedes acceder a ellos en tu perfil de" linktext="www.buda.com" href="https://www.buda.com" />          
           </div>
           <div>
             <inputLabel fieldName="API_KEY" fieldFor="key" />
@@ -19,7 +19,7 @@
             <passwordInput fieldId="password" fieldName="password" v-model="password"/>
           </div>
           <div>
-            <submitButton classmod='bg-blue-500 hover:bg-blue-700' :fieldDisabled="false" fieldPlaceholder="Sincronizar Buda" />
+            <submitButton :fieldDisabled="false" fieldPlaceholder="Sincronizar Buda" />
           </div>
         </form>
       </div>
@@ -33,6 +33,7 @@ import textInput from '../components/Input.vue'
 import passwordInput from '../components/PasswordInput'
 import submitButton from '../components/SubmitButton'
 import inputLabel from '../components/InputLabel'
+import textField from '../components/TextField'
 
 export default {
   name: 'BudaForm',
@@ -48,7 +49,8 @@ export default {
     textInput,
     passwordInput,
     submitButton,
-    inputLabel
+    inputLabel,
+    textField
   },
   computed: {
     ...mapState('user', ['currentUser'])
