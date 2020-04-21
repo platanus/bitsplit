@@ -7,6 +7,9 @@ class User < ApplicationRecord
   has_many :sent_payments, :class_name => 'Payment', :foreign_key => 'sender_id'
   has_many :received_payments, :class_name => 'Payment', :foreign_key => 'receiver_id'
 
+  def payments_record
+    sent_payments + received_payments
+  end
          
   def api_key=(text)
     super(self.encrypt(text))
