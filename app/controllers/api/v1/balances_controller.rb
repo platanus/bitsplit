@@ -2,8 +2,7 @@ class Api::V1::BalancesController < ApplicationController
 
     def show
         user = current_user
-        api_key = user.decrypt(user.api_key)
-        api_secret = user.decrypt(user.api_secret)
+        api_key, api_secret = user.get_buda_keys()
         buda_user = BudaUserService.new(api_key: api_key, api_secret: api_secret)
         balance_clp = buda_user.balance('clp')
         balance_btc = buda_user.balance('btc')

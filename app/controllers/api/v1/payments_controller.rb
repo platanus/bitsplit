@@ -21,7 +21,6 @@ class Api::V1::PaymentsController < ApplicationController
             @error_message = invoice
             render "error"
         end
-        
         invoice_body = JSON.parse(invoice.body)
         invoice_code = invoice_body["invoice"]["encoded_payment_request"]
         buda_payer = BudaUserService.new(api_key: sender_api_key, api_secret: sender_api_secret)
