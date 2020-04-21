@@ -56,6 +56,11 @@ class User < ApplicationRecord
     end
   end
 
+  def get_buda_keys
+    api_key = self.decrypt(self.api_key)
+    api_secret = self.decrypt(self.api_secret)
+    return api_key, api_secret
+  end
 end
 
 # == Schema Information

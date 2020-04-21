@@ -7,9 +7,12 @@ class Api::V1::QuotationsController < ApplicationController
         quotation_agv = buda_user.quotation(market_id, 'ask_given_value', final_amount)
         btc_amount = quotation_agv['quotation']['base_exchanged'][0]
         quotation_bgs = buda_user.quotation(market_id, 'bid_given_size', btc_amount)
-        return set_success_params(quotation_bgs) if quotation_bgs.has_key? "quotation"
-        @error_message = quotation_bgs 
-        render "error"
+        if !quotation_bgs.has_key? "quotation"
+            @error_message = quotation_bgs 
+            render "error"
+        end
+        return set_success_params(quotation_bgs) 
+
     end
 
     def set_success_params(quotation_bgs)
