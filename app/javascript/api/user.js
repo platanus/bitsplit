@@ -13,26 +13,27 @@ const loginApi = payload => {
   )
 }
 const logoutApi = payload => {
-  // TODO add real interaction with backend
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve({})
-    }, 1000)
+  return axios.delete('/api/v1/sessions', {
+    headers: {
+      'Content-type': 'application/json',
+      'X-User-Email': payload.email,
+      'X-User-Token': payload.authentication_token
+    }
   })
 }
+
 const signUpApi = payload => {
-    return axios
-    .post(
-      '/api/v1/users/',
-      {
-        email: payload.email,
-        password: payload.password,
-        password_confirmation: payload.password
-      },
-      {
-        headers: { 'Content-Type': 'application/json' }
-      }
-    )
+  return axios.post(
+    '/api/v1/users/',
+    {
+      email: payload.email,
+      password: payload.password,
+      password_confirmation: payload.password
+    },
+    {
+      headers: { 'Content-Type': 'application/json' }
+    }
+  )
 }
 const budaSyncApi = payload => {
   console.log(payload)
@@ -41,26 +42,25 @@ const budaSyncApi = payload => {
     {
       password: payload.password,
       api_key: payload.api_key,
-      api_secret: payload.api_secret,
+      api_secret: payload.api_secret
     },
     {
-      headers: { 'Content-Type': 'application/json',
-                 'X-User-Email': payload.email,
-                 'X-User-Token': payload.authentication_token
-               }
+      headers: {
+        'Content-Type': 'application/json',
+        'X-User-Email': payload.email,
+        'X-User-Token': payload.authentication_token
+      }
     }
   )
 }
 const getCurrentUserApi = payload => {
-  return axios.get(
-    '/api/v1/users/',
-    {
-      headers: { 'Content-Type': 'application/json',
-                 'X-User-Email': payload.email,
-                 'X-User-Token': payload.authentication_token
-               }
+  return axios.get('/api/v1/users/', {
+    headers: {
+      'Content-Type': 'application/json',
+      'X-User-Email': payload.email,
+      'X-User-Token': payload.authentication_token
     }
-  )
+  })
 }
 
 export { loginApi, logoutApi, signUpApi, budaSyncApi, getCurrentUserApi }
