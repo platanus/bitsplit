@@ -15,11 +15,6 @@ export default {
   },
   computed: {
     ...mapGetters('user', ['signedIn'])
-  },
-  created() {
-    if (this.signedIn) {
-      this.$router.push('/home')
-    }
   }
 }
 </script>
