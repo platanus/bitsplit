@@ -8,8 +8,12 @@ Rails.application.routes.draw do
       resource :users, only: [:show, :create, :destroy, :update]
       resource :quotations, only: [:create]
       resource :balances, only: [:show]
+<<<<<<< HEAD
       resource :payments, only: [:create]
       resource :splitwise, only: [:show, :create]
+=======
+      resource :payments, only: [:create, :show]
+>>>>>>> [backend]feat: payments record endpoint
     end
 
   end
