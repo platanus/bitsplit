@@ -34,7 +34,7 @@ class Api::V1::PaymentsController < Api::V1::BaseController
                         :completed => true, 
                         :invoice_id => invoice_id)
         invoice_code = invoice_body["invoice"]["encoded_payment_request"]
-        buda_payer = BudaUserService.new(api_key: user_api_key, api_secret: user_api_secret)
+        buda_payer = BudaUserService.new(api_key: sender_api_key, api_secret: sender_api_secret)
         invoice_payment = buda_payer.pay_invoice(bitcoins_amount, invoice_code, _secrets.buda_payment_simulation)
         if !invoice_payment.has_key? "withdrawal"
             @error_message = invoice_payment 
@@ -49,10 +49,6 @@ class Api::V1::PaymentsController < Api::V1::BaseController
         @payment_state = invoice_payment['withdrawal']['state'] 
     end
 
-    def show
-        payments_record = current_user.payments_record
-        respond_with payments_record
-    end
 
     private
 
