@@ -2,10 +2,7 @@
   <div id="SignUpForm">
     <center>
       <div class="w-full max-w-xs">
-        <form
-          @submit.prevent="handleSubmit"
-          class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
-        >
+        <form @submit.prevent="handleSubmit" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
           <div class="mb-4">
             <inputLabel fieldName="Email" fieldFor="email" />
             <textInput
@@ -19,11 +16,7 @@
           <div class="mb-4">
             <inputLabel fieldName="Password" fieldFor="password" />
 
-            <passwordInput
-              fieldId="password"
-              fieldName="password"
-              v-model="password"
-            />
+            <passwordInput fieldId="password" fieldName="password" v-model="password" />
             <inputLabel fieldName="Repeat your password" fieldFor="password" />
             <passwordInput
               fieldId="confirm_password"
@@ -81,7 +74,6 @@ export default {
           .then(() => {
             // TODO logger
             console.log('success')
-            this.$router.push('/home')
           })
           .catch(err => {
             console.error(err)

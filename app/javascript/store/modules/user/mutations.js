@@ -9,7 +9,7 @@ import {
   BUDA_SIGNIN_ATTEMPT,
   BUDA_SIGNIN_FAIL,
   BUDA_SIGNIN_SUCCESS,
-  BUDA_SIGNOUT,
+  BUDA_SIGNOUT
 } from '../../mutation-types'
 
 export default {
