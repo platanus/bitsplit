@@ -261,6 +261,58 @@ The `password` field is only required if the `api_key` or `api_secret` fields ar
             }
         }
         
+        
+### Get payments record [GET]
+
++ Request (application/json)
+
+    + Headers
+
+            X-User-Email: example@example.com
+            X-User-Token: smnozAAbYnEX2xVRfS5R
+
+            
++ Response 200 (application/json)
+
+        {
+             "data": {
+                 "type": "payments",
+                 "attributes": {
+                     "sent_payments": [
+                            {
+                        "id": 1,
+                        "receiver_email": "example2@example.com",
+                        "amount": 0.00227014,
+                        "state": 0,
+                        "invoice_id": 820,
+                        "created_at": "2020-04-21T00:03:59.420Z"
+                        }, 
+                            {
+                        "id": 6,
+                        "receiver_email": "jose3@example.com",
+                        "amount": 0.00227014,
+                        "state": 0,
+                        "invoice_id": 825,
+                        "created_at": "2020-04-21T00:44:50.990Z"
+                    }
+                    ],
+                    "received_payments": [
+                            {
+                        "id": 8,
+                        "sender_email": "example3@example.com",
+                        "amount": 0.00297014,
+                        "state": 0,
+                        "invoice_id": 827,
+                        "created_at": "2020-04-21T00:48:23.701Z"
+                        }
+                    ]
+                     
+                 }
+             }
+         }
+        
+
+        
 
 ## Splitwise API connection [/splitwise]
 ### Create new url for api connection [POST]
