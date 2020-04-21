@@ -11,10 +11,14 @@
 # It's strongly recommended that you check this file into your version control system.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 2020_04_19_230248) do
 =======
 ActiveRecord::Schema.define(version: 2020_04_20_235249) do
 >>>>>>> [backend]feat: payments record endpoint
+=======
+ActiveRecord::Schema.define(version: 2020_04_21_213244) do
+>>>>>>> [backend]fix: state bool comment
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,10 +27,10 @@ ActiveRecord::Schema.define(version: 2020_04_20_235249) do
     t.bigint "sender_id", null: false
     t.bigint "receiver_id", null: false
     t.float "amount"
-    t.integer "state"
     t.integer "invoice_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "completed"
     t.index ["receiver_id"], name: "index_payments_on_receiver_id"
     t.index ["sender_id"], name: "index_payments_on_sender_id"
   end
