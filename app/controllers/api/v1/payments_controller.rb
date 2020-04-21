@@ -1,4 +1,5 @@
-class Api::V1::PaymentsController < ApplicationController
+class Api::V1::PaymentsController < Api::V1::BaseController
+    # class Api::V1::PaymentsController < ApplicationController
 
     def create
         _secrets = Rails.application.secrets
@@ -23,7 +24,7 @@ class Api::V1::PaymentsController < ApplicationController
         end
         invoice_body = JSON.parse(invoice.body)
         invoice_id = invoice_body["invoice"]["id"]
-        Payment.create!(:sender => @user, 
+        new_payment = Payment.create!(:sender => @user, 
                         :receiver => @receiver_user, 
                         :amount => bitcoins_amount,  
                         :state => 0, 
@@ -39,40 +40,14 @@ class Api::V1::PaymentsController < ApplicationController
         return set_success_params(invoice_payment) 
     end
 
-    def show
-        sent_payments = current_user.sent_payments
-        received_payments = current_user.received_payments
-        @sent_payments_format = Array.new
-        sent_payments.each do |payment|
-            receiver_email = User.where(id: payment["receiver_id"]).first.email
-            sent_payment_details = {id: payment["id"], 
-                            receiver_email: receiver_email,
-                            amount: payment["amount"],
-                            state: payment["state"],
-                            invoice_id: payment["invoice_id"],
-                            created_at: payment["created_at"]}
-            @sent_payments_format.push sent_payment_details
-        end
-        @received_payments_format = Array.new
-        received_payments.each do |payment|
-            sender_email = User.where(id: payment["sender_id"]).first.email
-            rec_payment_details = {id: payment["id"], 
-                            sender_email: sender_email,
-                            amount: payment["amount"],
-                            state: payment["state"],
-                            invoice_id: payment["invoice_id"],
-                            created_at: payment["created_at"]}
-            @received_payments_format.push rec_payment_details
-        end
-    end
 
-    def set_success_params(invoice_payment)
-        @payment_amount = invoice_payment['withdrawal']['amount'] 
-        @payment_state = invoice_payment['withdrawal']['state'] 
+    def show
+        payments_record = current_user.payments_record
+        respond_with payments_record
     end
 
     private
-    
+
     def payment_params
         params.require(:payment_amount)
     end
