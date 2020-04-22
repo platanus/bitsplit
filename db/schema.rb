@@ -10,15 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-ActiveRecord::Schema.define(version: 2020_04_19_230248) do
-=======
-ActiveRecord::Schema.define(version: 2020_04_20_235249) do
->>>>>>> [backend]feat: payments record endpoint
-=======
+
 ActiveRecord::Schema.define(version: 2020_04_21_213244) do
->>>>>>> [backend]fix: state bool comment
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
