@@ -12,9 +12,6 @@ import {
   BUDA_SIGNIN_FAIL,
   BUDA_SIGNIN_SUCCESS,
   BUDA_SIGNOUT,
-  GET_QUOTATION_ATTEMPT,
-  GET_QUOTATION_FAIL,
-  GET_QUOTATION_SUCCESS,
   GET_USER_BALANCE_ATTEMPT,
   GET_USER_BALANCE_FAIL,
   GET_USER_BALANCE_SUCCESS,
@@ -169,8 +166,7 @@ export default {
     return getQuotationApi(payload)
       .then(res => {
         if (res.data) {
-          commit(GET_QUOTATION_SUCCESS,res.data.data.quotation)
-          return
+          return(res.data.data.quotation)
         }
       })
       .catch(err => {
@@ -186,7 +182,6 @@ export default {
       .then(res => {
         if (res.data) {
           commit(GET_USER_BALANCE_SUCCESS,res.data.data.balance)
-          return
         }
       })
       .catch(err => {
