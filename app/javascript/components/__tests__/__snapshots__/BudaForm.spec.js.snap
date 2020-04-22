@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BudaForm matches snapshot 1`] = `
+<div id="budaSignInForm">
+  <center>
+    <div class="w-full max-w-xs">
+      <form>
+        <div>
+          <textfield-stub textvalue1="Ingresa el API_KEY y API_SECRET de tu cuenta Buda. Puedes acceder a ellos en tu perfil de" linktext="www.buda.com" href="https://www.buda.com"></textfield-stub>
+        </div>
+        <div>
+          <inputlabel-stub fieldname="API_KEY" fieldfor="key"></inputlabel-stub>
+          <passwordinput-stub value="" fieldid="api_key" fieldname="api_key"></passwordinput-stub>
+        </div>
+        <div>
+          <inputlabel-stub fieldname="API_SECRET" fieldfor="api_secret"></inputlabel-stub>
+          <passwordinput-stub value="" fieldid="api_secret" fieldname="api_secret"></passwordinput-stub>
+        </div>
+        <div>
+          <inputlabel-stub fieldname="Confirma tu contraseña Bitsplit" fieldfor="password"></inputlabel-stub>
+          <passwordinput-stub value="" fieldid="password" fieldname="password"></passwordinput-stub>
+        </div>
+        <div>
+          <submitbutton-stub fieldplaceholder="Sincronizar Buda"></submitbutton-stub>
+        </div>
+      </form>
+    </div>
+  </center>
+</div>
+`;

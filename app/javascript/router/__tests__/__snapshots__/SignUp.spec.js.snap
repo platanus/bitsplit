@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SignUp matches snapshot 1`] = `
+<div id="SignUpForm">
+  <center>
+    <div class="w-full max-w-xs">
+      <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <div class="mb-4">
+          <inputlabel-stub fieldname="Email" fieldfor="email"></inputlabel-stub>
+          <textinput-stub value="" fieldid="email" fieldtype="text" fieldplaceholder="Email" fieldname="email" classmod=""></textinput-stub>
+        </div>
+        <div class="mb-4">
+          <inputlabel-stub fieldname="Password" fieldfor="password"></inputlabel-stub>
+          <passwordinput-stub value="" fieldid="password" fieldname="password"></passwordinput-stub>
+          <inputlabel-stub fieldname="Repeat your password" fieldfor="password"></inputlabel-stub>
+          <passwordinput-stub value="" fieldid="confirm_password" fieldname="confirm_password"></passwordinput-stub>
+        </div>
+        <submitbutton-stub fieldplaceholder="Sign Up" classmod="bg-blue-500 hover:bg-blue-700"></submitbutton-stub>
+      </form>
+    </div>
+  </center>
+</div>
+`;
