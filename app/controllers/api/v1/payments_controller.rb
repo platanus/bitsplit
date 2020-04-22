@@ -14,11 +14,7 @@ class Api::V1::PaymentsController < Api::V1::BaseController
             render "error"
         end
         sender_api_key, sender_api_secret = sender.get_buda_keys()
-<<<<<<< HEAD
-        receiver_api_key, receiver_api_secret= receiver.get_buda_keys()
-=======
         receiver_api_key, receiver_api_secret = receiver.get_buda_keys()
->>>>>>> [backend]add: new env variable
         bitcoins_amount = params[:payment_amount]
         buda_receiver = BudaUserService.new(api_key: receiver_api_key, api_secret: receiver_api_secret)
         invoice = buda_receiver.generate_invoice(bitcoins_amount)
