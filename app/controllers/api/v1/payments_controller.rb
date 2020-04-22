@@ -24,8 +24,8 @@ class Api::V1::PaymentsController < Api::V1::BaseController
         end
         invoice_body = JSON.parse(invoice.body)
         invoice_id = invoice_body["invoice"]["id"]
-        new_payment = Payment.create!(:sender => @user, 
-                        :receiver => @receiver_user, 
+        new_payment = Payment.create!(:sender => sender, 
+                        :receiver => receiver, 
                         :amount => bitcoins_amount,  
                         :completed => true, 
                         :invoice_id => invoice_id)
@@ -36,6 +36,7 @@ class Api::V1::PaymentsController < Api::V1::BaseController
           @error_message = invoice_payment 
           Payment.update(:completed => false)
           render "error"
+        end
         return respond_with new_payment
     end
 
@@ -48,5 +49,7 @@ class Api::V1::PaymentsController < Api::V1::BaseController
 
     def payment_params
         params.require(:payment_amount)
+    end
+end
 
    
