@@ -7,6 +7,11 @@ class Api::V1::SessionsController < Api::V1::BaseController
         @user = User.where(email: params[:email]).first
 
         if @user&.valid_password?(params[:password])
+
+            # Use firebase service to save token
+            firebase = FirebaseService.new(@user)
+            firebase.save_token()
+
             @user.update_attribute(:logged, true)
             @password = params[:password]
             render :create, status: :created

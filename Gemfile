@@ -70,3 +70,5 @@ group :production, :development, :test do
 end
 
 gem "httparty", "~> 0.18.0"
+
+gem "firebase", "~> 0.2.8"
