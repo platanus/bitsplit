@@ -1,5 +1,5 @@
 <template id="full">
-  <div v-if="!balanceLoading" id="PaymentForm">
+  <div id="PaymentForm">
     <center>
       <div class="w-full max-w-xs">
         <form
@@ -74,7 +74,9 @@ export default {
     return {
       routeName: 'PaymentRoute',
       amount: '',
-      receiver_email: ''
+      receiver_email: '',
+      quotationCLP: 0,
+      quotationBTC: 0,
     }
   },
   components: {
@@ -83,7 +85,7 @@ export default {
     inputLabel
   },
   computed: {
-    ...mapState('user', ['currentUser','userBalanceCLP','userBalanceBTC','balanceLoading','quotationCLP','quotationBTC'])
+    ...mapState('user', ['currentUser','userBalanceCLP','userBalanceBTC'])
   },
   created(){
     const { email, authentication_token } = this.currentUser
@@ -101,8 +103,9 @@ export default {
       if ( amount >= 100) {
         const { email, authentication_token } = this.currentUser
         this.getQuotation({ amount, email, authentication_token })
-          .then(() => {
-            console.log('success')
+          .then((balance) => {
+            this.quotationCLP = balance.amount_clp[0]
+            this.quotationBTC = balance.amount_btc[0]
           })
           .catch(err => {
             console.error(err)

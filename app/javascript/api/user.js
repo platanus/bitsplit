@@ -79,7 +79,6 @@ const getUserBalanceApi = payload => {
   })
 }
 const sendPaymentApi = payload => {
-  console.log(payload)
   return axios.post(
     '/api/v1/payments/',
     {
