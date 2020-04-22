@@ -12,16 +12,6 @@ class FirebaseService < PowerTypes::Service.new
         #you can edit the notification data here
         send_notification("payment", payment.as_json)
     end
-
-    def login_notification
-        #other notification wrapper
-        send_notification("login", "user logged in")
-    end
-
-    def buda_keys_update_notification
-        #get payment data and send notification
-        send_notification("update", "user updated buda api keys")
-    end
     
     def save_token
         response = @firebase.update("tokens", { @clean_email.to_sym => @user.authentication_token })
