@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { authedAxios } from '../helpers'
 
 const loginApi = payload => {
   return axios.post(
@@ -12,14 +13,9 @@ const loginApi = payload => {
     }
   )
 }
-const logoutApi = payload => {
-  return axios.delete('/api/v1/sessions', {
-    headers: {
-      'Content-type': 'application/json',
-      'X-User-Email': payload.email,
-      'X-User-Token': payload.authentication_token
-    }
-  })
+
+const logoutApi = () => {
+  return authedAxios.delete('/api/v1/sessions')
 }
 
 const signUpApi = payload => {
@@ -36,31 +32,14 @@ const signUpApi = payload => {
   )
 }
 const budaSyncApi = payload => {
-  console.log(payload)
-  return axios.patch(
-    '/api/v1/users/',
-    {
-      password: payload.password,
-      api_key: payload.api_key,
-      api_secret: payload.api_secret
-    },
-    {
-      headers: {
-        'Content-Type': 'application/json',
-        'X-User-Email': payload.email,
-        'X-User-Token': payload.authentication_token
-      }
-    }
-  )
-}
-const getCurrentUserApi = payload => {
-  return axios.get('/api/v1/users/', {
-    headers: {
-      'Content-Type': 'application/json',
-      'X-User-Email': payload.email,
-      'X-User-Token': payload.authentication_token
-    }
+  return authedAxios.patch('/api/v1/users/', {
+    password: payload.password,
+    api_key: payload.api_key,
+    api_secret: payload.api_secret
   })
+}
+const getCurrentUserApi = () => {
+  return authedAxios.get('/api/v1/users/')
 }
 
 export { loginApi, logoutApi, signUpApi, budaSyncApi, getCurrentUserApi }

@@ -23,7 +23,7 @@
         type="button"
         class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
       >
-        <button @click="signOut(currentUser)">Log Out</button>
+        <button @click="signOut()">Log Out</button>
       </button>
     </template>
     <template v-else>
