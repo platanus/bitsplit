@@ -48,13 +48,7 @@ const getQuotationApi = payload => {
 }
 
 const getUserBalanceApi = payload => {
-  return authedAxios.get('/api/v1/balances/', {
-    headers: {
-      'Content-Type': 'application/json',
-      'X-User-Email': payload.email,
-      'X-User-Token': payload.authentication_token
-    }
-  })
+  return authedAxios.get('/api/v1/balances/')
 }
 
 const sendPaymentApi = payload => {
