@@ -35,7 +35,6 @@ const signUpApi = payload => {
     )
 }
 const budaSyncApi = payload => {
-  console.log(payload)
   return axios.patch(
     '/api/v1/users/',
     {
@@ -62,5 +61,46 @@ const getCurrentUserApi = payload => {
     }
   )
 }
+const getQuotationApi = payload => {
+  return axios.post(
+    '/api/v1/quotations/',
+    {
+      amount: payload.amount
+    },
+    {
+      headers: { 'Content-Type': 'application/json',
+                 'X-User-Email': payload.email,
+                 'X-User-Token': payload.authentication_token
+               }
+    }
+  )
+}
+const getUserBalanceApi = payload => {
+  return axios.get(
+    '/api/v1/balances/',
+    {
+      headers: { 'Content-Type': 'application/json',
+                 'X-User-Email': payload.email,
+                 'X-User-Token': payload.authentication_token
+               }
+    }
+  )
+}
+const sendPaymentApi = payload => {
+  console.log(payload)
+  return axios.post(
+    '/api/v1/payments/',
+    {
+      payment_amount: payload.payment_amount,
+      receiver_email: payload.receiver_email
+    },
+    {
+      headers: { 'Content-Type': 'application/json',
+                 'X-User-Email': payload.email,
+                 'X-User-Token': payload.authentication_token
+               }
+    }
+  )
+}
 
-export { loginApi, logoutApi, signUpApi, budaSyncApi, getCurrentUserApi }
+export { loginApi, logoutApi, signUpApi, budaSyncApi, getCurrentUserApi, getQuotationApi, getUserBalanceApi, sendPaymentApi }

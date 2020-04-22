@@ -1,26 +1,31 @@
 <template id="full">
-  <div id="PaymentForm">
+  <div v-if="!balanceLoading" id="PaymentForm">
     <center>
       <div class="w-full max-w-xs">
         <form
-          @submit.prevent=""
+          @submit.prevent="handleSubmit"
           class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
         >
           <div class="flex flex-col mb-6 mt-4">
             <label class="block text-gray-700 text-lg " for="account_balance">
-              Saldo disponilbe:
+              Saldo disponible:
             </label>
             <label
               class="mb-4 uppercase font-bold text-xxl text-indigo-600"
               for="account_balance"
-              >${{ account_balance }} CLP</label
+              >${{ userBalanceCLP }} CLP</label
+            >
+            <label
+              class="mb-4 uppercase font-bold text-xxl text-indigo-600"
+              for="account_balance"
+              >${{ userBalanceBTC }} BTC</label
             >
             <textInput
-              fieldId="payment_amount"
+              fieldId="amount"
               fieldType="text"
               fieldPlaceholder="Monto a transferir"
-              fieldName="payment_amount"
-              v-model="payment_amount"
+              fieldName="amount"
+              v-model="amount"
             />
           </div>
           <div class="flex flex-col mb-6 mt-6">
@@ -33,7 +38,12 @@
             <label
               class="mb-8 uppercase font-bold text-xl text-indigo-600"
               for="account_balance"
-              >{{ bitcoin_equivalent }} BTC</label
+              >{{ quotationCLP }} CLP </label
+            >
+            <label
+              class="mb-8 uppercase font-bold text-xl text-indigo-600"
+              for="account_balance"
+              >{{ quotationBTC}} BTC </label
             >
             <textInput
               fieldId="receiver_email"
@@ -44,11 +54,7 @@
             />
           </div>
           <div>
-            <submitButton
-              classmod="mt-5 tracking-widest bg-indigo-600 hover:bg-indigo-700 w-full"
-              :fieldDisabled="false"
-              fieldPlaceholder="Pagar"
-            />
+            <submitButton size="full" :fieldDisabled="false" fieldPlaceholder="Pagar" />
           </div>
         </form>
       </div>
@@ -67,9 +73,7 @@ export default {
   data() {
     return {
       routeName: 'PaymentRoute',
-      account_balance: '1000',
-      bitcoin_equivalent: '0.1',
-      payment_amount: '',
+      amount: '',
       receiver_email: ''
     }
   },
@@ -79,9 +83,63 @@ export default {
     inputLabel
   },
   computed: {
-    ...mapState('component', ['budaProfileComp'])
+    ...mapState('user', ['currentUser','userBalanceCLP','userBalanceBTC','balanceLoading','quotationCLP','quotationBTC'])
+  },
+  created(){
+    const { email, authentication_token } = this.currentUser
+    this.getUserBalance({ email, authentication_token })
+  },
+  watch: {
+    amount: debounce(function(){
+      this.getNewQuotation()
+    }, 1000)
+  },
+  methods: {
+    ...mapActions('user', ['getQuotation','getUserBalance','sendPayment']),
+    getNewQuotation() {
+      const { amount } = this
+      if ( amount >= 100) {
+        const { email, authentication_token } = this.currentUser
+        this.getQuotation({ amount, email, authentication_token })
+          .then(() => {
+            console.log('success')
+          })
+          .catch(err => {
+            console.error(err)
+          })
+      }
+    },
+    handleSubmit(e) {
+      const { amount, receiver_email } = this
+      if ( amount && receiver_email ) {
+        const { email, authentication_token } = this.currentUser
+        this.sendPayment({ payment_amount:parseFloat(amount), receiver_email, email, authentication_token })
+          .then(() => {
+            // TODO confirm page
+            console.log('success')
+          })
+          .catch(err => {
+            console.error(err)
+          })
+      }
+    }
   }
 }
+
+function debounce(func, wait, immediate) {
+	var timeout;
+	return function() {
+		var context = this, args = arguments;
+		var later = function() {
+			timeout = null;
+			if (!immediate) func.apply(context, args);
+		};
+		var callNow = immediate && !timeout;
+		clearTimeout(timeout);
+		timeout = setTimeout(later, wait);
+		if (callNow) func.apply(context, args);
+	};
+};
 </script>
 
 <style scoped>

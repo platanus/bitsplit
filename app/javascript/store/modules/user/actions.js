@@ -1,4 +1,4 @@
-import { signIn, signOut, signUp, budaSignIn, budaSignOut } from '../../action-types'
+import { signIn, signOut, signUp, budaSignIn, budaSignOut, getQuotation, getUserBalance, sendPayment } from '../../action-types'
 
 import {
   SIGNIN_FAIL,
@@ -11,10 +11,19 @@ import {
   BUDA_SIGNIN_ATTEMPT,
   BUDA_SIGNIN_FAIL,
   BUDA_SIGNIN_SUCCESS,
-  BUDA_SIGNOUT
+  BUDA_SIGNOUT,
+  GET_QUOTATION_ATTEMPT,
+  GET_QUOTATION_FAIL,
+  GET_QUOTATION_SUCCESS,
+  GET_USER_BALANCE_ATTEMPT,
+  GET_USER_BALANCE_FAIL,
+  GET_USER_BALANCE_SUCCESS,
+  SEND_PAYMENT_ATTEMPT,
+  SEND_PAYMENT_FAIL,
+  SEND_PAYMENT_SUCCESS
 } from '../../mutation-types'
 
-import { loginApi, logoutApi, signUpApi, budaSyncApi, getCurrentUserApi } from '../../../api/user.js'
+import { loginApi, logoutApi, signUpApi, budaSyncApi, getCurrentUserApi, getQuotationApi, getUserBalanceApi, sendPaymentApi } from '../../../api/user.js'
 
 export default {
   [signIn]({ commit, dispatch }, payload) {
@@ -53,7 +62,7 @@ export default {
       .then(res => {
         localStorage.removeItem('currentUser')
         commit(SIGNOUT)
-        dispatch('alert/success_alert', 'Sesion cerrada correctamente', {
+        dispatch('alert/success_alert', 'Sesión cerrada correctamente', {
           root: true
         })
         return 
@@ -115,14 +124,11 @@ export default {
             })
         }
         else {
-          // Error de contraseña
-          commit(SIGNUP_FAIL)
           dispatch('alert/error_alert', 'Contraseña incorrecta', {
             root: true
           })
           throw new Error('Contraseña incorrecta')
         }
-        
       })
       .catch(err => {
         // Hay un error en el fetch
@@ -138,14 +144,13 @@ export default {
           // Cuenta buda desconectada correctamente
           localStorage.currentUser.api_key = ''
           commit(BUDA_SIGNOUT)
-          dispatch('alert/error_alert', 'Cuenta Buda desconectada correctamente', {
+          dispatch('alert/success_alert', 'Cuenta Buda desconectada correctamente', {
             root: true
           })
           return
         }
         else {
           // Error de contraseña
-          commit(SIGNUP_FAIL)
           dispatch('alert/error_alert', 'Contraseña incorrecta', {
             root: true
           })
@@ -156,8 +161,61 @@ export default {
         dispatch('alert/error_alert', 'Error desconocido', {
           root: true
         })
-        throw new Error("Error ")
+        throw new Error('Error desconocido')
+      })
+  },
+  [getQuotation]({ commit, dispatch }, payload) {
+    // Hacemos fetch a la api con data de payload (key y secret nulos)
+    return getQuotationApi(payload)
+      .then(res => {
+        if (res.data) {
+          commit(GET_QUOTATION_SUCCESS,res.data.data.quotation)
+          return
+        }
+      })
+      .catch(err => {
+        dispatch('alert/error_alert', 'Error desconocido', {
+          root: true
+        })
+        throw new Error('Error desconocido')
+      })
+  },
+  [getUserBalance]({ commit, dispatch }, payload) {
+    // Hacemos fetch a la api con data de payload (key y secret nulos)
+    return getUserBalanceApi(payload)
+      .then(res => {
+        if (res.data) {
+          commit(GET_USER_BALANCE_SUCCESS,res.data.data.balance)
+          return
+        }
+      })
+      .catch(err => {
+        dispatch('alert/error_alert', 'Error desconocido', {
+          root: true
+        })
+        throw new Error('Error desconocido')
+      })
+  },
+  [sendPayment]({ commit, dispatch }, payload) {
+    // Hacemos fetch a la api con data de payload (key y secret nulos)
+    return sendPaymentApi(payload)
+      .then(res => {
+        if (res.data) {
+          commit(SEND_PAYMENT_SUCCESS,res.data)
+          return
+        }
+        else {
+          dispatch('alert/error_alert', 'Datos incorrectos', {
+            root: true
+          })
+          throw new Error('Datos incorrectos')
+        }
+      })
+      .catch(err => {
+        dispatch('alert/error_alert', 'Error desconocido', {
+          root: true
+        })
+        throw new Error('Error desconocido')
       })
   }
 }
-
