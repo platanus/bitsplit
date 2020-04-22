@@ -39,8 +39,8 @@ class Api::V1::PaymentsController < Api::V1::BaseController
         end
       
         # Use firebase service to send payment notification
-        firebase = FirebaseService.new
-        firebase.payment_notification(@receiver_user, new_payment)
+        firebase = FirebaseService.new(receiver)
+        firebase.payment_notification(new_payment)
       
         return respond_with new_payment
     end
