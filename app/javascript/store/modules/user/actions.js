@@ -66,8 +66,8 @@ export default {
         }
       })
   },
-  [signOut]({ commit, dispatch }, payload) {
-    return logoutApi(payload)
+  [signOut]({ commit, dispatch }) {
+    return logoutApi()
       .then(res => {
         localStorage.removeItem('currentUser')
         commit(SIGNOUT)
@@ -144,7 +144,7 @@ export default {
             'Cuenta Buda sincronizada correctamente',
             { root: true }
           )
-          const fetchPromiseUser = getCurrentUserApi(payload)
+          const fetchPromiseUser = getCurrentUserApi()
           return fetchPromiseUser.then(res => {
             if (res.data.data.attributes) {
               localStorage.setItem(
