@@ -249,15 +249,19 @@ The `password` field is only required if the `api_key` or `api_secret` fields ar
 
 + Response 200 (application/json)
 
-        >`payment_state`: debería ser "confirmed" si se realiza el pago, en caso de simulación es "invalid"
 
         {
             "data": {
-                "payment_amount": [
-                    "0.00227014",
-                    "BTC"
-                ],
-                "payment_state": "invalid"
+                "id": "1",
+                "type": "payment",
+                "attributes": {
+                    "sender_email": "example1@example.com",
+                    "receiver_email": "example2@example.com",
+                    "amount": 0.0028859014,
+                    "completed": true,
+                    "invoice_id": 850,
+                    "created_at": "2020-04-21T22:16:59.731Z"
+                }
             }
         }
         
@@ -275,42 +279,46 @@ The `password` field is only required if the `api_key` or `api_secret` fields ar
 + Response 200 (application/json)
 
         {
-             "data": {
-                 "type": "payments",
-                 "attributes": {
-                     "sent_payments": [
-                            {
-                        "id": 1,
-                        "receiver_email": "example2@example.com",
+            "data": [
+                {
+                    "id": "2",
+                    "type": "payment",
+                    "attributes": {
+                        "sender_email": "example0@example.com",
+                        "receiver_email": "example1@example.com",
                         "amount": 0.00227014,
-                        "state": 0,
-                        "invoice_id": 820,
-                        "created_at": "2020-04-21T00:03:59.420Z"
-                        }, 
-                            {
-                        "id": 6,
-                        "receiver_email": "jose3@example.com",
-                        "amount": 0.00227014,
-                        "state": 0,
-                        "invoice_id": 825,
-                        "created_at": "2020-04-21T00:44:50.990Z"
+                        "completed": true,
+                        "invoice_id": 848,
+                        "created_at": "2020-04-21T21:47:42.915Z"
                     }
-                    ],
-                    "received_payments": [
-                            {
-                        "id": 8,
-                        "sender_email": "example3@example.com",
-                        "amount": 0.00297014,
-                        "state": 0,
-                        "invoice_id": 827,
-                        "created_at": "2020-04-21T00:48:23.701Z"
-                        }
-                    ]
-                     
-                 }
-             }
-         }
-        
+                },
+                {
+                    "id": "1",
+                    "type": "payment",
+                    "attributes": {
+                        "sender_email": "example1@example.com",
+                        "receiver_email": "example0@example.com",
+                        "amount": 0.00238859014,
+                        "completed": true,
+                        "invoice_id": 847,
+                        "created_at": "2020-04-21T21:47:15.549Z"
+                    }
+                },
+                {
+                    "id": "3",
+                    "type": "payment",
+                    "attributes": {
+                        "sender_email": "example1@example.com",
+                        "receiver_email": "example0@example.com",
+                        "amount": 0.00288859014,
+                        "completed": true,
+                        "invoice_id": 849,
+                        "created_at": "2020-04-21T21:51:49.047Z"
+                    }
+                }
+            ]
+        }
+                
 
         
 

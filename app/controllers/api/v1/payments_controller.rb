@@ -1,7 +1,7 @@
-class Api::V1::PaymentsController < ApplicationController
+class Api::V1::PaymentsController < Api::V1::BaseController
+    # class Api::V1::PaymentsController < ApplicationController
 
     def create
-
         #TODO: setear esta variable para simular o no
         payment_simulation = true
         @user = current_user
@@ -25,19 +25,32 @@ class Api::V1::PaymentsController < ApplicationController
             @error_message = invoice
             render "error"
         end
-        
+
         invoice_body = JSON.parse(invoice.body)
+        invoice_id = invoice_body["invoice"]["id"]
+        new_payment = Payment.create!(:sender => @user, 
+                        :receiver => @receiver_user, 
+                        :amount => bitcoins_amount,  
+                        :completed => true, 
+                        :invoice_id => invoice_id)
         invoice_code = invoice_body["invoice"]["encoded_payment_request"]
         buda_payer = BudaUserService.new(api_key: user_api_key, api_secret: user_api_secret)
         invoice_payment = buda_payer.pay_invoice(bitcoins_amount, invoice_code, payment_simulation)
-        return set_success_params(invoice_payment) if invoice_payment.has_key? "withdrawal"
+        return respond_with new_payment if invoice_payment.has_key? "withdrawal"
         @error_message = invoice_payment 
+        Payment.update(:completed => false)
         render "error"
-        
     end
 
-    def set_success_params(invoice_payment)
-        @payment_amount = invoice_payment['withdrawal']['amount'] 
-        @payment_state = invoice_payment['withdrawal']['state'] 
+
+    def show
+        payments_record = current_user.payments_record
+        respond_with payments_record
+    end
+
+    private
+
+    def payment_params
+        params.require(:payment_amount)
     end
 end
