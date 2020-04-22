@@ -3,16 +3,16 @@
     <center>
       <div class="w-full max-w-xs">
         <div>
-          <p class="block text-gray-700 text-sm font-bold mb-5">¡Ya estás conectado a una cuenta Buda! ¿Qué desear hacer?</p>
+          <textField textvalue1="¡Ya estás conectado a una cuenta Buda! ¿Qué desear hacer?" />
         </div>
         <div class=inline>
           <div class="pb-6">
             <submitButton @do-click="change('BudaForm')" 
-            classmod="bg-indigo-600 hover:bg-indigo-700 w-full" :fieldDisabled="false" fieldPlaceholder="Actualizar Keys" />
+            wide="full" color="secondary" :fieldDisabled="false" fieldPlaceholder="Actualizar Keys" />
           </div>
           <div class="pb-6">
             <submitButton @do-click="change('BudaLogoutForm')" 
-            classmod="bg-indigo-600 hover:bg-indigo-700 w-full" :fieldDisabled="false" fieldPlaceholder="Desconectar Buda" />
+            wide="full" color="secondary" :fieldDisabled="false" fieldPlaceholder="Desconectar Buda" />
           </div>
         </div>
       </div>
@@ -26,6 +26,7 @@ import textInput from '../components/Input.vue'
 import passwordInput from '../components/PasswordInput'
 import submitButton from '../components/SubmitButton'
 import inputLabel from '../components/InputLabel'
+import textField from '../components/TextField'
 
 export default {
   name: 'budaIndex',
@@ -41,7 +42,8 @@ export default {
     textInput,
     passwordInput,
     submitButton,
-    inputLabel
+    inputLabel,
+    textField
   },
   methods: {
     ...mapActions('component', ['changeProfileComp']),

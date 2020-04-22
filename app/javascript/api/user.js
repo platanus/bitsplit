@@ -41,5 +41,30 @@ const budaSyncApi = payload => {
 const getCurrentUserApi = () => {
   return authedAxios.get('/api/v1/users/')
 }
+const getQuotationApi = payload => {
+  return authedAxios.post('/api/v1/quotations/', {
+    amount: payload.amount
+  })
+}
 
-export { loginApi, logoutApi, signUpApi, budaSyncApi, getCurrentUserApi }
+const getUserBalanceApi = payload => {
+  return authedAxios.get('/api/v1/balances/')
+}
+
+const sendPaymentApi = payload => {
+  return authedAxios.post('/api/v1/payments/', {
+    payment_amount: payload.payment_amount,
+    receiver_email: payload.receiver_email
+  })
+}
+
+export {
+  loginApi,
+  logoutApi,
+  signUpApi,
+  budaSyncApi,
+  getCurrentUserApi,
+  getQuotationApi,
+  getUserBalanceApi,
+  sendPaymentApi
+}
