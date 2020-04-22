@@ -1,27 +1,48 @@
 <template>
   <header class="flex items- justify-around px-4 py-3 bg-gray-900">
     <template v-if="signedIn">
-      <button type="button" class="block text-gray-500 hover:text-white focus:text-white focus:outline-none">
+      <button
+        type="button"
+        class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
+      >
         <router-link :to="homeRoute">Home</router-link>
       </button>
-      <button type="button" class="block text-gray-500 hover:text-white focus:text-white focus:outline-none">
+      <button
+        type="button"
+        class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
+      >
         <router-link :to="budaRoute">Buda</router-link>
       </button>
-      <button type="button" class="block text-gray-500 hover:text-white focus:text-white focus:outline-none">
+      <button
+        type="button"
+        class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
+      >
         <router-link :to="payRoute">Pay</router-link>
       </button>
-      <button type="button" class="block text-gray-500 hover:text-white focus:text-white focus:outline-none">
-        <button @click="handleLogOut">Log Out</button>
+      <button
+        type="button"
+        class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
+      >
+        <button @click="signOut()">Log Out</button>
       </button>
     </template>
     <template v-else>
-      <button type="button" class="block text-gray-500 hover:text-white focus:text-white focus:outline-none">
+      <button
+        type="button"
+        class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
+      >
         <router-link :to="landingRoute">Landing</router-link>
       </button>
-      <button type="button" class="block text-gray-500 hover:text-white focus:text-white focus:outline-none">
+      <button
+        type="button"
+        class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
+      >
         <router-link :to="signInRoute">Iniciar sesión</router-link>
       </button>
-      <button type="button" class="block text-gray-500 hover:text-white focus:text-white focus:outline-none">
+      <button
+        type="button"
+        class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
+      >
         <router-link :to="signUpRoute">Registrarse</router-link>
       </button>
     </template>
@@ -43,21 +64,21 @@ export default {
     }
   },
   methods: {
-    ...mapActions('user', ['signOut']),
-    handleLogOut() {
-      this.signOut()
-        .then(() => {
-          this.$router.push('/')
-        })
-        .catch(err => {
-          // Aviso de que hubo un error se muestra globalmente
-          console.error(err)
-        })
-    }
+    ...mapActions('user', ['signOut'])
   },
   computed: {
     ...mapState('user', ['currentUser']),
     ...mapGetters('user', ['signedIn'])
+  },
+  watch: {
+    signedIn(isSignedIn) {
+      // Cuando cambia el estado de signedIn
+      if (!isSignedIn) {
+        this.$router.push('/')
+      } else {
+        this.$router.push('/home')
+      }
+    }
   }
 }
 </script>

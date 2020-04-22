@@ -10,6 +10,12 @@ import {
   BUDA_SIGNIN_FAIL,
   BUDA_SIGNIN_SUCCESS,
   BUDA_SIGNOUT,
+  GET_USER_BALANCE_ATTEMPT,
+  GET_USER_BALANCE_FAIL,
+  GET_USER_BALANCE_SUCCESS,
+  SEND_PAYMENT_ATTEMPT,
+  SEND_PAYMENT_FAIL,
+  SEND_PAYMENT_SUCCESS
 } from '../../mutation-types'
 
 export default {
@@ -37,16 +43,34 @@ export default {
     state.userLoading = false
   },
   [BUDA_SIGNIN_ATTEMPT](state, currentUser) {
-    state.userLoading = true
+    // TODO
   },
   [BUDA_SIGNIN_SUCCESS](state, currentUser) {
-    state.userLoading = false
     state.currentUser = currentUser
   },
   [BUDA_SIGNIN_FAIL](state) {
-    state.userLoading = false
+    // TODO
   },
   [BUDA_SIGNOUT](state) {
-    state.currentUser = null
+    // TODO
+  },
+  [GET_USER_BALANCE_ATTEMPT](state) {
+    // TODO
+  },
+  [GET_USER_BALANCE_SUCCESS](state, balance) {
+    state.userBalanceCLP = balance.CLP.available_amount
+    state.userBalanceBTC = balance.BTC.available_amount
+  },
+  [GET_USER_BALANCE_FAIL](state) {
+    // TODO
+  },
+  [SEND_PAYMENT_ATTEMPT](state) {
+    // TODO
+  },
+  [SEND_PAYMENT_SUCCESS](state, quotation) {
+    // TODO
+  },
+  [SEND_PAYMENT_FAIL](state) {
+    // TODO
   }
 }
