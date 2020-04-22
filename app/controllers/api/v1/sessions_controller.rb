@@ -8,11 +8,9 @@ class Api::V1::SessionsController < Api::V1::BaseController
 
         if @user&.valid_password?(params[:password])
 
-            # prueba 
+            # Use firebase service to save token
             firebase = FirebaseService.new
             firebase.save_token(@user)
-    
-            # prueba
 
             @user.update_attribute(:logged, true)
             @password = params[:password]

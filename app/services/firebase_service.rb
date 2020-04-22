@@ -5,7 +5,7 @@ class FirebaseService < PowerTypes::Service.new
 
     def payment_notification(user, payment)
         #get payment data and send notification
-        send_notification(user, "payment", "payment data example")
+        send_notification(user, "payment", payment.as_json)
     end
 
     def login_notification(user)

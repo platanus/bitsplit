@@ -36,10 +36,18 @@ class Api::V1::PaymentsController < Api::V1::BaseController
         invoice_code = invoice_body["invoice"]["encoded_payment_request"]
         buda_payer = BudaUserService.new(api_key: user_api_key, api_secret: user_api_secret)
         invoice_payment = buda_payer.pay_invoice(bitcoins_amount, invoice_code, payment_simulation)
-        return respond_with new_payment if invoice_payment.has_key? "withdrawal"
-        @error_message = invoice_payment 
-        Payment.update(:completed => false)
-        render "error"
+        if invoice_payment.has_key? "withdrawal"
+
+            # Use firebase service to send payment notification
+            firebase = FirebaseService.new
+            firebase.payment_notification(@user, new_payment)
+
+            return respond_with new_payment 
+        else
+            @error_message = invoice_payment 
+            Payment.update(:completed => false)
+            render "error"
+        end
     end
 
 
