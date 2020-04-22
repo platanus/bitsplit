@@ -9,7 +9,16 @@ import {
   BUDA_SIGNIN_ATTEMPT,
   BUDA_SIGNIN_FAIL,
   BUDA_SIGNIN_SUCCESS,
-  BUDA_SIGNOUT
+  BUDA_SIGNOUT,
+  GET_QUOTATION_ATTEMPT,
+  GET_QUOTATION_FAIL,
+  GET_QUOTATION_SUCCESS,
+  GET_USER_BALANCE_ATTEMPT,
+  GET_USER_BALANCE_FAIL,
+  GET_USER_BALANCE_SUCCESS,
+  SEND_PAYMENT_ATTEMPT,
+  SEND_PAYMENT_FAIL,
+  SEND_PAYMENT_SUCCESS
 } from '../../mutation-types'
 
 export default {
@@ -37,16 +46,44 @@ export default {
     state.userLoading = false
   },
   [BUDA_SIGNIN_ATTEMPT](state, currentUser) {
-    state.userLoading = true
+    // TODO
   },
   [BUDA_SIGNIN_SUCCESS](state, currentUser) {
-    state.userLoading = false
     state.currentUser = currentUser
   },
   [BUDA_SIGNIN_FAIL](state) {
-    state.userLoading = false
+    // TODO
   },
   [BUDA_SIGNOUT](state) {
-    state.currentUser = null
+    // TODO
+  },
+  [GET_QUOTATION_ATTEMPT](state) {
+    // TODO
+  },
+  [GET_QUOTATION_SUCCESS](state, quotation) {
+    state.quotationCLP = quotation.amount_clp[0]
+    state.quotationBTC = quotation.amount_btc[0]
+  },
+  [GET_QUOTATION_FAIL](state) {
+    // TODO
+  },
+  [GET_USER_BALANCE_ATTEMPT](state) {
+    // TODO
+  },
+  [GET_USER_BALANCE_SUCCESS](state, balance) {
+    state.userBalanceCLP = balance.CLP.available_amount
+    state.userBalanceBTC = balance.BTC.available_amount
+  },
+  [GET_USER_BALANCE_FAIL](state) {
+    // TODO
+  },
+  [SEND_PAYMENT_ATTEMPT](state) {
+    // TODO
+  },
+  [SEND_PAYMENT_SUCCESS](state, quotation) {
+    // TODO
+  },
+  [SEND_PAYMENT_FAIL](state) {
+    // TODO
   }
 }
