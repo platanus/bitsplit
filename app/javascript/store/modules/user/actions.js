@@ -1,4 +1,10 @@
-import { signIn, signOut, signUp, budaSignIn, budaSignOut } from '../../action-types'
+import {
+  signIn,
+  signOut,
+  signUp,
+  budaSignIn,
+  budaSignOut
+} from '../../action-types'
 
 import {
   SIGNIN_FAIL,
@@ -14,7 +20,13 @@ import {
   BUDA_SIGNOUT
 } from '../../mutation-types'
 
-import { loginApi, logoutApi, signUpApi, budaSyncApi, getCurrentUserApi } from '../../../api/user.js'
+import {
+  loginApi,
+  logoutApi,
+  signUpApi,
+  budaSyncApi,
+  getCurrentUserApi
+} from '../../../api/user.js'
 
 export default {
   [signIn]({ commit, dispatch }, payload) {
@@ -25,44 +37,61 @@ export default {
 
     return fetchPromise
       .then(res => {
-        // Recibe un response correcto (usuario existe, usuario no existe, etc)
-        if (res.data.data.attributes) {
-          // Usuario logeado correctamente
-          localStorage.setItem('currentUser', JSON.stringify(res.data.data.attributes))
-          commit(SIGNIN_SUCCESS, res.data.data.attributes)
-          dispatch('alert/success_alert', 'Sign in succesfull', { root: true })
-          return 
-        } else {
-          // Algun error de contraseña o usuario no existente
-          commit(SIGNIN_FAIL)
-          dispatch('alert/error_alert', 'Error al ingresar datos', {
-            root: true
-          })
-          throw new Error("Error al ingresar datos")
-        }
+        const user = res.data.data.attributes
+        localStorage.setItem('currentUser', JSON.stringify(user))
+        commit(SIGNIN_SUCCESS, user)
+        dispatch('alert/success_alert', 'Usuario ingresado correctamente', {
+          root: true
+        })
       })
       .catch(e => {
-        // Hay un error en el fetch
-        commit(SIGNIN_FAIL)
-        dispatch('alert/error_alert', 'Error desconocido', { root: true })
-        throw new Error('Error desconocido')
+        if (e.response) {
+          // Algun error de backend
+          commit(SIGNIN_FAIL)
+          dispatch(
+            'alert/error_alert',
+            'Error iniciando sesion (revise credenciales otorgadas)',
+            { root: true }
+          )
+          throw new Error('Error desconocido')
+        } else {
+          // Error en el fetch
+          commit(SIGNIN_FAIL)
+          dispatch(
+            'alert/error_alert',
+            'Error desconocido, intente nuevamente',
+            { root: true }
+          )
+          throw new Error('Error desconocido')
+        }
       })
   },
-   [signOut]({ commit, dispatch }, payload) {
-    return logoutApi(payload)
+  [signOut]({ commit, dispatch }) {
+    return logoutApi()
       .then(res => {
         localStorage.removeItem('currentUser')
         commit(SIGNOUT)
         dispatch('alert/success_alert', 'Sesion cerrada correctamente', {
           root: true
         })
-        return 
+        return
       })
       .catch(err => {
-        dispatch('alert/error_alert', 'Error cerrando sesion', {
-          root: true
-        })
-        throw new Error("Error al ingresar datos")
+        if (err.response) {
+          dispatch('alert/error_alert', 'Error interno, intente nuevamente', {
+            root: true
+          })
+          throw new Error('Error al ingresar datos')
+        } else {
+          dispatch(
+            'alert/error_alert',
+            'Error cerrando sesion, intente nuevamente',
+            {
+              root: true
+            }
+          )
+          throw new Error('Error al ingresar datos')
+        }
       })
   },
 
@@ -72,29 +101,36 @@ export default {
     // Enviamos la información del Payload a la API para que verifique la validez
     // Hay que verificar que no exista ese email registrado y que tenga usuario buda.
 
-    const fetchPromise = signUpApi(payload)
-    return fetchPromise
+    return signUpApi(payload)
       .then(res => {
-        if (res.data.data.attributes) {
-          // Credenciales verificadas
-          localStorage.setItem('currentUser', JSON.stringify(res.data.data.attributes))
-          commit(SIGNUP_SUCCESS, res.data.data.attributes)
-          dispatch('alert/success_alert', 'Sign up succesfull', { root: true })
-          return 
-        } else {
-          // Algun error de contraseña o usuario no existente
-          commit(SIGNUP_FAIL)
-          dispatch('alert/error_alert', 'Error al ingresar datos', {
-            root: true
-          })
-          throw new Error('Error al ingresar datos')
-        }
+        const user = res.data.data.attributes
+        localStorage.setItem('currentUser', JSON.stringify(user))
+        commit(SIGNUP_SUCCESS, user)
+        dispatch('alert/success_alert', 'Usuario creado correctamente', {
+          root: true
+        })
       })
       .catch(err => {
-        // Hay un error en el fetch
-        commit(SIGNUP_FAIL)
-        dispatch('alert/error_alert', 'Error desconocido', { root: true })
-        throw new Error('Error desconocido')
+        if (err.response) {
+          const { errors } = err.response.data
+          let errorMessage = ''
+          const fields = Object.keys(errors)
+          for (const field of fields) {
+            errorMessage = `${errorMessage} ${field}: ${errors[field]}  `
+          }
+
+          commit(SIGNUP_FAIL)
+          dispatch('alert/error_alert', errorMessage, {
+            root: true
+          })
+          throw new Error('Error interno')
+        } else {
+          commit(SIGNUP_FAIL)
+          dispatch('alert/error_alert', 'Error interno, intente nuevamente', {
+            root: true
+          })
+          throw new Error('Error interno')
+        }
       })
   },
   [budaSignIn]({ commit, dispatch }, payload) {
@@ -103,18 +139,23 @@ export default {
     return fetchPromise
       .then(res => {
         if (res.data) {
-          dispatch('alert/success_alert', 'Cuenta Buda sincronizada correctamente', { root: true })
-          const fetchPromiseUser = getCurrentUserApi(payload)
-          return fetchPromiseUser
-            .then(res => {
-              if (res.data.data.attributes){
-                localStorage.setItem('currentUser', JSON.stringify(res.data.data.attributes))
-                commit(SIGNIN_SUCCESS, res.data.data.attributes)
-              }
-              return
-            })
-        }
-        else {
+          dispatch(
+            'alert/success_alert',
+            'Cuenta Buda sincronizada correctamente',
+            { root: true }
+          )
+          const fetchPromiseUser = getCurrentUserApi()
+          return fetchPromiseUser.then(res => {
+            if (res.data.data.attributes) {
+              localStorage.setItem(
+                'currentUser',
+                JSON.stringify(res.data.data.attributes)
+              )
+              commit(SIGNIN_SUCCESS, res.data.data.attributes)
+            }
+            return
+          })
+        } else {
           // Error de contraseña
           commit(SIGNUP_FAIL)
           dispatch('alert/error_alert', 'Contraseña incorrecta', {
@@ -122,7 +163,6 @@ export default {
           })
           throw new Error('Contraseña incorrecta')
         }
-        
       })
       .catch(err => {
         // Hay un error en el fetch
@@ -138,12 +178,15 @@ export default {
           // Cuenta buda desconectada correctamente
           localStorage.currentUser.api_key = ''
           commit(BUDA_SIGNOUT)
-          dispatch('alert/error_alert', 'Cuenta Buda desconectada correctamente', {
-            root: true
-          })
+          dispatch(
+            'alert/error_alert',
+            'Cuenta Buda desconectada correctamente',
+            {
+              root: true
+            }
+          )
           return
-        }
-        else {
+        } else {
           // Error de contraseña
           commit(SIGNUP_FAIL)
           dispatch('alert/error_alert', 'Contraseña incorrecta', {
@@ -156,8 +199,7 @@ export default {
         dispatch('alert/error_alert', 'Error desconocido', {
           root: true
         })
-        throw new Error("Error ")
+        throw new Error('Error ')
       })
   }
 }
-

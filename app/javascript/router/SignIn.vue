@@ -2,10 +2,7 @@
   <div id="SignInForm">
     <center>
       <div class="w-full max-w-xs">
-        <form
-          @submit.prevent="handleSubmit"
-          class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
-        >
+        <form @submit.prevent="handleSubmit" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
           <div class="mb-4">
             <inputLabel fieldName="Email" fieldFor="email" />
             <textInput
@@ -13,19 +10,17 @@
               fieldType="text"
               fieldPlaceholder="Email"
               fieldName="email"
-              v-model = "email"
+              v-model="email"
             />
           </div>
           <div class="mb-4">
-            
             <inputLabel fieldName="Password" fieldFor="password" />
-            <passwordInput
-              fieldId="password"
-              fieldName="password"
-              v-model = "password"
+            <passwordInput fieldId="password" fieldName="password" v-model="password" />
+            <submitButton
+              classmod="bg-blue-500 hover:bg-blue-700"
+              :fieldDisabled="false"
+              fieldPlaceholder="Log In"
             />
-            <submitButton 
-            classmod='bg-blue-500 hover:bg-blue-700' :fieldDisabled="false" fieldPlaceholder="Log In" />
           </div>
         </form>
       </div>
@@ -68,7 +63,6 @@ export default {
           .then(() => {
             // TODO logger
             console.log('success')
-            this.$router.push('/home')
           })
           .catch(() => {
             console.error('error')
