@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BudaLogoutForm matches snapshot 1`] = `
+<div id="budaSignInForm">
+  <center>
+    <div class="w-full max-w-xs">
+      <form>
+        <div>
+          <textfield-stub textvalue1="¿Estás seguro de querer desconectar tu cuenta Buda? Por favor ingresa tu contraseña para confirmar"></textfield-stub>
+        </div>
+        <div>
+          <inputlabel-stub fieldname="Contraseña Bitsplit" fieldfor="password"></inputlabel-stub>
+          <passwordinput-stub value="" fieldid="password" fieldname="password"></passwordinput-stub>
+        </div>
+        <div>
+          <submitbutton-stub fieldplaceholder="Confirmar"></submitbutton-stub>
+        </div>
+      </form>
+    </div>
+  </center>
+</div>
+`;

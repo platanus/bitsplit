@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BudaIndex matches snapshot 1`] = `
+<div id="budaSignInForm">
+  <center>
+    <div class="w-full max-w-xs">
+      <div>
+        <textfield-stub textvalue1="¡Ya estás conectado a una cuenta Buda! ¿Qué desear hacer?"></textfield-stub>
+      </div>
+      <div class="inline">
+        <div class="pb-6">
+          <submitbutton-stub fieldplaceholder="Actualizar Keys" color="secondary" wide="full"></submitbutton-stub>
+        </div>
+        <div class="pb-6">
+          <submitbutton-stub fieldplaceholder="Desconectar Buda" color="secondary" wide="full"></submitbutton-stub>
+        </div>
+      </div>
+    </div>
+  </center>
+</div>
+`;
