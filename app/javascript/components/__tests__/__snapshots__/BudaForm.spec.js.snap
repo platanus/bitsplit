@@ -6,7 +6,8 @@ exports[`BudaForm matches snapshot 1`] = `
     <div class="w-full max-w-xs">
       <form>
         <div>
-          <textfield-stub textvalue1="Ingresa el API_KEY y API_SECRET de tu cuenta Buda. Puedes acceder a ellos en tu perfil de" linktext="www.buda.com" href="https://www.buda.com"></textfield-stub>
+          <textfield-stub>
+            Ingresa el API_KEY y API_SECRET de tu cuenta Buda. Puedes acceder a ellos en tu perfil de <a href="https://www.buda.com">www.buda.com</a></textfield-stub>
         </div>
         <div>
           <inputlabel-stub fieldname="API_KEY">key</inputlabel-stub>
