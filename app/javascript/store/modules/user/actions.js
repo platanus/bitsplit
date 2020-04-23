@@ -185,16 +185,25 @@ export default {
       })
   },
   [budaSignOut]({ commit, dispatch }, payload) {
-    return budaSyncApi(payload)
-      .then(() => {
-        localStorage.currentUser.api_key = ''
-        commit(BUDA_SIGNOUT)
+    const fetchPromise = budaSyncApi(payload)
+    return fetchPromise
+      .then(res => {
         dispatch(
           'alert/success_alert',
           'Cuenta Buda desconectada correctamente',
           { root: true }
         )
-        return
+        const fetchPromiseUser = getCurrentUserApi()
+        return fetchPromiseUser.then(res => {
+          if (res.data.data.attributes) {
+            localStorage.setItem(
+              'currentUser',
+              JSON.stringify(res.data.data.attributes)
+            )
+            commit(SIGNIN_SUCCESS, res.data.data.attributes)
+            return
+          }
+        })
       })
       .catch(err => {
         if (err.response) {

@@ -103,7 +103,7 @@ export default {
       if (amount && receiver_email) {
         const { email, authentication_token } = this.currentUser
         this.sendPayment({
-          payment_amount: parseFloat(amount),
+          payment_amount: parseFloat(this.quotationBTC),
           receiver_email,
           email,
           authentication_token
