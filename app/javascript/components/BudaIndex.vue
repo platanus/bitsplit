@@ -5,14 +5,22 @@
         <div>
           <textField textvalue1="¡Ya estás conectado a una cuenta Buda! ¿Qué desear hacer?" />
         </div>
-        <div class=inline>
+        <div class="inline">
           <div class="pb-6">
-            <submitButton @do-click="change('BudaForm')" 
-            wide="full" color="secondary" :fieldDisabled="false" fieldPlaceholder="Actualizar Keys" />
+            <submitButton
+              @do-click="change('BudaForm')"
+              wide="full"
+              color="secondary"
+              :fieldDisabled="false"
+            >Actualizar Keys</submitButton>
           </div>
           <div class="pb-6">
-            <submitButton @do-click="change('BudaLogoutForm')" 
-            wide="full" color="secondary" :fieldDisabled="false" fieldPlaceholder="Desconectar Buda" />
+            <submitButton
+              @do-click="change('BudaLogoutForm')"
+              wide="full"
+              color="secondary"
+              :fieldDisabled="false"
+            >Desconectar Buda</submitButton>
           </div>
         </div>
       </div>
@@ -35,7 +43,7 @@ export default {
       routeName: 'budaIndex',
       api_key: '',
       api_secret: '',
-      password: '',
+      password: ''
     }
   },
   components: {

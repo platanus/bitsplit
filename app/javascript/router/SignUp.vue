@@ -4,7 +4,7 @@
       <div class="w-full max-w-xs">
         <form @submit.prevent="handleSubmit" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
           <div class="mb-4">
-            <inputLabel fieldName="Email" fieldFor="email" />
+            <inputLabel fieldFor="email">Email</inputLabel>
             <textInput
               fieldId="email"
               fieldType="text"
@@ -14,21 +14,17 @@
             />
           </div>
           <div class="mb-4">
-            <inputLabel fieldName="Password" fieldFor="password" />
+            <inputLabel fieldFor="password">Password</inputLabel>
 
             <passwordInput fieldId="password" fieldName="password" v-model="password" />
-            <inputLabel fieldName="Repeat your password" fieldFor="password" />
+            <inputLabel fieldFor="password">Repeat your password</inputLabel>
             <passwordInput
               fieldId="confirm_password"
               fieldName="confirm_password"
               v-model="confirm_password"
             />
           </div>
-          <submitButton
-            classmod="bg-blue-500 hover:bg-blue-700"
-            :fieldDisabled="false"
-            fieldPlaceholder="Sign Up"
-          />
+          <submitButton classmod="bg-blue-500 hover:bg-blue-700" :fieldDisabled="false">Sign Up</submitButton>
         </form>
       </div>
     </center>

@@ -4,22 +4,26 @@
       <div class="w-full max-w-xs">
         <form @submit.prevent="handleSubmit">
           <div>
-            <textField textvalue1="Ingresa el API_KEY y API_SECRET de tu cuenta Buda. Puedes acceder a ellos en tu perfil de" linktext="www.buda.com" href="https://www.buda.com" />          
+            <textField
+              textvalue1="Ingresa el API_KEY y API_SECRET de tu cuenta Buda. Puedes acceder a ellos en tu perfil de"
+              linktext="www.buda.com"
+              href="https://www.buda.com"
+            />
           </div>
           <div>
-            <inputLabel fieldName="API_KEY" fieldFor="key" />
-            <passwordInput fieldId="api_key" fieldName="api_key" v-model="api_key"/>
+            <inputLabel fieldName="API_KEY">key</inputLabel>
+            <passwordInput fieldId="api_key" fieldName="api_key" v-model="api_key" />
           </div>
           <div>
-            <inputLabel fieldName="API_SECRET" fieldFor="api_secret" />
-            <passwordInput fieldId="api_secret" fieldName="api_secret" v-model="api_secret"/>
+            <inputLabel fieldName="API_SECRET">api_secret</inputLabel>
+            <passwordInput fieldId="api_secret" fieldName="api_secret" v-model="api_secret" />
           </div>
           <div>
-            <inputLabel fieldName="Confirma tu contraseña Bitsplit" fieldFor="password" />
-            <passwordInput fieldId="password" fieldName="password" v-model="password"/>
+            <inputLabel fieldFor="password">Confirma tu contraseña Bitsplit</inputLabel>
+            <passwordInput fieldId="password" fieldName="password" v-model="password" />
           </div>
           <div>
-            <submitButton :fieldDisabled="false" fieldPlaceholder="Sincronizar Buda" />
+            <submitButton :fieldDisabled="false">Sincronizar Buda</submitButton>
           </div>
         </form>
       </div>
@@ -61,7 +65,13 @@ export default {
       const { api_key, api_secret, password } = this
       if (api_key && api_secret && password) {
         const { email, authentication_token } = this.currentUser
-        this.budaSignIn({ api_key, api_secret, password, email, authentication_token })
+        this.budaSignIn({
+          api_key,
+          api_secret,
+          password,
+          email,
+          authentication_token
+        })
           .then(() => {
             console.log('success')
             this.$router.push('/home')

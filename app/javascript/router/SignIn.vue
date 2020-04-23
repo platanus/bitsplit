@@ -4,7 +4,7 @@
       <div class="w-full max-w-xs">
         <form @submit.prevent="handleSubmit" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
           <div class="mb-4">
-            <inputLabel fieldName="Email" fieldFor="email" />
+            <inputLabel fieldFor="email">Email</inputLabel>
             <textInput
               fieldId="email"
               fieldType="text"
@@ -14,13 +14,9 @@
             />
           </div>
           <div class="mb-4">
-            <inputLabel fieldName="Password" fieldFor="password" />
+            <inputLabel fieldFor="password">Contraseña Bitsplit</inputLabel>
             <passwordInput fieldId="password" fieldName="password" v-model="password" />
-            <submitButton
-              classmod="bg-blue-500 hover:bg-blue-700"
-              :fieldDisabled="false"
-              fieldPlaceholder="Log In"
-            />
+            <submitButton classmod="bg-blue-500 hover:bg-blue-700" :fieldDisabled="false">Log In</submitButton>
           </div>
         </form>
       </div>
