@@ -4,9 +4,7 @@
       <div class="w-full max-w-xs">
         <form @submit.prevent="handleSubmit">
           <div>
-            <textField
-              textvalue1="¿Estás seguro de querer desconectar tu cuenta Buda? Por favor ingresa tu contraseña para confirmar"
-            />
+            <textField>¿Estás seguro de querer desconectar tu cuenta Buda? Por favor ingresa tu contraseña para confirmar</textField>
           </div>
           <div>
             <inputLabel fieldFor="password">Contraseña Bitsplit</inputLabel>

@@ -4,11 +4,9 @@
       <div class="w-full max-w-xs">
         <form @submit.prevent="handleSubmit">
           <div>
-            <textField
-              textvalue1="Ingresa el API_KEY y API_SECRET de tu cuenta Buda. Puedes acceder a ellos en tu perfil de"
-              linktext="www.buda.com"
-              href="https://www.buda.com"
-            />
+            <textField>
+              Ingresa el API_KEY y API_SECRET de tu cuenta Buda. Puedes acceder a ellos en tu perfil de <a href="https://www.buda.com">www.buda.com</a>
+            </textField>
           </div>
           <div>
             <inputLabel fieldName="API_KEY">key</inputLabel>

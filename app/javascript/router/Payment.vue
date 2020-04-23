@@ -40,7 +40,7 @@
             />
           </div>
           <div>
-            <submitButton size="full" :fieldDisabled="false">Pagar</submitButton>
+            <submitButton width="full" :fieldDisabled="false">Pagar</submitButton>
           </div>
         </form>
       </div>
