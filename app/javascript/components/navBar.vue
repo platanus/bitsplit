@@ -13,7 +13,7 @@
       >
         <router-link :to="budaRoute">Buda</router-link>
       </button>
-      <button
+      <button v-if="budaSignedIn"
         type="button"
         class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
       >
@@ -68,7 +68,7 @@ export default {
   },
   computed: {
     ...mapState('user', ['currentUser']),
-    ...mapGetters('user', ['signedIn'])
+    ...mapGetters('user', ['signedIn','budaSignedIn'])
   },
   watch: {
     signedIn(isSignedIn) {
