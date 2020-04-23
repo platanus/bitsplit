@@ -9,19 +9,19 @@ exports[`BudaForm matches snapshot 1`] = `
           <textfield-stub textvalue1="Ingresa el API_KEY y API_SECRET de tu cuenta Buda. Puedes acceder a ellos en tu perfil de" linktext="www.buda.com" href="https://www.buda.com"></textfield-stub>
         </div>
         <div>
-          <inputlabel-stub fieldname="API_KEY" fieldfor="key"></inputlabel-stub>
+          <inputlabel-stub fieldname="API_KEY">key</inputlabel-stub>
           <passwordinput-stub value="" fieldid="api_key" fieldname="api_key"></passwordinput-stub>
         </div>
         <div>
-          <inputlabel-stub fieldname="API_SECRET" fieldfor="api_secret"></inputlabel-stub>
+          <inputlabel-stub fieldname="API_SECRET">api_secret</inputlabel-stub>
           <passwordinput-stub value="" fieldid="api_secret" fieldname="api_secret"></passwordinput-stub>
         </div>
         <div>
-          <inputlabel-stub fieldname="Confirma tu contraseña Bitsplit" fieldfor="password"></inputlabel-stub>
+          <inputlabel-stub fieldfor="password">Confirma tu contraseña Bitsplit</inputlabel-stub>
           <passwordinput-stub value="" fieldid="password" fieldname="password"></passwordinput-stub>
         </div>
         <div>
-          <submitbutton-stub fieldplaceholder="Sincronizar Buda"></submitbutton-stub>
+          <submitbutton-stub>Sincronizar Buda</submitbutton-stub>
         </div>
       </form>
     </div>
