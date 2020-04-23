@@ -265,6 +265,11 @@ export default {
     return sendPaymentApi(payload)
       .then(res => {
         commit(SEND_PAYMENT_SUCCESS, res.data)
+        dispatch(
+          'alert/success_alert',
+          'Pago realizado correctamente',
+          { root: true }
+        )
         return
       })
       .catch(err => {
