@@ -48,17 +48,14 @@ export default {
     ...mapState('user', ['currentUser'])
   },
   methods: {
-    ...mapActions('user', ['budaSignIn']),
+    ...mapActions('user', ['budaSignOut']),
     handleSubmit(e) {
       const { api_key, api_secret, password } = this
       if (password) {
-        const { email, authentication_token } = this.currentUser
-        this.budaSignIn({
+        this.budaSignOut({
           api_key,
           api_secret,
-          password,
-          email,
-          authentication_token
+          password
         })
           .then(() => {
             console.log('success')

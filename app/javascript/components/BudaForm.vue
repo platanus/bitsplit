@@ -62,13 +62,10 @@ export default {
     handleSubmit(e) {
       const { api_key, api_secret, password } = this
       if (api_key && api_secret && password) {
-        const { email, authentication_token } = this.currentUser
         this.budaSignIn({
           api_key,
           api_secret,
-          password,
-          email,
-          authentication_token
+          password
         })
           .then(() => {
             console.log('success')
