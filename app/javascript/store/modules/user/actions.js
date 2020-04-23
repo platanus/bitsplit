@@ -209,10 +209,10 @@ export default {
         if (err.response) {
           dispatch(
             'alert/error_alert',
-            'Error desconectado cuenta. Revise la contraseña ingresada',
+            'Error desconectando cuenta. Revise la contraseña ingresada',
             { root: true }
           )
-          throw new Error('Error desconectado cuenta. Revise la contraseña ingresada')
+          throw new Error('Error desconectando cuenta. Revise la contraseña ingresada')
         } else {
           dispatch(
             'alert/error_alert',
