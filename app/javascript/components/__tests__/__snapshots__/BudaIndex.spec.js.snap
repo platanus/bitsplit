@@ -9,10 +9,10 @@ exports[`BudaIndex matches snapshot 1`] = `
       </div>
       <div class="inline">
         <div class="pb-6">
-          <submitbutton-stub fieldplaceholder="Actualizar Keys" color="secondary" wide="full"></submitbutton-stub>
+          <submitbutton-stub color="secondary" wide="full">Actualizar Keys</submitbutton-stub>
         </div>
         <div class="pb-6">
-          <submitbutton-stub fieldplaceholder="Desconectar Buda" color="secondary" wide="full"></submitbutton-stub>
+          <submitbutton-stub color="secondary" wide="full">Desconectar Buda</submitbutton-stub>
         </div>
       </div>
     </div>

@@ -4,14 +4,16 @@
       <div class="w-full max-w-xs">
         <form @submit.prevent="handleSubmit">
           <div>
-            <textField textvalue1="¿Estás seguro de querer desconectar tu cuenta Buda? Por favor ingresa tu contraseña para confirmar" />
+            <textField
+              textvalue1="¿Estás seguro de querer desconectar tu cuenta Buda? Por favor ingresa tu contraseña para confirmar"
+            />
           </div>
           <div>
-            <inputLabel fieldName="Contraseña Bitsplit" fieldFor="password" />
-            <passwordInput fieldId="password" fieldName="password" v-model="password"/>
+            <inputLabel fieldFor="password">Contraseña Bitsplit</inputLabel>
+            <passwordInput fieldId="password" fieldName="password" v-model="password" />
           </div>
           <div>
-            <submitButton :fieldDisabled="false" fieldPlaceholder="Confirmar" />
+            <submitButton :fieldDisabled="false">Confirmar</submitButton>
           </div>
         </form>
       </div>
@@ -51,9 +53,15 @@ export default {
     ...mapActions('user', ['budaSignIn']),
     handleSubmit(e) {
       const { api_key, api_secret, password } = this
-      if ( password ) {
+      if (password) {
         const { email, authentication_token } = this.currentUser
-        this.budaSignIn({ api_key, api_secret, password, email, authentication_token })
+        this.budaSignIn({
+          api_key,
+          api_secret,
+          password,
+          email,
+          authentication_token
+        })
           .then(() => {
             console.log('success')
             this.$router.push('/home')

@@ -1,12 +1,35 @@
 <template>
-  <div>
-    <div v-if= !budaSignedIn >
+  <div class="m-12">
+    <div v-if="!budaSignedIn">
       <BudaAlert></BudaAlert>
     </div>
-    <h1>Route: {{ routeName }}</h1>
-    <div v-if= currentUser >
-      <p>Current user: {{ currentUser.email }}</p>
-      <p>API_KEY: {{ currentUser.api_key }}</p>
+    <div class="bg-gray-200 p-10 my-4 rounded-md">
+      <p class="text-5xl font-bold">BitSplit</p>
+      <p
+        class="font-light"
+      >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
+    </div>
+    <div
+      class="flex flex-col justify-center md:flex-row md:justify-start bg-gray-200 p-10 rounded-md"
+    >
+      <UserCard
+        :email="currentUser.email"
+        :clp_balance="userBalanceCLP"
+        :btc_balance="userBalanceBTC"
+        classmod="self-center"
+      />
+      <div class="flex flex-col md:flex-row md:items-start text-center px-4 py-2">
+        <LinkButton
+          classmod="bg-blue-500 hover:bg-blue-700 mx-4 my-3 md:my-0"
+          :fieldDisabled="false"
+          route="payment"
+        >Hacer un pago</LinkButton>
+        <LinkButton
+          classmod="bg-blue-500 hover:bg-blue-700 mx-4"
+          :fieldDisabled="false"
+          route="payment"
+        >Ver mis transacciones</LinkButton>
+      </div>
     </div>
   </div>
 </template>
@@ -14,6 +37,9 @@
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex'
 import BudaAlert from 'components/BudaAlert.vue'
+import LinkButton from '../components/LinkButton'
+import UserCard from '../components/UserCard'
+
 export default {
   name: 'Home',
   data() {
@@ -21,11 +47,21 @@ export default {
       routeName: 'home'
     }
   },
+
+  created() {
+    const { email, authentication_token } = this.currentUser
+    this.getUserBalance({ email, authentication_token })
+  },
   components: {
-    BudaAlert
+    BudaAlert,
+    LinkButton,
+    UserCard
+  },
+  methods: {
+    ...mapActions('user', ['getUserBalance'])
   },
   computed: {
-    ...mapState('user', ['currentUser']),
+    ...mapState('user', ['currentUser', 'userBalanceCLP', 'userBalanceBTC']),
     ...mapGetters('user', ['budaSignedIn'])
   }
 }
