@@ -13,15 +13,13 @@
         <LinkButton
           classmod="bg-blue-500 hover:bg-blue-700 mx-4 my-3 md:my-0"
           :fieldDisabled="false"
-          fieldPlaceholder="Iniciar sesion"
           route="sign-in"
-        />
+        >Iniciar sesion</LinkButton>
         <LinkButton
           classmod="bg-blue-500 hover:bg-blue-700 mx-4"
           :fieldDisabled="false"
-          fieldPlaceholder="Registrarse"
           route="sign-up"
-        />
+        >Registrarse</LinkButton>
       </div>
     </div>
   </div>

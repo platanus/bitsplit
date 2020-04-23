@@ -22,15 +22,13 @@
         <LinkButton
           classmod="bg-blue-500 hover:bg-blue-700 mx-4 my-3 md:my-0"
           :fieldDisabled="false"
-          fieldPlaceholder="Hacer un pago"
           route="payment"
-        />
+        >Hacer un pago</LinkButton>
         <LinkButton
           classmod="bg-blue-500 hover:bg-blue-700 mx-4"
           :fieldDisabled="false"
-          fieldPlaceholder="Ver mis transacciones"
           route="payment"
-        />
+        >Ver mis transacciones</LinkButton>
       </div>
     </div>
   </div>
