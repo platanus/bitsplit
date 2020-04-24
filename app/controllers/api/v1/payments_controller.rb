@@ -7,11 +7,11 @@ class Api::V1::PaymentsController < Api::V1::BaseController
         receiver = User.where(email: params[:receiver_email]).first
         if receiver.nil? 
             @error_message = "no user found with given email" 
-            render "error"
+            render "error" and return
         end
         if sender.api_key.nil? || receiver.api_key.nil?
             @error_message = "both users must have their buda api_keys" 
-            render "error"
+            render "error" and return
         end
         sender_api_key, sender_api_secret = sender.get_buda_keys()
         receiver_api_key, receiver_api_secret = receiver.get_buda_keys()
@@ -20,7 +20,7 @@ class Api::V1::PaymentsController < Api::V1::BaseController
         invoice = buda_receiver.generate_invoice(bitcoins_amount)
         if !invoice.has_key? "invoice"
             @error_message = invoice
-            render "error"
+            render "error" and return 
         end
         invoice_body = JSON.parse(invoice.body)
         invoice_id = invoice_body["invoice"]["id"]
@@ -35,7 +35,7 @@ class Api::V1::PaymentsController < Api::V1::BaseController
         if !invoice_payment.has_key? "withdrawal"
           @error_message = invoice_payment 
           Payment.update(:completed => false)
-          render "error"
+          render "error" and return
         end
       
         # Use firebase service to send payment notification
