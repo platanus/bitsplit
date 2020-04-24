@@ -40,7 +40,7 @@
             />
           </div>
           <div>
-            <submitButton size="full" :fieldDisabled="false">Pagar</submitButton>
+            <submitButton width="full" :fieldDisabled="false">Pagar</submitButton>
           </div>
         </form>
       </div>
@@ -74,8 +74,7 @@ export default {
     ...mapState('user', ['currentUser', 'userBalanceCLP', 'userBalanceBTC'])
   },
   created() {
-    const { email, authentication_token } = this.currentUser
-    this.getUserBalance({ email, authentication_token })
+    this.getUserBalance()
   },
   watch: {
     amount: debounce(function() {
@@ -87,8 +86,7 @@ export default {
     getNewQuotation() {
       const { amount } = this
       if (amount >= 100) {
-        const { email, authentication_token } = this.currentUser
-        this.getQuotation({ amount, email, authentication_token })
+        this.getQuotation({ amount })
           .then(balance => {
             this.quotationCLP = balance.amount_clp[0]
             this.quotationBTC = balance.amount_btc[0]
@@ -101,12 +99,9 @@ export default {
     handleSubmit(e) {
       const { amount, receiver_email } = this
       if (amount && receiver_email) {
-        const { email, authentication_token } = this.currentUser
         this.sendPayment({
-          payment_amount: parseFloat(amount),
-          receiver_email,
-          email,
-          authentication_token
+          payment_amount: parseFloat(this.quotationBTC),
+          receiver_email
         })
           .then(() => {
             // TODO confirm page

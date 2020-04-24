@@ -19,7 +19,7 @@
         classmod="self-center"
       />
       <div class="flex flex-col md:flex-row md:items-start text-center px-4 py-2">
-        <LinkButton
+        <LinkButton v-if="budaSignedIn"
           classmod="bg-blue-500 hover:bg-blue-700 mx-4 my-3 md:my-0"
           :fieldDisabled="false"
           route="payment"
@@ -49,8 +49,9 @@ export default {
   },
 
   created() {
-    const { email, authentication_token } = this.currentUser
-    this.getUserBalance({ email, authentication_token })
+    if (this.budaSignedIn) {
+      this.getUserBalance()
+    }
   },
   components: {
     BudaAlert,

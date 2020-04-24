@@ -5,14 +5,14 @@ exports[`BudaIndex matches snapshot 1`] = `
   <center>
     <div class="w-full max-w-xs">
       <div>
-        <textfield-stub textvalue1="¡Ya estás conectado a una cuenta Buda! ¿Qué desear hacer?"></textfield-stub>
+        <textfield-stub>¡Ya estás conectado a una cuenta Buda! ¿Qué desear hacer?"</textfield-stub>
       </div>
       <div class="inline">
         <div class="pb-6">
-          <submitbutton-stub color="secondary" wide="full">Actualizar Keys</submitbutton-stub>
+          <submitbutton-stub color="secondary" width="full">Actualizar Keys</submitbutton-stub>
         </div>
         <div class="pb-6">
-          <submitbutton-stub color="secondary" wide="full">Desconectar Buda</submitbutton-stub>
+          <submitbutton-stub color="secondary" width="full">Desconectar Buda</submitbutton-stub>
         </div>
       </div>
     </div>

@@ -4,9 +4,7 @@
       <div class="w-full max-w-xs">
         <form @submit.prevent="handleSubmit">
           <div>
-            <textField
-              textvalue1="¿Estás seguro de querer desconectar tu cuenta Buda? Por favor ingresa tu contraseña para confirmar"
-            />
+            <textField>¿Estás seguro de querer desconectar tu cuenta Buda? Por favor ingresa tu contraseña para confirmar</textField>
           </div>
           <div>
             <inputLabel fieldFor="password">Contraseña Bitsplit</inputLabel>
@@ -50,17 +48,14 @@ export default {
     ...mapState('user', ['currentUser'])
   },
   methods: {
-    ...mapActions('user', ['budaSignIn']),
+    ...mapActions('user', ['budaSignOut']),
     handleSubmit(e) {
       const { api_key, api_secret, password } = this
       if (password) {
-        const { email, authentication_token } = this.currentUser
-        this.budaSignIn({
+        this.budaSignOut({
           api_key,
           api_secret,
-          password,
-          email,
-          authentication_token
+          password
         })
           .then(() => {
             console.log('success')

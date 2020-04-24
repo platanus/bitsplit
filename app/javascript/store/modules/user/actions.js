@@ -146,123 +146,157 @@ export default {
       })
   },
   [budaSignIn]({ commit, dispatch }, payload) {
-    // Hacemos fetch a la api con data de payload
     const fetchPromise = budaSyncApi(payload)
     return fetchPromise
       .then(res => {
-        if (res.data) {
-          dispatch(
-            'alert/success_alert',
-            'Cuenta Buda sincronizada correctamente',
-            { root: true }
-          )
-          const fetchPromiseUser = getCurrentUserApi()
-          return fetchPromiseUser.then(res => {
-            if (res.data.data.attributes) {
-              localStorage.setItem(
-                'currentUser',
-                JSON.stringify(res.data.data.attributes)
-              )
-              commit(SIGNIN_SUCCESS, res.data.data.attributes)
-            }
+        dispatch(
+          'alert/success_alert',
+          'Cuenta Buda sincronizada correctamente',
+          { root: true }
+        )
+        const fetchPromiseUser = getCurrentUserApi()
+        return fetchPromiseUser.then(res => {
+          if (res.data.data.attributes) {
+            localStorage.setItem(
+              'currentUser',
+              JSON.stringify(res.data.data.attributes)
+            )
+            commit(SIGNIN_SUCCESS, res.data.data.attributes)
             return
-          })
-        } else {
-          // Error de contraseña
-          commit(SIGNUP_FAIL)
-          dispatch('alert/error_alert', 'Contraseña incorrecta', {
-            root: true
-          })
-          throw new Error('Contraseña incorrecta')
-        }
+          }
+        })
       })
       .catch(err => {
-        // Hay un error en el fetch
-        dispatch('alert/error_alert', 'Error desconocido', { root: true })
-        throw new Error('Error desconocido')
+        if (err.response) {
+          dispatch(
+            'alert/error_alert',
+            'Error conectando cuenta. Revise los datos ingresados',
+            { root: true }
+          )
+          throw new Error('Error conectando cuenta. Revise los datos ingresados')
+        } else {
+          dispatch(
+            'alert/error_alert',
+            'Error desconocido',
+            { root: true }
+          )
+          throw new Error('Error desconocido')
+        }
       })
   },
   [budaSignOut]({ commit, dispatch }, payload) {
-    // Hacemos fetch a la api con data de payload (key y secret nulos)
-    return budaSyncApi(payload)
+    const fetchPromise = budaSyncApi(payload)
+    return fetchPromise
       .then(res => {
-        if (res.data) {
-          // Cuenta buda desconectada correctamente
-          localStorage.currentUser.api_key = ''
-          commit(BUDA_SIGNOUT)
-          dispatch(
-            'alert/success_alert',
-            'Cuenta Buda desconectada correctamente',
-            {
-              root: true
-            }
-          )
-          return
-        } else {
-          // Error de contraseña
-          dispatch('alert/error_alert', 'Contraseña incorrecta', {
-            root: true
-          })
-          throw new Error('Contraseña incorrecta')
-        }
+        dispatch(
+          'alert/success_alert',
+          'Cuenta Buda desconectada correctamente',
+          { root: true }
+        )
+        const fetchPromiseUser = getCurrentUserApi()
+        return fetchPromiseUser.then(res => {
+          if (res.data.data.attributes) {
+            localStorage.setItem(
+              'currentUser',
+              JSON.stringify(res.data.data.attributes)
+            )
+            commit(SIGNIN_SUCCESS, res.data.data.attributes)
+            return
+          }
+        })
       })
       .catch(err => {
-        dispatch('alert/error_alert', 'Error desconocido', {
-          root: true
-        })
-        throw new Error('Error desconocido')
+        if (err.response) {
+          dispatch(
+            'alert/error_alert',
+            'Error desconectando cuenta. Revise la contraseña ingresada',
+            { root: true }
+          )
+          throw new Error('Error desconectando cuenta. Revise la contraseña ingresada')
+        } else {
+          dispatch(
+            'alert/error_alert',
+            'Error desconocido',
+            { root: true }
+          )
+          throw new Error('Error desconocido')
+        }
       })
   },
   [getQuotation]({ commit, dispatch }, payload) {
-    // Hacemos fetch a la api con data de payload (key y secret nulos)
     return getQuotationApi(payload)
       .then(res => {
-        if (res.data) {
-          return res.data.data.quotation
-        }
+        return res.data.data.quotation
       })
       .catch(err => {
-        dispatch('alert/error_alert', 'Error desconocido', {
-          root: true
-        })
-        throw new Error('Error desconocido')
+        if (err.response) {
+          dispatch(
+            'alert/error_alert',
+            'Error obteniendo cotización. Revise los datos ingresados',
+            { root: true }
+          )
+          throw new Error('Error obteniendo cotización. Revise los datos ingresados')
+        } else {
+          dispatch(
+            'alert/error_alert',
+            'Error desconocido.',
+            { root: true }
+          )
+          throw new Error('Error desconocido')
+        }
       })
   },
   [getUserBalance]({ commit, dispatch }, payload) {
-    // Hacemos fetch a la api con data de payload (key y secret nulos)
     return getUserBalanceApi(payload)
       .then(res => {
-        if (res.data) {
-          commit(GET_USER_BALANCE_SUCCESS, res.data.data.balance)
-          return
-        }
+        commit(GET_USER_BALANCE_SUCCESS, res.data.data.balance)
+        return
       })
       .catch(err => {
-        dispatch('alert/error_alert', 'Error desconocido', {
-          root: true
-        })
-        throw new Error('Error desconocido')
+        if (err.response) {
+          dispatch(
+            'alert/error_alert',
+            'Error obteniendo balance. Revise sus datos de cuenta',
+            { root: true }
+          )
+          throw new Error('Error obteniendo balance. Revise sus datos de cuenta')
+        } else {
+          dispatch(
+            'alert/error_alert',
+            'Error desconocido.',
+            { root: true }
+          )
+          throw new Error('Error desconocido')
+        }
       })
   },
   [sendPayment]({ commit, dispatch }, payload) {
-    // Hacemos fetch a la api con data de payload (key y secret nulos)
     return sendPaymentApi(payload)
       .then(res => {
-        if (res.data) {
-          commit(SEND_PAYMENT_SUCCESS, res.data)
-          return
-        } else {
-          dispatch('alert/error_alert', 'Datos incorrectos', {
-            root: true
-          })
-          throw new Error('Datos incorrectos')
-        }
+        commit(SEND_PAYMENT_SUCCESS, res.data)
+        dispatch(
+          'alert/success_alert',
+          'Pago realizado correctamente',
+          { root: true }
+        )
+        return
       })
       .catch(err => {
-        dispatch('alert/error_alert', 'Error desconocido', {
-          root: true
-        })
-        throw new Error('Error desconocido')
+        if (err.response) {
+          dispatch(
+            'alert/error_alert',
+            'Error enviando pago. Revise los datos ingresados',
+            { root: true }
+          )
+          throw new Error('Error enviando pago. Revise los datos ingresados')
+        } else {
+          dispatch(
+            'alert/error_alert',
+            'Error desconocido',
+            { root: true }
+          )
+          throw new Error('Error desconocido')
+        }
       })
   }
 }

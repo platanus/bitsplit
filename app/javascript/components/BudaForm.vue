@@ -4,11 +4,9 @@
       <div class="w-full max-w-xs">
         <form @submit.prevent="handleSubmit">
           <div>
-            <textField
-              textvalue1="Ingresa el API_KEY y API_SECRET de tu cuenta Buda. Puedes acceder a ellos en tu perfil de"
-              linktext="www.buda.com"
-              href="https://www.buda.com"
-            />
+            <textField>
+              Ingresa el API_KEY y API_SECRET de tu cuenta Buda. Puedes acceder a ellos en tu perfil de <a href="https://www.buda.com">www.buda.com</a>
+            </textField>
           </div>
           <div>
             <inputLabel fieldName="API_KEY">key</inputLabel>
@@ -64,13 +62,10 @@ export default {
     handleSubmit(e) {
       const { api_key, api_secret, password } = this
       if (api_key && api_secret && password) {
-        const { email, authentication_token } = this.currentUser
         this.budaSignIn({
           api_key,
           api_secret,
-          password,
-          email,
-          authentication_token
+          password
         })
           .then(() => {
             console.log('success')

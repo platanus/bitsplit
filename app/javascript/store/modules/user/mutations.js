@@ -58,8 +58,8 @@ export default {
     // TODO
   },
   [GET_USER_BALANCE_SUCCESS](state, balance) {
-    state.userBalanceCLP = balance.CLP.available_amount
-    state.userBalanceBTC = balance.BTC.available_amount
+    state.userBalanceCLP = parseFloat(balance.CLP.available_amount)
+    state.userBalanceBTC = parseFloat(balance.BTC.available_amount)
   },
   [GET_USER_BALANCE_FAIL](state) {
     // TODO

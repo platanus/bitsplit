@@ -3,13 +3,13 @@
     <center>
       <div class="w-full max-w-xs">
         <div>
-          <textField textvalue1="¡Ya estás conectado a una cuenta Buda! ¿Qué desear hacer?" />
+          <textField>¡Ya estás conectado a una cuenta Buda! ¿Qué desear hacer?"</textField>
         </div>
         <div class="inline">
           <div class="pb-6">
             <submitButton
               @do-click="change('BudaForm')"
-              wide="full"
+              width="full"
               color="secondary"
               :fieldDisabled="false"
             >Actualizar Keys</submitButton>
@@ -17,7 +17,7 @@
           <div class="pb-6">
             <submitButton
               @do-click="change('BudaLogoutForm')"
-              wide="full"
+              width="full"
               color="secondary"
               :fieldDisabled="false"
             >Desconectar Buda</submitButton>
