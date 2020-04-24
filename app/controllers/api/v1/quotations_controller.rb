@@ -9,7 +9,7 @@ class Api::V1::QuotationsController < ApplicationController
         quotation_bgs = buda_user.quotation(market_id, 'bid_given_size', btc_amount)
         if !quotation_bgs.has_key? "quotation"
             @error_message = quotation_bgs 
-            render "error"
+            render "error" and return
         end
         return set_success_params(quotation_bgs) 
 
