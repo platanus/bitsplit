@@ -1,6 +1,8 @@
 require 'oauth-plugin'
 
 class SplitwiseService < PowerTypes::Service.new(:user)
+
+  @@current_user_info_url = 'https://www.splitwise.com/api/v3.0/get_current_user'
   
   def token_initializer
     request = consumer.get_request_token
@@ -18,6 +20,10 @@ class SplitwiseService < PowerTypes::Service.new(:user)
 
   def get_from_splitwise(url)
     JSON.parse(generate_access_token.get(url).body).with_indifferent_access
+  end
+
+  def get_current_user_info
+    get_from_splitwise(@@current_user_info_url)
   end
   
   private
