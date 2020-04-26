@@ -54,18 +54,27 @@ HOST: http://localhost:5000/api/v1/
 
             
 + Response 200 (application/json)
+        
+    Si el usuario no se ha autenticado con Splitwise, entonces `picture_url` será `null`
 
-        {
-             "data": {
-                 "id": "1",
-                 "type": "user",
-                 "attributes": {
-                     "email": "example@gmail.com",
-                     "api_key": "th3b3stAP1K3Y",
-                     "authentication_token": "smnozAAbYnEX2xVRfS5R"
+    + Body
+
+            {
+                 "data": {
+                     "id": "1",
+                     "type": "user",
+                     "attributes": {
+                         "email": "example@gmail.com",
+                         "api_key": "th3b3stAP1K3Y",
+                         "authentication_token": "smnozAAbYnEX2xVRfS5R",
+                         "picture_url": {
+                            "small": "https://www.theBestImgHostingSite.com/small-img.jpeg",
+                            "medium": "https://www.theBestImgHostingSite.com/medium-img.jpeg",
+                            "large": "https://www.theBestImgHostingSite.com/large-img.jpeg"
+                         }
+                     }
                  }
              }
-         }
         
 
 
