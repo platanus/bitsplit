@@ -7,10 +7,21 @@ class Api::V1::UserSerializer < ActiveModel::Serializer
     :id,
     :email,
     :api_key,
-    :authentication_token
+    :authentication_token,
+    :picture_url,
   )
 
   def api_key
     object.decrypt(object.api_key)
+  end
+
+  def picture_url
+    if object.splitwise_secret == nil || object.splitwise_token == nil
+      return nil
+    else
+      @splitwise_service = SplitwiseService.new(user: object)
+      user_info = JSON.parse(@splitwise_service.get_from_splitwise('https://www.splitwise.com/api/v3.0/get_current_user')).with_indifferent_access
+      return user_info[:user][:picture]
+    end
   end
 end
