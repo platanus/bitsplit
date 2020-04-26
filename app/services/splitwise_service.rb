@@ -17,7 +17,7 @@ class SplitwiseService < PowerTypes::Service.new(:user)
   end
 
   def get_from_splitwise(url)
-    generate_access_token.get(url).body
+    JSON.parse(generate_access_token.get(url).body).with_indifferent_access
   end
   
   private
