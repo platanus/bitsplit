@@ -6,19 +6,19 @@ class BudaUserService < PowerTypes::Service.new(api_key: nil, api_secret: nil)
     url ='https://www.buda.com/api/v2/lightning_network_invoices'
     request_type = 'POST'
     satoshis = satoshi_price(bitcoins_amount)
-    body ={ amount_satoshis: satoshis, currency: 'BTC' }.to_json
+    body = { amount_satoshis: satoshis, currency: 'BTC' }.to_json
     nonce = generate_nonce
-    headers = headers(@api_key, @api_secret, nonce, request_type, path ,body)
+    headers = headers(@api_key, @api_secret, nonce, request_type, path, body)
     post_request(url, body, headers)
   end
 
   def pay_invoice(bitcoins_amount, invoice_code, simulate)
-    path = '/api/v2/currencies/BTC/withdrawals'
-    url ='https://www.buda.com/api/v2/currencies/BTC/withdrawals'
+    path = '/api/v2/reserves/ln-btc/withdrawals'
+    url ='https://www.buda.com/api/v2/reserves/ln-btc/withdrawals'
     request_type = 'POST'
-    body = { amount: bitcoins_amount, reserve_code: 'ln-btc', withdrawal_data:{payment_request: invoice_code}, simulate: simulate }.to_json
+    body = { amount: bitcoins_amount, withdrawal_data:{payment_request: invoice_code}, simulate: simulate }.to_json
     nonce = generate_nonce
-    headers = headers(@api_key, @api_secret, nonce,request_type, path ,body)
+    headers = headers(@api_key, @api_secret, nonce, request_type, path, body)
     post_request(url, body, headers)
 
   end 
