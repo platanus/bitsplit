@@ -21,5 +21,4 @@ class Api::V1::UserSerializer < ActiveModel::Serializer
     splitwise_service = SplitwiseService.new(user: object)
     user_info = splitwise_service.get_current_user_info
     user_info[:user][:picture]
-  end
 end
