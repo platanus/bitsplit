@@ -7,11 +7,14 @@ const state = {
 
 const actions = {
   bindNotifications: firebaseAction(({ bindFirebaseRef, rootState }) => {
-    const userEmail = rootState.user.currentUser.email.replace('.', ',')
+    const userEmailFirebase = rootState.user.currentUser.email.replace('.', ',')
+    const { authentication_token } = rootState.user.currentUser
 
     return bindFirebaseRef(
       'notifications',
-      db.ref(`notifications/${userEmail}`).orderByKey()
+      db
+        .ref(`notifications/${userEmailFirebase}`)
+        .orderByChild(`${userEmailFirebase}-${authentication_token}`)
     )
   }),
   unbindNotifications: firebaseAction(({ unbindFirebaseRef }) => {

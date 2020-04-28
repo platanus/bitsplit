@@ -30,8 +30,20 @@
           route="payment"
           >Hacer un pago</LinkButton
         >
-        <div class="block mx-4 my-3">
-          <CustomTable :data="paymentsHistory.slice().reverse()" :columns="tableColumns">
+        <LinkButton
+          v-if="budaSignedIn"
+          classmod="bg-blue-500 hover:bg-blue-700 mx-4 my-3 md:my-0"
+          :fieldDisabled="false"
+          route="payment"
+          >Hacer un pago</LinkButton
+        >
+      </div>
+      <body class="flex items-center justify-center">
+        <div class="container">
+          <CustomTable
+            :data="paymentsHistory.slice().reverse()"
+            :columns="tableColumns"
+          >
             <template slot-scope="{ row }">
               <td
                 v-if="row.attributes.sender_email != currentUser.email"
@@ -68,6 +80,14 @@
           </CustomTable>
         </div>
       </div>
+    </div>
+    <div class="bg-gray-200 p-10 my-4 rounded-md">
+      <p>{{ unSeenNotifications.length }} Notificaciones sin leer</p>
+      <ul>
+        <li v-for="notification in unSeenNotifications" :key="notification.id">
+          <p>Tipo: {{ notification.type }}</p>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
