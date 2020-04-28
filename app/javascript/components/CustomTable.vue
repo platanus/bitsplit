@@ -28,7 +28,7 @@
 </template>
 <script>
 export default {
-  name: 'table',
+  name: 'custom-table',
   props: {
     columns: Array,
     data: Array
