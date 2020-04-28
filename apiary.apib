@@ -351,3 +351,20 @@ The `password` field is only required if the `api_key` or `api_secret` fields ar
                 }
             }
         }
+        
+## Firebase [/firebase]
+### Update notification seen status [PUT]
+
++ Request (application/json)
+
+    + Headers
+
+            X-User-Email: example@example.com
+            X-User-Token: smnozAAbYnEX2xVRfS5R
+    + Body
+
+            {
+                "notification_token": "-M5y4cigQLy2bwsrSFh2"
+            }
+            
++ Response 200
