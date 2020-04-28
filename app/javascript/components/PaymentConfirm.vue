@@ -1,6 +1,16 @@
 <template>
   <div>
-    Pago confirmado
+    <div>
+      <div>
+        Monto: {{ this.lastPaymentAmount }}
+      </div>
+      <div>
+        Receptor: {{ this.lastPaymentReceiver }}
+      </div>
+      <div>
+        Fecha: {{ this.lastPaymentDate }}
+      </div>
+    </div>
   </div>
 </template>
 
@@ -8,14 +18,15 @@
 import { mapActions, mapState, mapGetters } from 'vuex'
 
 export default {
-  name: 'Payment',
+  name: 'PaymentConfirm',
   data() {
     return {
       routeName: 'PaymentRoute',
     }
   },
   computed: {
-    ...mapState('user', ['currentUser', 'userBalanceCLP', 'userBalanceBTC'])
+    ...mapState('user', ['currentUser', 'userBalanceCLP', 'userBalanceBTC',
+                'lastPaymentAmount','lastPaymentReceiver','lastPaymentDate'])
   },
   created() {
     this.getUserBalance()

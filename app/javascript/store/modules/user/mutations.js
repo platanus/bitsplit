@@ -67,8 +67,10 @@ export default {
   [SEND_PAYMENT_ATTEMPT](state) {
     // TODO
   },
-  [SEND_PAYMENT_SUCCESS](state, quotation) {
-    // TODO
+  [SEND_PAYMENT_SUCCESS](state, attributes) {
+    state.lastPaymentAmount = parseFloat(attributes.amount)
+    state.lastPaymentReceiver= attributes.receiver_email
+    state.lastPaymentDate = attributes.created_at
   },
   [SEND_PAYMENT_FAIL](state) {
     // TODO
