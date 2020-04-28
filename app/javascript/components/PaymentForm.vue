@@ -15,7 +15,7 @@
             >${{ userBalanceBTC }} BTC</label>
             <textInput
               fieldId="amount"
-              fieldType="text"
+              fieldType="number"
               fieldPlaceholder="Monto a transferir"
               fieldName="amount"
               v-model="amount"
@@ -83,6 +83,7 @@ export default {
   },
   methods: {
     ...mapActions('user', ['getQuotation', 'getUserBalance', 'sendPayment']),
+    ...mapActions('component', ['changePaymentComp']),
     getNewQuotation() {
       const { amount } = this
       if (amount >= 100) {
@@ -104,8 +105,8 @@ export default {
           receiver_email
         })
           .then(() => {
-            // TODO confirm page
             console.log('success')
+            this.changePaymentComp('PaymentConfirm')
           })
           .catch(err => {
             console.error(err)

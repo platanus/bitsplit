@@ -54,9 +54,9 @@ export default {
     textField
   },
   methods: {
-    ...mapActions('component', ['changeProfileComp']),
+    ...mapActions('component', ['changeBudaComp']),
     change(form) {
-      this.changeProfileComp(form)
+      this.changeBudaComp(form)
     }
   }
 }
