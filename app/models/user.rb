@@ -36,7 +36,7 @@ class User < ApplicationRecord
   end
 
   def authenticated_with_splitwise
-    return !self.splitwise_secret.nil? && !self.splitwise_token.nil?
+    return !self.splitwise_secret.nil? || !self.splitwise_token.nil?
   end
 
   # source https://dev.to/shobhitic/simple-string-encryption-in-rails-36pi
