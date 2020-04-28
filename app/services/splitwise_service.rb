@@ -17,6 +17,7 @@ class SplitwiseService < PowerTypes::Service.new(:user)
     access = request_token.get_access_token(:oauth_verifier => params[:oauth_verifier])
     update_user(:splitwise_token, access.token)
     update_user(:splitwise_secret, access.secret)
+    update_user(:splitwise_user_id, get_current_user_info[:user][:id])
   end
 
   def get_from_splitwise(url)
