@@ -15,7 +15,8 @@ import {
   GET_USER_BALANCE_SUCCESS,
   SEND_PAYMENT_ATTEMPT,
   SEND_PAYMENT_FAIL,
-  SEND_PAYMENT_SUCCESS
+  SEND_PAYMENT_SUCCESS,
+  GET_PAYMENTS_SUCCESS
 } from '../../mutation-types'
 
 export default {
@@ -72,5 +73,8 @@ export default {
   },
   [SEND_PAYMENT_FAIL](state) {
     // TODO
+  },
+  [GET_PAYMENTS_SUCCESS](state, payments){
+    state.paymentsHistory = payments
   }
 }

@@ -6,7 +6,8 @@ import {
   budaSignOut,
   getQuotation,
   getUserBalance,
-  sendPayment
+  sendPayment,
+  getPayments
 } from '../../action-types'
 
 import {
@@ -26,7 +27,8 @@ import {
   GET_USER_BALANCE_SUCCESS,
   SEND_PAYMENT_ATTEMPT,
   SEND_PAYMENT_FAIL,
-  SEND_PAYMENT_SUCCESS
+  SEND_PAYMENT_SUCCESS,
+  GET_PAYMENTS_SUCCESS
 } from '../../mutation-types'
 
 import {
@@ -37,7 +39,8 @@ import {
   getCurrentUserApi,
   getQuotationApi,
   getUserBalanceApi,
-  sendPaymentApi
+  sendPaymentApi,
+  getPaymentsApi
 } from '../../../api/user.js'
 
 export default {
@@ -173,13 +176,11 @@ export default {
             'Error conectando cuenta. Revise los datos ingresados',
             { root: true }
           )
-          throw new Error('Error conectando cuenta. Revise los datos ingresados')
-        } else {
-          dispatch(
-            'alert/error_alert',
-            'Error desconocido',
-            { root: true }
+          throw new Error(
+            'Error conectando cuenta. Revise los datos ingresados'
           )
+        } else {
+          dispatch('alert/error_alert', 'Error desconocido', { root: true })
           throw new Error('Error desconocido')
         }
       })
@@ -212,13 +213,11 @@ export default {
             'Error desconectando cuenta. Revise la contraseña ingresada',
             { root: true }
           )
-          throw new Error('Error desconectando cuenta. Revise la contraseña ingresada')
-        } else {
-          dispatch(
-            'alert/error_alert',
-            'Error desconocido',
-            { root: true }
+          throw new Error(
+            'Error desconectando cuenta. Revise la contraseña ingresada'
           )
+        } else {
+          dispatch('alert/error_alert', 'Error desconocido', { root: true })
           throw new Error('Error desconocido')
         }
       })
@@ -235,13 +234,11 @@ export default {
             'Error obteniendo cotización. Revise los datos ingresados',
             { root: true }
           )
-          throw new Error('Error obteniendo cotización. Revise los datos ingresados')
-        } else {
-          dispatch(
-            'alert/error_alert',
-            'Error desconocido.',
-            { root: true }
+          throw new Error(
+            'Error obteniendo cotización. Revise los datos ingresados'
           )
+        } else {
+          dispatch('alert/error_alert', 'Error desconocido.', { root: true })
           throw new Error('Error desconocido')
         }
       })
@@ -259,13 +256,11 @@ export default {
             'Error obteniendo balance. Revise sus datos de cuenta',
             { root: true }
           )
-          throw new Error('Error obteniendo balance. Revise sus datos de cuenta')
-        } else {
-          dispatch(
-            'alert/error_alert',
-            'Error desconocido.',
-            { root: true }
+          throw new Error(
+            'Error obteniendo balance. Revise sus datos de cuenta'
           )
+        } else {
+          dispatch('alert/error_alert', 'Error desconocido.', { root: true })
           throw new Error('Error desconocido')
         }
       })
@@ -274,11 +269,9 @@ export default {
     return sendPaymentApi(payload)
       .then(res => {
         commit(SEND_PAYMENT_SUCCESS, res.data)
-        dispatch(
-          'alert/success_alert',
-          'Pago realizado correctamente',
-          { root: true }
-        )
+        dispatch('alert/success_alert', 'Pago realizado correctamente', {
+          root: true
+        })
         return
       })
       .catch(err => {
@@ -290,11 +283,28 @@ export default {
           )
           throw new Error('Error enviando pago. Revise los datos ingresados')
         } else {
+          dispatch('alert/error_alert', 'Error desconocido', { root: true })
+          throw new Error('Error desconocido')
+        }
+      })
+  },
+  [getPayments]({ commit, dispatch }, payload) {
+    return getPaymentsApi(payload)
+      .then(res => {
+        console.log(res)
+        commit(GET_PAYMENTS_SUCCESS, res.data.data)
+        return
+      })
+      .catch(err => {
+        if (err.response) {
           dispatch(
             'alert/error_alert',
-            'Error desconocido',
+            'Error obteniendo el historial de transacciones.',
             { root: true }
           )
+          throw new Error('Error obteniendo el historial de transacciones.')
+        } else {
+          dispatch('alert/error_alert', 'Error desconocido.', { root: true })
           throw new Error('Error desconocido')
         }
       })

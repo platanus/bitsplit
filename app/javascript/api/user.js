@@ -58,6 +58,9 @@ const sendPaymentApi = payload => {
   })
 }
 
+const getPaymentsApi = payload => {
+  return authedAxios.get('/api/v1/payments/')
+}
 export {
   loginApi,
   logoutApi,
@@ -66,5 +69,6 @@ export {
   getCurrentUserApi,
   getQuotationApi,
   getUserBalanceApi,
-  sendPaymentApi
+  sendPaymentApi,
+  getPaymentsApi
 }
