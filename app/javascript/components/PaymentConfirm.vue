@@ -2,19 +2,19 @@
   <div class="flex justify-center m-16">
     <div class="flex flex-col mb-6 mt-6">
       <div>
-        <textField fontsize="full" textcolor="secondary">
+        <textField fontSize="full" fontColor="secondary">
           ¡Pago realizado con éxito!
         </textField>
       </div>
       <div>
         <textField>
-          Monto: {{ this.lastPaymentAmount }}
+          Monto: {{ this.lastPayment.amount }}
         </textField>
         <textField>
-          Receptor: {{ this.lastPaymentReceiver }}
+          Receptor: {{ this.lastPayment.receiver }}
         </textField>
         <textField>
-          Fecha: {{ this.lastPaymentDate }}
+          Fecha: {{ this.lastPayment.date }}
         </textField>
       </div>
     </div>
@@ -36,8 +36,8 @@ export default {
     textField
   },
   computed: {
-    ...mapState('user', ['currentUser', 'userBalanceCLP', 'userBalanceBTC',
-                'lastPaymentAmount','lastPaymentReceiver','lastPaymentDate'])
+    ...mapState('user', ['currentUser', 'userBalanceCLP', 
+                         'userBalanceBTC', 'lastPayment'])
   },
   created() {
     this.getUserBalance()

@@ -2,8 +2,8 @@
   <p 
     class='block mb-5 font-bold text-gray-700'
     :class="[
-      fontsize === 'full' ? 'text-xxl' : 'text-md',
-      textcolor === 'secondary' ? 'text-blue-500' : 'text-gray-700'
+      fontSize === 'full' ? 'text-xxl' : 'text-md',
+      fontColor === 'secondary' ? 'text-blue-500' : 'text-gray-700'
     ]"
   >
     <slot />
@@ -14,8 +14,8 @@
 export default {
   name: 'textField',
   props: {
-    fontsize: String,
-    textcolor: String
+    fontSize: String,
+    fontColor: String
   }
 }
 </script>
