@@ -11,7 +11,7 @@ Rails.application.routes.draw do
       resource :payments, only: [:create, :show]
       namespace :splitwise do
         resource :authentications, only: [:show, :create]
-        resource :debts, only: [:show]
+        resource :debts, only: [:show, :create]
       end
     end
 
