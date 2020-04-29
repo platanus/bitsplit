@@ -1,5 +1,5 @@
-<template id="full">
-  <div id="SignUpForm">
+<template>
+  <div class="mt-16">
     <center>
       <div class="w-full max-w-xs">
         <form @submit.prevent="handleSubmit" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
@@ -79,10 +79,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-#SignUpForm {
-  margin-top: 60px;
-  margin-bottom: 60px;
-}
-</style>

@@ -3,7 +3,7 @@
     class='block mb-5 font-bold text-gray-700'
     :class="[
       fontsize === 'full' ? 'text-xxl' : 'text-md',
-      textcolor === 'secondary' ? 'text-indigo-500' : 'text-gray-700'
+      textcolor === 'secondary' ? 'text-blue-500' : 'text-gray-700'
     ]"
   >
     <slot />
