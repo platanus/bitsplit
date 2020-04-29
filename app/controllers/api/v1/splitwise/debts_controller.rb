@@ -1,6 +1,6 @@
 class Api::V1::Splitwise::DebtsController < ApplicationController
     
-    before_action :generate_splitwise_service
+    before_action :generate_splitwise_service, :generate_payment_service
 
     def show 
         return if !current_user.authenticated_with_splitwise
