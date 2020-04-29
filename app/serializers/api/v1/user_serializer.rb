@@ -16,7 +16,7 @@ class Api::V1::UserSerializer < ActiveModel::Serializer
   end
 
   def picture_url
-    return if object.splitwise_secret.nil? || object.splitwise_token.nil?
+    return if !object.authenticated_with_splitwise
 
     splitwise_service = SplitwiseService.new(user: object)
     user_info = splitwise_service.get_current_user_info
