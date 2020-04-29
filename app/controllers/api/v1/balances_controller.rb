@@ -8,7 +8,7 @@ class Api::V1::BalancesController < ApplicationController
         balance_btc = buda_user.balance('btc')
         if !balance_btc.has_key? "balance"
             @error_message = balance_btc
-            render "error"
+            render "error" and return
         end
         return set_success_params(balance_clp, balance_btc) 
     end 
