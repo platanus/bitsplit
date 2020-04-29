@@ -2,7 +2,8 @@ class Api::V1::PaymentsController < Api::V1::BaseController
     # class Api::V1::PaymentsController < ApplicationController
  
     def create
-        payments_service = PaymentsService.new(sender: current_user, receiver: User.where(email: params[:receiver_email]).first)
+        receiver = User.where(email: params[:receiver_email]).first
+        payments_service = PaymentsService.new(sender: current_user, receiver: receiver)
         success, @error_message, new_payment = payments_service.create_payment(create_params)
 
         if !success

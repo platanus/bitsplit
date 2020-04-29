@@ -7,14 +7,14 @@ class PaymentsService < PowerTypes::Service.new(:sender, :receiver)
         return false, @error_message, nil if !check_users(@sender, @receiver)
 
         sender_api_key, sender_api_secret = @sender.get_buda_keys()
-        receiver_api_key, receiver_api_secret = receiver.get_buda_keys()
-        invoice = receiver_invoice(receiver_api_key, receiver_api_secret, params[:bitcoins_amount])
+        receiver_api_key, receiver_api_secret = @receiver.get_buda_keys()
+        invoice = receiver_invoice(receiver_api_key, receiver_api_secret, params[:payment_amount])
 
         return false, @error_message, nil if !check_invoice(invoice)
 
         invoice_id, invoice_code = invoice_id_and_code(invoice)
-        new_payment = create_new_payment(sender, receiver, params[:bitcoins_amount], invoice_id)
-        invoice_payment = sender_payment(sender_api_key, sender_api_secret, params[:bitcoins_amount], invoice_code)
+        new_payment = create_new_payment(@sender, @receiver, params[:payment_amount], invoice_id)
+        invoice_payment = sender_payment(sender_api_key, sender_api_secret, params[:payment_amount], invoice_code)
 
         return false, @error_message, nil if !check_invoice_payment(invoice_payment)
 
