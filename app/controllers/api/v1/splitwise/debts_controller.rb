@@ -8,7 +8,7 @@ class Api::V1::Splitwise::DebtsController < ApplicationController
     end
 
     def create
-        response = @splitwise_service.payoff_debt(params[:group_id], params[:to_user_id], params[:amount])
+        response = @splitwise_service.payoff_debt(create_params)
         if response.code == "200"
           head(:created)
         else
@@ -17,6 +17,10 @@ class Api::V1::Splitwise::DebtsController < ApplicationController
     end
     
     private
+    def create_params
+      params.permit(:group_id, :to_user_id, :amount)
+    end
+
     def generate_splitwise_service
       @splitwise_service = SplitwiseService.new(user: current_user)
     end

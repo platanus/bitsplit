@@ -3,7 +3,7 @@ class Api::V1::PaymentsController < Api::V1::BaseController
  
     def create
         payments_service = PaymentsService.new(sender: current_user, receiver: User.where(email: params[:receiver_email]).first)
-        success, @error_message, new_payment = payments_service.create_payment(params[:payment_amount])
+        success, @error_message, new_payment = payments_service.create_payment(create_params)
 
         if !success
             render "error" and return
@@ -23,8 +23,8 @@ class Api::V1::PaymentsController < Api::V1::BaseController
 
 
     private
-    def payment_params
-        params.require(:payment_amount)
+    def create_params
+        params.permit(:payment_amount)
     end
 end
 
