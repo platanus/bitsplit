@@ -1,14 +1,21 @@
 <template>
-  <div>
-    <div>
+  <div class="flex justify-center m-16">
+    <div class="flex flex-col mb-6 mt-6">
       <div>
-        Monto: {{ this.lastPaymentAmount }}
+        <textField fontsize="full" textcolor="secondary">
+          ¡Pago realizado con éxito!
+        </textField>
       </div>
       <div>
-        Receptor: {{ this.lastPaymentReceiver }}
-      </div>
-      <div>
-        Fecha: {{ this.lastPaymentDate }}
+        <textField>
+          Monto: {{ this.lastPaymentAmount }}
+        </textField>
+        <textField>
+          Receptor: {{ this.lastPaymentReceiver }}
+        </textField>
+        <textField>
+          Fecha: {{ this.lastPaymentDate }}
+        </textField>
       </div>
     </div>
   </div>
@@ -16,6 +23,7 @@
 
 <script>
 import { mapActions, mapState, mapGetters } from 'vuex'
+import textField from '../components/TextField'
 
 export default {
   name: 'PaymentConfirm',
@@ -23,6 +31,9 @@ export default {
     return {
       routeName: 'PaymentRoute',
     }
+  },
+  components: {
+    textField
   },
   computed: {
     ...mapState('user', ['currentUser', 'userBalanceCLP', 'userBalanceBTC',
