@@ -42,14 +42,14 @@
                 <span
                   class="px-2 items-center inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
                 >
-                  Received
+                  Recibido
                 </span>
               </td>
               <td v-else class="border-grey-light border hover:bg-gray-100 p-3">
                 <span
                   class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"
                 >
-                  Sent
+                  Enviado
                 </span>
               </td>
               <td class="border-grey-light border hover:bg-gray-100 p-3">
@@ -86,7 +86,7 @@ export default {
   data() {
     return {
       routeName: 'home',
-      tableColumns: ['Type', 'Email sender', 'Email receiver', 'Amount', 'Date']
+      tableColumns: ['Tipo', 'Envía', 'Recibe', 'Cantidad', 'Fecha']
     }
   },
 
