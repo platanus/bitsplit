@@ -5,5 +5,6 @@ export default {
   userLoading: false,
   userBalanceCLP: 0,
   userBalanceBTC: 0,
-  lastPayment: null
+  lastPayment: null,
+  paymentsHistory: []
 }

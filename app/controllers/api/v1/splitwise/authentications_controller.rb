@@ -1,4 +1,4 @@
-class Api::V1::SplitwiseController < ApplicationController
+class Api::V1::Splitwise::AuthenticationsController < ApplicationController
 
   # the token verification is skiped for show as this
   # path is used by Splitwise to return the information
