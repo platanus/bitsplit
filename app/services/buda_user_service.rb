@@ -51,7 +51,7 @@ class BudaUserService < PowerTypes::Service.new(api_key: nil, api_secret: nil)
   end
 
   def request_signature(api_secret, nonce, request_type, path, payload = nil)
-      signature = self.signature(request_type, path, nonce, payload)
+      signature = signature(request_type, path, nonce, payload)
       OpenSSL::HMAC.hexdigest(
       OpenSSL::Digest.new('sha384'),
       api_secret, signature)

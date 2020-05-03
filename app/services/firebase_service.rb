@@ -16,6 +16,10 @@ class FirebaseService < PowerTypes::Service.new
     def save_token
         response = @firebase.update("tokens", { @clean_email.to_sym => @user.authentication_token })
     end
+
+    def update_notification_status(token)
+        response = @firebase.update("notifications/#{@clean_email}/#{token}", {:seen => true})
+    end
   
     private
     def initialize(user)

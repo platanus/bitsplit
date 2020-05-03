@@ -6,7 +6,11 @@ class Api::V1::UsersController < Api::V1::BaseController
   acts_as_token_authentication_handler_for User, except: [:create]
 
   def create
-    respond_with User.create!(user_params)
+    new_user = User.create!(user_params)
+    # Use firebase service to save token
+    FirebaseService.new(new_user).save_token()
+
+    respond_with new_user
   end
 
 

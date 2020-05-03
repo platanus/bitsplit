@@ -9,10 +9,13 @@ Rails.application.routes.draw do
       resource :quotations, only: [:create]
       resource :balances, only: [:show]
       resource :payments, only: [:create, :show]
+      resource :firebase, only: [:update]
+      
       namespace :splitwise do
         resource :authentications, only: [:show, :create]
         resource :debts, only: [:show, :create]
       end
+
     end
 
   end

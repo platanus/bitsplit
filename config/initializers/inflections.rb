@@ -18,4 +18,5 @@
 
 ActiveSupport::Inflector.inflections do |inflect|
     inflect.uncountable %w( splitwise )
+    inflect.uncountable %w( firebase )
  end
