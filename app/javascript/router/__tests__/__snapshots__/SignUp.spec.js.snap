@@ -10,12 +10,12 @@ exports[`SignUp matches snapshot 1`] = `
           <textinput-stub value="" fieldid="email" fieldtype="text" fieldplaceholder="Email" fieldname="email" classmod=""></textinput-stub>
         </div>
         <div class="mb-4">
-          <inputlabel-stub fieldfor="password">Password</inputlabel-stub>
+          <inputlabel-stub fieldfor="password">Contraseña</inputlabel-stub>
           <passwordinput-stub value="" fieldid="password" fieldname="password"></passwordinput-stub>
-          <inputlabel-stub fieldfor="password">Repeat your password</inputlabel-stub>
+          <inputlabel-stub fieldfor="password">Confirme su contraseña</inputlabel-stub>
           <passwordinput-stub value="" fieldid="confirm_password" fieldname="confirm_password"></passwordinput-stub>
         </div>
-        <submitbutton-stub classmod="bg-blue-500 hover:bg-blue-700">Sign Up</submitbutton-stub>
+        <submitbutton-stub classmod="bg-blue-500 hover:bg-blue-700">Registrarse</submitbutton-stub>
       </form>
     </div>
   </center>

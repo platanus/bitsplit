@@ -12,7 +12,7 @@ exports[`SignIn matches snapshot 1`] = `
         <div class="mb-4">
           <inputlabel-stub fieldfor="password">Contraseña Bitsplit</inputlabel-stub>
           <passwordinput-stub value="" fieldid="password" fieldname="password"></passwordinput-stub>
-          <submitbutton-stub classmod="bg-blue-500 hover:bg-blue-700">Log In</submitbutton-stub>
+          <submitbutton-stub classmod="bg-blue-500 hover:bg-blue-700">Ingresar</submitbutton-stub>
         </div>
       </form>
     </div>
