@@ -33,7 +33,7 @@
       </div>
       <body class="flex items-center justify-center">
         <div class="container">
-          <CustomTable :data="paymentsHistory" :columns="tableColumns">
+          <CustomTable :data="paymentsHistory.slice().reverse()" :columns="tableColumns">
             <template slot-scope="{ row }">
               <td
                 v-if="row.attributes.sender_email != currentUser.email"
