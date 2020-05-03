@@ -16,7 +16,7 @@
           <div class="mb-4">
             <inputLabel fieldFor="password">Contraseña Bitsplit</inputLabel>
             <passwordInput fieldId="password" fieldName="password" v-model="password" />
-            <submitButton classmod="bg-blue-500 hover:bg-blue-700" :fieldDisabled="false">Log In</submitButton>
+            <submitButton classmod="bg-blue-500 hover:bg-blue-700" :fieldDisabled="false">Ingresar</submitButton>
           </div>
         </form>
       </div>

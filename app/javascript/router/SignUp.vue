@@ -14,17 +14,17 @@
             />
           </div>
           <div class="mb-4">
-            <inputLabel fieldFor="password">Password</inputLabel>
+            <inputLabel fieldFor="password">Contraseña</inputLabel>
 
             <passwordInput fieldId="password" fieldName="password" v-model="password" />
-            <inputLabel fieldFor="password">Repeat your password</inputLabel>
+            <inputLabel fieldFor="password">Confirme su contraseña</inputLabel>
             <passwordInput
               fieldId="confirm_password"
               fieldName="confirm_password"
               v-model="confirm_password"
             />
           </div>
-          <submitButton classmod="bg-blue-500 hover:bg-blue-700" :fieldDisabled="false">Sign Up</submitButton>
+          <submitButton classmod="bg-blue-500 hover:bg-blue-700" :fieldDisabled="false">Registrarse</submitButton>
         </form>
       </div>
     </center>

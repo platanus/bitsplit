@@ -5,7 +5,7 @@
         type="button"
         class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
       >
-        <router-link :to="homeRoute">Home</router-link>
+        <router-link :to="homeRoute">Inicio</router-link>
       </button>
       <button
         type="button"
@@ -17,13 +17,13 @@
         type="button"
         class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
       >
-        <router-link :to="payRoute">Pay</router-link>
+        <router-link :to="payRoute">Pagar</router-link>
       </button>
       <button
         type="button"
         class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
       >
-        <button @click="signOut()">Log Out</button>
+        <button @click="signOut()">Cerrar Sesión</button>
       </button>
     </template>
     <template v-else>
@@ -31,7 +31,7 @@
         type="button"
         class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
       >
-        <router-link :to="landingRoute">Landing</router-link>
+        <router-link :to="landingRoute">Bienvenido!</router-link>
       </button>
       <button
         type="button"
