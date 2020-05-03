@@ -1,6 +1,6 @@
 <template>
   <div>
-    <component :is="budaProfileComp"></component>
+    <component :is="budaComp"></component>
   </div>
 </template>
 
@@ -23,18 +23,18 @@ export default {
     BudaIndex
   },
   computed: {
-    ...mapState('component', ['budaProfileComp']),
+    ...mapState('component', ['budaComp']),
   },
   methods: {
-    ...mapActions('component', ['changeProfileComp']),
+    ...mapActions('component', ['changeBudaComp']),
     ...mapGetters('user', ['budaSignedIn'])
   },
   created() {
     if (this.budaSignedIn()) {
-      this.changeProfileComp('BudaIndex')
+      this.changeBudaComp('BudaIndex')
     }
     else {
-      this.changeProfileComp('BudaForm')
+      this.changeBudaComp('BudaForm')
     }
   }
 }

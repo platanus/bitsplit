@@ -1,7 +1,10 @@
 /* eslint-disable no-undef */
 module.exports = {
   theme: {
-    extend: {},
+    fontSize: {
+      xxl: '3.6rem',
+      xl: '2.6rem'
+    }
   },
   variants: {},
   plugins: [],

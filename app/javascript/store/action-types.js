@@ -9,7 +9,8 @@ export const getQuotation = 'getQuotation'
 export const getUserBalance = 'getUserBalance'
 export const sendPayment = 'sendPayment'
 
-export const changeProfileComp = 'changeProfileComp'
+export const changeBudaComp = 'changeBudaComp'
+export const changePaymentComp = 'changePaymentComp'
 
 export const success_alert = 'success_alert'
 export const error_alert = 'error_alert'

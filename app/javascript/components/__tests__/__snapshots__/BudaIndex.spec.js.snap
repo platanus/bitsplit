@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`BudaIndex matches snapshot 1`] = `
-<div id="budaSignInForm">
+<div class="mt-16">
   <center>
     <div class="w-full max-w-xs">
       <div>

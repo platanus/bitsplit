@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`SignUp matches snapshot 1`] = `
-<div id="SignUpForm">
+<div class="mt-16">
   <center>
     <div class="w-full max-w-xs">
       <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">

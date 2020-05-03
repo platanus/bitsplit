@@ -1,5 +1,5 @@
 <template>
-  <div id="budaSignInForm">
+  <div class="mt-16">
     <center>
       <div class="w-full max-w-xs">
         <div>
@@ -54,17 +54,10 @@ export default {
     textField
   },
   methods: {
-    ...mapActions('component', ['changeProfileComp']),
+    ...mapActions('component', ['changeBudaComp']),
     change(form) {
-      this.changeProfileComp(form)
+      this.changeBudaComp(form)
     }
   }
 }
 </script>
-
-<style scoped>
-#budaSignInForm {
-  margin-top: 60px;
-  margin-bottom: 60px;
-}
-</style>

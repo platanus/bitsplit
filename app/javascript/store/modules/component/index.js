@@ -1,19 +1,28 @@
-import { changeProfileComp } from '../../action-types'
-import { MUTATE_PROFILE_COMPONENT } from '../../mutation-types'
+import { changeBudaComp } from '../../action-types'
+import { changePaymentComp } from '../../action-types'
+import { MUTATE_BUDA_COMPONENT } from '../../mutation-types'
+import { MUTATE_PAYMENT_COMPONENT } from '../../mutation-types'
 
 const state = {
-  budaProfileComp: '' // Cambia el componente a renderear en la sección Buda
+  budaComp: '', // Cambia el componente a renderear en la sección Buda
+  paymentComp: '' // Cambia el componente a renderear en la sección pago
 }
 
 const actions = {
-  [changeProfileComp]({commit}, payload) {
-    commit(MUTATE_PROFILE_COMPONENT, payload)
+  [changeBudaComp]({commit}, payload) {
+    commit(MUTATE_BUDA_COMPONENT, payload)
+  },
+  [changePaymentComp]({commit}, payload) {
+    commit(MUTATE_PAYMENT_COMPONENT, payload)
   }
 }
 
 const mutations = {
-  [MUTATE_PROFILE_COMPONENT](state, payload) {
-    state.budaProfileComp = payload
+  [MUTATE_BUDA_COMPONENT](state, payload) {
+    state.budaComp = payload
+  },
+  [MUTATE_PAYMENT_COMPONENT](state, payload) {
+    state.paymentComp = payload
   }
 }
 
