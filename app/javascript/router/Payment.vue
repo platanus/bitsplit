@@ -144,7 +144,7 @@ function debounce(func, wait, immediate) {
   font-size: 2.6rem;
 }
 .max-w-xs {
-  max-width: 46rem;
+  max-width: 34rem;
 }
 .shadow-md {
   box-shadow: 0 10px 10px -1px rgba(85, 63, 167, 0.1),
