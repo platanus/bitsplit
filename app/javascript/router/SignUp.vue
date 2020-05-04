@@ -24,7 +24,7 @@
               v-model="confirm_password"
             />
           </div>
-          <submitButton classmod="bg-blue-500 hover:bg-blue-700" :fieldDisabled="false">Sign Up</submitButton>
+          <submitButton :loading="signUpLoading">Sign Up</submitButton>
         </form>
       </div>
     </center>
@@ -44,8 +44,7 @@ export default {
       routeName: 'SignUp',
       email: '',
       password: '',
-      confirm_password: '',
-      loading: false
+      confirm_password: ''
     }
   },
   components: {
@@ -55,7 +54,7 @@ export default {
     inputLabel
   },
   computed: {
-    ...mapState('user', ['currentUser'])
+    ...mapState('user', ['currentUser','signUpLoading'])
   },
   methods: {
     ...mapActions('user', ['signUp']),

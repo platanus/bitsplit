@@ -21,27 +21,27 @@ import {
 
 export default {
   [SIGNIN_ATTEMPT](state, currentUser) {
-    state.userLoading = true
+    state.signInLoading = true
   },
   [SIGNIN_SUCCESS](state, currentUser) {
-    state.userLoading = false
+    state.signInLoading = false
     state.currentUser = currentUser
   },
   [SIGNIN_FAIL](state) {
-    state.userLoading = false
+    state.signInLoading = false
   },
   [SIGNOUT](state) {
     state.currentUser = null
   },
   [SIGNUP_ATTEMPT](state) {
-    state.userLoading = true
+    state.signUpLoading = true
   },
   [SIGNUP_SUCCESS](state, currentUser) {
-    state.userLoading = false
+    state.signUpLoading = false
     state.currentUser = currentUser
   },
   [SIGNUP_FAIL](state) {
-    state.userLoading = false
+    state.signUpLoading = false
   },
   [BUDA_SIGNIN_ATTEMPT](state, currentUser) {
     // TODO
