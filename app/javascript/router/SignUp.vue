@@ -61,10 +61,8 @@ export default {
     handleSubmit(e) {
       const { email, password, confirm_password } = this
       // TODO logger
-      console.log(email, password, confirm_password)
       if (email && password && password === confirm_password) {
         // TODO logger
-        console.log('Correct confirmation')
         this.signUp({ email, password })
           .then(() => {
             // TODO logger

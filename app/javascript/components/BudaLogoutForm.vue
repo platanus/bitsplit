@@ -11,7 +11,7 @@
             <passwordInput fieldId="password" fieldName="password" v-model="password" />
           </div>
           <div>
-            <submitButton :fieldDisabled="false">Confirmar</submitButton>
+            <submitButton>Confirmar</submitButton>
           </div>
         </form>
       </div>
