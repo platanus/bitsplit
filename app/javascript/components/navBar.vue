@@ -65,8 +65,7 @@ export default {
       homeRoute: 'home',
       budaRoute: 'buda',
       landingRoute: '/',
-      payRoute: 'payment',
-      documents: []
+      payRoute: 'payment'
     }
   },
   components: {

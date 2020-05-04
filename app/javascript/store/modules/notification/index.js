@@ -3,7 +3,6 @@ import { db } from '../../../config/db'
 
 import { markAsSeenApi } from '../../../api/notifications'
 
-console.log(firebaseAction)
 const state = {
   notifications: []
 }
