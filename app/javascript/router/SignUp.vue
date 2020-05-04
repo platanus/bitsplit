@@ -24,7 +24,7 @@
               v-model="confirm_password"
             />
           </div>
-          <submitButton classmod="bg-blue-500 hover:bg-blue-700" :fieldDisabled="false">Registrarse</submitButton>
+          <submitButton :loading="signUpLoading">Sign Up</submitButton>
         </form>
       </div>
     </center>
@@ -44,8 +44,7 @@ export default {
       routeName: 'SignUp',
       email: '',
       password: '',
-      confirm_password: '',
-      loading: false
+      confirm_password: ''
     }
   },
   components: {
@@ -55,17 +54,15 @@ export default {
     inputLabel
   },
   computed: {
-    ...mapState('user', ['currentUser'])
+    ...mapState('user', ['currentUser', 'signUpLoading'])
   },
   methods: {
     ...mapActions('user', ['signUp']),
     handleSubmit(e) {
       const { email, password, confirm_password } = this
       // TODO logger
-      console.log(email, password, confirm_password)
       if (email && password && password === confirm_password) {
         // TODO logger
-        console.log('Correct confirmation')
         this.signUp({ email, password })
           .then(() => {
             // TODO logger

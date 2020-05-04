@@ -266,6 +266,7 @@ export default {
       })
   },
   [sendPayment]({ commit, dispatch }, payload) {
+    commit(SEND_PAYMENT_ATTEMPT)
     return sendPaymentApi(payload)
       .then(res => {
         commit(SEND_PAYMENT_SUCCESS, res.data.data.attributes)
@@ -277,6 +278,7 @@ export default {
         return
       })
       .catch(err => {
+        commit(SEND_PAYMENT_FAIL)
         if (err.response) {
           dispatch(
             'alert/error_alert',
@@ -293,7 +295,6 @@ export default {
   [getPayments]({ commit, dispatch }, payload) {
     return getPaymentsApi(payload)
       .then(res => {
-        console.log(res)
         commit(GET_PAYMENTS_SUCCESS, res.data.data)
         return
       })

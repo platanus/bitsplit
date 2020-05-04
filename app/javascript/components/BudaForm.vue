@@ -21,7 +21,7 @@
             <passwordInput fieldId="password" fieldName="password" v-model="password" />
           </div>
           <div>
-            <submitButton :fieldDisabled="false">Sincronizar Buda</submitButton>
+            <submitButton>Sincronizar Buda</submitButton>
           </div>
         </form>
       </div>

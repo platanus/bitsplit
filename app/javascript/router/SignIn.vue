@@ -16,8 +16,8 @@
           <div class="mb-4">
             <inputLabel fieldFor="password">Contraseña Bitsplit</inputLabel>
             <passwordInput fieldId="password" fieldName="password" v-model="password" />
-            <submitButton classmod="bg-blue-500 hover:bg-blue-700" :fieldDisabled="false">Ingresar</submitButton>
           </div>
+          <submitButton :loading="signInLoading">Log In</submitButton>
         </form>
       </div>
     </center>
@@ -37,8 +37,7 @@ export default {
     return {
       routeName: 'Sign In',
       email: '',
-      password: '',
-      loading: false
+      password: ''
     }
   },
   components: {
@@ -48,7 +47,7 @@ export default {
     inputLabel
   },
   computed: {
-    ...mapState('user', ['currentUser'])
+    ...mapState('user', ['currentUser', 'signInLoading'])
   },
   methods: {
     ...mapActions('user', ['signIn']),

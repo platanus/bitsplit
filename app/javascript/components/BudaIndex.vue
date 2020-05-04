@@ -11,7 +11,6 @@
               @do-click="change('BudaForm')"
               width="full"
               color="secondary"
-              :fieldDisabled="false"
             >Actualizar Keys</submitButton>
           </div>
           <div class="pb-6">
@@ -19,7 +18,6 @@
               @do-click="change('BudaLogoutForm')"
               width="full"
               color="secondary"
-              :fieldDisabled="false"
             >Desconectar Buda</submitButton>
           </div>
         </div>

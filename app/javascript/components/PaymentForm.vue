@@ -1,6 +1,7 @@
 <template>
     <div class="flex justify-center m-16">
       <div class="w-full max-w-xs">
+        <spinner v-if="paymentLoading" ></spinner>
         <form @submit.prevent="handleSubmit">
           <div class="flex flex-col mb-6 mt-6">
             <label class="block text-gray-700 text-lg" for="account_balance">Saldo disponible:</label>
@@ -39,7 +40,7 @@
             />
           </div>
           <div>
-            <submitButton width="full" :fieldDisabled="false">Pagar</submitButton>
+            <submitButton width="full" :loading="paymentLoading">Pagar</submitButton>
           </div>
         </form>
       </div>
@@ -51,6 +52,7 @@ import { mapActions, mapState, mapGetters } from 'vuex'
 import textInput from '../components/Input'
 import inputLabel from '../components/InputLabel'
 import submitButton from '../components/SubmitButton'
+import spinner from '../components/Spinner'
 
 export default {
   name: 'Payment',
@@ -66,10 +68,11 @@ export default {
   components: {
     textInput,
     submitButton,
-    inputLabel
+    inputLabel,
+    spinner
   },
   computed: {
-    ...mapState('user', ['currentUser', 'userBalanceCLP', 'userBalanceBTC'])
+    ...mapState('user', ['currentUser', 'paymentLoading', 'userBalanceCLP', 'userBalanceBTC'])
   },
   created() {
     this.getUserBalance()
