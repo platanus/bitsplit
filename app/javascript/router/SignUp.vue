@@ -14,10 +14,10 @@
             />
           </div>
           <div class="mb-4">
-            <inputLabel fieldFor="password">Password</inputLabel>
+            <inputLabel fieldFor="password">Contraseña</inputLabel>
 
             <passwordInput fieldId="password" fieldName="password" v-model="password" />
-            <inputLabel fieldFor="password">Repeat your password</inputLabel>
+            <inputLabel fieldFor="password">Confirme su contraseña</inputLabel>
             <passwordInput
               fieldId="confirm_password"
               fieldName="confirm_password"
