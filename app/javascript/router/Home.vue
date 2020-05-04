@@ -21,18 +21,16 @@
         classmod="self-center"
       />
       <div
-        class="flex flex-col md:flex-row md:items-start text-center px-4 py-2"
+        class="text-center px-4 py-2"
       >
         <LinkButton
           v-if="budaSignedIn"
-          classmod="bg-blue-500 hover:bg-blue-700 mx-4 my-3 md:my-0"
+          classmod="block bg-blue-500 hover:bg-blue-700 mx-4 my-3 md:my-0"
           :fieldDisabled="false"
           route="payment"
           >Hacer un pago</LinkButton
         >
-      </div>
-      <body class="flex items-center justify-center">
-        <div class="container">
+        <div class="block mx-4 my-3">
           <CustomTable :data="paymentsHistory.slice().reverse()" :columns="tableColumns">
             <template slot-scope="{ row }">
               <td
@@ -69,7 +67,7 @@
             </template>
           </CustomTable>
         </div>
-      </body>
+      </div>
     </div>
   </div>
 </template>
