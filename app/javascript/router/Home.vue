@@ -81,14 +81,15 @@
         </div>
       </div>
     </div>
-    <div class="bg-gray-200 p-10 my-4 rounded-md">
+    <!-- <div class="bg-gray-200 p-10 my-4 rounded-md">
       <p>{{ unSeenNotifications.length }} Notificaciones sin leer</p>
       <ul>
         <li v-for="notification in unSeenNotifications" :key="notification.id">
-          <p>Tipo: {{ notification.type }}</p>
+          <p>Tipo: {{ notification.seen }}</p>
+          <button @click="markAsSeen(notification['.key'])">Mark as seen</button>
         </li>
       </ul>
-    </div>
+    </div>-->
   </div>
 </template>
 

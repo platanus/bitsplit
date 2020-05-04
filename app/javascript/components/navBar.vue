@@ -13,12 +13,15 @@
       >
         <router-link :to="budaRoute">Buda</router-link>
       </button>
-      <button v-if="budaSignedIn"
+      <button
+        v-if="budaSignedIn"
         type="button"
         class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
       >
         <router-link :to="payRoute">Pagar</router-link>
       </button>
+      <NavBarNotifications />
+
       <button
         type="button"
         class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
@@ -51,6 +54,8 @@
 
 <script>
 import { mapGetters, mapActions, mapState } from 'vuex'
+import NavBarNotifications from '../components/NavBarNotifications'
+
 export default {
   name: 'navBar',
   data() {
@@ -60,23 +65,38 @@ export default {
       homeRoute: 'home',
       budaRoute: 'buda',
       landingRoute: '/',
-      payRoute: 'payment'
+      payRoute: 'payment',
+      documents: []
     }
   },
+  components: {
+    NavBarNotifications
+  },
   methods: {
-    ...mapActions('user', ['signOut'])
+    ...mapActions('user', ['signOut']),
+    ...mapActions('notification', ['bindNotifications', 'unbindNotifications'])
   },
   computed: {
     ...mapState('user', ['currentUser']),
-    ...mapGetters('user', ['signedIn','budaSignedIn'])
+    ...mapGetters('user', ['signedIn', 'budaSignedIn'])
+  },
+  created() {
+    if (!this.signedIn) {
+      this.unbindNotifications()
+      this.$router.push('/')
+    } else {
+      this.bindNotifications()
+    }
   },
   watch: {
     signedIn(isSignedIn) {
       // Cuando cambia el estado de signedIn
       if (!isSignedIn) {
         this.$router.push('/')
+        this.unbindNotifications()
       } else {
         this.$router.push('/home')
+        this.bindNotifications()
       }
     }
   }
