@@ -107,6 +107,7 @@ export default {
   },
   methods: {
     ...mapActions('user', ['getUserBalance', 'getPayments']),
+
     getDate(date) {
       let d = new Date(date)
       return d.toLocaleString('en-US', { hour12: false })

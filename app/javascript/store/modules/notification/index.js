@@ -1,8 +1,9 @@
 import { firebaseAction } from 'vuexfire'
 import { db } from '../../../config/db'
 
-import { markAsSeen } from '../../../api/notifications'
+import { markAsSeenApi } from '../../../api/notifications'
 
+console.log(firebaseAction)
 const state = {
   notifications: []
 }
@@ -22,9 +23,9 @@ const actions = {
   unbindNotifications: firebaseAction(({ unbindFirebaseRef }) => {
     unbindFirebaseRef('notifications')
   }),
-  markAsSeen: ({}, notificationToken) => {
-    return markAsSeen(notificationToken)
-  }
+  markAsSeen: firebaseAction(({}, notificationToken) => {
+    return markAsSeenApi(notificationToken)
+  })
 }
 
 const getters = {
