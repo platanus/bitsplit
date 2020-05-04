@@ -54,7 +54,7 @@ export default {
     inputLabel
   },
   computed: {
-    ...mapState('user', ['currentUser','signUpLoading'])
+    ...mapState('user', ['currentUser', 'signUpLoading'])
   },
   methods: {
     ...mapActions('user', ['signUp']),
