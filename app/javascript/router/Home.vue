@@ -20,9 +20,7 @@
         :btc_balance="userBalanceBTC"
         classmod="self-center"
       />
-      <div
-        class="text-center px-4 py-2"
-      >
+      <div class="text-center px-4 py-2">
         <LinkButton
           v-if="budaSignedIn"
           classmod="block bg-blue-500 hover:bg-blue-700 mx-4 my-3 md:my-0"
@@ -31,7 +29,7 @@
           >Hacer un pago</LinkButton
         >
       </div>
-      <body class="flex items-center justify-center">
+      <div class="flex items-center justify-center">
         <div class="container">
           <CustomTable
             :data="paymentsHistory.slice().reverse()"
