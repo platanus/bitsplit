@@ -66,16 +66,17 @@ export default {
     // TODO
   },
   [SEND_PAYMENT_ATTEMPT](state) {
-    // TODO
+    state.paymentLoading = true
   },
   [SEND_PAYMENT_SUCCESS](state, attributes) {
+    state.paymentLoading = false
     state.lastPayment = { amount: parseFloat(attributes.amount), 
                           receiver: attributes.receiver_email, 
                           date: attributes.created_at 
     }
   },
   [SEND_PAYMENT_FAIL](state) {
-    // TODO
+    state.paymentLoading = false
   },
   [GET_PAYMENTS_SUCCESS](state, payments){
     state.paymentsHistory = payments
