@@ -1,4 +1,4 @@
-<template>
+\<template>
   <div>
     <button
       class="text-gray-500 rounded inline-flex items-center"
@@ -67,8 +67,7 @@ export default {
     ...mapState('notification', ['notifications']),
 
     hasNotifications() {
-      return !!this.unSeenNotifications[0]
-      return false
+      return !!this.unSeenNotifications[0]     
     }
   }
 }
