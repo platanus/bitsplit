@@ -9,7 +9,7 @@
         color === 'secondary' ? 'bg-indigo-200' : 'bg-blue-200'
     ]"
     :disabled="
-      loading === false ? false : false
+      loading === false ? false : true
     "
   >
     <slot />
@@ -26,7 +26,7 @@ export default {
     width: String,
     loading: {
       type: Boolean,
-      default: null
+      default: false
     }
   }
 }
