@@ -20,9 +20,7 @@
         :btc_balance="userBalanceBTC"
         classmod="self-center"
       />
-      <div
-        class="text-center px-4 py-2"
-      >
+      <div class="text-center px-4 py-2">
         <LinkButton
           v-if="budaSignedIn"
           classmod="block bg-blue-500 hover:bg-blue-700 mx-4 my-3 md:my-0"
@@ -30,8 +28,13 @@
           route="payment"
           >Hacer un pago</LinkButton
         >
-        <div class="block mx-4 my-3">
-          <CustomTable :data="paymentsHistory.slice().reverse()" :columns="tableColumns">
+      </div>
+      <div class="flex items-center justify-center">
+        <div class="container">
+          <CustomTable
+            :data="paymentsHistory.slice().reverse()"
+            :columns="tableColumns"
+          >
             <template slot-scope="{ row }">
               <td
                 v-if="row.attributes.sender_email != currentUser.email"
@@ -102,6 +105,7 @@ export default {
   },
   methods: {
     ...mapActions('user', ['getUserBalance', 'getPayments']),
+
     getDate(date) {
       let d = new Date(date)
       return d.toLocaleString('en-US', { hour12: false })
