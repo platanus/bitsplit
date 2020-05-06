@@ -149,39 +149,57 @@ export default {
       })
   },
   [budaSignIn]({ commit, dispatch }, payload) {
+    commit(BUDA_SIGNIN_ATTEMPT)
     const fetchPromise = budaSyncApi(payload)
     return fetchPromise
       .then(res => {
-        dispatch(
-          'alert/success_alert',
-          'Cuenta Buda sincronizada correctamente',
-          { root: true }
-        )
-        const fetchPromiseUser = getCurrentUserApi()
-        return fetchPromiseUser.then(res => {
-          if (res.data.data.attributes) {
-            localStorage.setItem(
-              'currentUser',
-              JSON.stringify(res.data.data.attributes)
-            )
-            commit(SIGNIN_SUCCESS, res.data.data.attributes)
-            return
-          }
-        })
+        // Buscamos verificar credenciales Buda
+        const checkPromise = getUserBalanceApi(payload)
+        return checkPromise
       })
-      .catch(err => {
-        if (err.response) {
+      .then(res => {
+        // Credenciales válidas
+        if (res.data.data.balance) {
           dispatch(
-            'alert/error_alert',
-            'Error conectando cuenta. Revise los datos ingresados',
+            'alert/success_alert',
+            'Cuenta Buda sincronizada correctamente',
             { root: true }
           )
-          throw new Error(
-            'Error conectando cuenta. Revise los datos ingresados'
+          const fetchPromiseUser = getCurrentUserApi()
+          return fetchPromiseUser
+        }
+        // Credenciales inválidas
+        else {
+          dispatch('alert/error_alert',
+                   'Datos incorrectos. Revise los datos ingresados',
+                   { root: true }
           )
+          throw new Error('Datos incorrectos. Revise los datos ingresados')
+        }
+      })
+      .then(res => {
+        // Actualizamos Current user
+        if (res.data.data.attributes) {
+          localStorage.setItem(
+            'currentUser',
+            JSON.stringify(res.data.data.attributes)
+          )
+          commit(BUDA_SIGNIN_SUCCESS, res.data.data.attributes)
+          return
+        }
+      })
+      .catch(err => {
+        commit(BUDA_SIGNIN_FAIL)
+        console.log(err)
+        if (err.response || err.message) {
+          dispatch('alert/error_alert',
+                   'Datos incorrectos. Revise los datos ingresados',
+                   { root: true }
+          )
+          throw new Error('Datos incorrectos. Revise los datos ingresados')
         } else {
           dispatch('alert/error_alert', 'Error desconocido', { root: true })
-          throw new Error('Error desconocido')
+          throw new Error('Error desconocido',)
         }
       })
   },
