@@ -1,4 +1,3 @@
-
 <template>
   <div class="m-12">
     <div v-if="!budaSignedIn">
@@ -7,68 +6,68 @@
     <div class="bg-gray-200 p-10 my-4 rounded-md">
       <p class="text-5xl font-bold">BitSplit</p>
       <p class="font-light">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam
+        Bienvenido a BitSplit, el sitio donde podrás pagar facilmente a tus
+        amigos, cobrar deudas y manejar dinero. Todo esto de forma fácil,
+        intuitiva e internacional!
       </p>
     </div>
     <div
-      class="flex flex-col justify-center md:flex-row md:justify-start bg-gray-200 p-10 rounded-md"
-    > 
-      <div>
-      <UserCard
-        :email="currentUser.email"
-        :clp_balance="userBalanceCLP"
-        :btc_balance="userBalanceBTC"
-        classmod="self-center"
-      />
-      </div>
-      <div
-        class="text-center px-4 py-2"
-      >
-        <LinkButton
-          classmod="block bg-blue-500 hover:bg-blue-700 mx-4 my-3 md:my-0"
-          :fieldDisabled="false"
-          :route="budaSignedIn ? 'payment' : 'buda'"
-          >Hacer un pago</LinkButton
-        >
-        <div class="block mx-4 my-3">
-          <CustomTable :data="paymentsHistory.slice().reverse()" :columns="tableColumns">
-            <template slot-scope="{ row }">
-              <td
-                v-if="row.attributes.sender_email != currentUser.email"
-                class="border-grey-light border hover:bg-gray-100 p-3"
-              >
-                <span
-                  class="px-2 items-center inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
-                >
-                  Recibido
-                </span>
-              </td>
-              <td v-else class="border-grey-light border hover:bg-gray-100 p-3">
-                <span
-                  class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"
-                >
-                  Enviado
-                </span>
-              </td>
-              <td class="border-grey-light border hover:bg-gray-100 p-3">
-                {{ row.attributes.sender_email }}
-              </td>
-              <td class="border-grey-light border hover:bg-gray-100 p-3">
-                {{ row.attributes.receiver_email }}
-              </td>
-              <td
-                class="border-grey-light border hover:bg-gray-100 p-3 truncate"
-              >
-                {{ row.attributes.amount }} BTC
-              </td>
-              <td class="border-grey-light border hover:bg-gray-100 p-3">
-                {{ getDate(row.attributes.created_at) }}
-              </td>
-            </template>
-          </CustomTable>
+      class="flex flex-col justify-center lg:flex-row lg:justify-between bg-gray-200 p-10 rounded-md"
+    >
+      <div class="lg:pr-5 flex flex-col">
+        <UserCard
+          :email="currentUser.email"
+          :clp_balance="userBalanceCLP"
+          :btc_balance="userBalanceBTC"
+          classmod="self-center"
+        />
+        <div class="text-center px-4 py-2 ">
+          <LinkButton
+            v-if="budaSignedIn"
+            classmod="bg-blue-500 hover:bg-blue-700 my-3 md:my-0"
+            :fieldDisabled="false"
+            route="payment"
+            >Hacer un pago</LinkButton
+          >
         </div>
+      </div>
+      <div>
+        <CustomTable
+          :data="paymentsHistory.slice().reverse()"
+          :columns="tableColumns"
+        >
+          <template slot-scope="{ row }">
+            <td
+              v-if="row.attributes.sender_email != currentUser.email"
+              class="border-grey-light border hover:bg-gray-100 p-3"
+            >
+              <span
+                class="px-2 items-center inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+              >
+                Recibido
+              </span>
+            </td>
+            <td v-else class="border-grey-light border hover:bg-gray-100 p-3">
+              <span
+                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"
+              >
+                Enviado
+              </span>
+            </td>
+            <td class="border-grey-light border hover:bg-gray-100 p-3">
+              {{ row.attributes.sender_email }}
+            </td>
+            <td class="border-grey-light border hover:bg-gray-100 p-3">
+              {{ row.attributes.receiver_email }}
+            </td>
+            <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">
+              {{ row.attributes.amount }} BTC
+            </td>
+            <td class="border-grey-light border hover:bg-gray-100 p-3">
+              {{ getDate(row.attributes.created_at) }}
+            </td>
+          </template>
+        </CustomTable>
       </div>
     </div>
   </div>
