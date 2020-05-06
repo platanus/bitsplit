@@ -17,6 +17,15 @@ const checkNoAuth = (to, from, next) => {
   }
 }
 
+const checkBudaAuth = (to, from, next) => {
+  // Cuando trato de ir a /payments pero aun no estoy sincronizxado con buda
+  if (!store.getters['user/budaSignedIn']) {
+    next('/buda')
+  } else {
+    next()
+  }
+}
+
 const authedAxios = axios.create()
 
 authedAxios.interceptors.request.use(
@@ -31,4 +40,4 @@ authedAxios.interceptors.request.use(
   error => Promise.reject(error)
 )
 
-export { checkAuth, checkNoAuth, authedAxios }
+export { checkAuth, checkNoAuth, checkBudaAuth, authedAxios }

@@ -60,14 +60,29 @@ export default {
     }
   },
   methods: {
-    ...mapActions('notification', ['markAsSeen'])
+    ...mapActions('notification', ['markAsSeen']),
+    ...mapActions('user', ['getUserBalance', 'getPayments'])
   },
   computed: {
     ...mapGetters('notification', ['unSeenNotifications']),
     ...mapState('notification', ['notifications']),
 
     hasNotifications() {
-      return !!this.unSeenNotifications[0]     
+      return !!this.unSeenNotifications[0]
+    }
+  },
+  watch: {
+    unSeenNotifications(newNotifications, oldNotifications) {
+      const nPaymentsOld = oldNotifications.filter(d => d.type === 'payment')
+        .length
+      const nPaymentsNew = newNotifications.filter(d => d.type === 'payment')
+        .length
+
+      // Recargo el balance si hay una notificacion tipo payment nueva
+      if (nPaymentsNew > nPaymentsOld) {
+        this.getUserBalance()
+        this.getPayments()
+      }
     }
   }
 }

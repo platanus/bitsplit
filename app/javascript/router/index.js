@@ -8,19 +8,23 @@ import Home from './Home.vue'
 import BudaIndex from './BudaIndex.vue'
 import PaymentIndex from './PaymentIndex.vue'
 
-import { checkAuth, checkNoAuth } from '../helpers'
+import { checkAuth, checkNoAuth, checkBudaAuth } from '../helpers'
 
 Vue.use(Router)
 
 const router = new Router({
   mode: 'history',
   routes: [
-    { path: '/', component: Landing },
+    { path: '/', component: Landing, beforeEnter: checkNoAuth },
     { path: '/sign-in', component: SignIn, beforeEnter: checkNoAuth },
     { path: '/sign-up', component: SignUp, beforeEnter: checkNoAuth },
     { path: '/home', component: Home, beforeEnter: checkAuth },
     { path: '/buda', component: BudaIndex, beforeEnter: checkAuth },
-    { path: '/payment', component: PaymentIndex , beforeEnter: checkAuth }
+    {
+      path: '/payment',
+      component: PaymentIndex,
+      beforeEnter: checkAuth && checkBudaAuth
+    }
   ]
 })
 

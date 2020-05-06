@@ -296,7 +296,11 @@ export default {
             'Error obteniendo balance. Revise sus datos de cuenta'
           )
         } else {
-          dispatch('alert/error_alert', 'Error desconocido.', { root: true })
+          dispatch(
+            'alert/error_alert',
+            'Error obteniendo su balance, revise sus datos de cuenta o agregue sus credenciales de buda.',
+            { root: true }
+          )
           throw new Error('Error desconocido')
         }
       })
@@ -306,11 +310,9 @@ export default {
     return sendPaymentApi(payload)
       .then(res => {
         commit(SEND_PAYMENT_SUCCESS, res.data.data.attributes)
-        dispatch(
-          'alert/success_alert',
-          'Pago realizado correctamente',
-          { root: true }
-        )
+        dispatch('alert/success_alert', 'Pago realizado correctamente', {
+          root: true
+        })
         return
       })
       .catch(err => {
