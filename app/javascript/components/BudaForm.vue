@@ -21,7 +21,7 @@
             <passwordInput fieldId="password" fieldName="password" v-model="password" />
           </div>
           <div>
-            <submitButton>Sincronizar Buda</submitButton>
+            <submitButton :loading="budaSignInLoading">Sincronizar Buda</submitButton>
           </div>
         </form>
       </div>
@@ -55,7 +55,7 @@ export default {
     textField
   },
   computed: {
-    ...mapState('user', ['currentUser'])
+    ...mapState('user', ['currentUser', 'budaSignInLoading'])
   },
   methods: {
     ...mapActions('user', ['budaSignIn']),

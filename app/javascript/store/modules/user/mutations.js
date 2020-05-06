@@ -44,16 +44,17 @@ export default {
     state.signUpLoading = false
   },
   [BUDA_SIGNIN_ATTEMPT](state, currentUser) {
-    // TODO
+    state.budaSignInLoading = true
   },
   [BUDA_SIGNIN_SUCCESS](state, currentUser) {
+    state.budaSignInLoading = false
     state.currentUser = currentUser
   },
   [BUDA_SIGNIN_FAIL](state) {
-    // TODO
+    state.budaSignInLoading = false
   },
-  [BUDA_SIGNOUT](state) {
-    // TODO
+  [BUDA_SIGNOUT](state, currentUser) {
+    state.currentUser = currentUser
   },
   [GET_USER_BALANCE_ATTEMPT](state) {
     // TODO

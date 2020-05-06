@@ -8,13 +8,13 @@
       </div>
       <div>
         <textField>
-          Monto: {{ this.lastPayment.amount }}
+          Monto: {{ this.lastPayment.amount }} BTC
         </textField>
         <textField>
           Receptor: {{ this.lastPayment.receiver }}
         </textField>
         <textField>
-          Fecha: {{ this.lastPayment.date }}
+          Fecha: {{ getDateFormat(this.lastPayment.date) }}
         </textField>
       </div>
     </div>
@@ -30,6 +30,7 @@ export default {
   data() {
     return {
       routeName: 'PaymentRoute',
+      date: null
     }
   },
   components: {
@@ -43,7 +44,24 @@ export default {
     this.getUserBalance()
   },
   methods: {
-    ...mapActions('user', ['getQuotation', 'getUserBalance', 'sendPayment'])
+    ...mapActions('user', ['getQuotation', 'getUserBalance', 'sendPayment']),
+    getDateFormat(date) {
+      return format(date)
+    }
   }
 }
+
+function format(UNIX_timestamp){
+  var a = new Date(UNIX_timestamp);
+  var months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  var year = a.getFullYear();
+  var month = months[a.getMonth()];
+  var date = a.getDate();
+  var hour = a.getHours();
+  var min = a.getMinutes();
+  var sec = a.getSeconds();
+  var time = date + ' de ' + month + ' ' + year + ' ' + hour + ':' + min;
+  return time;
+}
 </script>
+
