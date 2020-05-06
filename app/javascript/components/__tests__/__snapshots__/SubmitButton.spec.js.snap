@@ -1,3 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SubmitButton matches snapshot 1`] = `<button class="text-white font-bold p-2 rounded focus:outline-none w-normal bg-blue-200"></button>`;
+exports[`SubmitButton matches snapshot 1`] = `<button class="text-white font-bold p-2 rounded focus:outline-none w-normal bg-blue-500 hover:bg-blue-700"></button>`;
