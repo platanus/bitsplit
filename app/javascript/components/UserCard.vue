@@ -1,7 +1,7 @@
 
 
 <template>
-  <div :class="[classmod, 'rounded rounded-t-lg overflow-hidden shadow max-w-xs my-3 bg-white']">
+  <div :class="[classmod, 'rounded rounded-t-lg overflow-hidden shadow max-w-xs my-2 bg-white']">
     <img
       src="https://images.pexels.com/photos/1099339/pexels-photo-1099339.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
       class="w-full"

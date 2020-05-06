@@ -1,3 +1,4 @@
+
 <template>
   <div class="m-12">
     <div v-if="!budaSignedIn">
@@ -13,28 +14,26 @@
     </div>
     <div
       class="flex flex-col justify-center md:flex-row md:justify-start bg-gray-200 p-10 rounded-md"
-    >
+    > 
+      <div>
       <UserCard
         :email="currentUser.email"
         :clp_balance="userBalanceCLP"
         :btc_balance="userBalanceBTC"
         classmod="self-center"
       />
-      <div class="text-center px-4 py-2">
+      </div>
+      <div
+        class="text-center px-4 py-2"
+      >
         <LinkButton
-          v-if="budaSignedIn"
           classmod="block bg-blue-500 hover:bg-blue-700 mx-4 my-3 md:my-0"
           :fieldDisabled="false"
-          route="payment"
+          :route="budaSignedIn ? 'payment' : 'buda'"
           >Hacer un pago</LinkButton
         >
-      </div>
-      <div class="flex items-center justify-center">
-        <div class="container">
-          <CustomTable
-            :data="paymentsHistory.slice().reverse()"
-            :columns="tableColumns"
-          >
+        <div class="block mx-4 my-3">
+          <CustomTable :data="paymentsHistory.slice().reverse()" :columns="tableColumns">
             <template slot-scope="{ row }">
               <td
                 v-if="row.attributes.sender_email != currentUser.email"
