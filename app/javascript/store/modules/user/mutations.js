@@ -53,8 +53,8 @@ export default {
   [BUDA_SIGNIN_FAIL](state) {
     state.budaSignInLoading = false
   },
-  [BUDA_SIGNOUT](state) {
-    state.currentUser = null
+  [BUDA_SIGNOUT](state, currentUser) {
+    state.currentUser = currentUser
   },
   [GET_USER_BALANCE_ATTEMPT](state) {
     // TODO

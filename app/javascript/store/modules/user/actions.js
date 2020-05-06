@@ -190,17 +190,35 @@ export default {
       })
       .catch(err => {
         commit(BUDA_SIGNIN_FAIL)
-        console.log(err)
-        if (err.response || err.message) {
-          dispatch('alert/error_alert',
-                   'Datos incorrectos. Revise los datos ingresados',
-                   { root: true }
-          )
-          throw new Error('Datos incorrectos. Revise los datos ingresados')
-        } else {
-          dispatch('alert/error_alert', 'Error desconocido', { root: true })
-          throw new Error('Error desconocido',)
-        }
+        payload.api_key = ''
+        payload.api_secret = ''
+        const fetchPromise = budaSyncApi(payload)
+        return fetchPromise
+          .then(res => {
+            const fetchPromiseUser = getCurrentUserApi()
+            return fetchPromiseUser.then(res => {
+              if (res.data.data.attributes) {
+                localStorage.setItem(
+                  'currentUser',
+                  JSON.stringify(res.data.data.attributes)
+                )
+                commit(BUDA_SIGNOUT, res.data.data.attributes)
+                return
+              }
+            })
+          })
+          .then(res => {
+            if (err.response || err.message) {
+              dispatch('alert/error_alert',
+                      'Datos incorrectos. Revise los datos ingresados',
+                      { root: true }
+              )
+              throw new Error('Datos incorrectos. Revise los datos ingresados')
+            } else {
+              dispatch('alert/error_alert', 'Error desconocido', { root: true })
+              throw new Error('Error desconocido',)
+            }
+          })
       })
   },
   [budaSignOut]({ commit, dispatch }, payload) {
@@ -219,7 +237,7 @@ export default {
               'currentUser',
               JSON.stringify(res.data.data.attributes)
             )
-            commit(SIGNIN_SUCCESS, res.data.data.attributes)
+            commit(BUDA_SIGNOUT, res.data.data.attributes)
             return
           }
         })
