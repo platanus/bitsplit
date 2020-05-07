@@ -7,7 +7,6 @@ class Api::V1::UserSerializer < ActiveModel::Serializer
     :id,
     :email,
     :api_key,
-    :authentication_token,
     :picture_url,
   )
 
