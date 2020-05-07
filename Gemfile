@@ -4,7 +4,6 @@ gem 'bootsnap', require: false
 gem 'data_migrate'
 gem 'devise'
 gem 'devise-i18n'
-gem 'simple_token_authentication', '~> 1.0'
 gem 'enumerize'
 gem 'jbuilder', '~> 2.7'
 gem 'pg'
@@ -22,6 +21,10 @@ gem 'webpacker', '~> 4.0'
 #Power_API https://github.com/platanus/power_api#installation
 
 gem 'power_api'
+gem 'has_secure_token'
+gem 'warden'
+gem 'tiddle'
+
 
 # splitwise api requirements
 gem 'oauth-plugin'
@@ -72,3 +75,5 @@ end
 gem "httparty", "~> 0.18.0"
 
 gem "firebase", "~> 0.2.8"
+
+gem 'devise-encryptable'
