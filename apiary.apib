@@ -10,8 +10,10 @@ HOST: http://localhost:5000/api/v1/
 + Request (application/json)
 
         {
-            "email": "example@example.com",
-            "password": "bestPa55W0rd3ver"
+            "user": {
+                "email": "example@example.com",
+                "password": "bestPa55W0rd3ver"
+            }
         }
 
 + Response 200 (application/json)
@@ -66,7 +68,6 @@ HOST: http://localhost:5000/api/v1/
                      "attributes": {
                          "email": "example@gmail.com",
                          "api_key": "th3b3stAP1K3Y",
-                         "authentication_token": "smnozAAbYnEX2xVRfS5R",
                          "picture_url": {
                             "small": "https://www.theBestImgHostingSite.com/small-img.jpeg",
                             "medium": "https://www.theBestImgHostingSite.com/medium-img.jpeg",
