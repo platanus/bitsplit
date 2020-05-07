@@ -93,6 +93,8 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
+    devise-encryptable (0.2.0)
+      devise (>= 2.1.0)
     devise-i18n (1.9.1)
       devise (>= 4.7.1)
     diff-lcs (1.3)
@@ -141,6 +143,8 @@ GEM
       guard (~> 2.1)
       guard-compat (~> 1.1)
       rspec (>= 2.99.0, < 4.0)
+    has_secure_token (1.0.0)
+      activerecord (>= 3.0)
     heroku-stage (0.4.0)
       rails
     httparty (0.18.0)
@@ -389,6 +393,9 @@ GEM
       unicode-display_width (~> 1.1, >= 1.1.1)
     thor (1.0.1)
     thread_safe (0.3.6)
+    tiddle (1.4.0)
+      activerecord (>= 4.2.0)
+      devise (>= 4.0.0.rc1, < 5)
     tilt (2.0.10)
     turbolinks (5.2.1)
       turbolinks-source (~> 5.2)
@@ -424,6 +431,7 @@ DEPENDENCIES
   bootsnap
   data_migrate
   devise
+  devise-encryptable
   devise-i18n
   dotenv-rails
   enumerize
@@ -431,6 +439,7 @@ DEPENDENCIES
   faker
   firebase (~> 0.2.8)
   guard-rspec
+  has_secure_token
   heroku-stage
   httparty (~> 0.18.0)
   jbuilder (~> 2.7)
@@ -456,11 +465,12 @@ DEPENDENCIES
   rubocop-rspec
   sass-rails (~> 5)
   shoulda-matchers
-  simple_token_authentication (~> 1.0)
   spring
   strong_migrations
+  tiddle
   turbolinks (~> 5)
   tzinfo-data
+  warden
   webpacker (~> 4.0)
 
 BUNDLED WITH
