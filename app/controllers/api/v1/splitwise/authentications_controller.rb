@@ -6,7 +6,6 @@ class Api::V1::Splitwise::AuthenticationsController < ApplicationController
 
   # this can be changed in the future by changing the callback
   # route that is in the splitwise api form
-  acts_as_token_authentication_handler_for User, except: [:show]
   before_action :generate_splitwise_service, except: [:show]
 
   def create
