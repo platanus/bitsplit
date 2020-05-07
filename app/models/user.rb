@@ -1,11 +1,12 @@
 class User < ApplicationRecord
-  acts_as_token_authenticatable
+  self.ignored_columns = ["authentication_token"]
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable, :token_authenticatable
   has_many :sent_payments, :class_name => 'Payment', :foreign_key => 'sender_id'
   has_many :received_payments, :class_name => 'Payment', :foreign_key => 'receiver_id'
+  has_many :authentication_tokens
 
   def payments_record
     sent_payments + received_payments
@@ -85,7 +86,6 @@ end
 #  remember_created_at    :datetime
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
-#  authentication_token   :string(30)
 #  api_key                :string
 #  api_secret             :string
 #  logged                 :boolean          default(FALSE)
@@ -97,7 +97,6 @@ end
 #
 # Indexes
 #
-#  index_users_on_authentication_token  (authentication_token) UNIQUE
 #  index_users_on_email                 (email) UNIQUE
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
