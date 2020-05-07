@@ -27,7 +27,7 @@ class FirebaseService < PowerTypes::Service.new
         @clean_email = @user.email.sub '.', ','
         firebase_url = 'https://platanus-bitsplit.firebaseio.com/'
         private_key_json_string = Rails.application.secrets.firebase_credentials
-        @firebase = Firebase::Client.new(firebase_url, private_key_json_string)
+        @firebase = Firebase::Client.new(firebase_url, private_key_json_string.to_s)
     end
   
 end
