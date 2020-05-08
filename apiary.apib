@@ -366,6 +366,8 @@ The `password` field is only required if the `api_key` or `api_secret` fields ar
     >>`user_to_friends`: Lista de las deudas que tiene el usuario con sus amigos.
     >`friends_to_user`: Lista de las deudas que los amigos tienen con el usuario.
     >`is_payable`: true si los dos usuarios tienen cuenta en Bitsplit; false sino.
+    >`"group_name": "Gastos sin grupo"`: son los gastos que se le hacen directamente a una persona (sin grupo). El id del grupo siempre es 0.
+
 
     + body
 
@@ -398,7 +400,12 @@ The `password` field is only required if the `api_key` or `api_secret` fields ar
                         ],
                         "friends_to_user": [
                             {
-                                "from": {},
+                                "from": {
+                                    "id": 25417511,
+                                    "first_name": "Example1",
+                                    "last_name": "Example1",
+                                    "picture": "https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-blue6-50px.png",
+                                    "email": "example1@gmail.com"},
                                 "to": {
                                     "id": 31015523,
                                     "first_name": "Example",
