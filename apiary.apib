@@ -332,7 +332,7 @@ The `password` field is only required if the `api_key` or `api_secret` fields ar
 
         
 
-## Splitwise API connection [/splitwise]
+## Splitwise API connection [/splitwise/authentications]
 ### Create new url for api connection [POST]
 
 + Request (application/json)
@@ -352,6 +352,91 @@ The `password` field is only required if the `api_key` or `api_secret` fields ar
                 }
             }
         }
+        
+## Splitwise debts [/splitwise/debts]
+### Get user splitwise debts [GET]
++ Request (application/json)
+
+    + Headers
+
+            X-User-Email: example@example.com
+            X-User-Token: smnozAAbYnEX2xVRfS5R
+
++ Response 200 (application/json)
+    >>`user_to_friends`: Lista de las deudas que tiene el usuario con sus amigos.
+    >`friends_to_user`: Lista de las deudas que los amigos tienen con el usuario.
+    >`is_payable`: true si los dos usuarios tienen cuenta en Bitsplit; false sino.
+
+    + body
+
+            {
+                "data": {
+                    "type": "debts",
+                    "attributes": {
+                        "user_to_friends": [
+                            {
+                                "to": {
+                                    "id": 25417511,
+                                    "first_name": "Example1",
+                                    "last_name": "Example1",
+                                    "picture": "https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-blue6-50px.png",
+                                    "email": "example1@gmail.com"
+                                },
+                                "from": {
+                                    "id": 31015523,
+                                    "first_name": "Example",
+                                    "last_name": "Example",
+                                    "picture": "https://splitwise.s3.amazonaws.com/uploads/user/avatar/31015523/small_503df34f-b77d-447c-b259-c62e7c216097.jpeg",
+                                    "email": "example@example.com"
+                                },
+                                "amount": "317.5",
+                                "currency_code": "CLP",
+                                "group_id": 17800816,
+                                "group_name": "Grupo1",
+                                "is_payable": false
+                            }
+                        ],
+                        "friends_to_user": [
+                            {
+                                "from": {},
+                                "to": {
+                                    "id": 31015523,
+                                    "first_name": "Example",
+                                    "last_name": "Example",
+                                    "picture": "https://splitwise.s3.amazonaws.com/uploads/user/avatar/31015523/small_503df34f-b77d-447c-b259-c62e7c216097.jpeg",
+                                    "email": "example@example.com"
+                                },
+                                "amount": "750.0",
+                                "currency_code": "CLP",
+                                "group_id": 0,
+                                "group_name": "Gastos sin grupo",
+                                "is_payable": true
+                            },
+                            {
+                                "from": {
+                                    "id": 6387905,
+                                    "first_name": "Example2",
+                                    "last_name": "Example2",
+                                    "picture": "https://splitwise.s3.amazonaws.com/uploads/user/avatar/6387905/small_b6b0e868-ecb4-485a-a396-a360e7a763d8.jpeg",
+                                    "email": "example2@gmail.com"
+                                },
+                                "to": {
+                                    "id": 31015523,
+                                    "first_name": "Example",
+                                    "last_name": "Example",
+                                    "picture": "https://splitwise.s3.amazonaws.com/uploads/user/avatar/31015523/small_503df34f-b77d-447c-b259-c62e7c216097.jpeg",
+                                    "email": "example@example.com"
+                                },
+                                "amount": "1750.0",
+                                "currency_code": "CLP",
+                                "group_id": 19105164,
+                                "group_name": "Grupo2",
+                                "is_payable": false
+                            }
+                        ]
+                    }
+                }
+            }
         
 ## Firebase [/firebase]
 ### Update notification seen status [PATCH]
