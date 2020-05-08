@@ -2,6 +2,7 @@ require 'oauth-plugin'
 
 class SplitwiseService < PowerTypes::Service.new(:user)
 
+  @@current_user_friends_url = 'https://www.splitwise.com/api/v3.0/get_friends'
   @@current_user_info_url = 'https://www.splitwise.com/api/v3.0/get_current_user'
   @@current_user_groups_url = 'https://www.splitwise.com/api/v3.0/get_groups'
   @@current_user_expenses_url = 'https://secure.splitwise.com/api/v3.0/get_expenses'
@@ -41,6 +42,10 @@ class SplitwiseService < PowerTypes::Service.new(:user)
 
   def get_current_user_info
     get_from_splitwise(@@current_user_info_url)
+  end
+
+  def get_current_user_friends
+    get_from_splitwise(@@current_user_friends_url)
   end
 
   def get_current_user_groups
