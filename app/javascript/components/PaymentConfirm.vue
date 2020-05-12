@@ -14,7 +14,7 @@
           Receptor: {{ this.lastPayment.receiver }}
         </textField>
         <textField>
-          Fecha: {{ getDateFormat(this.lastPayment.date) }}
+          Fecha: {{ getDate(this.lastPayment.date) }}
         </textField>
       </div>
     </div>
@@ -45,23 +45,10 @@ export default {
   },
   methods: {
     ...mapActions('user', ['getQuotation', 'getUserBalance', 'sendPayment']),
-    getDateFormat(date) {
-      return format(date)
+    getDate(date) {
+      let d = new Date(date)
+      return d.toLocaleString('en-US', { hour12: false })
     }
   }
 }
-
-function format(UNIX_timestamp){
-  var a = new Date(UNIX_timestamp);
-  var months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-  var year = a.getFullYear();
-  var month = months[a.getMonth()];
-  var date = a.getDate();
-  var hour = a.getHours();
-  var min = a.getMinutes();
-  var sec = a.getSeconds();
-  var time = date + ' de ' + month + ' ' + year + ' ' + hour + ':' + min;
-  return time;
-}
 </script>
-
