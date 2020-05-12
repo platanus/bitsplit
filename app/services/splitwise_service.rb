@@ -2,11 +2,6 @@ require 'oauth-plugin'
 
 class SplitwiseService < PowerTypes::Service.new(:user)
 
-  @@current_user_info_url = 'https://www.splitwise.com/api/v3.0/get_current_user'
-  @@current_user_groups_url = 'https://www.splitwise.com/api/v3.0/get_groups'
-  @@current_user_expenses_url = 'https://secure.splitwise.com/api/v3.0/get_expenses'
-  @@create_expense_url = 'https://secure.splitwise.com/api/v3.0/create_expense'
-
   def token_initializer
     request = consumer.get_request_token
     update_user(:oauth_token, request.token)
@@ -25,7 +20,8 @@ class SplitwiseService < PowerTypes::Service.new(:user)
   # POST methods from Splitwise API
 
   def payoff_debt(params)
-    post_to_splitwise(@@create_expense_url, {
+    create_expense_url = 'https://secure.splitwise.com/api/v3.0/create_expense'
+    post_to_splitwise(create_expense_url, {
       "cost": params[:amount],
       "payment": true,
       "group_id": params[:group_id],
@@ -40,15 +36,23 @@ class SplitwiseService < PowerTypes::Service.new(:user)
   # GET methods from Splitwise API
 
   def get_current_user_info
-    get_from_splitwise(@@current_user_info_url)
+    current_user_info_url = 'https://www.splitwise.com/api/v3.0/get_current_user'
+    get_from_splitwise(current_user_info_url)
+  end
+
+  def get_current_user_friends
+    current_user_friends_url = 'https://www.splitwise.com/api/v3.0/get_friends'
+    get_from_splitwise(current_user_friends_url)
   end
 
   def get_current_user_groups
-    get_from_splitwise(@@current_user_groups_url)
+    current_user_groups_url = 'https://www.splitwise.com/api/v3.0/get_groups'
+    get_from_splitwise(current_user_groups_url)
   end
 
   def get_current_user_expenses
-    get_from_splitwise(@@current_user_expenses_url)
+    current_user_expenses_url = 'https://secure.splitwise.com/api/v3.0/get_expenses'
+    get_from_splitwise(current_user_expenses_url)
   end
   
   private
