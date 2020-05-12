@@ -61,6 +61,11 @@ const sendPaymentApi = payload => {
 const getPaymentsApi = payload => {
   return authedAxios.get('/api/v1/payments/')
 }
+
+const splitwiseUrlConnectionApi = payload => {
+  return authedAxios.post('/api/v1/splitwise/authentications/')
+}
+
 export {
   loginApi,
   logoutApi,
@@ -70,5 +75,6 @@ export {
   getQuotationApi,
   getUserBalanceApi,
   sendPaymentApi,
-  getPaymentsApi
+  getPaymentsApi,
+  splitwiseUrlConnectionApi
 }

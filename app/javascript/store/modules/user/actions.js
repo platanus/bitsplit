@@ -7,7 +7,8 @@ import {
   getQuotation,
   getUserBalance,
   sendPayment,
-  getPayments
+  getPayments,
+  splitwiseUrlConnection,
 } from '../../action-types'
 
 import {
@@ -40,7 +41,8 @@ import {
   getQuotationApi,
   getUserBalanceApi,
   sendPaymentApi,
-  getPaymentsApi
+  getPaymentsApi,
+  splitwiseUrlConnectionApi
 } from '../../../api/user.js'
 
 export default {
@@ -320,6 +322,25 @@ export default {
             { root: true }
           )
           throw new Error('Error obteniendo el historial de transacciones.')
+        } else {
+          dispatch('alert/error_alert', 'Error desconocido.', { root: true })
+          throw new Error('Error desconocido')
+        }
+      })
+  },
+  [splitwiseUrlConnection]({ commit, dispatch }, payload) {
+    return splitwiseUrlConnectionApi(payload)
+      .then(res => {
+        return res.data.data.attributes
+      })
+      .catch(err => {
+        if (err.response) {
+          dispatch(
+            'alert/error_alert',
+            'Error redireccionando a Splitwise.',
+            { root: true }
+          )
+          throw new Error('Error redireccionando a Splitwise.')
         } else {
           dispatch('alert/error_alert', 'Error desconocido.', { root: true })
           throw new Error('Error desconocido')

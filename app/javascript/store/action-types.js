@@ -12,6 +12,8 @@ export const sendPayment = 'sendPayment'
 export const changeBudaComp = 'changeBudaComp'
 export const changePaymentComp = 'changePaymentComp'
 
+export const splitwiseUrlConnection = 'splitwiseUrlConnection'
+
 export const success_alert = 'success_alert'
 export const error_alert = 'error_alert'
 export const clear_alert = 'clear_alert'
