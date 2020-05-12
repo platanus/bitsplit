@@ -52,12 +52,10 @@ export default {
 
     return fetchPromise
       .then(res => {
-        const user = res.data.data.attributes
-        localStorage.setItem('currentUser', JSON.stringify(user))
-        commit(SIGNIN_SUCCESS, user)
         dispatch('alert/success_alert', 'Usuario ingresado correctamente', {
           root: true
         })
+        setUserLocalStorage(res, commit, SIGNIN_SUCCESS)
       })
       .catch(e => {
         if (e.response) {
@@ -118,12 +116,10 @@ export default {
 
     return signUpApi(payload)
       .then(res => {
-        const user = res.data.data.attributes
-        localStorage.setItem('currentUser', JSON.stringify(user))
-        commit(SIGNUP_SUCCESS, user)
         dispatch('alert/success_alert', 'Usuario creado correctamente', {
           root: true
         })
+        setUserLocalStorage(res, commit, SIGNUP_SUCCESS)
       })
       .catch(err => {
         if (err.response) {
@@ -178,15 +174,7 @@ export default {
         }
       })
       .then(res => {
-        // Actualizamos Current user
-        if (res.data.data.attributes) {
-          localStorage.setItem(
-            'currentUser',
-            JSON.stringify(res.data.data.attributes)
-          )
-          commit(BUDA_SIGNIN_SUCCESS, res.data.data.attributes)
-          return
-        }
+        setUserLocalStorage(res, commit, BUDA_SIGNIN_SUCCESS)
       })
       .catch(err => {
         commit(BUDA_SIGNIN_FAIL)
@@ -196,16 +184,10 @@ export default {
         return fetchPromise
           .then(res => {
             const fetchPromiseUser = getCurrentUserApi()
-            return fetchPromiseUser.then(res => {
-              if (res.data.data.attributes) {
-                localStorage.setItem(
-                  'currentUser',
-                  JSON.stringify(res.data.data.attributes)
-                )
-                commit(BUDA_SIGNOUT, res.data.data.attributes)
-                return
-              }
-            })
+            return fetchPromiseUser
+              .then(res => {
+                setUserLocalStorage(res, commit, BUDA_SIGNOUT)
+              })
           })
           .then(res => {
             if (err.response || err.message) {
@@ -231,16 +213,10 @@ export default {
           { root: true }
         )
         const fetchPromiseUser = getCurrentUserApi()
-        return fetchPromiseUser.then(res => {
-          if (res.data.data.attributes) {
-            localStorage.setItem(
-              'currentUser',
-              JSON.stringify(res.data.data.attributes)
-            )
-            commit(BUDA_SIGNOUT, res.data.data.attributes)
-            return
-          }
-        })
+        return fetchPromiseUser
+          .then(res => {
+            setUserLocalStorage(res, commit, BUDA_SIGNOUT)
+          })
       })
       .catch(err => {
         if (err.response) {
@@ -349,5 +325,16 @@ export default {
           throw new Error('Error desconocido')
         }
       })
+  }
+}
+
+function setUserLocalStorage(res, commit, MUTATION) {
+  if (res.data.data.attributes) {
+    localStorage.setItem(
+      'currentUser',
+      JSON.stringify(res.data.data.attributes)
+    )
+    commit(MUTATION, res.data.data.attributes)
+    return
   }
 }
