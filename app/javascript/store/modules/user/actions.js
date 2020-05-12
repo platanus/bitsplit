@@ -9,6 +9,7 @@ import {
   sendPayment,
   getPayments,
   splitwiseUrlConnection,
+  getDebts
 } from '../../action-types'
 
 import {
@@ -29,7 +30,8 @@ import {
   SEND_PAYMENT_ATTEMPT,
   SEND_PAYMENT_FAIL,
   SEND_PAYMENT_SUCCESS,
-  GET_PAYMENTS_SUCCESS
+  GET_PAYMENTS_SUCCESS,
+  GET_DEBTS_SUCCESS
 } from '../../mutation-types'
 
 import {
@@ -42,7 +44,8 @@ import {
   getUserBalanceApi,
   sendPaymentApi,
   getPaymentsApi,
-  splitwiseUrlConnectionApi
+  splitwiseUrlConnectionApi,
+  getDebtsApi
 } from '../../../api/user.js'
 
 export default {
@@ -341,6 +344,26 @@ export default {
             { root: true }
           )
           throw new Error('Error redireccionando a Splitwise.')
+        } else {
+          dispatch('alert/error_alert', 'Error desconocido.', { root: true })
+          throw new Error('Error desconocido')
+        }
+      })
+  },
+  [getDebts]({ commit, dispatch }, payload) {
+    return getDebtsApi(payload)
+      .then(res => {
+        commit(GET_DEBTS_SUCCESS, res.data.data.attributes.user_to_friends)
+        return
+      })
+      .catch(err => {
+        if (err.response) {
+          dispatch(
+            'alert/error_alert',
+            'Error obteniendo las deudas de Splitwise.',
+            { root: true }
+          )
+          throw new Error('Error obteniendo las deudas de Splitwise.')
         } else {
           dispatch('alert/error_alert', 'Error desconocido.', { root: true })
           throw new Error('Error desconocido')

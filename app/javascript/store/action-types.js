@@ -13,6 +13,7 @@ export const changeBudaComp = 'changeBudaComp'
 export const changePaymentComp = 'changePaymentComp'
 
 export const splitwiseUrlConnection = 'splitwiseUrlConnection'
+export const getDebts = 'getDebts'
 
 export const success_alert = 'success_alert'
 export const error_alert = 'error_alert'

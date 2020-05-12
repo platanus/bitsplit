@@ -16,7 +16,8 @@ import {
   SEND_PAYMENT_ATTEMPT,
   SEND_PAYMENT_FAIL,
   SEND_PAYMENT_SUCCESS,
-  GET_PAYMENTS_SUCCESS
+  GET_PAYMENTS_SUCCESS,
+  GET_DEBTS_SUCCESS
 } from '../../mutation-types'
 
 export default {
@@ -81,5 +82,9 @@ export default {
   },
   [GET_PAYMENTS_SUCCESS](state, payments){
     state.paymentsHistory = payments
+  },
+  [GET_DEBTS_SUCCESS](state, debts){
+    console.log('DEUDAS: ',debts)
+    state.userDebts = debts
   }
 }
