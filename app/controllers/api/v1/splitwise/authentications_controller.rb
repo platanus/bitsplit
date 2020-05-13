@@ -6,6 +6,7 @@ class Api::V1::Splitwise::AuthenticationsController < ApplicationController
 
   # this can be changed in the future by changing the callback
   # route that is in the splitwise api form
+  before_action :authenticate_user!, except: [:show]
   before_action :generate_splitwise_service, except: [:show]
 
   def create
@@ -17,7 +18,7 @@ class Api::V1::Splitwise::AuthenticationsController < ApplicationController
     @user = User.find_by(oauth_token: params[:oauth_token])
     @splitwise_service = SplitwiseService.new(user: @user)
     @splitwise_service.grant_access(params)
-    render head(:no_content)
+    redirect_to :root
   end
 
   private
