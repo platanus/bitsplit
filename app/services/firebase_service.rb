@@ -17,16 +17,12 @@ class FirebaseService < PowerTypes::Service.new
         hash = Hash(@firebase.get("tokens/#{@clean_email}").body)
         hash[token] = true
         response = @firebase.update("tokens", { @clean_email.to_sym => hash })
-        puts response.success? # => true
-        puts response.code # => 200
     end
 
     def delete_token(token)
         hash = Hash(@firebase.get("tokens/#{@clean_email}").body)
         hash.delete(token)
         response = @firebase.update("tokens", { @clean_email.to_sym => hash })
-        puts response.success? # => true
-        puts response.code # => 200
     end
 
     def update_notification_status(token)
@@ -39,7 +35,7 @@ class FirebaseService < PowerTypes::Service.new
         @clean_email = @user.email.sub '.', ','
         firebase_url = 'https://platanus-bitsplit.firebaseio.com/'
         private_key_json_string = Rails.application.secrets.firebase_credentials
-        @firebase = Firebase::Client.new(firebase_url, private_key_json_string.to_s)
+        @firebase = Firebase::Client.new(firebase_url, private_key_json_string.to_json.to_s)
     end
   
 end
