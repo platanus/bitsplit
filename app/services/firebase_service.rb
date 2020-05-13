@@ -12,9 +12,21 @@ class FirebaseService < PowerTypes::Service.new
         #you can edit the notification data here
         send_notification("payment", payment.as_json)
     end
-    
-    def save_token
-        response = @firebase.update("tokens", { @clean_email.to_sym => @user.authentication_token })
+
+    def save_token(token)
+        hash = Hash(@firebase.get("tokens/#{@clean_email}").body)
+        hash[token] = true
+        response = @firebase.update("tokens", { @clean_email.to_sym => hash })
+        puts response.success? # => true
+        puts response.code # => 200
+    end
+
+    def delete_token(token)
+        hash = Hash(@firebase.get("tokens/#{@clean_email}").body)
+        hash.delete(token)
+        response = @firebase.update("tokens", { @clean_email.to_sym => hash })
+        puts response.success? # => true
+        puts response.code # => 200
     end
 
     def update_notification_status(token)

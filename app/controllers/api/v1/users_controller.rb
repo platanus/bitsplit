@@ -7,9 +7,6 @@ class Api::V1::UsersController < Api::V1::BaseController
 
   def create
     new_user = User.create!(user_params)
-    # Use firebase service to save token
-    FirebaseService.new(new_user).save_token()
-
     respond_with new_user
   end
 

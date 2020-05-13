@@ -5,6 +5,10 @@ class Api::V1::SessionsController < Devise::SessionsController
     def create
       user = warden.authenticate!(auth_options)
       token = Tiddle.create_and_return_token(user, request)
+
+      # Use firebase service to save token
+      FirebaseService.new(user).save_token(token)
+
       render json: { authentication_token: token }
     end
   
