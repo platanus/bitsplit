@@ -2,8 +2,11 @@ class Api::V1::Splitwise::DebtsController < ApplicationController
 
     def show 
         return if !current_user.authenticated_with_splitwise
-        user_groups = @splitwise_service.get_current_user_groups
-        @user_to_friends, @friends_to_user = helpers.generate_answer(user_groups)
+        user_groups = generate_splitwise_service.get_current_user_groups
+        user_friends = @splitwise_service.get_current_user_friends["friends"]
+        current_user = @splitwise_service.get_current_user_info["user"]
+        user_friends.push(current_user)
+        @user_to_friends, @friends_to_user = helpers.generate_answer(user_groups, user_friends)
     end
 
     def create
