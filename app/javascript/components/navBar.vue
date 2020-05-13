@@ -14,7 +14,7 @@
         <router-link :to="budaRoute">Buda</router-link>
       </button>
       <button
-        @click="splitwise()"
+        @click="openSplitwiseUrl()"
         type="button"
         class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
       >
@@ -81,7 +81,7 @@ export default {
   methods: {
     ...mapActions('user', ['signOut', 'splitwiseUrlConnection']),
     ...mapActions('notification', ['bindNotifications', 'unbindNotifications']),
-    splitwise() {
+    openSplitwiseUrl() {
       this.splitwiseUrlConnection()
         .then((res) => {
           window.open(res.authorize_url)
