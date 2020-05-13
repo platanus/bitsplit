@@ -70,6 +70,59 @@
         </CustomTable>
       </div>
     </div>
+    <div class="bg-gray-200 p-10 my-4 rounded-md">
+      <p class="text-5xl font-bold">Splitwise</p>
+      <div v-if="userDebts.user_to_friends && userDebts.user_to_friends.length">
+        <p class="text-5xl font-bold">Deudas a amigos</p>
+        <CustomTable
+          :data="userDebts.user_to_friends.slice().reverse()"
+          :columns="debtsColumns"
+        >
+          <template slot-scope="{ row }">
+            <td class="border-grey-light border hover:bg-gray-100 p-3">
+              {{ row.from.first_name + ' ' + row.from.last_name }}
+            </td>
+            <td class="border-grey-light border hover:bg-gray-100 p-3">
+              {{ row.to.first_name + ' ' + row.to.last_name }}
+            </td>
+            <td class="border-grey-light border hover:bg-gray-100 p-3">
+              ${{ row.amount }}
+            </td>
+            <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">
+              {{ row.group_name }}
+            </td>
+            <td v-show="row.is_payable" class="border-grey-light border hover:bg-gray-100 p-3 truncate">
+              <LinkButton classmod="bg-blue-500 hover:bg-blue-700 my-3 md:my-0" :fieldDisabled="true">Pagar</LinkButton>
+            </td>
+          </template>
+        </CustomTable>
+      </div>
+      <div v-if="userDebts.friends_to_user && userDebts.friends_to_user.length">
+        <p class="text-5xl font-bold">Deudas de amigos hacia ti</p>
+        <CustomTable
+          :data="userDebts.friends_to_user.slice().reverse()"
+          :columns="debtsColumns"
+        >
+          <template slot-scope="{ row }">
+            <td class="border-grey-light border hover:bg-gray-100 p-3">
+              {{ row.from.first_name + ' ' + row.from.last_name }}
+            </td>
+            <td class="border-grey-light border hover:bg-gray-100 p-3">
+              {{ row.to.first_name + ' ' + row.to.last_name }}
+            </td>
+            <td class="border-grey-light border hover:bg-gray-100 p-3">
+              ${{ row.amount }}
+            </td>
+            <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">
+              {{ row.group_name }}
+            </td>
+            <td v-show="row.is_payable" class="border-grey-light border hover:bg-gray-100 p-3 truncate">
+              <LinkButton classmod="bg-blue-500 hover:bg-blue-700 my-3 md:my-0" :fieldDisabled="true">Pagar</LinkButton>
+            </td>
+          </template>
+        </CustomTable>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -85,11 +138,13 @@ export default {
   data() {
     return {
       routeName: 'home',
-      tableColumns: ['Tipo', 'Envía', 'Recibe', 'Cantidad', 'Fecha']
+      tableColumns: ['Tipo', 'Envía', 'Recibe', 'Cantidad', 'Fecha'],
+      debtsColumns: ['De', 'Para', 'Monto', 'Grupo', 'Pagar']
     }
   },
 
   created() {
+    this.getDebts()
     if (this.budaSignedIn) {
       this.getUserBalance()
       this.getPayments()
@@ -102,7 +157,7 @@ export default {
     CustomTable
   },
   methods: {
-    ...mapActions('user', ['getUserBalance', 'getPayments']),
+    ...mapActions('user', ['getUserBalance', 'getPayments', 'getDebts']),
 
     getDate(date) {
       let d = new Date(date)
@@ -114,7 +169,8 @@ export default {
       'currentUser',
       'userBalanceCLP',
       'userBalanceBTC',
-      'paymentsHistory'
+      'paymentsHistory',
+      'userDebts'
     ]),
     ...mapGetters('user', ['budaSignedIn'])
   }
