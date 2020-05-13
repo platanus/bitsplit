@@ -6,7 +6,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :token_authenticatable
   has_many :sent_payments, :class_name => 'Payment', :foreign_key => 'sender_id'
   has_many :received_payments, :class_name => 'Payment', :foreign_key => 'receiver_id'
-  has_many :authentication_tokens
+  has_many :authentication_tokens, dependent: :delete_all
 
   def payments_record
     sent_payments + received_payments
