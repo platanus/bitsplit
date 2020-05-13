@@ -353,7 +353,7 @@ export default {
   [getDebts]({ commit, dispatch }, payload) {
     return getDebtsApi(payload)
       .then(res => {
-        commit(GET_DEBTS_SUCCESS, res.data.data.attributes.user_to_friends)
+        commit(GET_DEBTS_SUCCESS, res.data.data.attributes)
         return
       })
       .catch(err => {
