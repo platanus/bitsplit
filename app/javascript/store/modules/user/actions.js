@@ -55,7 +55,7 @@ export default {
         dispatch('alert/success_alert', 'Usuario ingresado correctamente', {
           root: true
         })
-        setUserLocalStorage(res, commit, SIGNIN_SUCCESS)
+        commitAndSetUser({ commit, mutation: SIGNIN_SUCCESS, user: res })
       })
       .catch(e => {
         if (e.response) {
@@ -119,7 +119,7 @@ export default {
         dispatch('alert/success_alert', 'Usuario creado correctamente', {
           root: true
         })
-        setUserLocalStorage(res, commit, SIGNUP_SUCCESS)
+        commitAndSetUser({ commit, mutation: SIGNUP_SUCCESS, user: res })
       })
       .catch(err => {
         if (err.response) {
@@ -174,7 +174,7 @@ export default {
         }
       })
       .then(res => {
-        setUserLocalStorage(res, commit, BUDA_SIGNIN_SUCCESS)
+        commitAndSetUser({ commit, mutation: BUDA_SIGNIN_SUCCESS, user: res })
       })
       .catch(err => {
         commit(BUDA_SIGNIN_FAIL)
@@ -186,7 +186,7 @@ export default {
             const fetchPromiseUser = getCurrentUserApi()
             return fetchPromiseUser
               .then(res => {
-                setUserLocalStorage(res, commit, BUDA_SIGNOUT)
+                commitAndSetUser({ commit, mutation: BUDA_SIGNOUT, user: res })
               })
           })
           .then(res => {
@@ -215,7 +215,7 @@ export default {
         const fetchPromiseUser = getCurrentUserApi()
         return fetchPromiseUser
           .then(res => {
-            setUserLocalStorage(res, commit, BUDA_SIGNOUT)
+            commitAndSetUser({ commit, mutation: BUDA_SIGNOUT, user: res })
           })
       })
       .catch(err => {
@@ -328,13 +328,12 @@ export default {
   }
 }
 
-function setUserLocalStorage(res, commit, MUTATION) {
-  if (res.data.data.attributes) {
+function commitAndSetUser({ commit, mutation, user }) {
+  if (user.data.data.attributes) {
     localStorage.setItem(
       'currentUser',
-      JSON.stringify(res.data.data.attributes)
+      JSON.stringify(user.data.data.attributes)
     )
-    commit(MUTATION, res.data.data.attributes)
-    return
+    commit(mutation, user.data.data.attributes)
   }
 }
