@@ -116,9 +116,6 @@
             <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">
               {{ row.group_name }}
             </td>
-            <td v-show="row.is_payable" class="border-grey-light border hover:bg-gray-100 p-3 truncate">
-              <LinkButton classmod="bg-blue-500 hover:bg-blue-700 my-3 md:my-0" :fieldDisabled="true">Pagar</LinkButton>
-            </td>
           </template>
         </CustomTable>
       </div>
