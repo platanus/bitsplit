@@ -10,6 +10,7 @@ end
 #  body         :string
 #  user_id      :bigint(8)        not null
 #  last_used_at :datetime
+#  expires_in   :integer
 #  ip_address   :string
 #  user_agent   :string
 #  created_at   :datetime         not null
@@ -17,6 +18,7 @@ end
 #
 # Indexes
 #
+#  index_authentication_tokens_on_body     (body)
 #  index_authentication_tokens_on_user_id  (user_id)
 #
 # Foreign Keys
