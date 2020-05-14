@@ -19,16 +19,8 @@ HOST: http://localhost:5000/api/v1/
 + Response 200 (application/json)
 
         {
-             "data": {
-                 "id": "1",
-                 "type": "session",
-                 "attributes": {
-                     "email": "example@example.com",
-                     "api_key": "th3b3stAP1K3Y",
-                     "authentication_token": "smnozAAbYnEX2xVRfS5R"
-                 }
-             }
-         }
+            "authentication_token": "smnozAAbYnEX2xVRfS5R"
+        }
         
 ### Delete session [DELETE]
 
@@ -91,7 +83,7 @@ HOST: http://localhost:5000/api/v1/
             "api_secret": "th3B3s1S3Cr31"
         }
 
-+ Response 200 (application/json)
++ Response 201 (application/json)
 
         {
              "data": {
