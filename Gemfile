@@ -20,10 +20,10 @@ gem 'webpacker', '~> 4.0'
 
 #Power_API https://github.com/platanus/power_api#installation
 
-gem 'power_api'
 gem 'has_secure_token'
-gem 'warden'
+gem 'power_api'
 gem 'tiddle'
+gem 'warden'
 
 
 # splitwise api requirements
