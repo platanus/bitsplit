@@ -15,7 +15,7 @@
         <img src="assets/bitsplit-logo.svg" class="mb-4" align="top" />
 
         <p class="txt-field mb-8">
-          Crea tu cuenta es fácil y rápido
+          Crea tu cuenta, es fácil y rápido
         </p>
         <form @submit.prevent="handleSubmit" class="  pt-4 pb-8 mb-4">
           <div class="mb-8">

@@ -10,7 +10,7 @@ exports[`BudaLogoutForm matches snapshot 1`] = `
         </div>
         <div>
           <inputlabel-stub fieldfor="password">Contraseña Bitsplit</inputlabel-stub>
-          <passwordinput-stub value="" fieldid="password" fieldname="password"></passwordinput-stub>
+          <passwordinput-stub value="" fieldid="password" fieldname="password" fieldplaceholder="****************"></passwordinput-stub>
         </div>
         <div>
           <submitbutton-stub>Confirmar</submitbutton-stub>
