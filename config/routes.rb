@@ -17,6 +17,9 @@ Rails.application.routes.draw do
       end
 
     end
+    api_version(module: 'Api::V2', path: { value: 'v2' }, defaults: { format: 'json' }) do
+      resource :charges, only: [:create]
+    end
 
   end
 
