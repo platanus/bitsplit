@@ -1,7 +1,7 @@
 class Api::V2::WithdrawalsController < Api::V2::BaseController
     # class Api::V2::WithdrawalsController < ApplicationController
 
-    WITHDRAWALS_API_KEY = '308365d0-e46c-48ac-ad3a-3c43cd5cd8ae'
+    WITHDRAWALS_API_KEY = 'insertar api key con permisos para withdrawal'
 
     def create
         url ='https://api.opennode.co/v2/withdrawals'

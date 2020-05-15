@@ -1,7 +1,7 @@
 class Api::V2::ChargesController < Api::V2::BaseController
     # class Api::V2::ChargesController < ApplicationController
 
-    CHARGES_API_KEY = 'dd7f69a9-7e57-410c-a077-71ed516ea87b'
+    CHARGES_API_KEY = 'insertar api key con permisos para charges'
 
     def create
         url ='https://api.opennode.co/v1/charges'
