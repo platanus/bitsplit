@@ -18,3 +18,81 @@ td:not(:last-child) {
 th:not(:last-child) {
   border-bottom: 2px solid rgba(0, 0, 0, 0.1);
 }
+
+.btn {
+  height: 48px;
+  background: #ffffff;
+  border: 2px solid #000000;
+  box-sizing: border-box;
+  border-radius: 6px;
+  font-family: monospace;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 32px;
+  text-align: center;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+
+.btn:hover {
+  background: #3f2eac;
+  border-radius: 6px;
+  font-family: monospace;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 32px;
+
+  text-align: center;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+
+  color: #ffffff;
+}
+
+.txt-input {
+  height: 48px;
+  background: #eeedfb;
+  border-radius: 4px;
+  font-family: monospace;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.2px;
+  color: #6b6b6b;
+}
+
+.txt-input:hover {
+  background: #ffffff;
+  border: 2px solid #8070e3;
+  box-sizing: border-box;
+  box-shadow: inset 0px 0px 6px rgba(128, 112, 227, 0.12);
+  border-radius: 4px;
+
+  color: #000000;
+}
+.txt-input:focus {
+  font-size: 20px;
+  line-height: 22px;
+  letter-spacing: 0.2px;
+
+  color: #000000;
+}
+
+.txt-field {
+  font-family: monospace;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.2px;
+  color: #6b6b6b;
+}
+
+.right-icon {
+  position: absolute;
+  right: 16%;
+  bottom: 37%;
+}
