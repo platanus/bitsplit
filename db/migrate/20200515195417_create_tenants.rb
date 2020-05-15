@@ -5,5 +5,8 @@ class CreateTenants < ActiveRecord::Migration[6.0]
 
       t.timestamps
     end
+
+  # Tenant.create(:name => "Bitsplit")
+
   end
 end

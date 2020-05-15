@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe User, type: :request do
   
-  user_params = {"email" => "user@example.com", "password" =>"password", "password_confitmation" => "password", "api_secret" => "api_secret", "api_key" => "api_key"}
+  user_params = {"email" => "user@example.com", "password" =>"password", "password_confirmation" => "password", "api_secret" => "api_secret", "api_key" => "api_key", "tenant_id" => 1}
 
   describe "CRUD" do
 
@@ -25,7 +25,7 @@ RSpec.describe User, type: :request do
       end
       it "should have user type" do
         expect(@post_response_body["data"]["type"]).to eq "user"
-      end
+      endend
 
       it "should still be the same data" do
         expect(@post_response_body["data"]["attributes"]).to include("email" => user_params["email"], "api_key" => user_params["api_key"])
