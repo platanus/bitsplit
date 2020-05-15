@@ -1,5 +1,5 @@
   <template>
-  <div id="vue-app">
+  <div class= "bg-primary items-center h-screen w-full " id="vue-app">
     <navBar></navBar>
     <alert-message></alert-message>
     <router-view></router-view>
