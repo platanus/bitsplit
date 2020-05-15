@@ -1,23 +1,35 @@
-<template id="full">
-  <div class="mt-16">
+<template>
+  <div class="items-center h-screen w-full bg-primary p-12 mt-24">
     <center>
-      <div class="w-full max-w-xs">
-        <form @submit.prevent="handleSubmit" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+      <div class="w-full max-w-xs ">
+        <img src="assets/bitsplit-logo.svg" class="mb-10" align="top" />
+        <form
+          @submit.prevent="handleSubmit"
+          class="bg-primary rounded pt-6 pb-8 mb-4 "
+        >
           <div class="mb-4">
-            <inputLabel fieldFor="email">Email</inputLabel>
             <textInput
               fieldId="email"
               fieldType="text"
-              fieldPlaceholder="Email"
+              fieldPlaceholder="Correo"
               fieldName="email"
               v-model="email"
             />
           </div>
-          <div class="mb-4">
-            <inputLabel fieldFor="password">Contraseña Bitsplit</inputLabel>
-            <passwordInput fieldId="password" fieldName="password" v-model="password" />
+          <div>
+            <passwordInput
+              fieldId="password"
+              fieldName="password"
+              fieldPlaceholder="Contraseña"
+              v-model="password"
+            />
           </div>
-          <submitButton :loading="signInLoading">Log In</submitButton>
+          <submitButton :loading="signInLoading">Ingresar</submitButton>
+          <p class="txt-field items-center mt-10 underline ">
+            <router-link :to="signUpRoute">
+              Crear una cuenta
+            </router-link>
+          </p>
         </form>
       </div>
     </center>
@@ -37,7 +49,8 @@ export default {
     return {
       routeName: 'Sign In',
       email: '',
-      password: ''
+      password: '',
+      signUpRoute: 'sign-up'
     }
   },
   components: {

@@ -1,7 +1,7 @@
 <template>
   <button
     @click.once="$emit('do-click')"
-    class='text-white font-bold p-2 rounded focus:outline-none'
+    class='btn w-full ext-black font-bold p-2 rounded focus:outline-none'
     :class="[
       width === 'full' ? 'w-full' : 'w-normal',
       loading === false ? 
