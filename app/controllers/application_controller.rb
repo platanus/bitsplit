@@ -3,13 +3,13 @@ class ApplicationController < ActionController::API
     # protect_from_forgery unless: -> { request.format.json? }
 
     # Require authentication and do not set a session cookie for JSON requests (API clients)
-    before_action :authenticate_user!, :do_not_set_cookie, if: -> { request.format.json? }
+    before_action :authenticate_user!, :skip_session, if: -> { request.format.json? }
 
     private
 
     # Do not generate a session or session ID cookie
     # See https://github.com/rack/rack/blob/master/lib/rack/session/abstract/id.rb#L171
-    def do_not_set_cookie
+    def skip_session
         request.session_options[:skip] = true
     end
 end
