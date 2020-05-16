@@ -1,6 +1,6 @@
 <template>
-  <p 
-    class='block mb-5 font-bold text-gray-700'
+  <p
+    class="block mb-5 font-bold text-gray-700"
     :class="[
       fontSize === 'full' ? 'text-xxl' : 'text-md',
       fontColor === 'secondary' ? 'text-blue-500' : 'text-gray-700'
@@ -12,10 +12,10 @@
 
 <script>
 export default {
-  name: 'textField',
+  name: 'TextField',
   props: {
     fontSize: String,
-    fontColor: String
-  }
-}
+    fontColor: String,
+  },
+};
 </script>

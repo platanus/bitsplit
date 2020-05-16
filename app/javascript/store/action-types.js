@@ -1,22 +1,22 @@
-export const signIn = 'signIn'
-export const signOut = 'signOut'
-export const signUp = 'signUp'
+export const signIn = 'signIn';
+export const signOut = 'signOut';
+export const signUp = 'signUp';
 
-export const budaSignIn = 'budaSignIn'
-export const budaSignOut = 'budaSignOut'
+export const budaSignIn = 'budaSignIn';
+export const budaSignOut = 'budaSignOut';
 
-export const getQuotation = 'getQuotation'
-export const getUserBalance = 'getUserBalance'
-export const sendPayment = 'sendPayment'
+export const getQuotation = 'getQuotation';
+export const getUserBalance = 'getUserBalance';
+export const sendPayment = 'sendPayment';
 
-export const changeBudaComp = 'changeBudaComp'
-export const changePaymentComp = 'changePaymentComp'
+export const changeBudaComp = 'changeBudaComp';
+export const changePaymentComp = 'changePaymentComp';
 
-export const splitwiseUrlConnection = 'splitwiseUrlConnection'
-export const getDebts = 'getDebts'
+export const splitwiseUrlConnection = 'splitwiseUrlConnection';
+export const getDebts = 'getDebts';
 
-export const success_alert = 'success_alert'
-export const error_alert = 'error_alert'
-export const clear_alert = 'clear_alert'
+export const successAlert = 'successAlert';
+export const errorAlert = 'errorAlert';
+export const clearAlert = 'clearAlert';
 
-export const getPayments = 'getPayments'
+export const getPayments = 'getPayments';

@@ -1,4 +1,4 @@
-const user = JSON.parse(localStorage.getItem('currentUser'))
+const user = JSON.parse(localStorage.getItem('currentUser'));
 
 export default {
   currentUser: user, // Si no esta es null
@@ -10,5 +10,5 @@ export default {
   userBalanceBTC: 0,
   lastPayment: null,
   paymentsHistory: [],
-  userDebts: []
-}
+  userDebts: [],
+};

@@ -2,7 +2,10 @@
   <div class="flex justify-center m-16">
     <div class="flex flex-col mb-6 mt-6">
       <div>
-        <textField fontSize="full" fontColor="secondary">
+        <textField
+          font-size="full"
+          font-color="secondary"
+        >
           ¡Pago realizado con éxito!
         </textField>
       </div>
@@ -22,33 +25,34 @@
 </template>
 
 <script>
-import { mapActions, mapState, mapGetters } from 'vuex'
-import textField from '../components/TextField'
+import { mapActions, mapState } from 'vuex';
+import textField from '../components/TextField';
 
 export default {
   name: 'PaymentConfirm',
   data() {
     return {
       routeName: 'PaymentRoute',
-      date: null
-    }
+      date: null,
+    };
   },
   components: {
-    textField
+    textField,
   },
   computed: {
-    ...mapState('user', ['currentUser', 'userBalanceCLP', 
-                         'userBalanceBTC', 'lastPayment'])
+    ...mapState('user', ['currentUser', 'userBalanceCLP',
+      'userBalanceBTC', 'lastPayment']),
   },
   created() {
-    this.getUserBalance()
+    this.getUserBalance();
   },
   methods: {
     ...mapActions('user', ['getQuotation', 'getUserBalance', 'sendPayment']),
     getDate(date) {
-      let d = new Date(date)
-      return d.toLocaleString('en-US', { hour12: false })
-    }
-  }
-}
+      const d = new Date(date);
+
+      return d.toLocaleString('en-US', { hour12: false });
+    },
+  },
+};
 </script>

@@ -7,12 +7,12 @@
         <tr
           class="bg-indigo-500 flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0"
           v-for="(column, index) in data"
-          v-bind:key="index"
+          :key="index"
         >
           <th
             class="p-3 text-left"
             v-for="(column, index) in columns"
-            v-bind:key="index"
+            :key="index"
           >
             {{ column }}
           </th>
@@ -23,13 +23,13 @@
       <template v-for="(item, index) in data">
         <tr
           class="flex flex-col flex-no wrap sm:table-row mb-2 sm:mb-0"
-          v-bind:key="index"
+          :key="index"
         >
           <slot :row="item">
             <td
               class="border-grey-light border hover:bg-gray-100 p-3"
               v-for="(column, index) in columns"
-              v-bind:key="index"
+              :key="index"
             >
               {{ itemValue(item, column) }}
             </td>
@@ -41,16 +41,16 @@
 </template>
 <script>
 export default {
-  name: 'custom-table',
+  name: 'CustomTable',
   props: {
     columns: Array,
-    data: Array
+    data: Array,
   },
   methods: {
     itemValue(item, column) {
-      return item[column.toLowerCase()]
-    }
-  }
-}
+      return item[column.toLowerCase()];
+    },
+  },
+};
 </script>
 <style lang="scss"></style>

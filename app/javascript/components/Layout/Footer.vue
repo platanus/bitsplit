@@ -1,18 +1,18 @@
 <template>
-    <footer>
-        Hello!
-    </footer>
+  <footer>
+    Hello!
+  </footer>
 </template>
 
 <script>
 export default {
   name: 'App',
-  data () {
+  data() {
     return {
-        title: 'footer'
-    }
+      title: 'footer',
+    };
   },
-}
+};
 </script>
 
 <style>
