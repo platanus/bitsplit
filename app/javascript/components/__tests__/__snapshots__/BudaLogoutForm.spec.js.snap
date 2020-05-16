@@ -6,10 +6,14 @@ exports[`BudaLogoutForm matches snapshot 1`] = `
     <div class="w-full max-w-xs">
       <form>
         <div>
-          <textfield-stub>¿Estás seguro de querer desconectar tu cuenta Buda? Por favor ingresa tu contraseña para confirmar</textfield-stub>
+          <textfield-stub>
+            ¿Estás seguro de querer desconectar tu cuenta Buda? Por favor ingresa tu contraseña para confirmar
+          </textfield-stub>
         </div>
         <div>
-          <inputlabel-stub fieldfor="password">Contraseña Bitsplit</inputlabel-stub>
+          <inputlabel-stub fieldfor="password">
+            Contraseña Bitsplit
+          </inputlabel-stub>
           <passwordinput-stub value="" fieldid="password" fieldname="password"></passwordinput-stub>
         </div>
         <div>
