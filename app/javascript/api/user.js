@@ -6,8 +6,10 @@ const loginApi = payload =>
   axios.post(
     '/api/v1/sessions/',
     {
-      email: payload.email,
-      password: payload.password,
+      user: {
+        email: payload.email,
+        password: payload.password,
+      },
     },
     {
       headers: { 'Content-Type': 'application/json' },
@@ -34,7 +36,9 @@ const budaSyncApi = payload =>
     api_key: payload.api_key,
     api_secret: payload.api_secret,
   });
+
 const getCurrentUserApi = () => authedAxios.get('/api/v1/users/');
+
 const getQuotationApi = payload =>
   authedAxios.post('/api/v1/quotations/', {
     amount: payload.amount,

@@ -1,4 +1,5 @@
 import {
+  GET_CURRENT_USER,
   SIGNIN_ATTEMPT,
   SIGNIN_FAIL,
   SIGNIN_SUCCESS,
@@ -21,6 +22,9 @@ import {
 } from '../../mutation-types';
 
 export default {
+  [GET_CURRENT_USER](state, currentUser) {
+    state.currentUser = currentUser;
+  },
   [SIGNIN_ATTEMPT](state) {
     state.signInLoading = true;
   },

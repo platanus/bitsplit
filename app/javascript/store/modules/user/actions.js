@@ -1,4 +1,5 @@
 import {
+  getCurrentUser,
   signIn,
   signOut,
   signUp,
@@ -13,6 +14,7 @@ import {
 } from '../../action-types';
 
 import {
+  GET_CURRENT_USER,
   SIGNIN_FAIL,
   SIGNIN_SUCCESS,
   SIGNIN_ATTEMPT,
@@ -47,16 +49,33 @@ import {
 } from '../../../api/user.js';
 
 const commitAndSetUser = ({ commit, mutation, user }) => {
-  if (user.data.data.attributes) {
+  if (user) {
     localStorage.setItem(
       'currentUser',
-      JSON.stringify(user.data.data.attributes),
+      JSON.stringify(user),
     );
-    commit(mutation, user.data.data.attributes);
+    commit(mutation, user);
   }
 };
 
 export default {
+  [getCurrentUser]({ dispatch, commit }, payload) {
+    return getCurrentUserApi()
+      .then((res) => {
+        const currentUser = res.data.data.attributes;
+        currentUser.authentication_token = payload.authentication_token;
+
+        localStorage.setItem(
+          'currentUser',
+          JSON.stringify(currentUser),
+        );
+        commit(GET_CURRENT_USER, currentUser);
+      }).catch(e => {
+        // no logramos cargar los otros datos del usuario, cerramos la sesion
+        console.error(e);
+        dispatch(signOut);
+      });
+  },
   [signIn]({ commit, dispatch }, payload) {
     // Hacemos fetch a la api con data de payload
 
@@ -68,7 +87,19 @@ export default {
         dispatch('alert/successAlert', 'Usuario ingresado correctamente', {
           root: true,
         });
-        commitAndSetUser({ commit, mutation: SIGNIN_SUCCESS, user: res });
+
+        const { authentication_token } = res.data;
+
+        // SignIn fue exitosa, seteamos informacion con un placeholder
+        commitAndSetUser({ commit,
+          mutation: SIGNIN_SUCCESS,
+          user: { authentication_token,
+            email: payload.email,
+            api_key: '',
+            picture_url: null },
+        });
+        // SignIn fue exitosa
+        dispatch(getCurrentUser, { authentication_token });
       })
       .catch(e => {
         if (e.response) {
@@ -121,7 +152,6 @@ export default {
         }
       });
   },
-
   [signUp]({ commit, dispatch }, payload) {
     commit(SIGNUP_ATTEMPT);
 
