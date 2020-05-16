@@ -52,12 +52,10 @@ export default {
 
     return fetchPromise
       .then(res => {
-        const user = res.data.data.attributes
-        localStorage.setItem('currentUser', JSON.stringify(user))
-        commit(SIGNIN_SUCCESS, user)
         dispatch('alert/success_alert', 'Usuario ingresado correctamente', {
           root: true
         })
+        commitAndSetUser({ commit, mutation: SIGNIN_SUCCESS, user: res })
       })
       .catch(e => {
         if (e.response) {
@@ -118,12 +116,10 @@ export default {
 
     return signUpApi(payload)
       .then(res => {
-        const user = res.data.data.attributes
-        localStorage.setItem('currentUser', JSON.stringify(user))
-        commit(SIGNUP_SUCCESS, user)
         dispatch('alert/success_alert', 'Usuario creado correctamente', {
           root: true
         })
+        commitAndSetUser({ commit, mutation: SIGNUP_SUCCESS, user: res })
       })
       .catch(err => {
         if (err.response) {
@@ -178,15 +174,7 @@ export default {
         }
       })
       .then(res => {
-        // Actualizamos Current user
-        if (res.data.data.attributes) {
-          localStorage.setItem(
-            'currentUser',
-            JSON.stringify(res.data.data.attributes)
-          )
-          commit(BUDA_SIGNIN_SUCCESS, res.data.data.attributes)
-          return
-        }
+        commitAndSetUser({ commit, mutation: BUDA_SIGNIN_SUCCESS, user: res })
       })
       .catch(err => {
         commit(BUDA_SIGNIN_FAIL)
@@ -196,16 +184,10 @@ export default {
         return fetchPromise
           .then(res => {
             const fetchPromiseUser = getCurrentUserApi()
-            return fetchPromiseUser.then(res => {
-              if (res.data.data.attributes) {
-                localStorage.setItem(
-                  'currentUser',
-                  JSON.stringify(res.data.data.attributes)
-                )
-                commit(BUDA_SIGNOUT, res.data.data.attributes)
-                return
-              }
-            })
+            return fetchPromiseUser
+              .then(res => {
+                commitAndSetUser({ commit, mutation: BUDA_SIGNOUT, user: res })
+              })
           })
           .then(res => {
             if (err.response || err.message) {
@@ -231,16 +213,10 @@ export default {
           { root: true }
         )
         const fetchPromiseUser = getCurrentUserApi()
-        return fetchPromiseUser.then(res => {
-          if (res.data.data.attributes) {
-            localStorage.setItem(
-              'currentUser',
-              JSON.stringify(res.data.data.attributes)
-            )
-            commit(BUDA_SIGNOUT, res.data.data.attributes)
-            return
-          }
-        })
+        return fetchPromiseUser
+          .then(res => {
+            commitAndSetUser({ commit, mutation: BUDA_SIGNOUT, user: res })
+          })
       })
       .catch(err => {
         if (err.response) {
@@ -349,5 +325,15 @@ export default {
           throw new Error('Error desconocido')
         }
       })
+  }
+}
+
+function commitAndSetUser({ commit, mutation, user }) {
+  if (user.data.data.attributes) {
+    localStorage.setItem(
+      'currentUser',
+      JSON.stringify(user.data.data.attributes)
+    )
+    commit(mutation, user.data.data.attributes)
   }
 }
