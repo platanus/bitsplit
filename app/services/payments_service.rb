@@ -74,7 +74,7 @@ class PaymentsService < PowerTypes::Service.new(:sender, :receiver)
     end
 
     def sender_payment(api_key, api_secret, bitcoins_amount, invoice_code)
-        simulate = Rails.application.secrets.buda_payment_simulation
+        simulate = ENV.fetch("INVOICE_PAYMENT_SIMULATION")
         buda_payer = BudaUserService.new(api_key: api_key, api_secret: api_secret)
         buda_payer.pay_invoice(bitcoins_amount, invoice_code, simulate)
     end

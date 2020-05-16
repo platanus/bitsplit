@@ -73,14 +73,15 @@ class SplitwiseService < PowerTypes::Service.new(:user)
   end
 
   def consumer
-    _secrets = Rails.application.secrets
-    @c ||= OAuth::Consumer.new(_secrets.splitwise_consumer_key, _secrets.splitwise_consumer_secret, {
-      :site => _secrets.splitwise_base_site,
+    splitwise_key = ENV.fetch("SPLITWISE_CONSUMER_KEY")
+    splitwise_secret = ENV.fetch("SPLITWISE_CONSUMER_SECRET")
+    @c ||= OAuth::Consumer.new(splitwise_key, splitwise_secret, {
+      :site => 'https://secure.splitwise.com',
       :scheme => :header,
       :http_method => :post,
-      :authorize_path => _secrets.splitwise_authorize_url,
-      :request_token_path => _secrets.splitwise_token_url,
-      :access_token_path => _secrets.splitwise_access_token_url
+      :authorize_path => '/authorize',
+      :request_token_path => '/api/v3.0/get_request_token',
+      :access_token_path => '/api/v3.0/get_access_token'
       })
   end
 
