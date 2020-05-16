@@ -1,32 +1,28 @@
-class Api::V1::SessionsController < Api::V1::BaseController
-
+class Api::V1::SessionsController < Devise::SessionsController
     # exclude the creation of a session for token auth
-    acts_as_token_authentication_handler_for User, except: [:create]
+    before_action :authenticate_user!, except: [:create]
 
     def create
-        @user = User.where(email: params[:email]).first
-
-        if @user&.valid_password?(params[:password])
-
-            # Use firebase service to save token
-            firebase = FirebaseService.new(@user)
-            firebase.save_token()
-
-            @user.update_attribute(:logged, true)
-            @password = params[:password]
-            render :create, status: :created
-        else
-            head(:unauthorized)
-        end
+      user = warden.authenticate!(auth_options)
+      token = Tiddle.create_and_return_token(user, request)
+      # Use firebase service to save newly created token
+      FirebaseService.new(user).save_token(token)
+      render json: { authentication_token: token }
     end
-
+  
     def destroy
-        current_user&.authentication_token = nil
-        if current_user.save
-            @current_user.update_attribute(:logged, false)
-            head(:no_content)
-        else
-            head(:unauthorized)
-        end
+      if current_user && Tiddle.expire_token(current_user, request)
+        # Use firebase service to destroy token in header
+        FirebaseService.new(current_user).delete_token(request.headers["X-User-Token"])
+        head :ok
+      else
+        # Client tried to expire an invalid token
+        render json: { error: 'invalid token' }, status: 401
+      end
+    end
+  
+    private  
+    # this is invoked before destroy and we have to override it
+    def verify_signed_out_user
     end
 end

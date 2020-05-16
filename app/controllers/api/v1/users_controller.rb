@@ -3,13 +3,10 @@
 class Api::V1::UsersController < Api::V1::BaseController
   
   # exclude the creation of a user for token auth
-  acts_as_token_authentication_handler_for User, except: [:create]
+  before_action :authenticate_user!, except: [:create]
 
   def create
     new_user = User.create!(user_params)
-    # Use firebase service to save token
-    FirebaseService.new(new_user).save_token()
-
     respond_with new_user
   end
 
