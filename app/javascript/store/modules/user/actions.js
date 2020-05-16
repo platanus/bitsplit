@@ -7,7 +7,9 @@ import {
   getQuotation,
   getUserBalance,
   sendPayment,
-  getPayments
+  getPayments,
+  splitwiseUrlConnection,
+  getDebts
 } from '../../action-types'
 
 import {
@@ -28,7 +30,8 @@ import {
   SEND_PAYMENT_ATTEMPT,
   SEND_PAYMENT_FAIL,
   SEND_PAYMENT_SUCCESS,
-  GET_PAYMENTS_SUCCESS
+  GET_PAYMENTS_SUCCESS,
+  GET_DEBTS_SUCCESS
 } from '../../mutation-types'
 
 import {
@@ -40,7 +43,9 @@ import {
   getQuotationApi,
   getUserBalanceApi,
   sendPaymentApi,
-  getPaymentsApi
+  getPaymentsApi,
+  splitwiseUrlConnectionApi,
+  getDebtsApi
 } from '../../../api/user.js'
 
 export default {
@@ -320,6 +325,45 @@ export default {
             { root: true }
           )
           throw new Error('Error obteniendo el historial de transacciones.')
+        } else {
+          dispatch('alert/error_alert', 'Error desconocido.', { root: true })
+          throw new Error('Error desconocido')
+        }
+      })
+  },
+  [splitwiseUrlConnection]({ commit, dispatch }, payload) {
+    return splitwiseUrlConnectionApi(payload)
+      .then(res => {
+        return res.data.data.attributes
+      })
+      .catch(err => {
+        if (err.response) {
+          dispatch(
+            'alert/error_alert',
+            'Error redireccionando a Splitwise.',
+            { root: true }
+          )
+          throw new Error('Error redireccionando a Splitwise.')
+        } else {
+          dispatch('alert/error_alert', 'Error desconocido.', { root: true })
+          throw new Error('Error desconocido')
+        }
+      })
+  },
+  [getDebts]({ commit, dispatch }, payload) {
+    return getDebtsApi(payload)
+      .then(res => {
+        commit(GET_DEBTS_SUCCESS, res.data.data.attributes)
+        return
+      })
+      .catch(err => {
+        if (err.response) {
+          dispatch(
+            'alert/error_alert',
+            'Error obteniendo las deudas de Splitwise.',
+            { root: true }
+          )
+          throw new Error('Error obteniendo las deudas de Splitwise.')
         } else {
           dispatch('alert/error_alert', 'Error desconocido.', { root: true })
           throw new Error('Error desconocido')

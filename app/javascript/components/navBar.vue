@@ -14,6 +14,13 @@
         <router-link :to="budaRoute">Buda</router-link>
       </button>
       <button
+        @click="openSplitwiseUrl()"
+        type="button"
+        class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
+      >
+        Splitwise
+      </button>
+      <button
         v-if="budaSignedIn"
         type="button"
         class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
@@ -72,8 +79,17 @@ export default {
     NavBarNotifications
   },
   methods: {
-    ...mapActions('user', ['signOut']),
-    ...mapActions('notification', ['bindNotifications', 'unbindNotifications'])
+    ...mapActions('user', ['signOut', 'splitwiseUrlConnection']),
+    ...mapActions('notification', ['bindNotifications', 'unbindNotifications']),
+    openSplitwiseUrl() {
+      this.splitwiseUrlConnection()
+        .then((res) => {
+          window.open(res.authorize_url)
+        })
+        .catch(err => {
+          console.error(err)
+        })
+    }
   },
   computed: {
     ...mapState('user', ['currentUser']),

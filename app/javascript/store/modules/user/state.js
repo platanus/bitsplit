@@ -9,5 +9,6 @@ export default {
   userBalanceCLP: 0,
   userBalanceBTC: 0,
   lastPayment: null,
-  paymentsHistory: []
+  paymentsHistory: [],
+  userDebts: []
 }
