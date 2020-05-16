@@ -9,6 +9,7 @@
     "axios": "^0.19.2",
     "eslint-plugin-import": "^2.20.2",
     "firebase": "^7.14.2",
+    "husky": "^4.2.5",
     "tailwindcss": "^1.2.0",
     "turbolinks": "^5.2.0",
     "vue": "^2.6.11",
@@ -26,7 +27,13 @@
   },
   "scripts": {
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "lint": "eslint ./app/javascript --fix --ext .vue,.js"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn run lint"
+    }
   },
   "jest": {
     "roots": [
