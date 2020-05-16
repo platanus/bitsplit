@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters }  from 'vuex';
 import LinkButton from '../components/LinkButton';
 
 export default {
