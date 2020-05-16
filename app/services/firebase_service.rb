@@ -34,8 +34,17 @@ class FirebaseService < PowerTypes::Service.new
         @user = user
         @clean_email = @user.email.sub '.', ','
         firebase_url = 'https://platanus-bitsplit.firebaseio.com/'
-        private_key_json_string = Rails.application.secrets.firebase_credentials
-        @firebase = Firebase::Client.new(firebase_url, private_key_json_string.to_json.to_s)
+        firebase_credentials = {
+            "type": "service_account",
+            "project_id": "platanus-bitsplit",
+            "private_key_id": ENV.fetch("FIREBASE_PRIVATE_KEY_ID"),
+            "private_key": ENV.fetch("FIREBASE_PRIVATE_KEY"),
+            "client_email": "firebase-adminsdk-qj7zf@platanus-bitsplit.iam.gserviceaccount.com","client_id": "105168040932761626714",
+            "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+            "token_uri": "https://oauth2.googleapis.com/token",
+            "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs","client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-qj7zf%40platanus-bitsplit.iam.gserviceaccount.com"
+        }
+        @firebase = Firebase::Client.new(firebase_url, firebase_credentials.to_json)
     end
   
 end
