@@ -33,7 +33,7 @@ const mutations = {};
 
 export default {
   namespaced: true,
-  firebaseState,
+  state: firebaseState,
   actions,
   getters,
   mutations,

@@ -25,9 +25,9 @@ const mutations = {
   },
 };
 
-export const component = {
+export default {
   namespaced: true,
-  componentState,
+  state: componentState,
   actions,
   mutations,
 };
