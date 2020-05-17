@@ -41,9 +41,8 @@ export default {
   [SIGNUP_ATTEMPT](state) {
     state.signUpLoading = true;
   },
-  [SIGNUP_SUCCESS](state, currentUser) {
+  [SIGNUP_SUCCESS](state) {
     state.signUpLoading = false;
-    state.currentUser = currentUser;
   },
   [SIGNUP_FAIL](state) {
     state.signUpLoading = false;
