@@ -1,5 +1,4 @@
 class Api::V1::Splitwise::AuthenticationsController < ApplicationController
-
   # the token verification is skiped for show as this
   # path is used by Splitwise to return the information
   # as a callback
@@ -22,8 +21,8 @@ class Api::V1::Splitwise::AuthenticationsController < ApplicationController
   end
 
   private
+
   def generate_splitwise_service
     @splitwise_service = SplitwiseService.new(user: current_user)
   end
-
 end
