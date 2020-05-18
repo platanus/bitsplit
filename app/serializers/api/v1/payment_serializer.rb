@@ -1,21 +1,21 @@
 class Api::V1::PaymentSerializer < ActiveModel::Serializer
-    type :payment
-  
-    attributes(
-      :id, 
-      :sender_email,
-      :receiver_email,
-      :amount,
-      :completed,
-      :invoice_id,
-      :created_at
-    )
+  type :payment
 
-    def receiver_email
-        User.where(id: object["receiver_id"]).first.email
-    end
+  attributes(
+    :id,
+    :sender_email,
+    :receiver_email,
+    :amount,
+    :completed,
+    :invoice_id,
+    :created_at
+  )
 
-    def sender_email
-        User.where(id: object["sender_id"]).first.email
-    end
+  def receiver_email
+    User.where(id: object['receiver_id']).first.email
   end
+
+  def sender_email
+    User.where(id: object['sender_id']).first.email
+  end
+end

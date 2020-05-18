@@ -1,10 +1,8 @@
 class Payment < ApplicationRecord
-  belongs_to :sender, :class_name => 'User'
-  belongs_to :receiver, :class_name => 'User'
-  self.ignored_columns = ["date"]
-  self.ignored_columns = ["state"]
-
-
+  belongs_to :sender, class_name: 'User'
+  belongs_to :receiver, class_name: 'User'
+  self.ignored_columns = ['date']
+  self.ignored_columns = ['state']
 end
 
 # == Schema Information

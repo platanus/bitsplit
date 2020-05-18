@@ -1,9 +1,7 @@
 class BudaUserService < PowerTypes::Service.new(api_key: nil, api_secret: nil)
-
-
   def generate_invoice(bitcoins_amount)
     path = '/api/v2/lightning_network_invoices'
-    url ='https://www.buda.com/api/v2/lightning_network_invoices'
+    url = 'https://www.buda.com/api/v2/lightning_network_invoices'
     request_type = 'POST'
     satoshis = satoshi_price(bitcoins_amount)
     body = { amount_satoshis: satoshis, currency: 'BTC' }.to_json
@@ -14,36 +12,33 @@ class BudaUserService < PowerTypes::Service.new(api_key: nil, api_secret: nil)
 
   def pay_invoice(bitcoins_amount, invoice_code, simulate)
     path = '/api/v2/reserves/ln-btc/withdrawals'
-    url ='https://www.buda.com/api/v2/reserves/ln-btc/withdrawals'
+    url = 'https://www.buda.com/api/v2/reserves/ln-btc/withdrawals'
     request_type = 'POST'
-    body = { amount: bitcoins_amount, withdrawal_data:{payment_request: invoice_code}, simulate: simulate }.to_json
+    body = { amount: bitcoins_amount, withdrawal_data: { payment_request: invoice_code }, simulate: simulate }.to_json
     nonce = generate_nonce
-    headers = headers(@api_key, @api_secret, nonce, request_type, path, body)
+    headers = generate_headers(@api_key, @api_secret, nonce, request_type, path, body)
     post_request(url, body, headers)
-
-  end 
+  end
 
   def balance(currency)
-    path = '/api/v2/balances/'+ currency
-    url ='https://www.buda.com/api/v2/balances/' + currency
+    path = '/api/v2/balances/' + currency
+    url = 'https://www.buda.com/api/v2/balances/' + currency
     request_type = 'GET'
     nonce = generate_nonce
-    headers = headers(@api_key, @api_secret, nonce, request_type, path)
+    headers = generate_headers(@api_key, @api_secret, nonce, request_type, path)
     get_request(url, headers)
-
   end
 
   def quotation(market_id, type, amount)
-    url ='https://www.buda.com/api/v2/markets/'+ market_id +'/quotations'
-    body = { type: type, amount: amount}
+    url = 'https://www.buda.com/api/v2/markets/' + market_id + '/quotations'
+    body = { type: type, amount: amount }
     post_request(url, body)
-
   end
 
   private
 
   def satoshi_price(bitcoins_amount)
-      (bitcoins_amount * 100_000_000).round
+    (bitcoins_amount * 100_000_000).round
   end
 
   def generate_nonce
@@ -51,39 +46,39 @@ class BudaUserService < PowerTypes::Service.new(api_key: nil, api_secret: nil)
   end
 
   def request_signature(api_secret, nonce, request_type, path, payload = nil)
-      signature = signature(request_type, path, nonce, payload)
-      OpenSSL::HMAC.hexdigest(
+    signature = signature(request_type, path, nonce, payload)
+    OpenSSL::HMAC.hexdigest(
       OpenSSL::Digest.new('sha384'),
-      api_secret, signature)
+      api_secret, signature
+    )
   end
 
   def signature(request_type, path, nonce, payload = nil)
-      if payload.nil?
-        "#{request_type} #{path} #{nonce}"
-      else
-        "#{request_type} #{path} #{Base64.strict_encode64(payload)} #{nonce}"
-      end
+    if payload.nil?
+      "#{request_type} #{path} #{nonce}"
+    else
+      "#{request_type} #{path} #{Base64.strict_encode64(payload)} #{nonce}"
+    end
   end
 
-  def headers(api_key, api_secret, nonce, request_type, path, payload = nil)
-    { 
-    'X-SBTC-APIKEY' => api_key ,
-    'X-SBTC-NONCE' => nonce,
-    'X-SBTC-SIGNATURE' => request_signature(api_secret, nonce, request_type, path, payload),
-    'Content-Type' => 'application/json'
-      }
+  def generate_headers(api_key, api_secret, nonce, request_type, path, payload = nil)
+    {
+      'X-SBTC-APIKEY' => api_key,
+      'X-SBTC-NONCE' => nonce,
+      'X-SBTC-SIGNATURE' => request_signature(api_secret, nonce, request_type, path, payload),
+      'Content-Type' => 'application/json'
+    }
   end
 
-  def post_request(path, body , header = nil)
+  def post_request(path, body, header = nil)
     params = { body: body }
     params[:headers] = header unless header.nil?
     HTTParty.post(path, body: body, headers: header)
   end
 
   def get_request(path, header)
-    params={}
+    params = {}
     params[:headers] = header unless header.nil?
     HTTParty.get(path, headers: header)
   end
-
 end
