@@ -1,5 +1,5 @@
 Ledgerizer.setup do |conf|
-    conf.tenant(:tenant) do
+    conf.tenant(:tenant, currency: :sat) do
         # where bitsplit keeps the bitcoins (like a bank account)
         conf.asset :vault
       
