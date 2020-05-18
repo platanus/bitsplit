@@ -1,14 +1,17 @@
 <template>
-  <label class="block text-gray-700 text-sm font-bold mb-2" for="fieldFor">
+  <label
+    class="block text-gray-700 text-sm font-bold mb-2"
+    for="fieldFor"
+  >
     <slot />
   </label>
 </template>
 <script>
 export default {
-  name: 'inputLabel',
+  name: 'InputLabel',
   props: {
     fieldName: String,
-    fieldFor: String
-  }
-}
+    fieldFor: String,
+  },
+};
 </script>

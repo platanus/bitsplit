@@ -1,6 +1,11 @@
 
 <template>
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    width="24"
+    height="24"
+  >
     <path
       :stroke="color"
       stroke-width="0.1"
@@ -14,7 +19,10 @@
 export default {
   name: 'RightArrow',
   props: {
-    color: String
-  }
-}
+    color: {
+      type: String,
+      default: 'green',
+    },
+  },
+};
 </script>

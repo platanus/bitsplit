@@ -1,23 +1,24 @@
-  <template>
+<template>
   <div id="vue-app">
-    <navBar></navBar>
-    <alert-message></alert-message>
-    <router-view></router-view>
+    <navBar />
+    <alert-message />
+    <router-view />
   </div>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
-import navBar from 'components/navBar.vue'
-import alertMessage from 'components/alerts/alertMessage.vue'
+import { mapActions } from 'vuex';
+import navBar from 'components/navBar.vue';
+import alertMessage from 'components/alerts/alertMessage.vue';
+
 export default {
-  name: 'app',
+  name: 'App',
   components: {
     navBar,
-    alertMessage
+    alertMessage,
   },
   methods: {
-    ...mapActions('alert', ['clear_alert'])
-  }
-}
+    ...mapActions('alert', ['clearAlert']),
+  },
+};
 </script>

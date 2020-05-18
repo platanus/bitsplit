@@ -16,13 +16,13 @@ export default {
     route: String,
     classmod: {
       type: String,
-      default: ''
-    }
+      default: '',
+    },
   },
   methods: {
     moveMe() {
-      this.$router.push(`/${this.route}`)
-    }
-  }
-}
+      this.$router.push(`/${this.route}`);
+    },
+  },
+};
 </script>

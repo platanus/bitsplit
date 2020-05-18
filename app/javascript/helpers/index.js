@@ -1,43 +1,43 @@
-import store from '../store'
-import axios from 'axios'
+import axios from 'axios';
+import store from '../store';
 
 const checkAuth = (to, from, next) => {
-  if (!store.getters['user/signedIn']) {
-    next('/')
+  if (store.getters['user/signedIn']) {
+    next();
   } else {
-    next()
+    next('/');
   }
-}
+};
 
 const checkNoAuth = (to, from, next) => {
   if (store.getters['user/signedIn']) {
-    next('/home')
+    next('/home');
   } else {
-    next()
+    next();
   }
-}
+};
 
 const checkBudaAuth = (to, from, next) => {
   // Cuando trato de ir a /payments pero aun no estoy sincronizxado con buda
-  if (!store.getters['user/budaSignedIn']) {
-    next('/buda')
+  if (store.getters['user/budaSignedIn']) {
+    next();
   } else {
-    next()
+    next('/buda');
   }
-}
+};
 
-const authedAxios = axios.create()
+const authedAxios = axios.create();
 
 authedAxios.interceptors.request.use(
   config => {
     config.headers['X-User-Token'] =
-      store.state.user.currentUser.authentication_token
-    config.headers['X-User-Email'] = store.state.user.currentUser.email
-    config.headers['Content-Type'] = 'application/json'
+      store.state.user.currentUser.authentication_token;
+    config.headers['X-User-Email'] = store.state.user.currentUser.email;
+    config.headers['Content-Type'] = 'application/json';
 
-    return config
+    return config;
   },
-  error => Promise.reject(error)
-)
+  error => Promise.reject(error),
+);
 
-export { checkAuth, checkNoAuth, checkBudaAuth, authedAxios }
+export { checkAuth, checkNoAuth, checkBudaAuth, authedAxios };

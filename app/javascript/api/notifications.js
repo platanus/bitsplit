@@ -1,9 +1,8 @@
-import { authedAxios } from '../helpers'
+import { authedAxios } from '../helpers';
 
-const markAsSeenApi = notificationToken => {
-  return authedAxios.patch('/api/v1/firebase', {
-    notification_token: notificationToken
-  })
-}
+const markAsSeenApi = notificationToken => authedAxios.patch('/api/v1/firebase', {
+  // eslint-disable-next-line camelcase
+  notification_token: notificationToken,
+});
 
-export { markAsSeenApi }
+export { markAsSeenApi };

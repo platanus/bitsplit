@@ -11,14 +11,18 @@
               @do-click="change('BudaForm')"
               width="full"
               color="secondary"
-            >Actualizar Keys</submitButton>
+            >
+              Actualizar Keys
+            </submitButton>
           </div>
           <div class="pb-6">
             <submitButton
               @do-click="change('BudaLogoutForm')"
               width="full"
               color="secondary"
-            >Desconectar Buda</submitButton>
+            >
+              Desconectar Buda
+            </submitButton>
           </div>
         </div>
       </div>
@@ -27,35 +31,29 @@
 </template>
 
 <script>
-import { mapActions, mapState, mapMutations } from 'vuex'
-import textInput from '../components/Input.vue'
-import passwordInput from '../components/PasswordInput'
-import submitButton from '../components/SubmitButton'
-import inputLabel from '../components/InputLabel'
-import textField from '../components/TextField'
+import { mapActions } from 'vuex';
+import submitButton from '../components/SubmitButton';
+import textField from '../components/TextField';
 
 export default {
-  name: 'budaIndex',
+  name: 'BudaIndex',
   data() {
     return {
       routeName: 'budaIndex',
       api_key: '',
       api_secret: '',
-      password: ''
-    }
+      password: '',
+    };
   },
   components: {
-    textInput,
-    passwordInput,
     submitButton,
-    inputLabel,
-    textField
+    textField,
   },
   methods: {
     ...mapActions('component', ['changeBudaComp']),
     change(form) {
-      this.changeBudaComp(form)
-    }
-  }
-}
+      this.changeBudaComp(form);
+    },
+  },
+};
 </script>

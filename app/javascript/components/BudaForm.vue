@@ -9,19 +9,39 @@
             </textField>
           </div>
           <div>
-            <inputLabel fieldName="API_KEY">key</inputLabel>
-            <passwordInput fieldId="api_key" fieldName="api_key" v-model="api_key" />
+            <inputLabel field-name="API_KEY">
+              key
+            </inputLabel>
+            <passwordInput
+              field-id="apiKey"
+              field-name="apiKey"
+              v-model="apiKey"
+            />
           </div>
           <div>
-            <inputLabel fieldName="API_SECRET">api_secret</inputLabel>
-            <passwordInput fieldId="api_secret" fieldName="api_secret" v-model="api_secret" />
+            <inputLabel field-name="API_SECRET">
+              apiSecret
+            </inputLabel>
+            <passwordInput
+              field-id="apiSecret"
+              field-name="apiSecret"
+              v-model="apiSecret"
+            />
           </div>
           <div>
-            <inputLabel fieldFor="password">Confirma tu contraseña Bitsplit</inputLabel>
-            <passwordInput fieldId="password" fieldName="password" v-model="password" />
+            <inputLabel field-for="password">
+              Confirma tu contraseña Bitsplit
+            </inputLabel>
+            <passwordInput
+              field-id="password"
+              field-name="password"
+              v-model="password"
+            />
           </div>
           <div>
-            <submitButton :loading="budaSignInLoading">Sincronizar Buda</submitButton>
+            <submitButton :loading="budaSignInLoading">
+              Sincronizar Buda
+            </submitButton>
           </div>
         </form>
       </div>
@@ -30,52 +50,50 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
-import textInput from '../components/Input.vue'
-import passwordInput from '../components/PasswordInput'
-import submitButton from '../components/SubmitButton'
-import inputLabel from '../components/InputLabel'
-import textField from '../components/TextField'
+import { mapActions, mapState } from 'vuex';
+import passwordInput from '../components/PasswordInput';
+import submitButton from '../components/SubmitButton';
+import inputLabel from '../components/InputLabel';
+import textField from '../components/TextField';
 
 export default {
   name: 'BudaForm',
   data() {
     return {
       routeName: 'BudaForm',
-      api_key: '',
-      api_secret: '',
-      password: ''
-    }
+      apiKey: '',
+      apiSecret: '',
+      password: '',
+    };
   },
   components: {
-    textInput,
     passwordInput,
     submitButton,
     inputLabel,
-    textField
+    textField,
   },
   computed: {
-    ...mapState('user', ['currentUser', 'budaSignInLoading'])
+    ...mapState('user', ['currentUser', 'budaSignInLoading']),
   },
   methods: {
     ...mapActions('user', ['budaSignIn']),
-    handleSubmit(e) {
-      const { api_key, api_secret, password } = this
-      if (api_key && api_secret && password) {
+    handleSubmit() {
+      const { apiKey, apiSecret, password } = this;
+      if (apiKey && apiSecret && password) {
         this.budaSignIn({
-          api_key,
-          api_secret,
-          password
+          api_key: apiKey,
+          api_secret: apiSecret,
+          password,
         })
           .then(() => {
-            console.log('success')
-            this.$router.push('/home')
+            console.log('success');
+            this.$router.push('/home');
           })
           .catch(err => {
-            console.error(err)
-          })
+            console.error(err);
+          });
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>

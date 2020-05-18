@@ -1,41 +1,40 @@
 <template>
   <div>
-    <component :is="budaComp"></component>
+    <component :is="budaComp" />
   </div>
 </template>
 
 <script>
-import { mapActions, mapState, mapGetters } from 'vuex'
-import BudaForm from '../components/BudaForm'
-import BudaLogoutForm from '../components/BudaLogoutForm'
-import BudaIndex from '../components/BudaIndex'
+import { mapActions, mapState, mapGetters } from 'vuex';
+import BudaForm from '../components/BudaForm';
+import BudaLogoutForm from '../components/BudaLogoutForm';
+import BudaIndex from '../components/BudaIndex';
 
 export default {
-  name: 'budaProfile',
+  name: 'BudaProfile',
   data() {
     return {
       routeName: 'budaProfile',
-    }
+    };
   },
   components: {
     BudaForm,
     BudaLogoutForm,
-    BudaIndex
+    BudaIndex,
   },
   computed: {
     ...mapState('component', ['budaComp']),
   },
   methods: {
     ...mapActions('component', ['changeBudaComp']),
-    ...mapGetters('user', ['budaSignedIn'])
+    ...mapGetters('user', ['budaSignedIn']),
   },
   created() {
     if (this.budaSignedIn()) {
-      this.changeBudaComp('BudaIndex')
+      this.changeBudaComp('BudaIndex');
+    } else {
+      this.changeBudaComp('BudaForm');
     }
-    else {
-      this.changeBudaComp('BudaForm')
-    }
-  }
-}
+  },
+};
 </script>

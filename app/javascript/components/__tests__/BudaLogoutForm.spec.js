@@ -1,9 +1,9 @@
-import { shallowMount } from '@vue/test-utils'
-import BudaLogoutForm from '../BudaLogoutForm'
+import { shallowMount } from '@vue/test-utils';
+import BudaLogoutForm from '../BudaLogoutForm';
 
 describe('BudaLogoutForm', () => {
   it('matches snapshot', () => {
-    const wrapper = shallowMount(BudaLogoutForm)
-    expect(wrapper).toMatchSnapshot()
-  })
-})
+    const wrapper = shallowMount(BudaLogoutForm);
+    expect(wrapper).toMatchSnapshot();
+  });
+});

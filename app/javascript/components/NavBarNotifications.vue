@@ -15,20 +15,32 @@
       </svg>
       <span>{{ unSeenNotifications.length }}</span>
     </button>
-    <div v-show="!hidden" class="absolute bg-gray-400 mt-4 ml-2">
+    <div
+      v-show="!hidden"
+      class="absolute bg-gray-400 mt-4 ml-2"
+    >
       <div
         class="absolute z-0 w-4 h-4 origin-center transform rotate-45 translate-x-5 -translate-y-2 bg-gray-400 border-t border-l border-gray-200 rounded-sm pointer-events-none"
       />
-      <div v-show="!hasNotifications" class="m-2">
+      <div
+        v-show="!hasNotifications"
+        class="m-2"
+      >
         No tienes notificaciones sin leer
       </div>
-      <div v-show="hasNotifications" class="pr-2 h-64 overflow-y-auto">
+      <div
+        v-show="hasNotifications"
+        class="pr-2 h-64 overflow-y-auto"
+      >
         <ul
           v-for="notification in unSeenNotifications"
           :key="notification['.key']"
         >
           <li class="p-3 border-black border-solid hover:bg-gray-500 z-40">
-            <div v-show="notification.type === 'payment'" class="flex flex-row">
+            <div
+              v-show="notification.type === 'payment'"
+              class="flex flex-row"
+            >
               <RightArrow color="seaGreen" />
               <p class="pl-2 font-thin">
                 Recibido BTC {{ notification.data.amount }}
@@ -44,46 +56,46 @@
   </div>
 </template>
 <script>
-import { mapGetters, mapActions, mapState } from 'vuex'
-import RightArrow from './icons/RightArrow'
-import Cross from './icons/Cross'
+import { mapGetters, mapActions, mapState } from 'vuex';
+import RightArrow from './icons/RightArrow';
+import Cross from './icons/Cross';
 
 export default {
   name: 'NavBarNotifications',
   components: {
     RightArrow,
-    Cross
+    Cross,
   },
   data() {
     return {
-      hidden: true
-    }
+      hidden: true,
+    };
   },
   methods: {
     ...mapActions('notification', ['markAsSeen']),
-    ...mapActions('user', ['getUserBalance', 'getPayments'])
+    ...mapActions('user', ['getUserBalance', 'getPayments']),
   },
   computed: {
     ...mapGetters('notification', ['unSeenNotifications']),
     ...mapState('notification', ['notifications']),
 
     hasNotifications() {
-      return !!this.unSeenNotifications[0]
-    }
+      return !!this.unSeenNotifications[0];
+    },
   },
   watch: {
     unSeenNotifications(newNotifications, oldNotifications) {
       const nPaymentsOld = oldNotifications.filter(d => d.type === 'payment')
-        .length
+        .length;
       const nPaymentsNew = newNotifications.filter(d => d.type === 'payment')
-        .length
+        .length;
 
       // Recargo el balance si hay una notificacion tipo payment nueva
       if (nPaymentsNew > nPaymentsOld) {
-        this.getUserBalance()
-        this.getPayments()
+        this.getUserBalance();
+        this.getPayments();
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>

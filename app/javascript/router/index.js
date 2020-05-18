@@ -1,16 +1,16 @@
-import Vue from 'vue/dist/vue.esm'
-import Router from 'vue-router'
+import Vue from 'vue/dist/vue.esm';
+import Router from 'vue-router';
 
-import SignIn from './SignIn.vue'
-import SignUp from './SignUp.vue'
-import Landing from './Landing.vue'
-import Home from './Home.vue'
-import BudaIndex from './BudaIndex.vue'
-import PaymentIndex from './PaymentIndex.vue'
+import SignIn from './SignIn.vue';
+import SignUp from './SignUp.vue';
+import Landing from './Landing.vue';
+import Home from './Home.vue';
+import BudaIndex from './BudaIndex.vue';
+import PaymentIndex from './PaymentIndex.vue';
 
-import { checkAuth, checkNoAuth, checkBudaAuth } from '../helpers'
+import { checkAuth, checkNoAuth, checkBudaAuth } from '../helpers';
 
-Vue.use(Router)
+Vue.use(Router);
 
 const router = new Router({
   mode: 'history',
@@ -23,9 +23,9 @@ const router = new Router({
     {
       path: '/payment',
       component: PaymentIndex,
-      beforeEnter: checkAuth && checkBudaAuth
-    }
-  ]
-})
+      beforeEnter: checkAuth && checkBudaAuth,
+    },
+  ],
+});
 
-export default router
+export default router;
