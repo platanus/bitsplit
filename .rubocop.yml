@@ -1,0 +1,39 @@
+AllCops:
+  Includes:
+    - app/**/*
+  Excludes:
+    - app/javascript/**/*
+    - app/assets/**/*
+    - app/views/**/*
+    - bin/**/*
+    - db/**/*
+    - config/**/*
+    - script/**
+    - vendor/**/*
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Layout/LineLength:
+  Max: 150
+
+Metrics/MethodLength:
+  Max: 15
+
+Metrics/AbcSize:
+  Max: 25
+
+Metrics/ParameterLists:
+  Max: 6
+
+Style/PreferredHashMethods:
+  Enabled: false
+
+Naming/MemoizedInstanceVariableName:
+  Enabled: false
