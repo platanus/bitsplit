@@ -2,7 +2,6 @@ class RegisterWithdrawal < PowerTypes::Command.new(:withdrawal)
   include Ledgerizer::Execution::Dsl
 
   def perform
-    
     execute_user_withdrawal_satoshis_entry(
       tenant: tenant,
       document: @withdrawal,
@@ -22,5 +21,4 @@ class RegisterWithdrawal < PowerTypes::Command.new(:withdrawal)
   def tenant
     Tenant.first
   end
-
 end

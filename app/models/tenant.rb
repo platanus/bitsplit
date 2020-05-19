@@ -1,7 +1,7 @@
 class Tenant < ApplicationRecord
-    include LedgerizerTenant
+  include LedgerizerTenant
 
-    def vault_account
-        accounts.find_by(name: :vault)
-    end
+  def vault_account
+    accounts.find_by(name: :vault)
+  end
 end
