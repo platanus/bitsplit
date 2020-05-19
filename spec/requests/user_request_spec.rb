@@ -25,7 +25,7 @@ RSpec.describe User, type: :request do
       end
       it "should have user type" do
         expect(@post_response_body["data"]["type"]).to eq "user"
-      endend
+      end
 
       it "should still be the same data" do
         expect(@post_response_body["data"]["attributes"]).to include("email" => user_params["email"], "api_key" => user_params["api_key"])
