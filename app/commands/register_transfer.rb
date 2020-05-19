@@ -2,7 +2,6 @@ class RegisterTransfer < PowerTypes::Command.new(:transfer)
   include Ledgerizer::Execution::Dsl
 
   def perform
-    
     execute_user_transfer_satoshis_entry(
       tenant: tenant,
       document: @transfer,

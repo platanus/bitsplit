@@ -2,7 +2,6 @@ class RegisterDeposit < PowerTypes::Command.new(:deposit)
   include Ledgerizer::Execution::Dsl
 
   def perform
-    
     execute_user_deposit_satoshis_entry(
       tenant: tenant,
       document: @deposit,
