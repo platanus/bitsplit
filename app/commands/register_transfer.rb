@@ -15,7 +15,7 @@ class RegisterTransfer < PowerTypes::Command.new(:transfer)
 
   private
 
-  def satoshis_in_withdrawal
+  def satoshis_in_transfer
     Money.from_amount(@transfer.satoshis, 'SAT')
   end
 

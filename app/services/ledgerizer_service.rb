@@ -1,27 +1,18 @@
 class LedgerizerService < PowerTypes::Service.new
 
-
-    def self.simulate
-        tenant = Tenant.create(:name => "Bitsplit")
-        user = User.create(:email=>"example@ex.com", :password=> "holaexample", 
-        :password_confirmation=>"holaexample", :tenant=> tenant)
-        deposit(user, 1000)
-    
-    end
-
-    def self.deposit(user, satoshis)
-        deposit = Deposit.create(user: user, satoshis: satoshis)
+    def self.deposit(user, bitcoins)
+        deposit = Deposit.create(user: user, satoshis: to_satoshis(bitcoins))
         RegisterDeposit.for(deposit: deposit)
     end 
 
-    def self.withdrawal(user, satoshis)
-        withdrawal = Withdrawal.create(user: user, satoshis: satoshis)
-        RegisterDeposit.for(withdrawal: withdrawal)
+    def self.withdrawal(user, bitcoins)
+        withdrawal = Withdrawal.create(user: user, satoshis: to_satoshis(bitcoins))
+        RegisterWithdrawal.for(withdrawal: withdrawal)
     end
 
-    def self.transfer(sender, receiver, satoshis)
-        transfer = Transfer.create(sender: sender, receiver: receiver, satoshis: satoshis)
-        RegisterDeposit.for(transfer: transfer)
+    def self.transfer(sender, receiver, bitcoins)
+        transfer = Transfer.create(sender: sender, receiver: receiver, satoshis: to_satoshis(bitcoins))
+        RegisterTransfer.for(transfer: transfer)
     end
 
     def self.user_balance(user)
@@ -29,4 +20,7 @@ class LedgerizerService < PowerTypes::Service.new
         account.balance
     end
 
+    def self.to_satoshis(bitcoins)
+        bitcoins * 100000000
+    end
 end

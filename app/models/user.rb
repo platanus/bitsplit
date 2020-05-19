@@ -1,6 +1,6 @@
 class User < ApplicationRecord
   include LedgerizerAccountable
-  
+
   self.ignored_columns = ['authentication_token']
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -9,7 +9,6 @@ class User < ApplicationRecord
   has_many :sent_payments, class_name: 'Payment', foreign_key: 'sender_id'
   has_many :received_payments, class_name: 'Payment', foreign_key: 'receiver_id'
   has_many :authentication_tokens, dependent: :delete_all
-  belongs_to :tenant
 
   def wallet_account
     accounts.find_by(name: :wallet)
