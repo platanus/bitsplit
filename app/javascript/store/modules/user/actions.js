@@ -49,7 +49,6 @@ import {
 } from '../../../api/user.js';
 
 const commitAndSetUser = ({ commit, mutation, user }) => {
-  console.log(user);
   if (user) {
     localStorage.setItem(
       'currentUser',
@@ -65,7 +64,6 @@ export default {
       .then((res) => {
         const currentUser = res.data.data.attributes;
         currentUser.authentication_token = payload.authentication_token;
-        console.log(currentUser);
 
         localStorage.setItem(
           'currentUser',
@@ -191,7 +189,6 @@ export default {
       });
   },
   [budaSignIn]({ state, commit, dispatch }, payload) {
-    console.log(state);
     commit(BUDA_SIGNIN_ATTEMPT);
     const fetchPromise = budaSyncApi(payload);
 

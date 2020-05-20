@@ -134,7 +134,6 @@ export default {
           receiver_email,
         })
           .then(() => {
-            console.log('success');
             this.changePaymentComp('PaymentConfirm');
           })
           .catch(err => {

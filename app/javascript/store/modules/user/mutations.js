@@ -87,7 +87,6 @@ export default {
     state.paymentsHistory = payments;
   },
   [GET_DEBTS_SUCCESS](state, debts) {
-    console.log('DEUDAS: ', debts);
     state.userDebts = debts;
   },
 };
