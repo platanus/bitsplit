@@ -165,7 +165,6 @@ ActiveRecord::Schema.define(version: 2020_05_15_200344) do
     t.datetime "remember_created_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "authentication_token", limit: 30
     t.string "api_key"
     t.string "api_secret"
     t.boolean "logged", default: false
@@ -174,7 +173,6 @@ ActiveRecord::Schema.define(version: 2020_05_15_200344) do
     t.string "oauth_secret"
     t.string "splitwise_secret"
     t.integer "splitwise_user_id"
-    t.index ["authentication_token"], name: "index_users_on_authentication_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -187,8 +185,8 @@ ActiveRecord::Schema.define(version: 2020_05_15_200344) do
     t.index ["user_id"], name: "index_withdrawals_on_user_id"
   end
 
-  add_foreign_key "authentication_tokens", "users"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "authentication_tokens", "users"
   add_foreign_key "deposits", "users"
   add_foreign_key "ledgerizer_lines", "ledgerizer_accounts", column: "account_id"
   add_foreign_key "ledgerizer_lines", "ledgerizer_entries", column: "entry_id"

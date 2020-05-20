@@ -15,7 +15,7 @@ class LedgerizerService < PowerTypes::Service.new
     [true, @error_message]
   end
 
-  def self.transfer(sender, receiver, bitcoins)
+  def transfer(sender, receiver, bitcoins)
     satoshis = to_satoshis(bitcoins)
     return false, @error_message unless self.validate_amount(sender, satoshis)
     transfer = Transfer.create(sender: sender,
@@ -24,18 +24,16 @@ class LedgerizerService < PowerTypes::Service.new
     [true, @error_message]
   end
 
-  def self.user_balance(user)
+  def user_balance(user)
     account = user.wallet_account
     account.balance
   end
 
-  private
-
-  def self.to_satoshis(bitcoins)
+  def to_satoshis(bitcoins)
     bitcoins * 100_000_000
   end
 
-  def self.validate_amount(user, amount)
+  def validate_amount(user, amount)
     if self.user_balance(user) < Money.from_amount(amount, 'SAT')
       @error_message = 'amount is greater than balance'
       return false
