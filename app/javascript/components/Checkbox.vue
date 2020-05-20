@@ -7,7 +7,6 @@
         type="checkbox"
         id="checkbox"
         class="opacity-0 absolute"
-        value="foo"
         :checked="!!isChecked"
         @change="e => (isChecked = e.target.checked)"
         @input="$emit('input', $event.target.checked)"

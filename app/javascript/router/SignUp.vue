@@ -44,7 +44,7 @@
           <div class="mb-8">
             <checkBox
               fieldText="Acepto los términos de privacidad"
-              v-model= "checkBox_field"
+              v-model= "checkboxField"
             />
           </div>
           <submitButton :loading="signUpLoading">Crear Cuenta</submitButton>
@@ -71,7 +71,7 @@ export default {
       password: '',
       confirm_password: '',
       signInRoute: 'sign-in',
-      checkBox_field: false
+      checkboxField: false
     }
   },
   components: {

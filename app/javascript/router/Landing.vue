@@ -4,7 +4,6 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import LinkButton from '../components/LinkButton'
 import SignIn from './SignIn'
 
 export default {
@@ -15,7 +14,6 @@ export default {
     }
   },
   components: {
-    LinkButton,
     SignIn
   },
   computed: {
