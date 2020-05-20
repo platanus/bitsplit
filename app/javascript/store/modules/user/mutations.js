@@ -1,4 +1,5 @@
 import {
+  GET_CURRENT_USER,
   SIGNIN_ATTEMPT,
   SIGNIN_FAIL,
   SIGNIN_SUCCESS,
@@ -21,6 +22,9 @@ import {
 } from '../../mutation-types';
 
 export default {
+  [GET_CURRENT_USER](state, currentUser) {
+    state.currentUser = currentUser;
+  },
   [SIGNIN_ATTEMPT](state) {
     state.signInLoading = true;
   },
@@ -37,9 +41,8 @@ export default {
   [SIGNUP_ATTEMPT](state) {
     state.signUpLoading = true;
   },
-  [SIGNUP_SUCCESS](state, currentUser) {
+  [SIGNUP_SUCCESS](state) {
     state.signUpLoading = false;
-    state.currentUser = currentUser;
   },
   [SIGNUP_FAIL](state) {
     state.signUpLoading = false;
@@ -84,7 +87,6 @@ export default {
     state.paymentsHistory = payments;
   },
   [GET_DEBTS_SUCCESS](state, debts) {
-    console.log('DEUDAS: ', debts);
     state.userDebts = debts;
   },
 };

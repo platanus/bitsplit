@@ -1,3 +1,4 @@
+export const getCurrentUser = 'getCurrentUser';
 export const signIn = 'signIn';
 export const signOut = 'signOut';
 export const signUp = 'signUp';

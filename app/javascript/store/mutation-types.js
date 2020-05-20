@@ -3,6 +3,8 @@ export const SIGNIN_FAIL = 'SIGNIN_FAIL';
 export const SIGNIN_SUCCESS = 'SIGNIN_SUCCESS';
 export const SIGNOUT = 'SIGNOUT';
 
+export const GET_CURRENT_USER = 'GET_CURRENT_USER';
+
 export const SIGNUP_ATTEMPT = 'SIGNUP_ATTEMPT';
 export const SIGNUP_FAIL = 'SIGNUP_FAIL';
 export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';

@@ -1,4 +1,5 @@
 import {
+  getCurrentUser,
   signIn,
   signOut,
   signUp,
@@ -13,6 +14,7 @@ import {
 } from '../../action-types';
 
 import {
+  GET_CURRENT_USER,
   SIGNIN_FAIL,
   SIGNIN_SUCCESS,
   SIGNIN_ATTEMPT,
@@ -47,16 +49,33 @@ import {
 } from '../../../api/user.js';
 
 const commitAndSetUser = ({ commit, mutation, user }) => {
-  if (user.data.data.attributes) {
+  if (user) {
     localStorage.setItem(
       'currentUser',
-      JSON.stringify(user.data.data.attributes),
+      JSON.stringify(user),
     );
-    commit(mutation, user.data.data.attributes);
+    commit(mutation, user);
   }
 };
 
 export default {
+  [getCurrentUser]({ dispatch, commit }, payload) {
+    return getCurrentUserApi()
+      .then((res) => {
+        const currentUser = res.data.data.attributes;
+        currentUser.authentication_token = payload.authentication_token;
+
+        localStorage.setItem(
+          'currentUser',
+          JSON.stringify(currentUser),
+        );
+        commit(GET_CURRENT_USER, currentUser);
+      }).catch(e => {
+        // no logramos cargar los otros datos del usuario, cerramos la sesion
+        console.error(e);
+        dispatch(signOut);
+      });
+  },
   [signIn]({ commit, dispatch }, payload) {
     // Hacemos fetch a la api con data de payload
 
@@ -68,7 +87,19 @@ export default {
         dispatch('alert/successAlert', 'Usuario ingresado correctamente', {
           root: true,
         });
-        commitAndSetUser({ commit, mutation: SIGNIN_SUCCESS, user: res });
+
+        const { authentication_token } = res.data;
+
+        // SignIn fue exitosa, seteamos informacion con un placeholder
+        commitAndSetUser({ commit,
+          mutation: SIGNIN_SUCCESS,
+          user: { authentication_token,
+            email: payload.email,
+            api_key: '',
+            picture_url: null },
+        });
+        // SignIn fue exitosa
+        dispatch(getCurrentUser, { authentication_token });
       })
       .catch(e => {
         if (e.response) {
@@ -121,19 +152,17 @@ export default {
         }
       });
   },
-
   [signUp]({ commit, dispatch }, payload) {
     commit(SIGNUP_ATTEMPT);
 
-    // Enviamos la información del Payload a la API para que verifique la validez
-    // Hay que verificar que no exista ese email registrado y que tenga usuario buda.
-
     return signUpApi(payload)
-      .then(res => {
+      .then(() => {
         dispatch('alert/successAlert', 'Usuario creado correctamente', {
           root: true,
         });
-        commitAndSetUser({ commit, mutation: SIGNUP_SUCCESS, user: res });
+
+        // No lo logeamos, lo mandamos para que lo haga manualmente
+        commit(SIGNUP_SUCCESS);
       })
       // eslint-disable-next-line max-statements
       .catch(err => {
@@ -159,7 +188,7 @@ export default {
         }
       });
   },
-  [budaSignIn]({ commit, dispatch }, payload) {
+  [budaSignIn]({ state, commit, dispatch }, payload) {
     commit(BUDA_SIGNIN_ATTEMPT);
     const fetchPromise = budaSyncApi(payload);
 
@@ -191,7 +220,7 @@ export default {
         throw new Error('Datos incorrectos. Revise los datos ingresados');
       })
       .then(res => {
-        commitAndSetUser({ commit, mutation: BUDA_SIGNIN_SUCCESS, user: res });
+        commitAndSetUser({ commit, mutation: BUDA_SIGNIN_SUCCESS, user: { ...state.currentUser, ...res.data.data.attributes } });
       })
       .catch(err => {
         commit(BUDA_SIGNIN_FAIL);
@@ -204,7 +233,7 @@ export default {
 
             return fetchPromiseUser
               .then(res => {
-                commitAndSetUser({ commit, mutation: BUDA_SIGNOUT, user: res });
+                commitAndSetUser({ commit, mutation: BUDA_SIGNIN_SUCCESS, user: { ...state.currentUser, ...res.data.data.attributes } });
               });
           })
           .then(() => {
@@ -221,7 +250,7 @@ export default {
           });
       });
   },
-  [budaSignOut]({ commit, dispatch }, payload) {
+  [budaSignOut]({ state, commit, dispatch }, payload) {
     const fetchPromise = budaSyncApi(payload);
 
     return fetchPromise
@@ -235,7 +264,7 @@ export default {
 
         return fetchPromiseUser
           .then(res => {
-            commitAndSetUser({ commit, mutation: BUDA_SIGNOUT, user: res });
+            commitAndSetUser({ commit, mutation: BUDA_SIGNOUT, user: { ...state.currentUser, ...res.data.data.attributes } });
           });
       })
       .catch(err => {

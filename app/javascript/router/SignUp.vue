@@ -81,7 +81,7 @@ export default {
         this.signUp({ email, password })
           .then(() => {
             // TODO logger
-            console.log('success');
+            this.$router.push('/sign-in');
           })
           .catch(err => {
             console.error(err);

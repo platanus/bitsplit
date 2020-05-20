@@ -70,7 +70,6 @@ export default {
         this.signIn({ email, password })
           .then(() => {
             // TODO logger
-            console.log('success');
           })
           .catch(() => {
             console.error('error');
