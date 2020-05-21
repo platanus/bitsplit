@@ -7,18 +7,14 @@ class RegisterTransfer < PowerTypes::Command.new(:transfer)
       document: @transfer,
       datetime: @transfer.created_at
     ) do
-      debit(account: :wallet, accountable: @transfer.sender, amount: satoshis_in_transfer)
-      credit(account: :wallet, accountable: @transfer.receiver, amount: satoshis_in_transfer)
+      debit(account: :wallet, accountable: @transfer.sender, amount: @transfer.satoshis_in_transfer)
+      credit(account: :wallet, accountable: @transfer.receiver, amount: @transfer.satoshis_in_transfer)
     end
   end
 
   private
 
-  def satoshis_in_transfer
-    Money.from_amount(@transfer.satoshis, 'SAT')
-  end
-
   def tenant
-    Tenant.first
+    Tenant.find(ENV.fetch("MAIN_TENANT", 1))
   end
 end

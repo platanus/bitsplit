@@ -10,6 +10,10 @@ class User < ApplicationRecord
   has_many :received_payments, class_name: 'Payment', foreign_key: 'receiver_id'
   has_many :authentication_tokens, dependent: :delete_all
 
+  def wallet_balance
+    wallet_account&.balance || Money.from_amount(0, 'SAT')
+  end
+
   def wallet_account
     accounts.find_by(name: :wallet)
   end

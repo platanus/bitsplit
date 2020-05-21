@@ -24,11 +24,6 @@ class LedgerizerService < PowerTypes::Service.new
     [true, @error_message]
   end
 
-  def user_balance(user)
-    account = user.wallet_account
-    account.balance
-  end
-
   def to_satoshis(bitcoins)
     bitcoins * 100_000_000
   end
@@ -38,7 +33,7 @@ class LedgerizerService < PowerTypes::Service.new
       @error_message = 'amount is less or equal to 0'
       return false
     end
-    if user_balance(user) < Money.from_amount(amount, 'SAT')
+    if user.wallet_balance < Money.from_amount(amount, 'SAT')
       @error_message = 'amount is greater than balance'
       return false
     end

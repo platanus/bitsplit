@@ -7,18 +7,14 @@ class RegisterWithdrawal < PowerTypes::Command.new(:withdrawal)
       document: @withdrawal,
       datetime: @withdrawal.created_at
     ) do
-      debit(account: :wallet, accountable: @withdrawal.user, amount: satoshis_in_withdrawal)
-      credit(account: :vault, amount: satoshis_in_withdrawal)
+      debit(account: :wallet, accountable: @withdrawal.user, amount: @withdrawal.satoshis_in_withdrawal)
+      credit(account: :vault, amount: @withdrawal.satoshis_in_withdrawal)
     end
   end
 
   private
 
-  def satoshis_in_withdrawal
-    Money.from_amount(@withdrawal.satoshis, 'SAT')
-  end
-
   def tenant
-    Tenant.first
+    Tenant.find(ENV.fetch("MAIN_TENANT", 1))
   end
 end

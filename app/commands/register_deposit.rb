@@ -7,18 +7,14 @@ class RegisterDeposit < PowerTypes::Command.new(:deposit)
       document: @deposit,
       datetime: @deposit.created_at
     ) do
-      debit(account: :vault, amount: satoshis_in_deposit)
-      credit(account: :wallet, accountable: @deposit.user, amount: satoshis_in_deposit)
+      debit(account: :vault, amount: @deposit.satoshis_in_deposit)
+      credit(account: :wallet, accountable: @deposit.user, amount: @deposit.satoshis_in_deposit)
     end
   end
 
   private
 
-  def satoshis_in_deposit
-    Money.from_amount(@deposit.satoshis, 'SAT')
-  end
-
   def tenant
-    Tenant.first
+    Tenant.find(ENV.fetch("MAIN_TENANT", 1))
   end
 end
