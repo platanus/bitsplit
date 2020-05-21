@@ -538,3 +538,27 @@ The `password` field is only required if the `api_key` or `api_secret` fields ar
                         }
                 }
         }
+        
+## Transfer [v2/transfers]]
+ > Transferir bitcoins de un usuario de Bitsplit a otro
+### Create Transfer [POST]
+
++ Request (application/json)
+
+    + Headers
+
+            X-User-Email: example@example.com
+            X-User-Token: smnozAAbYnEX2xVRfS5R
+            
+    + Body
+
+            {
+                "receiver_email": "example1@example.com",
+                "amount": 0.00001
+            }
+            
++ Response 200 (application/json)
+    > Se hizo la transferencia correctamente
+
++ Response 400 (application/json)
+    > Ha habido un error
