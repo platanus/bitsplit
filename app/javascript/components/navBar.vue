@@ -1,5 +1,5 @@
 <template>
-  <header class="flex items- justify-around px-4 py-3 bg-gray-900">
+  <header class="flex items- justify-around px-4 py-3 bg-secondary">
     <template v-if="signedIn">
       <button
         type="button"
@@ -49,17 +49,7 @@
         type="button"
         class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
       >
-        <router-link :to="landingRoute">
-          Bienvenido!
-        </router-link>
-      </button>
-      <button
-        type="button"
-        class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
-      >
-        <router-link :to="signInRoute">
-          Iniciar sesión
-        </router-link>
+        <router-link :to="signInRoute">Iniciar sesión</router-link>
       </button>
       <button
         type="button"
