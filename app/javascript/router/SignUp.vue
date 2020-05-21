@@ -88,8 +88,8 @@ export default {
   methods: {
     ...mapActions('user', ['signUp']),
     handleSubmit(e) {
-      const { checkBox_field, email, password, confirm_password } = this
-      if (checkBox_field && email && password && password === confirm_password) {
+      const { checkboxField, email, password, confirm_password } = this
+      if (checkboxField && email && password && password === confirm_password) {
         // TODO logger
         this.signUp({ email, password })
           .then(() => {
