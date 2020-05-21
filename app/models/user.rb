@@ -1,48 +1,49 @@
 class User < ApplicationRecord
-  acts_as_token_authenticatable
+  self.ignored_columns = ['authentication_token']
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
-  has_many :sent_payments, :class_name => 'Payment', :foreign_key => 'sender_id'
-  has_many :received_payments, :class_name => 'Payment', :foreign_key => 'receiver_id'
+         :recoverable, :rememberable, :validatable, :token_authenticatable
+  has_many :sent_payments, class_name: 'Payment', foreign_key: 'sender_id'
+  has_many :received_payments, class_name: 'Payment', foreign_key: 'receiver_id'
+  has_many :authentication_tokens, dependent: :delete_all
 
   def payments_record
     sent_payments + received_payments
   end
-         
+
   def api_key=(text)
-    super(self.encrypt(text))
+    super(encrypt(text))
   end
-     
+
   def api_secret=(text)
-    super(self.encrypt(text))
+    super(encrypt(text))
   end
 
   def splitwise_token
-    self.decrypt(self[:splitwise_token])
+    decrypt(self[:splitwise_token])
   end
 
   def splitwise_token=(text)
-    super(self.encrypt(text))
+    super(encrypt(text))
   end
 
   def splitwise_secret
-    self.decrypt(self[:splitwise_secret])
+    decrypt(self[:splitwise_secret])
   end
 
   def splitwise_secret=(text)
-    super(self.encrypt(text))
+    super(encrypt(text))
   end
 
   def authenticated_with_splitwise
-    return !self.splitwise_secret.nil? || !self.splitwise_token.nil?
+    !splitwise_secret.nil? || !splitwise_token.nil?
   end
 
   # source https://dev.to/shobhitic/simple-string-encryption-in-rails-36pi
-  def encrypt text
+  def encrypt(text)
     text = text.to_s unless text.is_a? String
-  
+
     len   = ActiveSupport::MessageEncryptor.key_len
     salt  = SecureRandom.hex len
     key   = ActiveSupport::KeyGenerator.new(Rails.application.secrets.secret_key_base).generate_key salt, len
@@ -50,15 +51,15 @@ class User < ApplicationRecord
     encrypted_data = crypt.encrypt_and_sign text
     "#{salt}$$#{encrypted_data}"
   end
-  
-  def decrypt text
+
+  def decrypt(text)
     # note that to decrypt the api_secret the password is Rails.application.secrets.secret_key_base
     # if user has not yet setted a api_key or api_secret
     if text.nil?
       nil
     else
-      salt, data = text.split "$$"
-    
+      salt, data = text.split '$$'
+
       len   = ActiveSupport::MessageEncryptor.key_len
       key   = ActiveSupport::KeyGenerator.new(Rails.application.secrets.secret_key_base).generate_key salt, len
       crypt = ActiveSupport::MessageEncryptor.new key
@@ -66,10 +67,10 @@ class User < ApplicationRecord
     end
   end
 
-  def get_buda_keys
-    api_key = self.decrypt(self.api_key)
-    api_secret = self.decrypt(self.api_secret)
-    return api_key, api_secret
+  def buda_keys
+    api_key = decrypt(self.api_key)
+    api_secret = decrypt(self.api_secret)
+    [api_key, api_secret]
   end
 end
 

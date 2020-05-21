@@ -10,16 +10,16 @@ export default {
   name: 'Landing',
   data() {
     return {
-      routeName: 'Landing'
-    }
+      routeName: 'Landing',
+    };
   },
   components: {
     SignIn
   },
   computed: {
-    ...mapGetters('user', ['signedIn'])
-  }
-}
+    ...mapGetters('user', ['signedIn']),
+  },
+};
 </script>
 
 <style lang="scss"></style>

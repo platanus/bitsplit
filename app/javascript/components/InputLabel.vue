@@ -5,10 +5,10 @@
 </template>
 <script>
 export default {
-  name: 'inputLabel',
+  name: 'InputLabel',
   props: {
     fieldName: String,
-    fieldFor: String
-  }
-}
+    fieldFor: String,
+  },
+};
 </script>

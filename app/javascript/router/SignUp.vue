@@ -62,6 +62,7 @@ import inputLabel from '../components/InputLabel'
 import textField from '../components/TextField'
 import checkBox from '../components/Checkbox'
 
+
 export default {
   name: 'SignUp',
   data() {
@@ -82,7 +83,7 @@ export default {
     checkBox
   },
   computed: {
-    ...mapState('user', ['currentUser', 'signUpLoading'])
+    ...mapState('user', ['currentUser', 'signUpLoading']),
   },
   methods: {
     ...mapActions('user', ['signUp']),
@@ -93,13 +94,13 @@ export default {
         this.signUp({ email, password })
           .then(() => {
             // TODO logger
-            console.log('success')
+            this.$router.push('/sign-in');
           })
           .catch(err => {
-            console.error(err)
-          })
+            console.error(err);
+          });
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>

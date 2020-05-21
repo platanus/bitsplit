@@ -37,11 +37,11 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
-import textInput from '../components/Input'
-import passwordInput from '../components/PasswordInput'
-import submitButton from '../components/SubmitButton'
-import inputLabel from '../components/InputLabel'
+import { mapActions, mapState } from 'vuex';
+import textInput from '../components/Input';
+import passwordInput from '../components/PasswordInput';
+import submitButton from '../components/SubmitButton';
+import inputLabel from '../components/InputLabel';
 
 export default {
   name: 'SignIn',
@@ -57,26 +57,25 @@ export default {
     textInput,
     passwordInput,
     submitButton,
-    inputLabel
+    inputLabel,
   },
   computed: {
-    ...mapState('user', ['currentUser', 'signInLoading'])
+    ...mapState('user', ['currentUser', 'signInLoading']),
   },
   methods: {
     ...mapActions('user', ['signIn']),
-    handleSubmit(e) {
-      const { email, password } = this
+    handleSubmit() {
+      const { email, password } = this;
       if (email && password) {
         this.signIn({ email, password })
           .then(() => {
             // TODO logger
-            console.log('success')
           })
           .catch(() => {
-            console.error('error')
-          })
+            console.error('error');
+          });
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>

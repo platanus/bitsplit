@@ -2,7 +2,9 @@
   <div
     class="flex flex-row items-center bg-green-500 hover:bg-green-600 fixed bottom-0 right-0 mb-16 mr-8 p-2 rounded-md cursor-pointer"
   >
-    <p class="text-white">{{ alert.message }}</p>
+    <p class="text-white">
+      {{ alert.message }}
+    </p>
     <svg
       class="fill-current h-6 w-6 ml-4 text-gray-100"
       role="button"
@@ -17,13 +19,14 @@
 </template>
 
 <script>
-import { mapGetters, mapActions, mapState } from 'vuex'
+import { mapState } from 'vuex';
+
 export default {
-  name: 'successAlert',
+  name: 'SuccessAlert',
   computed: {
     ...mapState({
-      alert: state => state.alert
-    })
-  }
-}
+      alert: state => state.alert,
+    }),
+  },
+};
 </script>

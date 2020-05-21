@@ -2,7 +2,10 @@
   <div class="flex justify-center m-16">
     <div class="flex flex-col mb-6 mt-6">
       <div>
-        <textField fontSize="full" fontColor="secondary">
+        <textField
+          font-size="full"
+          font-color="secondary"
+        >
           ¡Pago realizado con éxito!
         </textField>
       </div>
@@ -14,7 +17,7 @@
           Receptor: {{ this.lastPayment.receiver }}
         </textField>
         <textField>
-          Fecha: {{ getDateFormat(this.lastPayment.date) }}
+          Fecha: {{ getDate(this.lastPayment.date) }}
         </textField>
       </div>
     </div>
@@ -22,46 +25,34 @@
 </template>
 
 <script>
-import { mapActions, mapState, mapGetters } from 'vuex'
-import textField from '../components/TextField'
+import { mapActions, mapState } from 'vuex';
+import textField from '../components/TextField';
 
 export default {
   name: 'PaymentConfirm',
   data() {
     return {
       routeName: 'PaymentRoute',
-      date: null
-    }
+      date: null,
+    };
   },
   components: {
-    textField
+    textField,
   },
   computed: {
-    ...mapState('user', ['currentUser', 'userBalanceCLP', 
-                         'userBalanceBTC', 'lastPayment'])
+    ...mapState('user', ['currentUser', 'userBalanceCLP',
+      'userBalanceBTC', 'lastPayment']),
   },
   created() {
-    this.getUserBalance()
+    this.getUserBalance();
   },
   methods: {
     ...mapActions('user', ['getQuotation', 'getUserBalance', 'sendPayment']),
-    getDateFormat(date) {
-      return format(date)
-    }
-  }
-}
+    getDate(date) {
+      const d = new Date(date);
 
-function format(UNIX_timestamp){
-  var a = new Date(UNIX_timestamp);
-  var months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-  var year = a.getFullYear();
-  var month = months[a.getMonth()];
-  var date = a.getDate();
-  var hour = a.getHours();
-  var min = a.getMinutes();
-  var sec = a.getSeconds();
-  var time = date + ' de ' + month + ' ' + year + ' ' + hour + ':' + min;
-  return time;
-}
+      return d.toLocaleString('en-US', { hour12: false });
+    },
+  },
+};
 </script>
-

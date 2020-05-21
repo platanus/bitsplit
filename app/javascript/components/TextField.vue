@@ -12,10 +12,10 @@
 
 <script>
 export default {
-  name: 'textField',
+  name: 'TextField',
   props: {
     fontSize: String,
-    fontColor: String
-  }
-}
+    fontColor: String,
+  },
+};
 </script>

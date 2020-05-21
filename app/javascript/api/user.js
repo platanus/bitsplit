@@ -1,66 +1,64 @@
-import axios from 'axios'
-import { authedAxios } from '../helpers'
+/* eslint-disable camelcase */
+import axios from 'axios';
+import { authedAxios } from '../helpers';
 
-const loginApi = payload => {
-  return axios.post(
+const loginApi = payload =>
+  axios.post(
     '/api/v1/sessions/',
     {
-      email: payload.email,
-      password: payload.password
+      user: {
+        email: payload.email,
+        password: payload.password,
+      },
     },
     {
-      headers: { 'Content-Type': 'application/json' }
-    }
-  )
-}
+      headers: { 'Content-Type': 'application/json' },
+    },
+  );
 
-const logoutApi = () => {
-  return authedAxios.delete('/api/v1/sessions')
-}
+const logoutApi = () => authedAxios.delete('/api/v1/sessions');
 
-const signUpApi = payload => {
-  return axios.post(
+const signUpApi = payload =>
+  axios.post(
     '/api/v1/users/',
     {
       email: payload.email,
       password: payload.password,
-      password_confirmation: payload.password
+      password_confirmation: payload.password,
     },
     {
-      headers: { 'Content-Type': 'application/json' }
-    }
-  )
-}
-const budaSyncApi = payload => {
-  return authedAxios.patch('/api/v1/users/', {
+      headers: { 'Content-Type': 'application/json' },
+    },
+  );
+const budaSyncApi = payload =>
+  authedAxios.patch('/api/v1/users/', {
     password: payload.password,
     api_key: payload.api_key,
-    api_secret: payload.api_secret
-  })
-}
-const getCurrentUserApi = () => {
-  return authedAxios.get('/api/v1/users/')
-}
-const getQuotationApi = payload => {
-  return authedAxios.post('/api/v1/quotations/', {
-    amount: payload.amount
-  })
-}
+    api_secret: payload.api_secret,
+  });
 
-const getUserBalanceApi = payload => {
-  return authedAxios.get('/api/v1/balances/')
-}
+const getCurrentUserApi = () => authedAxios.get('/api/v1/users/');
 
-const sendPaymentApi = payload => {
-  return authedAxios.post('/api/v1/payments/', {
+const getQuotationApi = payload =>
+  authedAxios.post('/api/v1/quotations/', {
+    amount: payload.amount,
+  });
+
+const getUserBalanceApi = () => authedAxios.get('/api/v1/balances/');
+
+const sendPaymentApi = payload =>
+  authedAxios.post('/api/v1/payments/', {
     payment_amount: payload.payment_amount,
-    receiver_email: payload.receiver_email
-  })
-}
+    receiver_email: payload.receiver_email,
+  });
 
-const getPaymentsApi = payload => {
-  return authedAxios.get('/api/v1/payments/')
-}
+const getPaymentsApi = () => authedAxios.get('/api/v1/payments/');
+
+const splitwiseUrlConnectionApi = () =>
+  authedAxios.post('/api/v1/splitwise/authentications/');
+
+const getDebtsApi = () => authedAxios.get('/api/v1/splitwise/debts/');
+
 export {
   loginApi,
   logoutApi,
@@ -70,5 +68,8 @@ export {
   getQuotationApi,
   getUserBalanceApi,
   sendPaymentApi,
-  getPaymentsApi
-}
+  getPaymentsApi,
+  splitwiseUrlConnectionApi,
+  getDebtsApi,
+};
+

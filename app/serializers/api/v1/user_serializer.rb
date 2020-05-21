@@ -7,8 +7,7 @@ class Api::V1::UserSerializer < ActiveModel::Serializer
     :id,
     :email,
     :api_key,
-    :authentication_token,
-    :picture_url,
+    :picture_url
   )
 
   def api_key
@@ -16,10 +15,10 @@ class Api::V1::UserSerializer < ActiveModel::Serializer
   end
 
   def picture_url
-    return if !object.authenticated_with_splitwise
+    return unless object.authenticated_with_splitwise
 
     splitwise_service = SplitwiseService.new(user: object)
-    user_info = splitwise_service.get_current_user_info
+    user_info = splitwise_service.current_user_info
     user_info[:user][:picture]
   end
 end

@@ -8,9 +8,13 @@ exports[`BudaAlert matches snapshot 1`] = `
       </svg></div>
     <div>
       <router-link-stub to="buda">
-        <p class="font-bold">No estás conectado a Buda</p>
+        <p class="font-bold">
+          No estás conectado a Buda
+        </p>
       </router-link-stub>
-      <p class="text-sm">Para realizar pagos debes asociar una cuenta Buda.</p>
+      <p class="text-sm">
+        Para realizar pagos debes asociar una cuenta Buda.
+      </p>
     </div>
   </div>
 </div>

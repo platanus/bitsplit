@@ -5,20 +5,33 @@
         type="button"
         class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
       >
-        <router-link :to="homeRoute">Inicio</router-link>
+        <router-link :to="homeRoute">
+          Inicio
+        </router-link>
       </button>
       <button
         type="button"
         class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
       >
-        <router-link :to="budaRoute">Buda</router-link>
+        <router-link :to="budaRoute">
+          Buda
+        </router-link>
+      </button>
+      <button
+        @click="openSplitwiseUrl()"
+        type="button"
+        class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
+      >
+        Splitwise
       </button>
       <button
         v-if="budaSignedIn"
         type="button"
         class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
       >
-        <router-link :to="payRoute">Pagar</router-link>
+        <router-link :to="payRoute">
+          Pagar
+        </router-link>
       </button>
       <NavBarNotifications />
 
@@ -26,7 +39,9 @@
         type="button"
         class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
       >
-        <button @click="signOut()">Cerrar Sesión</button>
+        <button @click="signOut()">
+          Cerrar Sesión
+        </button>
       </button>
     </template>
     <template v-else>
@@ -40,18 +55,20 @@
         type="button"
         class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
       >
-        <router-link :to="signUpRoute">Registrarse</router-link>
+        <router-link :to="signUpRoute">
+          Registrarse
+        </router-link>
       </button>
     </template>
   </header>
 </template>
 
 <script>
-import { mapGetters, mapActions, mapState } from 'vuex'
-import NavBarNotifications from '../components/NavBarNotifications'
+import { mapGetters, mapActions, mapState } from 'vuex';
+import NavBarNotifications from '../components/NavBarNotifications';
 
 export default {
-  name: 'navBar',
+  name: 'NavBar',
   data() {
     return {
       signInRoute: 'sign-in',
@@ -59,39 +76,48 @@ export default {
       homeRoute: 'home',
       budaRoute: 'buda',
       landingRoute: '/',
-      payRoute: 'payment'
-    }
+      payRoute: 'payment',
+    };
   },
   components: {
-    NavBarNotifications
+    NavBarNotifications,
   },
   methods: {
-    ...mapActions('user', ['signOut']),
-    ...mapActions('notification', ['bindNotifications', 'unbindNotifications'])
+    ...mapActions('user', ['signOut', 'splitwiseUrlConnection']),
+    ...mapActions('notification', ['bindNotifications', 'unbindNotifications']),
+    openSplitwiseUrl() {
+      this.splitwiseUrlConnection()
+        .then((res) => {
+          window.open(res.authorize_url);
+        })
+        .catch(err => {
+          console.error(err);
+        });
+    },
   },
   computed: {
     ...mapState('user', ['currentUser']),
-    ...mapGetters('user', ['signedIn', 'budaSignedIn'])
+    ...mapGetters('user', ['signedIn', 'budaSignedIn']),
   },
   created() {
-    if (!this.signedIn) {
-      this.unbindNotifications()
-      this.$router.push('/')
+    if (this.signedIn) {
+      this.bindNotifications();
     } else {
-      this.bindNotifications()
+      this.unbindNotifications();
+      this.$router.push('/');
     }
   },
   watch: {
     signedIn(isSignedIn) {
       // Cuando cambia el estado de signedIn
-      if (!isSignedIn) {
-        this.$router.push('/')
-        this.unbindNotifications()
+      if (isSignedIn) {
+        this.$router.push('/home');
+        this.bindNotifications();
       } else {
-        this.$router.push('/home')
-        this.bindNotifications()
+        this.$router.push('/');
+        this.unbindNotifications();
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>

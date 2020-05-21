@@ -1,10 +1,12 @@
 <template>
   <div class="m-12">
     <div v-if="!budaSignedIn">
-      <BudaAlert></BudaAlert>
+      <BudaAlert />
     </div>
     <div class="bg-gray-200 p-10 my-4 rounded-md">
-      <p class="text-5xl font-bold">BitSplit</p>
+      <p class="text-5xl font-bold">
+        BitSplit
+      </p>
       <p class="font-light">
         Bienvenido a BitSplit, el sitio donde podrás pagar facilmente a tus
         amigos, cobrar deudas y manejar dinero. Todo esto de forma fácil,
@@ -25,10 +27,11 @@
           <LinkButton
             v-if="budaSignedIn"
             classmod="bg-blue-500 hover:bg-blue-700 my-3 md:my-0"
-            :fieldDisabled="false"
+            :field-disabled="false"
             route="payment"
-            >Hacer un pago</LinkButton
           >
+            Hacer un pago
+          </LinkButton>
         </div>
       </div>
       <div>
@@ -47,7 +50,10 @@
                 Recibido
               </span>
             </td>
-            <td v-else class="border-grey-light border hover:bg-gray-100 p-3">
+            <td
+              v-else
+              class="border-grey-light border hover:bg-gray-100 p-3"
+            >
               <span
                 class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"
               >
@@ -70,55 +76,123 @@
         </CustomTable>
       </div>
     </div>
+    <div class="bg-gray-200 p-10 my-4 rounded-md">
+      <p class="text-5xl font-bold">
+        Splitwise
+      </p>
+      <div v-if="userDebts.user_to_friends && userDebts.user_to_friends.length">
+        <p class="text-5xl font-bold">
+          Deudas a amigos
+        </p>
+        <CustomTable
+          :data="userDebts.user_to_friends.slice().reverse()"
+          :columns="debtsColumns"
+        >
+          <template slot-scope="{ row }">
+            <td class="border-grey-light border hover:bg-gray-100 p-3">
+              {{ row.from.first_name + ' ' + row.from.last_name }}
+            </td>
+            <td class="border-grey-light border hover:bg-gray-100 p-3">
+              {{ row.to.first_name + ' ' + row.to.last_name }}
+            </td>
+            <td class="border-grey-light border hover:bg-gray-100 p-3">
+              ${{ row.amount }}
+            </td>
+            <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">
+              {{ row.group_name }}
+            </td>
+            <td
+              v-show="row.is_payable"
+              class="border-grey-light border hover:bg-gray-100 p-3 truncate"
+            >
+              <LinkButton
+                classmod="bg-blue-500 hover:bg-blue-700 my-3 md:my-0"
+                :field-disabled="true"
+              >
+                Pagar
+              </LinkButton>
+            </td>
+          </template>
+        </CustomTable>
+      </div>
+      <div v-if="userDebts.friends_to_user && userDebts.friends_to_user.length">
+        <p class="text-5xl font-bold">
+          Deudas de amigos hacia ti
+        </p>
+        <CustomTable
+          :data="userDebts.friends_to_user.slice().reverse()"
+          :columns="debtsColumns"
+        >
+          <template slot-scope="{ row }">
+            <td class="border-grey-light border hover:bg-gray-100 p-3">
+              {{ row.from.first_name + ' ' + row.from.last_name }}
+            </td>
+            <td class="border-grey-light border hover:bg-gray-100 p-3">
+              {{ row.to.first_name + ' ' + row.to.last_name }}
+            </td>
+            <td class="border-grey-light border hover:bg-gray-100 p-3">
+              ${{ row.amount }}
+            </td>
+            <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">
+              {{ row.group_name }}
+            </td>
+          </template>
+        </CustomTable>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions } from 'vuex'
-import BudaAlert from 'components/BudaAlert.vue'
-import LinkButton from '../components/LinkButton'
-import UserCard from '../components/UserCard'
-import CustomTable from '../components/CustomTable'
+import { mapState, mapGetters, mapActions } from 'vuex';
+import BudaAlert from 'components/BudaAlert.vue';
+import LinkButton from '../components/LinkButton';
+import UserCard from '../components/UserCard';
+import CustomTable from '../components/CustomTable';
 
 export default {
   name: 'Home',
   data() {
     return {
       routeName: 'home',
-      tableColumns: ['Tipo', 'Envía', 'Recibe', 'Cantidad', 'Fecha']
-    }
+      tableColumns: ['Tipo', 'Envía', 'Recibe', 'Cantidad', 'Fecha'],
+      debtsColumns: ['De', 'Para', 'Monto', 'Grupo', 'Pagar'],
+    };
   },
 
   created() {
+    this.getDebts();
     if (this.budaSignedIn) {
-      this.getUserBalance()
-      this.getPayments()
+      this.getUserBalance();
+      this.getPayments();
     }
   },
   components: {
     BudaAlert,
     LinkButton,
     UserCard,
-    CustomTable
+    CustomTable,
   },
   methods: {
-    ...mapActions('user', ['getUserBalance', 'getPayments']),
+    ...mapActions('user', ['getUserBalance', 'getPayments', 'getDebts']),
 
     getDate(date) {
-      let d = new Date(date)
-      return d.toLocaleString('en-US', { hour12: false })
-    }
+      const d = new Date(date);
+
+      return d.toLocaleString('en-US', { hour12: false });
+    },
   },
   computed: {
     ...mapState('user', [
       'currentUser',
       'userBalanceCLP',
       'userBalanceBTC',
-      'paymentsHistory'
+      'paymentsHistory',
+      'userDebts',
     ]),
-    ...mapGetters('user', ['budaSignedIn'])
-  }
-}
+    ...mapGetters('user', ['budaSignedIn']),
+  },
+};
 </script>
 
 <style></style>

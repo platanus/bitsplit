@@ -8,11 +8,11 @@
     :name="fieldName"
     :value="value"
     @input="$emit('update', $event.target.value)"
-  />
+  >
 </template>
 <script>
 export default {
-  name: 'inputForm',
+  name: 'InputForm',
   props: {
     value: String,
     fieldId: String,
@@ -20,13 +20,13 @@ export default {
     fieldPlaceholder: String,
     fieldName: String,
     classmod: {
-        type: String,
-        default: ''
-      }
+      type: String,
+      default: '',
+    },
   },
   model: {
     prop: 'value',
-    event: 'update'
-  }
-}
+    event: 'update',
+  },
+};
 </script>

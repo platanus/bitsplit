@@ -1,46 +1,46 @@
-import { success_alert, error_alert, clear_alert } from '../../action-types'
-import { SUCCESS_ALERT, ERROR_ALERT, CLEAR_ALERT } from '../../mutation-types'
+import { successAlert, errorAlert } from '../../action-types';
+import { SUCCESS_ALERT, ERROR_ALERT, CLEAR_ALERT } from '../../mutation-types';
 
-const state = {
+const alertState = {
   type: null,
-  message: null
-}
+  message: null,
+};
 
-const ALERT_TIMEOUT = 4000
+const ALERT_TIMEOUT = 4000;
 
 const actions = {
-  [success_alert]({ commit }, message) {
-    commit(SUCCESS_ALERT, message)
+  [successAlert]({ commit }, message) {
+    commit(SUCCESS_ALERT, message);
     setTimeout(() => {
-      commit(CLEAR_ALERT)
-    }, ALERT_TIMEOUT)
+      commit(CLEAR_ALERT);
+    }, ALERT_TIMEOUT);
   },
-  [error_alert]({ commit }, message) {
-    commit(ERROR_ALERT, message)
+  [errorAlert]({ commit }, message) {
+    commit(ERROR_ALERT, message);
     setTimeout(() => {
-      commit(CLEAR_ALERT)
-    }, ALERT_TIMEOUT)
-  }
-}
+      commit(CLEAR_ALERT);
+    }, ALERT_TIMEOUT);
+  },
+};
 
 const mutations = {
   [SUCCESS_ALERT](state, message) {
-    state.type = 'success'
-    state.message = message
+    state.type = 'success';
+    state.message = message;
   },
   [ERROR_ALERT](state, message) {
-    state.type = 'error'
-    state.message = message
+    state.type = 'error';
+    state.message = message;
   },
   [CLEAR_ALERT](state) {
-    state.type = null
-    state.message = null
-  }
-}
+    state.type = null;
+    state.message = null;
+  },
+};
 
-export default alert = {
+export default {
   namespaced: true,
-  state,
+  state: alertState,
   actions,
-  mutations
-}
+  mutations,
+};

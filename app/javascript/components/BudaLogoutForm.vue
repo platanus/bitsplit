@@ -4,11 +4,19 @@
       <div class="w-full max-w-xs">
         <form @submit.prevent="handleSubmit">
           <div>
-            <textField>¿Estás seguro de querer desconectar tu cuenta Buda? Por favor ingresa tu contraseña para confirmar</textField>
+            <textField>
+              ¿Estás seguro de querer desconectar tu cuenta Buda? Por favor ingresa tu contraseña para confirmar
+            </textField>
           </div>
           <div>
-            <inputLabel fieldFor="password">Contraseña Bitsplit</inputLabel>
-            <passwordInput fieldId="password" fieldName="password" v-model="password" />
+            <inputLabel field-for="password">
+              Contraseña Bitsplit
+            </inputLabel>
+            <passwordInput
+              field-id="password"
+              field-name="password"
+              v-model="password"
+            />
           </div>
           <div>
             <submitButton>Confirmar</submitButton>
@@ -20,52 +28,49 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
-import textInput from '../components/Input.vue'
-import passwordInput from '../components/PasswordInput'
-import submitButton from '../components/SubmitButton'
-import inputLabel from '../components/InputLabel'
-import textField from '../components/TextField'
+import { mapActions, mapState } from 'vuex';
+import passwordInput from '../components/PasswordInput';
+import submitButton from '../components/SubmitButton';
+import inputLabel from '../components/InputLabel';
+import textField from '../components/TextField';
 
 export default {
   name: 'BudaLogoutForm',
   data() {
     return {
       routeName: 'BudaLogoutForm',
-      api_key: '',
-      api_secret: '',
-      password: ''
-    }
+      apiKey: '',
+      apiSecret: '',
+      password: '',
+    };
   },
   components: {
-    textInput,
     passwordInput,
     submitButton,
     inputLabel,
-    textField
+    textField,
   },
   computed: {
-    ...mapState('user', ['currentUser'])
+    ...mapState('user', ['currentUser']),
   },
   methods: {
     ...mapActions('user', ['budaSignOut']),
-    handleSubmit(e) {
-      const { api_key, api_secret, password } = this
+    handleSubmit() {
+      const { apiKey, apiSecret, password } = this;
       if (password) {
         this.budaSignOut({
-          api_key,
-          api_secret,
-          password
+          api_key: apiKey,
+          api_secret: apiSecret,
+          password,
         })
           .then(() => {
-            console.log('success')
-            this.$router.push('/home')
+            this.$router.push('/home');
           })
           .catch(err => {
-            console.error(err)
-          })
+            console.error(err);
+          });
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
