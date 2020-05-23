@@ -10,6 +10,7 @@ class LedgerizerService < PowerTypes::Service.new
   def withdrawal(user, bitcoins)
     satoshis = to_satoshis(bitcoins)
     return false, @error_message unless validate_amount(user, satoshis)
+
     withdrawal = Withdrawal.create(user: user, satoshis: satoshis)
     RegisterWithdrawal.for(withdrawal: withdrawal)
     [true, @error_message]
@@ -18,6 +19,7 @@ class LedgerizerService < PowerTypes::Service.new
   def transfer(sender, receiver, bitcoins)
     satoshis = to_satoshis(bitcoins)
     return false, @error_message unless validate_amount(sender, satoshis)
+
     transfer = Transfer.create(sender: sender,
                                receiver: receiver, satoshis: to_satoshis(bitcoins))
     RegisterTransfer.for(transfer: transfer)

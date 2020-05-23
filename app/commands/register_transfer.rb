@@ -15,6 +15,6 @@ class RegisterTransfer < PowerTypes::Command.new(:transfer)
   private
 
   def tenant
-    Tenant.find(ENV.fetch("MAIN_TENANT", 1))
+    Tenant.find(ENV.fetch('MAIN_TENANT', 1))
   end
 end
