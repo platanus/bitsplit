@@ -8,8 +8,12 @@
       :name="fieldName"
       :value="value"
       @input="$emit('update', $event.target.value)"
-    />
-    <img :src="noVisibility" class="absolute transform translate-y-3 -translate-x-4" align="top" />
+    >
+    <img
+      :src="noVisibility"
+      class="absolute transform translate-y-3 -translate-x-4"
+      align="top"
+    >
   </div>
 </template>
 <script>

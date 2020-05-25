@@ -3,7 +3,7 @@
     <center>
       <div class="w-full max-w-xs ">
         <img
-          src="assets/bitsplit-logo.svg"
+          :src="bitsplitLogo"
           class="mb-10"
           align="top"
         >
@@ -47,6 +47,7 @@ import { mapActions, mapState } from 'vuex';
 import textInput from '../components/Input';
 import passwordInput from '../components/PasswordInput';
 import submitButton from '../components/SubmitButton';
+import logo from '../assets/bitsplit-logo.svg';
 
 export default {
   name: 'SignIn',
@@ -56,6 +57,7 @@ export default {
       email: '',
       password: '',
       signUpRoute: 'sign-up',
+      bitsplitLogo: logo,
     };
   },
   components: {

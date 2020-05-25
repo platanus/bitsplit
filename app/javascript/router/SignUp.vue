@@ -5,7 +5,7 @@
         <div class="flex content-start mb-8 ">
           <router-link :to="signInRoute">
             <img
-              src="assets/left-arrow.svg"
+              :src="leftArrow"
               class="mr-2"
               align="top"
             >
@@ -17,7 +17,7 @@
           </router-link>
         </div>
         <img
-          src="assets/bitsplit-logo.svg"
+          :src="bitsplitLogo"
           class="mb-4"
           align="top"
         >
@@ -72,6 +72,8 @@ import textInput from '../components/Input';
 import passwordInput from '../components/PasswordInput';
 import submitButton from '../components/SubmitButton';
 import checkBox from '../components/Checkbox';
+import logo from '../assets/bitsplit-logo.svg';
+import lArrow from '../assets/left-arrow.svg';
 
 export default {
   name: 'SignUp',
@@ -83,6 +85,8 @@ export default {
       confirm_password: '',
       signInRoute: 'sign-in',
       checkboxField: false,
+      bitsplitLogo: logo,
+      leftArrow: lArrow,
     };
   },
   components: {
