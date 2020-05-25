@@ -1,6 +1,9 @@
 import { changeBudaComp, changePaymentComp } from '../../action-types';
 
-import { MUTATE_BUDA_COMPONENT, MUTATE_PAYMENT_COMPONENT } from '../../mutation-types';
+import {
+  MUTATE_BUDA_COMPONENT,
+  MUTATE_PAYMENT_COMPONENT,
+} from '../../mutation-types';
 
 const componentState = {
   budaComp: '', // Cambia el componente a renderear en la sección Buda
