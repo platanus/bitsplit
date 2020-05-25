@@ -50,10 +50,7 @@ import {
 
 const commitAndSetUser = ({ commit, mutation, user }) => {
   if (user) {
-    localStorage.setItem(
-      'currentUser',
-      JSON.stringify(user),
-    );
+    localStorage.setItem('currentUser', JSON.stringify(user));
     commit(mutation, user);
   }
 };
@@ -61,17 +58,16 @@ const commitAndSetUser = ({ commit, mutation, user }) => {
 export default {
   [getCurrentUser]({ dispatch, commit }, payload) {
     return getCurrentUserApi()
-      .then((res) => {
+      .then(res => {
         const currentUser = res.data.data.attributes;
         currentUser.authentication_token = payload.authentication_token;
 
-        localStorage.setItem(
-          'currentUser',
-          JSON.stringify(currentUser),
-        );
+        localStorage.setItem('currentUser', JSON.stringify(currentUser));
         commit(GET_CURRENT_USER, currentUser);
-      }).catch(e => {
+      })
+      .catch(e => {
         // no logramos cargar los otros datos del usuario, cerramos la sesion
+        // eslint-disable-next-line no-console
         console.error(e);
         dispatch(signOut);
       });
@@ -91,12 +87,15 @@ export default {
         const { authentication_token } = res.data;
 
         // SignIn fue exitosa, seteamos informacion con un placeholder
-        commitAndSetUser({ commit,
+        commitAndSetUser({
+          commit,
           mutation: SIGNIN_SUCCESS,
-          user: { authentication_token,
+          user: {
+            authentication_token,
             email: payload.email,
             api_key: '',
-            picture_url: null },
+            picture_url: null,
+          },
         });
         // SignIn fue exitosa
         dispatch(getCurrentUser, { authentication_token });
@@ -108,7 +107,7 @@ export default {
           dispatch(
             'alert/errorAlert',
             'Error iniciando sesion (revise credenciales otorgadas)',
-            { root: true },
+            { root: true }
           );
           throw new Error('Error desconocido');
         } else {
@@ -117,7 +116,7 @@ export default {
           dispatch(
             'alert/errorAlert',
             'Error desconocido, intente nuevamente',
-            { root: true },
+            { root: true }
           );
           throw new Error('Error desconocido');
         }
@@ -146,7 +145,7 @@ export default {
             'Error cerrando sesion, intente nuevamente',
             {
               root: true,
-            },
+            }
           );
           throw new Error('Error al ingresar datos');
         }
@@ -155,38 +154,40 @@ export default {
   [signUp]({ commit, dispatch }, payload) {
     commit(SIGNUP_ATTEMPT);
 
-    return signUpApi(payload)
-      .then(() => {
-        dispatch('alert/successAlert', 'Usuario creado correctamente', {
-          root: true,
-        });
+    return (
+      signUpApi(payload)
+        .then(() => {
+          dispatch('alert/successAlert', 'Usuario creado correctamente', {
+            root: true,
+          });
 
-        // No lo logeamos, lo mandamos para que lo haga manualmente
-        commit(SIGNUP_SUCCESS);
-      })
-      // eslint-disable-next-line max-statements
-      .catch(err => {
-        if (err.response) {
-          const { errors } = err.response.data;
-          let errorMessage = '';
-          const fields = Object.keys(errors);
-          for (const field of fields) {
-            errorMessage = `${errorMessage} ${field}: ${errors[field]}  `;
+          // No lo logeamos, lo mandamos para que lo haga manualmente
+          commit(SIGNUP_SUCCESS);
+        })
+        // eslint-disable-next-line max-statements
+        .catch(err => {
+          if (err.response) {
+            const { errors } = err.response.data;
+            let errorMessage = '';
+            const fields = Object.keys(errors);
+            for (const field of fields) {
+              errorMessage = `${errorMessage} ${field}: ${errors[field]}  `;
+            }
+
+            commit(SIGNUP_FAIL);
+            dispatch('alert/errorAlert', errorMessage, {
+              root: true,
+            });
+            throw new Error('Error interno');
+          } else {
+            commit(SIGNUP_FAIL);
+            dispatch('alert/errorAlert', 'Error interno, intente nuevamente', {
+              root: true,
+            });
+            throw new Error('Error interno');
           }
-
-          commit(SIGNUP_FAIL);
-          dispatch('alert/errorAlert', errorMessage, {
-            root: true,
-          });
-          throw new Error('Error interno');
-        } else {
-          commit(SIGNUP_FAIL);
-          dispatch('alert/errorAlert', 'Error interno, intente nuevamente', {
-            root: true,
-          });
-          throw new Error('Error interno');
-        }
-      });
+        })
+    );
   },
   [budaSignIn]({ state, commit, dispatch }, payload) {
     commit(BUDA_SIGNIN_ATTEMPT);
@@ -205,7 +206,7 @@ export default {
           dispatch(
             'alert/successAlert',
             'Cuenta Buda sincronizada correctamente',
-            { root: true },
+            { root: true }
           );
           const fetchPromiseUser = getCurrentUserApi();
 
@@ -213,14 +214,19 @@ export default {
         }
         // Credenciales inválidas
 
-        dispatch('alert/errorAlert',
+        dispatch(
+          'alert/errorAlert',
           'Datos incorrectos. Revise los datos ingresados',
-          { root: true },
+          { root: true }
         );
         throw new Error('Datos incorrectos. Revise los datos ingresados');
       })
       .then(res => {
-        commitAndSetUser({ commit, mutation: BUDA_SIGNIN_SUCCESS, user: { ...state.currentUser, ...res.data.data.attributes } });
+        commitAndSetUser({
+          commit,
+          mutation: BUDA_SIGNIN_SUCCESS,
+          user: { ...state.currentUser, ...res.data.data.attributes },
+        });
       })
       .catch(err => {
         commit(BUDA_SIGNIN_FAIL);
@@ -231,16 +237,20 @@ export default {
           .then(() => {
             const fetchPromiseUser = getCurrentUserApi();
 
-            return fetchPromiseUser
-              .then(res => {
-                commitAndSetUser({ commit, mutation: BUDA_SIGNIN_SUCCESS, user: { ...state.currentUser, ...res.data.data.attributes } });
+            return fetchPromiseUser.then(res => {
+              commitAndSetUser({
+                commit,
+                mutation: BUDA_SIGNIN_SUCCESS,
+                user: { ...state.currentUser, ...res.data.data.attributes },
               });
+            });
           })
           .then(() => {
             if (err.response || err.message) {
-              dispatch('alert/errorAlert',
+              dispatch(
+                'alert/errorAlert',
                 'Datos incorrectos. Revise los datos ingresados',
-                { root: true },
+                { root: true }
               );
               throw new Error('Datos incorrectos. Revise los datos ingresados');
             } else {
@@ -258,24 +268,27 @@ export default {
         dispatch(
           'alert/successAlert',
           'Cuenta Buda desconectada correctamente',
-          { root: true },
+          { root: true }
         );
         const fetchPromiseUser = getCurrentUserApi();
 
-        return fetchPromiseUser
-          .then(res => {
-            commitAndSetUser({ commit, mutation: BUDA_SIGNOUT, user: { ...state.currentUser, ...res.data.data.attributes } });
+        return fetchPromiseUser.then(res => {
+          commitAndSetUser({
+            commit,
+            mutation: BUDA_SIGNOUT,
+            user: { ...state.currentUser, ...res.data.data.attributes },
           });
+        });
       })
       .catch(err => {
         if (err.response) {
           dispatch(
             'alert/errorAlert',
             'Error desconectando cuenta. Revise la contraseña ingresada',
-            { root: true },
+            { root: true }
           );
           throw new Error(
-            'Error desconectando cuenta. Revise la contraseña ingresada',
+            'Error desconectando cuenta. Revise la contraseña ingresada'
           );
         } else {
           dispatch('alert/errorAlert', 'Error desconocido', { root: true });
@@ -291,10 +304,10 @@ export default {
           dispatch(
             'alert/errorAlert',
             'Error obteniendo cotización. Revise los datos ingresados',
-            { root: true },
+            { root: true }
           );
           throw new Error(
-            'Error obteniendo cotización. Revise los datos ingresados',
+            'Error obteniendo cotización. Revise los datos ingresados'
           );
         } else {
           dispatch('alert/errorAlert', 'Error desconocido.', { root: true });
@@ -314,16 +327,16 @@ export default {
           dispatch(
             'alert/errorAlert',
             'Error obteniendo balance. Revise sus datos de cuenta',
-            { root: true },
+            { root: true }
           );
           throw new Error(
-            'Error obteniendo balance. Revise sus datos de cuenta',
+            'Error obteniendo balance. Revise sus datos de cuenta'
           );
         } else {
           dispatch(
             'alert/errorAlert',
             'Error obteniendo su balance, revise sus datos de cuenta o agregue sus credenciales de buda.',
-            { root: true },
+            { root: true }
           );
           throw new Error('Error desconocido');
         }
@@ -347,7 +360,7 @@ export default {
           dispatch(
             'alert/errorAlert',
             'Error enviando pago. Revise los datos ingresados',
-            { root: true },
+            { root: true }
           );
           throw new Error('Error enviando pago. Revise los datos ingresados');
         } else {
@@ -368,7 +381,7 @@ export default {
           dispatch(
             'alert/errorAlert',
             'Error obteniendo el historial de transacciones.',
-            { root: true },
+            { root: true }
           );
           throw new Error('Error obteniendo el historial de transacciones.');
         } else {
@@ -382,11 +395,9 @@ export default {
       .then(res => res.data.data.attributes)
       .catch(err => {
         if (err.response) {
-          dispatch(
-            'alert/errorAlert',
-            'Error redireccionando a Splitwise.',
-            { root: true },
-          );
+          dispatch('alert/errorAlert', 'Error redireccionando a Splitwise.', {
+            root: true,
+          });
           throw new Error('Error redireccionando a Splitwise.');
         } else {
           dispatch('alert/errorAlert', 'Error desconocido.', { root: true });
@@ -406,7 +417,7 @@ export default {
           dispatch(
             'alert/errorAlert',
             'Error obteniendo las deudas de Splitwise.',
-            { root: true },
+            { root: true }
           );
           throw new Error('Error obteniendo las deudas de Splitwise.');
         } else {
@@ -416,4 +427,3 @@ export default {
       });
   },
 };
-

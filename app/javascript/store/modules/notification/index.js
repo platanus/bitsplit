@@ -9,20 +9,25 @@ const firebaseState = {
 
 const actions = {
   bindNotifications: firebaseAction(({ bindFirebaseRef, rootState }) => {
-    const userEmailFirebase = rootState.user.currentUser.email.replace('.', ',');
+    const userEmailFirebase = rootState.user.currentUser.email.replace(
+      '.',
+      ','
+    );
     const { authentication_token } = rootState.user.currentUser;
 
     return bindFirebaseRef(
       'notifications',
       db
         .ref(`notifications/${userEmailFirebase}`)
-        .orderByChild(`${userEmailFirebase}-${authentication_token}`),
+        .orderByChild(`${userEmailFirebase}-${authentication_token}`)
     );
   }),
   unbindNotifications: firebaseAction(({ unbindFirebaseRef }) => {
     unbindFirebaseRef('notifications');
   }),
-  markAsSeen: firebaseAction((notificationToken) => markAsSeenApi(notificationToken)),
+  markAsSeen: firebaseAction(notificationToken =>
+    markAsSeenApi(notificationToken)
+  ),
 };
 
 const getters = {
