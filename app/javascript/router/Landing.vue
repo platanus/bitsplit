@@ -1,10 +1,10 @@
 <template>
-  <SignIn/>
+  <SignIn />
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import SignIn from './SignIn'
+import { mapGetters } from 'vuex';
+import SignIn from './SignIn';
 
 export default {
   name: 'Landing',
@@ -14,7 +14,7 @@ export default {
     };
   },
   components: {
-    SignIn
+    SignIn,
   },
   computed: {
     ...mapGetters('user', ['signedIn']),
