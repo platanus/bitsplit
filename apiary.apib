@@ -3,7 +3,7 @@ HOST: http://localhost:5000/api/
 
 # Bitsplit
 
-## Sessions [v1/sessions]
+## Sessions [/v1/sessions]
 
 ### Create new session [POST]
 
@@ -34,7 +34,7 @@ HOST: http://localhost:5000/api/
 + Response 204
 
         
-## Users [v1/users]
+## Users [/v1/users]
 
 ### Get current user [GET]
 
@@ -149,7 +149,7 @@ The `password` field is only required if the `api_key` or `api_secret` fields ar
 + Response 204 (application/json)
 
         
-## Quotations [v1/quotations]
+## Quotations [/v1/quotations]
 ### Create new quotation [POST]
 
 
@@ -185,7 +185,7 @@ The `password` field is only required if the `api_key` or `api_secret` fields ar
             }
         }
 
-## Balances [v1/balances]
+## Balances [/v1/balances]
 ### Get balance [GET]
 
 
@@ -228,7 +228,7 @@ The `password` field is only required if the `api_key` or `api_secret` fields ar
             }
 
 
-## Payments [v1/payments]
+## Payments [/v1/payments]
 ### Create new payment [POST]
 
 
@@ -322,7 +322,7 @@ The `password` field is only required if the `api_key` or `api_secret` fields ar
 
         
 
-## Splitwise API connection [v1/splitwise/authentications]
+## Splitwise API connection [/v1/splitwise/authentications]
 ### Create new url for api connection [POST]
 
 + Request (application/json)
@@ -343,7 +343,7 @@ The `password` field is only required if the `api_key` or `api_secret` fields ar
             }
         }
         
-## Splitwise debts [v1/splitwise/debts]
+## Splitwise debts [/v1/splitwise/debts]
 ### Get user splitwise debts [GET]
 + Request (application/json)
 
@@ -435,7 +435,7 @@ The `password` field is only required if the `api_key` or `api_secret` fields ar
                 }
             }
         
-## Firebase [v1/firebase]
+## Firebase [/v1/firebase]
 ### Update notification seen status [PATCH]
 
 + Request (application/json)
@@ -453,7 +453,7 @@ The `password` field is only required if the `api_key` or `api_secret` fields ar
 + Response 200
 
 
-## OpenNode Charge [v2/charges]
+## OpenNode Charge [/charges]
 ### Create OpenNode Charge [POST]
 
 + Request (application/json)
@@ -506,7 +506,7 @@ The `password` field is only required if the `api_key` or `api_secret` fields ar
         }
 
 
-## OpenNode Withdrawal [v2/withdrawals]
+## OpenNode Withdrawal [/v2/withdrawals]
 ### Create OpenNode Withdrawal [POST]
 
 + Request (application/json)
@@ -539,7 +539,7 @@ The `password` field is only required if the `api_key` or `api_secret` fields ar
                 }
         }
         
-## Transfer [v2/transfers]]
+## Transfer [/v2/transfers]
  > Transferir bitcoins de un usuario de Bitsplit a otro
 ### Create Transfer [POST]
 
