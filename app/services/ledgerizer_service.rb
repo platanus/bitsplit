@@ -17,6 +17,7 @@ class LedgerizerService < PowerTypes::Service.new
 
   def transfer(sender, receiver, bitcoins)
     satoshis = to_satoshis(bitcoins)
+    return false, @error_message unless validate_receiver(sender, receiver)
     return false, @error_message unless validate_amount(sender, satoshis)
     transfer = Transfer.create(sender: sender,
                                receiver: receiver, satoshis: to_satoshis(bitcoins))
@@ -35,6 +36,18 @@ class LedgerizerService < PowerTypes::Service.new
     end
     if user.wallet_balance < Money.from_amount(amount, 'SAT')
       @error_message = 'amount is greater than balance'
+      return false
+    end
+    true
+  end
+
+  def validate_receiver(sender, receiver)
+    if receiver.nil?
+      @error_message = 'invalid receiver email'
+      return false
+    end
+    if sender == receiver
+      @error_message = 'you cannot transfer to yourself'
       return false
     end
     true
