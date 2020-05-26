@@ -1,8 +1,8 @@
 <template>
   <div class="mt-16">
     <center>
-      <div class="w-full max-w-xs ">
-        <div class="flex content-start mb-8 ">
+      <div class="w-full max-w-xs">
+        <div class="flex content-start mb-8">
           <router-link :to="signInRoute">
             <img
               :src="leftArrow"
@@ -25,10 +25,7 @@
         <p class="txt-field mb-8">
           Crea tu cuenta, es fácil y rápido
         </p>
-        <form
-          @submit.prevent="handleSubmit"
-          class="  pt-4 pb-8 mb-4"
-        >
+        <form @submit.prevent="handleSubmit" class="pt-4 pb-8 mb-4">
           <div class="mb-8">
             <textInput
               field-id="email"
@@ -72,8 +69,6 @@ import textInput from '../components/Input';
 import passwordInput from '../components/PasswordInput';
 import submitButton from '../components/SubmitButton';
 import checkBox from '../components/Checkbox';
-import logo from '../assets/bitsplit-logo.svg';
-import lArrow from '../assets/left-arrow.svg';
 
 export default {
   name: 'SignUp',
@@ -85,8 +80,6 @@ export default {
       confirm_password: '',
       signInRoute: 'sign-in',
       checkboxField: false,
-      bitsplitLogo: logo,
-      leftArrow: lArrow,
     };
   },
   components: {
@@ -99,15 +92,20 @@ export default {
     ...mapState('user', ['currentUser', 'signUpLoading']),
   },
   methods: {
-    ...mapActions('user', ['signUp']),
+    ...mapActions('user', ['signUp', 'signIn']),
     handleSubmit() {
       const { checkboxField, email, password, confirm_password } = this;
       if (checkboxField && email && password && password === confirm_password) {
         // TODO logger
         this.signUp({ email, password })
-          .then(() => {
+          .then(() =>
             // TODO logger
-            this.$router.push('/sign-in');
+            // this.$router.push('/sign-in');
+            this.signIn({ email, password }),
+          )
+          .then(() => {
+            console.log('signed in');
+            this.$router.push('/onboarding');
           })
           .catch(err => {
             console.error(err);
