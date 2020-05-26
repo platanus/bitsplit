@@ -6,6 +6,7 @@ gem 'devise'
 gem 'devise-i18n'
 gem 'enumerize'
 gem 'jbuilder', '~> 2.7'
+gem 'ledgerizer', github: 'platanus/ledgerizer', ref: 'master'
 gem 'pg'
 gem 'power-types'
 gem 'puma', '~> 3.11'
@@ -16,7 +17,6 @@ gem 'sass-rails', '~> 5'
 gem 'strong_migrations'
 gem 'turbolinks', '~> 5'
 gem 'webpacker', '~> 4.0'
-gem 'ledgerizer', github: 'platanus/ledgerizer', ref: 'master'
 
 
 #Power_API https://github.com/platanus/power_api#installation
