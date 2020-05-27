@@ -3,7 +3,7 @@ HOST: http://localhost:5000/api/
 
 # Bitsplit
 
-## Sessions [v1/sessions]
+## Sessions [/v1/sessions]
 
 ### Create new session [POST]
 
@@ -34,7 +34,7 @@ HOST: http://localhost:5000/api/
 + Response 204
 
         
-## Users [v1/users]
+## Users [/v1/users]
 
 ### Get current user [GET]
 
@@ -149,7 +149,7 @@ The `password` field is only required if the `api_key` or `api_secret` fields ar
 + Response 204 (application/json)
 
         
-## Quotations [v1/quotations]
+## Quotations [/v1/quotations]
 ### Create new quotation [POST]
 
 
@@ -185,7 +185,7 @@ The `password` field is only required if the `api_key` or `api_secret` fields ar
             }
         }
 
-## Balances [v1/balances]
+## Balances [/v1/balances]
 ### Get balance [GET]
 
 
@@ -228,7 +228,7 @@ The `password` field is only required if the `api_key` or `api_secret` fields ar
             }
 
 
-## Payments [v1/payments]
+## Payments [/v1/payments]
 ### Create new payment [POST]
 
 
@@ -322,7 +322,7 @@ The `password` field is only required if the `api_key` or `api_secret` fields ar
 
         
 
-## Splitwise API connection [v1/splitwise/authentications]
+## Splitwise API connection [/v1/splitwise/authentications]
 ### Create new url for api connection [POST]
 
 + Request (application/json)
@@ -343,7 +343,7 @@ The `password` field is only required if the `api_key` or `api_secret` fields ar
             }
         }
         
-## Splitwise debts [v1/splitwise/debts]
+## Splitwise debts [/v1/splitwise/debts]
 ### Get user splitwise debts [GET]
 + Request (application/json)
 
@@ -435,7 +435,7 @@ The `password` field is only required if the `api_key` or `api_secret` fields ar
                 }
             }
         
-## Firebase [v1/firebase]
+## Firebase [/v1/firebase]
 ### Update notification seen status [PATCH]
 
 + Request (application/json)
@@ -453,7 +453,7 @@ The `password` field is only required if the `api_key` or `api_secret` fields ar
 + Response 200
 
 
-## OpenNode Charge [v2/charges]
+## OpenNode Charge [/charges]
 ### Create OpenNode Charge [POST]
 
 + Request (application/json)
@@ -490,23 +490,20 @@ The `password` field is only required if the `api_key` or `api_secret` fields ar
                 "notif_email": null,
                 "lightning_invoice": {
                     "expires_at": 1589576545,
-                    "payreq": "LNBC25940N1P0TAA23PP56MCL7UTKYDM2HUJE47SUQWXX7YRE3DGYJK5WRCPW80LZPWGHPHHQDQ9FCH5ZCQZPG8XT8K4S36
-                    82JMX0VNS2G3V62L367GALTAZLX6TTMFDPMJ9K7S0HHGM2MWNZK7Z7YFLVJVWWDF6TX3GQFKFD7N2TXX5S2LZVCCPN2AEQQ89WRDD"
+                    "payreq": "LNBC25940N1P0TAA23PP56MCL7UTKYDM2HUJE47SUQWXX7YRE3DGYJK5WRCPW80LZPWGHPHHQDQ9FCH5ZCQZPG8XT8K4S3682JMX0VNS2G3V62L367GALTAZLX6TTMFDPMJ9K7S0HHGM2MWNZK7Z7YFLVJVWWDF6TX3GQFKFD7N2TXX5S2LZVCCPN2AEQQ89WRDD"
                 },
                 "chain_invoice": {
                     "address": "3LUvbCKZfAHGQzZM95cDFGeHrJ1ecqtj9F"
                 },
                 "address": "3LUvbCKZfAHGQzZM95cDFGeHrJ1ecqtj9F",
                 "amount": 2594,
-                "uri": "bitcoin:3LUvbCKZfAHGQzZM95cDFGeHrJ1ecqtj9F?amount=0.00002594&label=N/A&lightning=LNBC25940N1P0TAA23PP56
-                MCL7UTKYDM2HUJE47SUQWXX7YRE3DGYJK5WRCPW80LZPWGHPHHQDQ9FCH5ZCQZPG8XT8K4S3682JMX0VNS2G3V62L367GALTAZLX6TTMFDPMJ9K7S
-                0HHGM2MWNZK7Z7YFLVJVWWDF6TX3GQFKFD7N2TXX5S2LZVCCPN2AEQQ89WRDD"
+                "uri": "bitcoin:3LUvbCKZfAHGQzZM95cDFGeHrJ1ecqtj9F?amount=0.00002594&label=N/A&lightning=LNBC25940N1P0TAA23PP56MCL7UTKYDM2HUJE47SUQWXX7YRE3DGYJK5WRCPW80LZPWGHPHHQDQ9FCH5ZCQZPG8XT8K4S3682JMX0VNS2G3V62L367GALTAZLX6TTMFDPMJ9K7S0HHGM2MWNZK7Z7YFLVJVWWDF6TX3GQFKFD7N2TXX5S2LZVCCPN2AEQQ89WRDD"
                         }
                 }
         }
 
 
-## OpenNode Withdrawal [v2/withdrawals]
+## OpenNode Withdrawal [/v2/withdrawals]
 ### Create OpenNode Withdrawal [POST]
 
 + Request (application/json)
@@ -518,29 +515,28 @@ The `password` field is only required if the `api_key` or `api_secret` fields ar
     + Body
 
             {
-                "invoice": "LNBC25940N1P0TAA23PP56MCL7UTKYDM2HUJE47SUQWXX7YRE3DGYJK5WRCPW80LZPWGHPHHQDQ9FCH5ZCQZPG8XT8K
-                4S3682JMX0VNS2G3V62L367GALTAZLX6TTMFDPMJ9K7S0HHGM2MWNZK7Z7YFLVJVWWDF6TX3GQFKFD7N2TXX5S2LZVCCPN2AEQQ89WR"
+                "invoice": "LNBC25940N1P0TAA23PP56MCL7UTKYDM2HUJE47SUQWXX7YRE3DGYJK5WRCPW80LZPWGHPHHQDQ9FCH5ZCQZPG8XT8K4S3682JMX0VNS2G3V62L367GALTAZLX6TTMFDPMJ9K7S0HHGM2MWNZK7Z7YFLVJVWWDF6TX3GQFKFD7N2TXX5S2LZVCCPN2AEQQ89WR"
             }
             
 + Response 200 (application/json)
 
         {
-        "data": {
-            "response": {
-                "id": "3f50999e-f21f-4981-b67c-ea9c075be7d6",
-                "type": "ln",
-                "amount": 10,
-                "reference": "lntb100n1pw0fl34pp5p8u6alsp6vr7ngevp82lu6kz7j4ryla0dgpg9es0jq70shs39xzsdqqcqzpgxqyz5vqm5egyv
-                dadnnvrecqdzamwl6guhhvkpja0s9e0vu6g0ay75kegzfnhjykdveagfj8rt9nay0yvu8j94shsvj3ghxu306y2pac02nq85qq7m8tsc",
-                "fee": 0,
-                "status": "pending",
-                "processed_at": 1559559748
-                        }
+            "data": {
+                "response": {
+                        "id": "3f50999e-f21f-4981-b67c-ea9c075be7d6",
+                        "type": "ln",
+                        "amount": 10,
+                        "reference": "lntb100n1pw0fl34pp5p8u6alsp6vr7ngevp82lu6kz7j4ryla0dgpg9es0jq70shs39xzsdqqcqzpgxqyz5vqm5egyvdadnnvrecqdzamwl6guhhvkpja0s9e0vu6g0ay75kegzfnhjykdveagfj8rt9nay0yvu8j94shsvj3ghxu306y2pac02nq85qq7m8tsc",
+                        "fee": 0,
+                        "status": "pending",
+                        "processed_at": 1559559748
+                    }
                 }
         }
         
-## Transfer [v2/transfers]]
- > Transferir bitcoins de un usuario de Bitsplit a otro
+## Transfer [/v2/transfers]
+ > Transferir bitcoins de un usuario de Bitsplit a otro usuario con su cuenta de BitSplit o Buda
+ 
 ### Create Transfer [POST]
 
 + Request (application/json)
@@ -554,11 +550,10 @@ The `password` field is only required if the `api_key` or `api_secret` fields ar
 
             {
                 "receiver_email": "example1@example.com",
-                "amount": 0.00001
+                "amount": 0.00001,
+                "wallet_origin": "bitsplit"
             }
             
 + Response 200 (application/json)
-    > Se hizo la transferencia correctamente
 
 + Response 400 (application/json)
-    > Ha habido un error

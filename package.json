@@ -9,7 +9,7 @@
     "axios": "^0.19.2",
     "eslint-plugin-import": "^2.20.2",
     "firebase": "^7.14.2",
-    "husky": "^4.2.5",
+    "husky": ">=4",
     "tailwindcss": "^1.2.0",
     "turbolinks": "^5.2.0",
     "vue": "^2.6.11",
@@ -32,7 +32,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn run lint"
+      "pre-commit": "lint-staged"
     }
   },
   "jest": {
@@ -82,8 +82,17 @@
     "eslint-plugin-vue": "^7.0.0-alpha.2",
     "jest": "^25.2.7",
     "jest-serializer-vue": "^2.0.2",
+    "lint-staged": ">=10",
+    "prettier": "^2.0.5",
     "vue-jest": "^3.0.5",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.10.3"
+  },
+  "lint-staged": {
+    "*.{vue,js}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "/*.rb": "bundle exec rubocop"
   }
 }
