@@ -8,21 +8,33 @@
       :name="fieldName"
       :value="value"
       @input="$emit('update', $event.target.value)"
-    />
-    <img src="assets/no-visibility.svg" class="absolute transform translate-y-3 -translate-x-4" align="top" />
+    >
+    <img
+      :src="noVisibility"
+      class="absolute transform translate-y-3 -translate-x-4"
+      align="top"
+    >
   </div>
 </template>
 <script>
+
+import noVis from '../assets/no-visibility.svg';
+
 export default {
   name: 'PasswordForm',
+  data() {
+    return {
+      noVisibility: noVis,
+    };
+  },
   props: {
     value: String,
     fieldId: String,
     fieldName: String,
     fieldPlaceholder: {
       default: '****************',
-      type: String
-    }
+      type: String,
+    },
   },
   model: {
     prop: 'value',

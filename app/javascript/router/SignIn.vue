@@ -2,29 +2,35 @@
   <div class="items-center h-screen w-full bg-primary p-12 mt-24">
     <center>
       <div class="w-full max-w-xs ">
-        <img src="assets/bitsplit-logo.svg" class="mb-10" align="top" />
+        <img
+          :src="bitsplitLogo"
+          class="mb-10"
+          align="top"
+        >
         <form
           @submit.prevent="handleSubmit"
           class="bg-primary rounded pt-6 pb-8 mb-4 "
         >
           <div class="mb-4">
             <textInput
-              fieldId="email"
-              fieldType="text"
-              fieldPlaceholder="Correo"
-              fieldName="email"
+              field-id="email"
+              field-type="text"
+              field-placeholder="Correo"
+              field-name="email"
               v-model="email"
             />
           </div>
           <div>
             <passwordInput
-              fieldId="password"
-              fieldName="password"
-              fieldPlaceholder="Contraseña"
+              field-id="password"
+              field-name="password"
+              field-placeholder="Contraseña"
               v-model="password"
             />
           </div>
-          <submitButton :loading="signInLoading">Ingresar</submitButton>
+          <submitButton :loading="signInLoading">
+            Ingresar
+          </submitButton>
           <p class="txt-field items-center mt-10 underline ">
             <router-link :to="signUpRoute">
               Crear una cuenta
@@ -41,7 +47,7 @@ import { mapActions, mapState } from 'vuex';
 import textInput from '../components/Input';
 import passwordInput from '../components/PasswordInput';
 import submitButton from '../components/SubmitButton';
-import inputLabel from '../components/InputLabel';
+import logo from '../assets/bitsplit-logo.svg';
 
 export default {
   name: 'SignIn',
@@ -50,14 +56,14 @@ export default {
       routeName: 'Sign In',
       email: '',
       password: '',
-      signUpRoute: 'sign-up'
-    }
+      signUpRoute: 'sign-up',
+      bitsplitLogo: logo,
+    };
   },
   components: {
     textInput,
     passwordInput,
     submitButton,
-    inputLabel,
   },
   computed: {
     ...mapState('user', ['currentUser', 'signInLoading']),
