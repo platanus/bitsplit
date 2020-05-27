@@ -4,7 +4,7 @@
       <div class="w-1/2">
         <div class="relative mb-2">
           <div
-            v-if="!budaDone"
+            v-if="!budaSignedIn"
             class="w-12 h-12 mx-auto bg-white border-2 border-gray-200 rounded-full text-lg text-black flex justify-center"
           >
             <i class="material-icons self-center">account_balance_wallet</i>
@@ -71,19 +71,16 @@
   </div>
 </template>
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
 
 export default {
   name: 'InputLabel',
   props: {
-    steps: {
-      default: [],
-      type: Array[String],
-    },
     fieldFor: String,
   },
   computed: {
-    ...mapState('onBoarding', ['budaDone', 'splitwiseDone', 'currentStep']),
+    ...mapState('onBoarding', ['splitwiseDone', 'currentStep']),
+    ...mapGetters('user', ['budaSignedIn']),
   },
 };
 </script>

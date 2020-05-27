@@ -6,14 +6,7 @@
         <i class="material-icons self-center ml-2">arrow_back_ios</i>
       </StepButton>
       <div class="p-8">
-        <BudaForm />
-        <button
-          @click="currentStepOk"
-          class="btn w-full ext-black font-bold p-2 rounded focus:outline-none"
-          :class="[width === 'full' ? 'w-full' : 'w-normal']"
-        >
-          Marcar como hecho
-        </button>
+        <budaIndex v-if="currentStep === 'buda'" />
       </div>
       <StepButton @do-click="NEXT_STEP" :loading="loading">
         <i class="material-icons material-icons self-center mr-2"
@@ -26,9 +19,9 @@
 
 <script>
 import { mapState, mapMutations, mapActions } from 'vuex';
+import BudaIndex from '../components/BudaOnBoarding';
 import CurrentStep from '../components/CurrentStep';
 import StepButton from '../components/StepButton';
-import BudaForm from '../components/BudaForm';
 
 export default {
   name: 'OnBoarding',
@@ -40,7 +33,7 @@ export default {
   components: {
     CurrentStep,
     StepButton,
-    BudaForm,
+    BudaIndex,
   },
   methods: {
     ...mapMutations('onBoarding', ['NEXT_STEP', 'PREVIOUS_STEP', 'CURRENT_OK']),
