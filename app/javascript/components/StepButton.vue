@@ -1,10 +1,16 @@
 <template>
-  <div
-    @click="$emit('do-click')"
-    class="px-1 h-auto bg-gray-200 hover:bg-gray-400 cursor-pointer flex flex-row justify-start"
-    :disabled="loading"
-  >
-    <slot />
+  <div>
+    <div v-if="display" class="m-3 cursor-pointer" @click="$emit('do-click')">
+      <div v-if="forward" class="flex flex-row">
+        <slot name="text" />
+        <slot name="icon" />
+      </div>
+      <div v-else class="flex flex-row">
+        <slot name="icon" />
+        <slot name="text" />
+      </div>
+    </div>
+    <div v-else />
   </div>
 </template>
 
@@ -12,10 +18,13 @@
 export default {
   name: 'SubmitButton',
   props: {
-    fieldDisabled: Boolean,
-    loading: {
+    forward: {
       type: Boolean,
-      default: false,
+      default: true,
+    },
+    display: {
+      type: Boolean,
+      default: true,
     },
   },
 };

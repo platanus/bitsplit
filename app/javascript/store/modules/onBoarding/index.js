@@ -1,20 +1,11 @@
-// import { successAlert, errorAlert } from '../../action-types';
-// import { SUCCESS_ALERT, ERROR_ALERT, CLEAR_ALERT } from '../../mutation-types';
-const currentStepOk = 'currentStepOk';
-
-const BUDA_OK = 'BUDA_OK';
-const SPLITWISE_OK = 'SPLITWISE_OK';
-const NEXT_STEP = 'NEXT_STEP';
-const PREVIOUS_STEP = 'PREVIOUS_STEP';
+import { currentStepOk } from '../../action-types';
+import { NEXT_STEP, PREVIOUS_STEP } from '../../mutation-types';
+import router from '../../../router';
 
 const onBoardingState = {
   loading: false, // Para que no se haga doble click
   currentStep: 'buda', // buda - splitwise
   splitwiseDone: false,
-};
-
-const getters = {
-  onBoardingDone: state => state.splitwiseDone,
 };
 
 const actions = {
@@ -24,15 +15,12 @@ const actions = {
 };
 
 const mutations = {
-  [BUDA_OK](state) {
-    state.currentStep = 'splitwise';
-  },
-  [SPLITWISE_OK](state) {
-    state.currentStep = null;
-    state.splitwiseDone = true;
-  },
   [NEXT_STEP](state) {
-    state.currentStep = 'splitwise';
+    if (state.currentStep === 'buda') {
+      state.currentStep = 'splitwise';
+    } else {
+      router.push('/home');
+    }
   },
   [PREVIOUS_STEP](state) {
     state.currentStep = 'buda';
@@ -42,7 +30,6 @@ const mutations = {
 export default {
   namespaced: true,
   state: onBoardingState,
-  getters,
   mutations,
   actions,
 };

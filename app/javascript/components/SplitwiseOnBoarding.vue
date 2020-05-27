@@ -1,6 +1,6 @@
 <template>
-  <div class="h-full flex flex-col justify-around">
-    <textField class="">
+  <div class="flex flex-col justify-between flex-grow">
+    <textField class="self-center">
       Haz click en el boton de abajo para linkear tu cuenta de BitSplit a
       <a href="https://www.spliwise.com">Splitwise</a>
     </textField>

@@ -1,31 +1,25 @@
 <template>
-  <div>
-    <center>
-      <div class="w-full max-w-xs">
-        <form @submit.prevent="handleSubmit">
-          <div>
-            <textField>
-              ¿Estás seguro de querer desconectar tu cuenta Buda? Por favor
-              ingresa tu contraseña para confirmar
-            </textField>
-          </div>
-          <div>
-            <inputLabel field-for="password">
-              Contraseña Bitsplit
-            </inputLabel>
-            <passwordInput
-              field-id="password"
-              field-name="password"
-              v-model="password"
-            />
-          </div>
-          <div>
-            <submitButton>Confirmar</submitButton>
-          </div>
-        </form>
-      </div>
-    </center>
-  </div>
+  <form @submit.prevent="handleSubmit">
+    <div>
+      <textField>
+        ¿Estás seguro de querer desconectar tu cuenta Buda? Por favor ingresa tu
+        contraseña para confirmar
+      </textField>
+    </div>
+    <div>
+      <inputLabel field-for="password">
+        Contraseña Bitsplit
+      </inputLabel>
+      <passwordInput
+        field-id="password"
+        field-name="password"
+        v-model="password"
+      />
+    </div>
+    <div>
+      <submitButton>Confirmar</submitButton>
+    </div>
+  </form>
 </template>
 
 <script>

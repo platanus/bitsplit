@@ -1,19 +1,31 @@
 <template>
   <div>
     <CurrentStep />
-    <div class="flex flex-row justify-center fixed-size">
-      <StepButton @do-click="PREVIOUS_STEP" :loading="loading">
-        <i class="material-icons self-center ml-2">arrow_back_ios</i>
-      </StepButton>
-      <div class="p-8 w-1/3">
-        <budaIndex v-if="currentStep === 'buda'" />
-        <SplitwiseOnBoarding v-if="currentStep === 'splitwise'" />
-      </div>
-      <StepButton @do-click="NEXT_STEP" :loading="loading">
-        <i class="material-icons material-icons self-center mr-2"
-          >arrow_forward_ios</i
+    <div class="max-w-xs mx-auto fixed-size flex flex-col justify-between">
+      <budaIndex v-if="currentStep === 'buda'" />
+      <SplitwiseOnBoarding v-if="currentStep === 'splitwise'" />
+      <div class="flex flex-row justify-between flex-grow-0 py-4">
+        <StepButton
+          @do-click="PREVIOUS_STEP"
+          :forward="false"
+          :display="currentStep !== 'buda'"
         >
-      </StepButton>
+          <i slot="icon" class="material-icons self-center ml-2"
+            >arrow_back_ios</i
+          >
+          <p slot="text">
+            Anterior
+          </p>
+        </StepButton>
+        <StepButton @do-click="NEXT_STEP" :forward="true">
+          <i slot="icon" class="material-icons material-icons self-center mr-2"
+            >arrow_forward_ios</i
+          >
+          <p slot="text">
+            Saltar
+          </p>
+        </StepButton>
+      </div>
     </div>
   </div>
 </template>

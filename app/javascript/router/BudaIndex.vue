@@ -1,6 +1,12 @@
 <template>
   <div class="mt-16">
-    <component :is="budaComp" />
+    <div>
+      <center>
+        <div class="w-full max-w-xs">
+          <component :is="budaComp" />
+        </div>
+      </center>
+    </div>
   </div>
 </template>
 

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="">
     <component :is="budaComp" v-bind="{ onBoardingScreen: true }" />
   </div>
 </template>
