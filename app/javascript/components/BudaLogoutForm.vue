@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-16">
+  <div>
     <center>
       <div class="w-full max-w-xs">
         <form @submit.prevent="handleSubmit">

@@ -1,9 +1,12 @@
 <template>
-  <div class="mt-16">
+  <div>
     <center>
       <div class="w-full max-w-xs">
         <div>
-          <textField>¡Ya estás conectado a una cuenta Buda! ¿Qué desear hacer?"</textField>
+          <textField
+            >¡Ya estás conectado a una cuenta Buda! ¿Qué desear
+            hacer?"</textField
+          >
         </div>
         <div class="inline">
           <div class="pb-6">
