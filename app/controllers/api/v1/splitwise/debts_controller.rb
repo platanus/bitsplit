@@ -10,10 +10,10 @@ class Api::V1::Splitwise::DebtsController < ApplicationController
   end
 
   def create
-    respond_with({ error: @error_message }, status: :unprocessable_entity)
+    # respond_with({ error: @error_message }, status: :unprocessable_entity)
 
-    success, @error_message, _new_payment = payments_service.create_payment(create_params)
-    render('error') && return unless success
+    success, @error_message, _new_payment = payment_service.create_payment(create_params)
+    head(:unprocessable_entity) && return unless success
 
     response = splitwise_service.payoff_debt(create_params)
     if response.code == '200'
