@@ -19,5 +19,3 @@ Ledgerizer.setup do |conf|
         end
     end
 end
-
-Ledgerizer.definition.running_inside_transactional_fixtures = true
