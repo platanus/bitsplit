@@ -344,6 +344,25 @@ The `password` field is only required if the `api_key` or `api_secret` fields ar
         }
         
 ## Splitwise debts [/v1/splitwise/debts]
+
+### Pay off user debt [POST]
++ Request (application/json)
+
+    + Headers
+
+            X-User-Email: example@example.com
+            X-User-Token: smnozAAbYnEX2xVRfS5R
+
+    + Body
+
+            {
+                "group_id": 1298371,
+                "to_user_id": 541423,
+                "payment_amount": 0.00001
+            }
+            
++ Response 200
+
 ### Get user splitwise debts [GET]
 + Request (application/json)
 
