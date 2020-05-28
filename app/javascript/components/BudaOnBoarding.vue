@@ -1,12 +1,6 @@
 <template>
-  <div class="mt-16">
-    <div>
-      <center>
-        <div class="w-full max-w-xs">
-          <component :is="budaComp" />
-        </div>
-      </center>
-    </div>
+  <div class="">
+    <component :is="budaComp" v-bind="{ onBoardingScreen: true }" />
   </div>
 </template>
 

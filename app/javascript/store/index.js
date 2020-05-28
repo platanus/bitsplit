@@ -6,6 +6,7 @@ import user from './modules/user';
 import alert from './modules/alert';
 import component from './modules/component';
 import notification from './modules/notification';
+import onBoarding from './modules/onBoarding';
 
 Vue.use(Vuex);
 
@@ -15,6 +16,7 @@ const store = new Vuex.Store({
     user,
     component,
     notification,
+    onBoarding,
   },
   mutations: vuexfireMutations,
 });

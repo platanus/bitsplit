@@ -32,3 +32,6 @@ export const CLEAR_ALERT = 'CLEAR_ALERT';
 export const GET_PAYMENTS_SUCCESS = 'GET_PAYMENTS_SUCCESS';
 
 export const GET_DEBTS_SUCCESS = 'GET_DEBTS_SUCCESS';
+
+export const NEXT_STEP = 'NEXT_STEP';
+export const PREVIOUS_STEP = 'PREVIOUS_STEP';

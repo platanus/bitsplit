@@ -21,3 +21,5 @@ export const errorAlert = 'errorAlert';
 export const clearAlert = 'clearAlert';
 
 export const getPayments = 'getPayments';
+
+export const currentStepOk = 'currentStepOk';

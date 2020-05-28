@@ -1,30 +1,25 @@
 <template>
-  <div class="mt-16">
-    <center>
-      <div class="w-full max-w-xs">
-        <form @submit.prevent="handleSubmit">
-          <div>
-            <textField>
-              ¿Estás seguro de querer desconectar tu cuenta Buda? Por favor ingresa tu contraseña para confirmar
-            </textField>
-          </div>
-          <div>
-            <inputLabel field-for="password">
-              Contraseña Bitsplit
-            </inputLabel>
-            <passwordInput
-              field-id="password"
-              field-name="password"
-              v-model="password"
-            />
-          </div>
-          <div>
-            <submitButton>Confirmar</submitButton>
-          </div>
-        </form>
-      </div>
-    </center>
-  </div>
+  <form @submit.prevent="handleSubmit">
+    <div>
+      <textField>
+        ¿Estás seguro de querer desconectar tu cuenta Buda? Por favor ingresa tu
+        contraseña para confirmar
+      </textField>
+    </div>
+    <div>
+      <inputLabel field-for="password">
+        Contraseña Bitsplit
+      </inputLabel>
+      <passwordInput
+        field-id="password"
+        field-name="password"
+        v-model="password"
+      />
+    </div>
+    <div>
+      <submitButton>Confirmar</submitButton>
+    </div>
+  </form>
 </template>
 
 <script>
@@ -44,6 +39,12 @@ export default {
       password: '',
     };
   },
+  props: {
+    onBoardingScreen: {
+      type: Boolean,
+      default: false,
+    },
+  },
   components: {
     passwordInput,
     submitButton,
@@ -55,6 +56,7 @@ export default {
   },
   methods: {
     ...mapActions('user', ['budaSignOut']),
+    ...mapActions('component', ['changeBudaComp']),
     handleSubmit() {
       const { apiKey, apiSecret, password } = this;
       if (password) {
@@ -64,7 +66,11 @@ export default {
           password,
         })
           .then(() => {
-            this.$router.push('/home');
+            if (this.onBoardingScreen) {
+              this.changeBudaComp('BudaForm');
+            } else {
+              this.$router.push('/home');
+            }
           })
           .catch(err => {
             console.error(err);
