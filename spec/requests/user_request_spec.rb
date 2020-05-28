@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe User, type: :request do
   
-  user_params = {"email" => "user@example.com", "password" =>"password", "password_confitmation" => "password", "api_secret" => "api_secret", "api_key" => "api_key"}
+  user_params = {"email" => "user@example.com", "password" =>"password", "password_confirmation" => "password", "api_secret" => "api_secret", "api_key" => "api_key", "tenant_id" => 1}
 
   describe "CRUD" do
 

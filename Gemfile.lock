@@ -1,3 +1,15 @@
+GIT
+  remote: https://github.com/platanus/ledgerizer.git
+  revision: 0b841804936bcef37065c9653389355a6a7702ba
+  ref: master
+  specs:
+    ledgerizer (0.1.0)
+      enumerize
+      money-rails
+      rails (>= 5.2.0)
+      require_all
+      table_print
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -193,6 +205,15 @@ GEM
     mini_mime (1.0.2)
     mini_portile2 (2.4.0)
     minitest (5.14.0)
+    monetize (1.9.4)
+      money (~> 6.12)
+    money (6.13.7)
+      i18n (>= 0.6.4, <= 2)
+    money-rails (1.13.3)
+      activesupport (>= 3.0)
+      monetize (~> 1.9.0)
+      money (~> 6.13.2)
+      railties (>= 3.0)
     msgpack (1.3.3)
     multi_json (1.14.1)
     multi_xml (0.6.0)
@@ -301,6 +322,7 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
+    require_all (3.0.0)
     responders (3.0.0)
       actionpack (>= 5.0)
       railties (>= 5.0)
@@ -388,6 +410,7 @@ GEM
       sprockets (>= 3.0.0)
     strong_migrations (0.6.3)
       activerecord (>= 5)
+    table_print (1.5.6)
     terminal-notifier (2.0.0)
     terminal-table (1.8.0)
       unicode-display_width (~> 1.1, >= 1.1.1)
@@ -443,6 +466,7 @@ DEPENDENCIES
   heroku-stage
   httparty (~> 0.18.0)
   jbuilder (~> 2.7)
+  ledgerizer!
   listen
   oauth-plugin
   pg
