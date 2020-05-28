@@ -4,11 +4,7 @@
       <div class="w-full max-w-xs">
         <div class="flex content-start mb-8">
           <router-link :to="signInRoute">
-            <img
-              :src="leftArrow"
-              class="mr-2"
-              align="top"
-            >
+            <img :src="leftArrow" class="mr-2" align="top" />
           </router-link>
           <router-link :to="signInRoute">
             <p class="txt-field">
@@ -16,11 +12,7 @@
             </p>
           </router-link>
         </div>
-        <img
-          :src="bitsplitLogo"
-          class="mb-4"
-          align="top"
-        >
+        <img :src="bitsplitLogo" class="mb-4" align="top" />
 
         <p class="txt-field mb-8">
           Crea tu cuenta, es fácil y rápido
@@ -100,8 +92,7 @@ export default {
         this.signUp({ email, password })
           .then(() =>
             // TODO logger
-            // this.$router.push('/sign-in');
-            this.signIn({ email, password }),
+            this.signIn({ email, password })
           )
           .then(() => {
             console.log('signed in');

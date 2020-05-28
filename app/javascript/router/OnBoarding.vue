@@ -63,6 +63,5 @@ export default {
 <style lang="scss">
 .fixed-size {
   height: 50vh;
-  // width: 30px;
 }
 </style>

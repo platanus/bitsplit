@@ -27,7 +27,7 @@
           <div
             class="absolute flex align-center items-center align-middle content-center"
             style="
-              width: calc(100% - 2.5rem - 1rem);
+              width: calc(100% - 3.5rem);
               top: 50%;
               transform: translate(-50%, -50%);
             "
