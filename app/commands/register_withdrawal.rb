@@ -15,6 +15,6 @@ class RegisterWithdrawal < PowerTypes::Command.new(:withdrawal)
   private
 
   def tenant
-    Tenant.find(ENV.fetch("MAIN_TENANT", 1))
+    Tenant.find(ENV.fetch('MAIN_TENANT', 1))
   end
 end
