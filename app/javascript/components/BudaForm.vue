@@ -1,51 +1,45 @@
 <template>
-  <div class="mt-16">
-    <center>
-      <div class="w-full max-w-xs">
-        <form @submit.prevent="handleSubmit">
-          <div>
-            <textField>
-              Ingresa el API_KEY y API_SECRET de tu cuenta Buda. Puedes acceder a ellos en tu perfil de <a href="https://www.buda.com">www.buda.com</a>
-            </textField>
-          </div>
-          <div>
-            <inputLabel field-name="API_KEY">
-              key
-            </inputLabel>
-            <passwordInput
-              field-id="apiKey"
-              field-name="apiKey"
-              v-model="apiKey"
-            />
-          </div>
-          <div>
-            <inputLabel field-name="API_SECRET">
-              apiSecret
-            </inputLabel>
-            <passwordInput
-              field-id="apiSecret"
-              field-name="apiSecret"
-              v-model="apiSecret"
-            />
-          </div>
-          <div>
-            <inputLabel field-for="password">
-              Confirma tu contraseña Bitsplit
-            </inputLabel>
-            <passwordInput
-              field-id="password"
-              field-name="password"
-              v-model="password"
-            />
-          </div>
-          <div>
-            <submitButton :loading="budaSignInLoading">
-              Sincronizar Buda
-            </submitButton>
-          </div>
-        </form>
+  <div>
+    <form @submit.prevent="handleSubmit()">
+      <div>
+        <textField>
+          Ingresa el API_KEY y API_SECRET de tu cuenta Buda. Puedes acceder a
+          ellos en tu perfil de
+          <a href="https://www.buda.com">www.buda.com</a>
+        </textField>
       </div>
-    </center>
+      <div>
+        <inputLabel field-name="API_KEY">
+          key
+        </inputLabel>
+        <passwordInput field-id="apiKey" field-name="apiKey" v-model="apiKey" />
+      </div>
+      <div>
+        <inputLabel field-name="API_SECRET">
+          apiSecret
+        </inputLabel>
+        <passwordInput
+          field-id="apiSecret"
+          field-name="apiSecret"
+          v-model="apiSecret"
+        />
+      </div>
+      <div>
+        <inputLabel field-for="password">
+          Confirma tu contraseña Bitsplit
+        </inputLabel>
+        <passwordInput
+          field-id="password"
+          field-name="password"
+          v-model="password"
+        />
+      </div>
+      <div>
+        <submitButton :loading="budaSignInLoading">
+          Sincronizar Buda
+        </submitButton>
+      </div>
+    </form>
   </div>
 </template>
 
@@ -66,6 +60,12 @@ export default {
       password: '',
     };
   },
+  props: {
+    onBoardingScreen: {
+      type: Boolean,
+      default: false,
+    },
+  },
   components: {
     passwordInput,
     submitButton,
@@ -77,6 +77,7 @@ export default {
   },
   methods: {
     ...mapActions('user', ['budaSignIn']),
+    ...mapActions('onBoarding', ['currentStepOk']),
     handleSubmit() {
       const { apiKey, apiSecret, password } = this;
       if (apiKey && apiSecret && password) {
@@ -86,7 +87,11 @@ export default {
           password,
         })
           .then(() => {
-            this.$router.push('/home');
+            if (this.onBoardingScreen) {
+              this.currentStepOk();
+            } else {
+              this.$router.push('/home');
+            }
           })
           .catch(err => {
             console.error(err);

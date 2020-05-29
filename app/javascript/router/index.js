@@ -7,6 +7,7 @@ import Landing from './Landing.vue';
 import Home from './Home.vue';
 import BudaIndex from './BudaIndex.vue';
 import PaymentIndex from './PaymentIndex.vue';
+import OnBoarding from './OnBoarding.vue';
 
 import { checkAuth, checkNoAuth, checkBudaAuth } from '../helpers';
 
@@ -18,6 +19,7 @@ const router = new Router({
     { path: '/', component: Landing, beforeEnter: checkNoAuth },
     { path: '/sign-in', component: SignIn, beforeEnter: checkNoAuth },
     { path: '/sign-up', component: SignUp, beforeEnter: checkNoAuth },
+    { path: '/onboarding', component: OnBoarding, beforeEnter: checkAuth },
     { path: '/home', component: Home, beforeEnter: checkAuth },
     { path: '/buda', component: BudaIndex, beforeEnter: checkAuth },
     {

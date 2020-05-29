@@ -10,7 +10,7 @@
         :checked="!!isChecked"
         @change="e => (isChecked = e.target.checked)"
         @input="$emit('input', $event.target.checked)"
-      />
+      >
       <svg
         class="fill-current hidden w-4 h-4 text-black-500 pointer-events-none"
         viewBox="0 0 20 20"
@@ -27,12 +27,12 @@ export default {
   name: 'Checkbox',
   props: {
     checked: Boolean,
-    fieldText: String
+    fieldText: String,
   },
   data: () => ({
-      isChecked: false
-    })
-}
+    isChecked: false,
+  }),
+};
 </script>
 
 <style>

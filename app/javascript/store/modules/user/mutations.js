@@ -75,7 +75,8 @@ export default {
   },
   [SEND_PAYMENT_SUCCESS](state, attributes) {
     state.paymentLoading = false;
-    state.lastPayment = { amount: parseFloat(attributes.amount),
+    state.lastPayment = {
+      amount: parseFloat(attributes.amount),
       receiver: attributes.receiver_email,
       date: attributes.created_at,
     };
