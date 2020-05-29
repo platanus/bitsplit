@@ -6,7 +6,7 @@ class BudaUserService < PowerTypes::Service.new(api_key: nil, api_secret: nil)
     satoshis = satoshi_price(bitcoins_amount)
     body = { amount_satoshis: satoshis, currency: 'BTC' }.to_json
     nonce = generate_nonce
-    headers = headers(@api_key, @api_secret, nonce, request_type, path, body)
+    headers = generate_headers(@api_key, @api_secret, nonce, request_type, path, body)
     post_request(url, body, headers)
   end
 
