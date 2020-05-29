@@ -4,14 +4,14 @@ class OpenNodeService < PowerTypes::Service.new(charges_api_key: nil, withdrawal
   def send_charge_request(amount, currency)
     url = url('/v1/charges')
     headers = headers(@charges_api_key)
-    body = { amount: amount, currency: currency}.to_json
+    body = { amount: amount, currency: currency }.to_json
     post_request(url, body, headers)
   end
 
   def send_withdrawal_request(invoice)
     url = url('/v2/withdrawals')
     headers = headers(@withdrawals_api_key)
-    body = { type: 'ln', address: invoice}.to_json
+    body = { type: 'ln', address: invoice }.to_json
     post_request(url, body, headers)
   end
 
