@@ -5,12 +5,12 @@ class Api::V2::TransfersController < Api::V2::BaseController
     render(json: { error: 'you can not transfer to yourself' }, status: 400) && return if receiver == current_user
 
     money_service = MoneyService.new(sender: current_user, receiver: receiver, amount: params[:amount], wallet_origin: params[:wallet_origin])
-    success = money_service.payment
+    success, error_message = money_service.payment
 
     if success
       head :ok
     else
-      render json: { error: @error_message }, status: 400
+      render json: { error: error_message }, status: 400
     end
   end
 end

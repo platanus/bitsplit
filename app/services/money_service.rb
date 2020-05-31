@@ -7,66 +7,84 @@ class MoneyService < PowerTypes::Service.new(:sender, :receiver, :amount, :walle
   # 4) bitsplit-bitsplit: transfer
 
   def payment
+    @error_message = 'error'
+
+    #generar invoice
+    if @receiver.wallet == 'buda'
+
+      # verificar que el receptor tenga cuenta en buda 
+      if @receiver.api_key.nil? || @receiver.api_secret.nil? 
+        @error_message = 'receiver user does not have buda api_keys'
+        return false, @error_message
+      end
+      api_key, api_secret = @receiver.buda_keys
+      buda_service = BudaUserService.new(api_key: api_key, api_secret: api_secret)
+      response = buda_service.generate_invoice(@amount)
+
+      # verificar que el invoice se creó correctamente 
+      if !response.has_key? 'invoice'
+        @error_message = response
+        return false, @error_message
+      end
+      invoice = JSON.parse(response.body)['invoice']['encoded_payment_request']
+    
+    else
+      open_node_service = OpenNodeService.new
+      response = open_node_service.send_charge_request(@amount, 'BTC')
+      data = JSON.parse(response.body)['data']
+      
+      # verificar que el invoice se creó correctamente 
+      if !data.has_key? 'id'
+        @error_message = response
+        return false, @error_message
+      end
+      invoice = JSON.parse(response.body)['data']['lightning_invoice']['payreq']
+    end
+
+    #pagar invoice
+    if @wallet_origin == 'buda'
+      # verificar que el emisor tenga cuenta en buda
+      if @sender.api_key.nil? || @sender.api_secret.nil? 
+        @error_message = 'sender user does not have buda api_keys'
+        return false, @error_message
+      end
+      api_key, api_secret = @sender.buda_keys
+      buda_service = BudaUserService.new(api_key: api_key, api_secret: api_secret)
+      simulate = ENV.fetch('INVOICE_PAYMENT_SIMULATION')
+      invoice_payment = buda_service.pay_invoice(@amount, invoice, simulate)
+      # verificar que el pago se realizó correctamente
+      if !invoice_payment.has_key? 'withdrawal'
+        @error_message = invoice_payment
+        return false, @error_message
+      end
+
+    else @wallet_origin == 'bitsplit'
+      open_node_service = OpenNodeService.new
+      invoice_payment = open_node_service.send_withdrawal_request(invoice)
+      data = JSON.parse(response.body)['data']
+      # verificar que el pago se realizó correctamente
+      if !data.has_key? 'id'
+        @error_message = invoice_payment
+        return false, @error_message
+      end
+    end
+  
+    #hacer registro en ledgerizer
     @ledgerizer = LedgerizerService.new
-    return buda(@receiver.wallet) if @wallet_origin == 'buda'
-    return bitsplit(@receiver.wallet) if @wallet_origin == 'bitsplit'
-  end
 
-  private
+    #si el que envía lo hace desde una wallet distinta a bitsplit, registrar depósio
+    if @wallet_origin != 'bitsplit'
+      @ledgerizer.deposit(@sender, @amount)
+    end
 
-  def buda(receiver_wallet)
-    return buda_buda if receiver_wallet == 'buda'
-    return buda_bitsplit if receiver_wallet == 'bitsplit'
-  end
-
-  def bitsplit(receiver_wallet)
-    return bitsplit_buda if receiver_wallet == 'buda'
-    return bitsplit_bitsplit if receiver_wallet == 'bitsplit'
-  end
-
-  def bitsplit_buda
-    # generate ln in buda and pay it with opennode
-    api_key, api_secret = @receiver.buda_keys
-    buda_service = BudaUserService.new(api_key: api_key, api_secret: api_secret)
-    open_node_service = OpenNodeService.new
-
-    # get ln code from buda
-    response = buda_service.generate_invoice(@amount)
-    ln_code = JSON.parse(response.body)['invoice']['encoded_payment_request']
-    # pass ln_code to opennode to execute payment
-    open_node_service.send_withdrawal_request(ln_code)
-
+    # registrar la transferencia
     @ledgerizer.transfer(@sender, @receiver, @amount)
-    @ledgerizer.withdrawal(@receiver, @amount)
-  end
 
-  def buda_bitsplit
-    # generate charge in opennode and pay it with buda
-    api_key, api_secret = @sender.buda_keys
-    buda_service = BudaUserService.new(api_key: api_key, api_secret: api_secret)
-    open_node_service = OpenNodeService.new
+    #si el que recibe lo hace desde una wallet distinta a bitsplit, registrar retiro
+    if @receiver.wallet != 'bitsplit'
+      @ledgerizer.withdrawal(@receiver, @amount)
+    end
 
-    # get ln code from opennode
-    response = open_node_service.send_charge_request(@amount, 'BTC')
-    ln_code = JSON.parse(response.body)['data']['lightning_invoice']['payreq']
-    # pass ln_code to buda to execute payment
-    simulate = ENV.fetch('INVOICE_PAYMENT_SIMULATION')
-    buda_service.pay_invoice(@amount, ln_code, simulate)
-
-    @ledgerizer.deposit(@sender, @amount)
-    @ledgerizer.transfer(@sender, @receiver, @amount)
-  end
-
-  def buda_buda
-    payments_service = PaymentsService.new(sender: @sender, receiver: @receiver)
-    _success, @error_message, _new_payment = payments_service.create_payment(@amount)
-
-    @ledgerizer.deposit(@sender, @amount)
-    @ledgerizer.transfer(@sender, @receiver, @amount)
-    @ledgerizer.withdrawal(@receiver, @amount)
-  end
-
-  def bitsplit_bitsplit
-    @ledgerizer.transfer(@sender, @receiver, @amount)
+    return true, @error_message
   end
 end
