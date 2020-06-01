@@ -23,6 +23,7 @@ Rails.application.routes.draw do
       resource :charges, only: [:create]
       resource :withdrawals, only: [:create]
       resource :transfers, only: [:create]
+      resource :balances, only: [:show]
     end
 
   end
