@@ -27,7 +27,6 @@ const router = new Router({
     { path: '/sign-up', component: SignUp, beforeEnter: checkNoAuth },
     { path: '/onboarding', component: OnBoarding, beforeEnter: checkAuth },
     { path: '/home', component: Home, beforeEnter: checkAuth },
-    { path: '/buda', component: BudaIndex, beforeEnter: checkAuth },
     {
       path: '/profile/',
       component: Profile,
