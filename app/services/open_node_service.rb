@@ -1,10 +1,12 @@
-class OpenNodeService < PowerTypes::Service.new(charges_api_key: nil, withdrawals_api_key: nil)
+class OpenNodeService < PowerTypes::Service.new
   # Service code goes here
 
   def send_charge_request(amount, currency)
     url = url('/v1/charges')
     headers = headers(@charges_api_key)
-    body = { amount: amount, currency: currency }.to_json
+    # 100,000,000 satoshis = 1 btc
+    amount_satoshis = (amount * 100_000_000).to_i
+    body = { amount: amount_satoshis, currency: currency }.to_json
     post_request(url, body, headers)
   end
 
@@ -26,6 +28,11 @@ class OpenNodeService < PowerTypes::Service.new(charges_api_key: nil, withdrawal
   end
 
   private
+
+  def initialize
+    @charges_api_key =  ENV.fetch('OPENNODE_CHARGES_KEY')
+    @withdrawals_api_key = ENV.fetch('OPENNODE_WITHDRAWALS_KEY')
+  end
 
   def headers(api_key)
     {

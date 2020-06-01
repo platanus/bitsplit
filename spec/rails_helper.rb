@@ -48,6 +48,12 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
 
   config.include FactoryBot::Syntax::Methods
+
+  config.before do
+    allow_any_instance_of(Ledgerizer::Definition::Config).to receive(
+      :running_inside_transactional_fixtures
+    ).and_return(true)
+  end
 end
 
 Shoulda::Matchers.configure do |config|

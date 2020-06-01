@@ -49,7 +49,9 @@
         type="button"
         class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
       >
-        <router-link :to="signInRoute">Iniciar sesión</router-link>
+        <router-link :to="signInRoute">
+          Iniciar sesión
+        </router-link>
       </button>
       <button
         type="button"

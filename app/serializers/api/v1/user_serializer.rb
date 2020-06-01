@@ -7,7 +7,8 @@ class Api::V1::UserSerializer < ActiveModel::Serializer
     :id,
     :email,
     :api_key,
-    :picture_url
+    :picture_url,
+    :wallet
   )
 
   def api_key

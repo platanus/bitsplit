@@ -13,7 +13,7 @@ const loginApi = payload =>
     },
     {
       headers: { 'Content-Type': 'application/json' },
-    },
+    }
   );
 
 const logoutApi = () => authedAxios.delete('/api/v1/sessions');
@@ -28,7 +28,7 @@ const signUpApi = payload =>
     },
     {
       headers: { 'Content-Type': 'application/json' },
-    },
+    }
   );
 const budaSyncApi = payload =>
   authedAxios.patch('/api/v1/users/', {
@@ -72,4 +72,3 @@ export {
   splitwiseUrlConnectionApi,
   getDebtsApi,
 };
-

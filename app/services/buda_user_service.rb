@@ -14,7 +14,11 @@ class BudaUserService < PowerTypes::Service.new(api_key: nil, api_secret: nil)
     path = '/api/v2/reserves/ln-btc/withdrawals'
     url = 'https://www.buda.com/api/v2/reserves/ln-btc/withdrawals'
     request_type = 'POST'
-    body = { amount: bitcoins_amount, withdrawal_data: { payment_request: invoice_code }, simulate: simulate }.to_json
+    body = { amount: bitcoins_amount, withdrawal_data: { payment_request: invoice_code } }
+    # not included directly in body because if it is included, even being false, then simulated
+    # is considered true by the api
+    body[:simulate] = simulate if simulate == true
+    body = body.to_json
     nonce = generate_nonce
     headers = generate_headers(@api_key, @api_secret, nonce, request_type, path, body)
     post_request(url, body, headers)

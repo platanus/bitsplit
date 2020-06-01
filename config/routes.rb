@@ -22,6 +22,8 @@ Rails.application.routes.draw do
     api_version(module: 'Api::V2', path: { value: 'v2' }, defaults: { format: 'json' }) do
       resource :charges, only: [:create]
       resource :withdrawals, only: [:create]
+      resource :transfers, only: [:create]
+      resource :balances, only: [:show]
     end
 
   end
