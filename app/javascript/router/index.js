@@ -45,33 +45,6 @@ const router = new Router({
           component: SplitwiseLink,
         },
         {
-          path: 'wallet',
-          component: ProfileOpenNode,
-        },
-        {
-          path: 'settings',
-          component: ProfileSettings,
-        },
-      ],
-    },
-    {
-      path: '/profile/',
-      component: Profile,
-      beforeEnter: checkAuth,
-      children: [
-        {
-          path: '',
-          component: ProfileHome,
-        },
-        {
-          path: 'buda',
-          component: BudaIndex,
-        },
-        {
-          path: 'splitwise',
-          component: SplitwiseLink,
-        },
-        {
           path: 'opennode',
           component: ProfileOpenNode,
         },
