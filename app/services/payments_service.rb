@@ -1,19 +1,19 @@
 class PaymentsService < PowerTypes::Service.new(:sender, :receiver)
   @error_message = 'error'
 
-  def create_payment(params)
+  def create_payment(amount)
     # returns success, error, invoice
     return false, @error_message, nil unless check_users(@sender, @receiver)
 
     sender_api_key, sender_api_secret = @sender.buda_keys
     receiver_api_key, receiver_api_secret = @receiver.buda_keys
-    invoice = receiver_invoice(receiver_api_key, receiver_api_secret, params[:payment_amount])
+    invoice = receiver_invoice(receiver_api_key, receiver_api_secret, amount)
 
     return false, @error_message, nil unless check_invoice(invoice)
 
     invoice_id, invoice_code = invoice_id_and_code(invoice)
-    new_payment = create_new_payment(@sender, @receiver, params[:payment_amount], invoice_id)
-    invoice_payment = sender_payment(sender_api_key, sender_api_secret, params[:payment_amount], invoice_code)
+    new_payment = create_new_payment(@sender, @receiver, amount, invoice_id)
+    invoice_payment = sender_payment(sender_api_key, sender_api_secret, amount, invoice_code)
 
     return false, @error_message, nil unless check_invoice_payment(invoice_payment)
 

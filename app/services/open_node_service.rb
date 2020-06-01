@@ -4,7 +4,7 @@ class OpenNodeService < PowerTypes::Service.new
   def send_charge_request(amount, currency)
     url = url('/v1/charges')
     headers = headers(@charges_api_key)
-    # 1 satoshis = 100,000,000 btc
+    # 100,000,000 satoshis = 1 btc
     amount_satoshis = (amount * 100_000_000).to_i
     body = { amount: amount_satoshis, currency: currency }.to_json
     post_request(url, body, headers)

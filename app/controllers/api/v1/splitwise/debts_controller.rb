@@ -10,12 +10,10 @@ class Api::V1::Splitwise::DebtsController < ApplicationController
   end
 
   def create
-    respond_with({ error: @error_message }, status: :unprocessable_entity)
+    success, @error_message, _new_payment = generate_payment_service.create_payment(params[:amount_btc])
+    head(:unprocessable_entity) && return unless success
 
-    success, @error_message, _new_payment = payments_service.create_payment(create_params)
-    render('error') && return unless success
-
-    response = splitwise_service.payoff_debt(create_params)
+    response = generate_splitwise_service.payoff_debt(params[:amount_clp], params[:group_id], params[:to_user_id])
     if response.code == '200'
       head(:created)
     else
@@ -25,15 +23,11 @@ class Api::V1::Splitwise::DebtsController < ApplicationController
 
   private
 
-  def create_params
-    params.permit(:group_id, :to_user_id, :amount)
-  end
-
   def generate_splitwise_service
     @splitwise_service ||= SplitwiseService.new(user: current_user)
   end
 
-  def payment_service
-    @payments_service ||= PaymentsService.new(sender: current_user, receiver: User.find_by(splitwise_user_id: params[:to_user_id]))
+  def generate_payment_service
+    @payments_service = PaymentsService.new(sender: current_user, receiver: User.find_by(splitwise_user_id: params[:to_user_id]))
   end
 end
