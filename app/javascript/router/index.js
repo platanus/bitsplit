@@ -55,33 +55,6 @@ const router = new Router({
       ],
     },
     {
-      path: '/profile/',
-      component: Profile,
-      beforeEnter: checkAuth,
-      children: [
-        {
-          path: '',
-          component: ProfileHome,
-        },
-        {
-          path: 'buda',
-          component: BudaIndex,
-        },
-        {
-          path: 'splitwise',
-          component: SplitwiseLink,
-        },
-        {
-          path: 'opennode',
-          component: ProfileOpenNode,
-        },
-        {
-          path: 'settings',
-          component: ProfileSettings,
-        },
-      ],
-    },
-    {
       path: '/payment',
       component: PaymentIndex,
       beforeEnter: checkAuth && checkBudaAuth,
