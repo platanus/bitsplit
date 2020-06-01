@@ -3,6 +3,7 @@ HOST: http://localhost:5000/api/
 
 # Bitsplit
 
+
 ## Sessions [/v1/sessions]
 
 ### Create new session [POST]
@@ -473,7 +474,7 @@ The `password` field is only required if the `api_key` or `api_secret` fields ar
 + Response 200
 
 
-## OpenNode Charge [/charges]
+## OpenNode Charge [/v1/charges]
 ### Create OpenNode Charge [POST]
 
 + Request (application/json)
@@ -577,3 +578,52 @@ The `password` field is only required if the `api_key` or `api_secret` fields ar
 + Response 200 (application/json)
 
 + Response 400 (application/json)
+
+## Balances V2 [/v2/balances]
+### Get balance [GET]
+
+
+
++ Request (application/json)
+
+    + Headers
+
+            X-User-Email: example@example.com
+            X-User-Token: smnozAAbYnEX2xVRfS5R
+
+
+
++ Response 200 (application/json)
+    
+    >>`amount`: Cantidad total asociada a la cuenta
+    >`available_amount`: Cantidad total asociada a la cuenta
+    >`frozen_amount`: Cantidad retenida en órdenes pendientes
+    >`pending_withdraw_amount`: Cantidad retenida en proceso de retiro
+
+    + body
+
+            { 
+                "data": {
+                    "balance": {
+                        "buda": {
+                            "CLP": {
+                                "amount": "0.0",
+                                "available_amount": "0.0",
+                                "frozen_amount": "0.0",
+                                "pending_withdraw_amount": "0.0"
+                            },
+                            "BTC": {
+                                "amount": "0.0",
+                                "available_amount": "0.0",
+                                "frozen_amount": "0.0",
+                                "pending_withdraw_amount": "0.0"
+                            }
+                        },
+                        "bitsplit": {
+                            "BTC": {
+                                "amount": "0.001"
+                            }
+                        }
+                    }
+                }
+            }
