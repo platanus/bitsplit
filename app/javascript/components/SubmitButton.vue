@@ -4,15 +4,15 @@
     class="btn w-full ext-black font-bold p-2 rounded focus:outline-none"
     :class="[
       width === 'full' ? 'w-full' : 'w-normal',
-      loading === false
+      !loading
         ? color === 'secondary'
           ? 'bg-indigo-500 hover:bg-indigo-700'
           : ''
         : color === 'secondary'
-        ? 'bg-indigo-200'
-        : '',
+        ? 'bg-indigo-200 cursor-not-allowed'
+        : 'cursor-not-allowed',
     ]"
-    :disabled="loading === false ? false : true"
+    :disabled="loading"
   >
     <slot />
   </button>

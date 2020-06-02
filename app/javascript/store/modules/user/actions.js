@@ -48,6 +48,11 @@ import {
   getDebtsApi,
 } from '../../../api/user.js';
 
+import { chargeTestApi, widthdrawalTestApi } from '../../../api/wallet';
+
+const chargeOpenNode = 'chargeOpenNode';
+const withdrawalOpenNode = 'withdrawalOpenNode';
+
 const commitAndSetUser = ({ commit, mutation, user }) => {
   if (user) {
     localStorage.setItem('currentUser', JSON.stringify(user));
@@ -424,6 +429,54 @@ export default {
           dispatch('alert/errorAlert', 'Error desconocido.', { root: true });
           throw new Error('Error desconocido');
         }
+      });
+  },
+  [chargeOpenNode]({ dispatch }, { amount, currency }) {
+    if (!amount || !currency) {
+      return Promise.reject('Error');
+    }
+
+    return chargeTestApi({ amount, currency })
+      .then(res => {
+        const { data } = res.data;
+        dispatch('alert/successAlert', 'Solicitud recibida con exito', {
+          root: true,
+        });
+
+        return data;
+      })
+      .catch(err => {
+        // if (err.response) {
+        dispatch('alert/errorAlert', 'Algo salio mal', {
+          root: true,
+        });
+
+        throw Error(err);
+        // }
+      });
+  },
+  [withdrawalOpenNode]({ dispatch }, { invoice }) {
+    if (!invoice) {
+      return Promise.reject('Error');
+    }
+
+    return widthdrawalTestApi({ invoice })
+      .then(res => {
+        const { data } = res.data;
+        dispatch('alert/successAlert', 'Solicitud recibida con exito', {
+          root: true,
+        });
+
+        return data;
+      })
+      .catch(err => {
+        // if (err.response) {
+        dispatch('alert/errorAlert', 'Algo salio mal', {
+          root: true,
+        });
+
+        throw Error(err);
+        // }
       });
   },
 };

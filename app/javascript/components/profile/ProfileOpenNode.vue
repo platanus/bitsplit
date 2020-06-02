@@ -23,7 +23,7 @@
             :currency-options="currencyOptions"
           />
         </div>
-        <submitButton :loading="false">
+        <submitButton :loading="chargeAllowed">
           Cargar
         </submitButton>
       </form>
@@ -40,7 +40,7 @@
           field-name="invoice"
           v-model="invoice"
         />
-        <submitButton :loading="false">
+        <submitButton :loading="withdrawalAllowed">
           Retirar
         </submitButton>
       </form>
@@ -48,6 +48,8 @@
   </div>
 </template>
 <script>
+import { mapActions } from 'vuex';
+
 import TextField from '../TextField';
 import textInput from '../Input';
 import SelectInput from '../Select';
@@ -69,16 +71,25 @@ export default {
       invoice: '',
     };
   },
+  computed: {
+    chargeAllowed() {
+      return !(this.amount && this.currency);
+    },
+    withdrawalAllowed() {
+      return !this.invoice;
+    },
+  },
   methods: {
+    ...mapActions('user', ['withdrawalOpenNode']),
     handleChargeSubmit() {
       console.log('charge');
       const { amount, currency } = this;
       console.log(amount, currency);
     },
     handleWithdrawalSubmit() {
-      console.log('Withdrawal');
       const { invoice } = this;
-      console.log(invoice);
+
+      return this.withdrawalOpenNode({ invoice });
     },
   },
 };
