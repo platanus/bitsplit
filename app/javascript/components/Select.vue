@@ -1,29 +1,34 @@
 <template>
-  <input
+  <select
     class="txt-input"
     :class="[
       classmod,
       'appearance-none border rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline',
     ]"
     :id="fieldId"
-    :type="fieldType"
-    :placeholder="fieldPlaceholder"
     :name="fieldName"
-    :value="value"
-    min="0"
-    step="0.000001"
-    @input="$emit('update', $event.target.value)"
-  />
+    @change="$emit('update', $event.target.value)"
+  >
+    <option disabled value="">
+      Seleccione una opción
+    </option>
+    <option
+      v-for="currencyCode in currencyOptions"
+      :key="currencyCode"
+      :value="currencyCode"
+    >
+      {{ currencyCode }}
+    </option>
+  </select>
 </template>
 <script>
 export default {
-  name: 'InputForm',
+  name: 'SelectInput',
   props: {
-    value: String,
-    fieldId: String,
-    fieldType: String,
-    fieldPlaceholder: String,
     fieldName: String,
+    fieldId: String,
+    value: String,
+    currencyOptions: Array,
     classmod: {
       type: String,
       default: '',
