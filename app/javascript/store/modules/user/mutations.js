@@ -11,13 +11,17 @@ import {
   BUDA_SIGNIN_FAIL,
   BUDA_SIGNIN_SUCCESS,
   BUDA_SIGNOUT,
-  // GET_USER_BALANCE_ATTEMPT,
-  // GET_USER_BALANCE_FAIL,
+  GET_USER_BALANCE_ATTEMPT,
+  GET_USER_BALANCE_FAIL,
   GET_USER_BALANCE_SUCCESS,
   SEND_PAYMENT_ATTEMPT,
   SEND_PAYMENT_FAIL,
   SEND_PAYMENT_SUCCESS,
+  GET_PAYMENTS_ATTEMPT,
+  GET_PAYMENTS_FAIL,
   GET_PAYMENTS_SUCCESS,
+  GET_DEBTS_ATTEMPT,
+  GET_DEBTS_FAIL,
   GET_DEBTS_SUCCESS,
 } from '../../mutation-types';
 
@@ -60,16 +64,17 @@ export default {
   [BUDA_SIGNOUT](state, currentUser) {
     state.currentUser = currentUser;
   },
-  // [GET_USER_BALANCE_ATTEMPT](state) {
-  //   // TODO
-  // },
+  [GET_USER_BALANCE_ATTEMPT](state) {
+    state.getBalanceLoading = true;
+  },
   [GET_USER_BALANCE_SUCCESS](state, balance) {
+    state.getBalanceLoading = false;
     state.userBalanceCLP = parseFloat(balance.CLP.available_amount);
     state.userBalanceBTC = parseFloat(balance.BTC.available_amount);
   },
-  // [GET_USER_BALANCE_FAIL](state) {
-  //   // TODO
-  // },
+  [GET_USER_BALANCE_FAIL](state) {
+    state.getBalanceLoading = false;
+  },
   [SEND_PAYMENT_ATTEMPT](state) {
     state.paymentLoading = true;
   },
@@ -84,10 +89,24 @@ export default {
   [SEND_PAYMENT_FAIL](state) {
     state.paymentLoading = false;
   },
+  [GET_PAYMENTS_ATTEMPT](state) {
+    state.getPaymentsLoading = true;
+  },
+  [GET_PAYMENTS_FAIL](state) {
+    state.getPaymentsLoading = false;
+  },
   [GET_PAYMENTS_SUCCESS](state, payments) {
+    state.getPaymentsLoading = false;
     state.paymentsHistory = payments;
   },
+  [GET_DEBTS_ATTEMPT](state) {
+    state.getDebtsLoading = true;
+  },
+  [GET_DEBTS_FAIL](state) {
+    state.getDebtsLoading = false;
+  },
   [GET_DEBTS_SUCCESS](state, debts) {
+    state.getDebtsLoading = false;
     state.userDebts = debts;
   },
 };

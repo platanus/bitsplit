@@ -26,11 +26,17 @@ import {
   BUDA_SIGNIN_FAIL,
   BUDA_SIGNIN_SUCCESS,
   BUDA_SIGNOUT,
+  GET_USER_BALANCE_ATTEMPT,
+  GET_USER_BALANCE_FAIL,
   GET_USER_BALANCE_SUCCESS,
   SEND_PAYMENT_ATTEMPT,
   SEND_PAYMENT_FAIL,
   SEND_PAYMENT_SUCCESS,
+  GET_PAYMENTS_ATTEMPT,
+  GET_PAYMENTS_FAIL,
   GET_PAYMENTS_SUCCESS,
+  GET_DEBTS_ATTEMPT,
+  GET_DEBTS_FAIL,
   GET_DEBTS_SUCCESS,
 } from '../../mutation-types';
 
@@ -316,6 +322,8 @@ export default {
       });
   },
   [getUserBalance]({ commit, dispatch }, payload) {
+    commit(GET_USER_BALANCE_ATTEMPT);
+
     return getUserBalanceApi(payload)
       .then(res => {
         commit(GET_USER_BALANCE_SUCCESS, res.data.data.balance);
@@ -323,6 +331,7 @@ export default {
         return;
       })
       .catch(err => {
+        commit(GET_USER_BALANCE_FAIL);
         if (err.response) {
           dispatch(
             'alert/errorAlert',
@@ -370,6 +379,8 @@ export default {
       });
   },
   [getPayments]({ commit, dispatch }, payload) {
+    commit(GET_PAYMENTS_ATTEMPT);
+
     return getPaymentsApi(payload)
       .then(res => {
         commit(GET_PAYMENTS_SUCCESS, res.data.data);
@@ -377,6 +388,7 @@ export default {
         return;
       })
       .catch(err => {
+        commit(GET_PAYMENTS_FAIL);
         if (err.response) {
           dispatch(
             'alert/errorAlert',
@@ -406,6 +418,8 @@ export default {
       });
   },
   [getDebts]({ commit, dispatch }, payload) {
+    commit(GET_DEBTS_ATTEMPT);
+
     return getDebtsApi(payload)
       .then(res => {
         commit(GET_DEBTS_SUCCESS, res.data.data.attributes);
@@ -413,6 +427,7 @@ export default {
         return;
       })
       .catch(err => {
+        commit(GET_DEBTS_FAIL);
         if (err.response) {
           dispatch(
             'alert/errorAlert',
