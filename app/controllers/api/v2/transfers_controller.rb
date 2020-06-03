@@ -8,6 +8,7 @@ class Api::V2::TransfersController < Api::V2::BaseController
     success = money_service.payment
 
     if success
+      NotificationsService.new(current_user).payment_notifications("info pago")
       head :ok
     else
       render json: { error: @error_message }, status: 400
