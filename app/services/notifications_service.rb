@@ -8,7 +8,6 @@ class NotificationsService < PowerTypes::Service.new
     data = payment_data(sender, amount)
     @firebase.payment_notification(data)
     @push_notifications.payment_notification
-    return
   end
 
   private
