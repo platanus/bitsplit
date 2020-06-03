@@ -475,7 +475,7 @@ The `password` field is only required if the `api_key` or `api_secret` fields ar
 + Response 200
 
 
-## OpenNode Charge [/v2/charges]
+## OpenNode Charge [/v1/charges]
 ### Create OpenNode Charge [POST]
 
 + Request (application/json)
@@ -626,5 +626,77 @@ The `password` field is only required if the `api_key` or `api_secret` fields ar
                             }
                         }
                     }
+                }
+            }
+            
+## Transactions V2 [/v2/transactions]
+### Get transactions [GET]
+
+
++ Request (application/json)
+
+    + Headers
+
+            X-User-Email: example@example.com
+            X-User-Token: smnozAAbYnEX2xVRfS5R
+
+
+
++ Response 200 (application/json)
+    > * Si el usuario no tiene su cuenta asociada con Splitwise su nombre, apellido y foto se retornan vacíos.
+    > * Si la transacción es de tipo Deposit o Withdrawal el sender y receiver es la misma persona
+    
+    + body
+
+            {
+                "data": {
+                    "transactions": [
+                        {
+                            "id": 21,
+                            "type": "Transfer",
+                            "attributes": {
+                                "created_at": "2020-06-03T00:18:19.620Z",
+                                "amount_btc": 0.001555,
+                                "amount_clp": 11641.4380537,
+                                "sender": {
+                                    "id": 1,
+                                    "email": "example@example.com",
+                                    "first_name": "Example",
+                                    "last_name": "Example",
+                                    "picture": "https://splitwise.s3.amazonaws.com/uploads/user/avatar/31015523/small_503df34f-b77d-447c-b259-c62e7c216097.jpeg"
+                                },
+                                "receiver": {
+                                    "id": 3,
+                                    "email": "example@example.com",
+                                    "first_name": "",
+                                    "last_name": "",
+                                    "picture": ""
+                                }
+                            }
+                        },
+                        {
+                            "id": 18,
+                            "type": "Deposit",
+                            "attributes": {
+                                "created_at": "2020-06-02T22:51:56.966Z",
+                                "amount_btc": 0.00155577,
+                                "amount_clp": 11647.2026243118,
+                                "sender": {
+                                    "id": 1,
+                                    "email": "example@example.com",
+                                    "first_name": "Example",
+                                    "last_name": "Example",
+                                    "picture": "https://splitwise.s3.amazonaws.com/uploads/user/avatar/31015523/small_503df34f-b77d-447c-b259-c62e7c216097.jpeg"
+                                },
+                                "receiver": {
+                                    "id": 1,
+                                    "email": "example@example.com",
+                                    "first_name": "Example",
+                                    "last_name": "Example",
+                                    "picture": "https://splitwise.s3.amazonaws.com/uploads/user/avatar/31015523/small_503df34f-b77d-447c-b259-c62e7c216097.jpeg"
+                                }
+                            }
+                        }
+                    ]
                 }
             }
