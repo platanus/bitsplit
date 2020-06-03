@@ -8,7 +8,8 @@ class Api::V2::BalancesController < ApplicationController
         render('error') && return
       end
     end
+    balance_service = BalanceService.new
     @balance_buda_clp, @balance_buda_btc, @buda_btc_clp,
-    @balance_bitsplit_btc, @balance_bitsplit_btc_clp = helpers.generate_answer(buda_user)
+    @balance_bitsplit_btc, @balance_bitsplit_btc_clp = balance_service.get_buda_and_bitsplit_balances(current_user, buda_user)
   end
 end
