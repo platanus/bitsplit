@@ -1,5 +1,4 @@
 module Api::V2::BalancesHelper
-
   def generate_answer(buda_user)
     clp_equivalence_btc = ConvertBtcToClp.for(amount: 1).to_f
     buda_answer_clp = buda_user&.balance('clp')
@@ -9,16 +8,16 @@ module Api::V2::BalancesHelper
     buda_btc_clp = balance_buda_btc_to_clp(balance_buda_btc, clp_equivalence_btc)
     balance_bitsplit_btc = bitsplit_balance(1)
     balance_bitsplit_btc_clp = bitsplit_balance(clp_equivalence_btc)
-    [balance_buda_clp, balance_buda_btc, buda_btc_clp, 
-    balance_bitsplit_btc, balance_bitsplit_btc_clp]
+    [balance_buda_clp, balance_buda_btc, buda_btc_clp,
+     balance_bitsplit_btc, balance_bitsplit_btc_clp]
   end
 
   def buda_balance(balance_curr)
     {
-      amount: balance_curr&['balance']&['amount'][0] || "0.0",
-      available_amount: balance_curr&['balance']&['available_amount'][0] || "0.0",
-      frozen_amount: balance_curr&['balance']&['frozen_amount'][0] || "0.0",
-      pending_withdraw_amount: balance_curr&['balance']&['pending_withdraw_amount'][0] || "0.0"
+      amount: balance_curr & ['balance'] & ['amount'][0] || '0.0',
+      available_amount: balance_curr & ['balance'] & ['available_amount'][0] || '0.0',
+      frozen_amount: balance_curr & ['balance'] & ['frozen_amount'][0] || '0.0',
+      pending_withdraw_amount: balance_curr & ['balance'] & ['pending_withdraw_amount'][0] || '0.0'
     }
   end
 
@@ -37,5 +36,4 @@ module Api::V2::BalancesHelper
       'amount' => amount * factor
     }
   end
-  
 end
