@@ -422,7 +422,11 @@ export default {
 
     return getDebtsApi(payload)
       .then(res => {
-        commit(GET_DEBTS_SUCCESS, res.data.data.attributes);
+        commit(
+          GET_DEBTS_SUCCESS,
+          res.data.data.attributes.user_to_friends,
+          res.data.data.attributes.friends_to_user
+        );
 
         return;
       })
