@@ -7,7 +7,8 @@ class Api::V2::BalancesController < ApplicationController
       @error_message = balance_btc
       render('error') && return
     end
-    @balance_buda_clp, @balance_buda_btc, @balance_bitsplit_btc = helpers.generate_answer(buda_user)
+    @balance_buda_clp, @balance_buda_btc, @buda_btc_clp, 
+    @balance_bitsplit_btc, @balance_bitsplit_btc_clp = helpers.generate_answer(buda_user)
   end
     
 end
