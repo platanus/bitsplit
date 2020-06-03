@@ -1,7 +1,9 @@
 module Api::V2::TransactionsHelper
   def generate_answer(user_friends)
     clp_equivalence_btc = ConvertBtcToClp.for(amount: 1).to_f
-    transactions = current_user.wallet_account.ledger_lines
+    transactions = current_user.wallet_account&.ledger_lines
+    return [] if transactions.nil?
+
     transactions_list = []
     transactions.each do |line|
       transaction = transaction_info(line, user_friends, clp_equivalence_btc)
