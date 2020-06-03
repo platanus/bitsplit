@@ -8,9 +8,9 @@ import {
   getQuotation,
   getUserBalance,
   sendPayment,
-  getPayments,
   splitwiseUrlConnection,
   getDebts,
+  getUserPaymentHistory,
 } from '../../action-types';
 
 import {
@@ -30,7 +30,6 @@ import {
   SEND_PAYMENT_ATTEMPT,
   SEND_PAYMENT_FAIL,
   SEND_PAYMENT_SUCCESS,
-  GET_PAYMENTS_SUCCESS,
   GET_DEBTS_SUCCESS,
 } from '../../mutation-types';
 
@@ -43,7 +42,6 @@ import {
   getQuotationApi,
   getUserBalanceApi,
   sendPaymentApi,
-  getPaymentsApi,
   splitwiseUrlConnectionApi,
   getDebtsApi,
 } from '../../../api/user.js';
@@ -369,27 +367,6 @@ export default {
         }
       });
   },
-  [getPayments]({ commit, dispatch }, payload) {
-    return getPaymentsApi(payload)
-      .then(res => {
-        commit(GET_PAYMENTS_SUCCESS, res.data.data);
-
-        return;
-      })
-      .catch(err => {
-        if (err.response) {
-          dispatch(
-            'alert/errorAlert',
-            'Error obteniendo el historial de transacciones.',
-            { root: true }
-          );
-          throw new Error('Error obteniendo el historial de transacciones.');
-        } else {
-          dispatch('alert/errorAlert', 'Error desconocido.', { root: true });
-          throw new Error('Error desconocido');
-        }
-      });
-  },
   [splitwiseUrlConnection]({ dispatch }, payload) {
     return splitwiseUrlConnectionApi(payload)
       .then(res => res.data.data.attributes)
@@ -426,4 +403,5 @@ export default {
         }
       });
   },
+  [getUserPaymentHistory]() {},
 };

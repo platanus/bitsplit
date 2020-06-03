@@ -23,7 +23,7 @@
           :btc_balance="userBalanceBTC"
           classmod="self-center"
         />
-        <div class="text-center px-4 py-2 ">
+        <div class="text-center px-4 py-2">
           <LinkButton
             v-if="budaSignedIn"
             classmod="bg-blue-500 hover:bg-blue-700 my-3 md:my-0"
@@ -50,10 +50,7 @@
                 Recibido
               </span>
             </td>
-            <td
-              v-else
-              class="border-grey-light border hover:bg-gray-100 p-3"
-            >
+            <td v-else class="border-grey-light border hover:bg-gray-100 p-3">
               <span
                 class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"
               >
@@ -174,7 +171,8 @@ export default {
     CustomTable,
   },
   methods: {
-    ...mapActions('user', ['getUserBalance', 'getPayments', 'getDebts']),
+    ...mapActions('user', ['getUserBalance', 'getDebts']),
+    ...mapActions('paymentsHistory', ['getPayments']),
 
     getDate(date) {
       const d = new Date(date);
@@ -187,10 +185,11 @@ export default {
       'currentUser',
       'userBalanceCLP',
       'userBalanceBTC',
-      'paymentsHistory',
       'userDebts',
     ]),
     ...mapGetters('user', ['budaSignedIn']),
+
+    ...mapState('paymentsHistory', ['paymentsHistory']),
   },
 };
 </script>

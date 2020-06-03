@@ -52,8 +52,6 @@ const sendPaymentApi = payload =>
     receiver_email: payload.receiver_email,
   });
 
-const getPaymentsApi = () => authedAxios.get('/api/v1/payments/');
-
 const splitwiseUrlConnectionApi = () =>
   authedAxios.post('/api/v1/splitwise/authentications/');
 
@@ -68,7 +66,6 @@ export {
   getQuotationApi,
   getUserBalanceApi,
   sendPaymentApi,
-  getPaymentsApi,
   splitwiseUrlConnectionApi,
   getDebtsApi,
 };

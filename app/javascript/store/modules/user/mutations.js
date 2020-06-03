@@ -17,7 +17,7 @@ import {
   SEND_PAYMENT_ATTEMPT,
   SEND_PAYMENT_FAIL,
   SEND_PAYMENT_SUCCESS,
-  GET_PAYMENTS_SUCCESS,
+  GET_USER_PAYMENTS_SUCCESS,
   GET_DEBTS_SUCCESS,
 } from '../../mutation-types';
 
@@ -84,7 +84,7 @@ export default {
   [SEND_PAYMENT_FAIL](state) {
     state.paymentLoading = false;
   },
-  [GET_PAYMENTS_SUCCESS](state, payments) {
+  [GET_USER_PAYMENTS_SUCCESS](state, payments) {
     state.paymentsHistory = payments;
   },
   [GET_DEBTS_SUCCESS](state, debts) {
