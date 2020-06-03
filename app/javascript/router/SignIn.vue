@@ -1,15 +1,11 @@
 <template>
   <div class="items-center h-screen w-full bg-primary p-12 mt-24">
     <center>
-      <div class="w-full max-w-xs ">
-        <img
-          :src="bitsplitLogo"
-          class="mb-10"
-          align="top"
-        >
+      <div class="w-full max-w-xs">
+        <img :src="bitsplitLogo" class="mb-10" align="top" />
         <form
           @submit.prevent="handleSubmit"
-          class="bg-primary rounded pt-6 pb-8 mb-4 "
+          class="bg-primary rounded pt-6 pb-8 mb-4"
         >
           <div class="mb-4">
             <textInput
@@ -28,10 +24,10 @@
               v-model="password"
             />
           </div>
-          <submitButton :loading="signInLoading">
+          <submitButton :loading="signInLoading" width="full">
             Ingresar
           </submitButton>
-          <p class="txt-field items-center mt-10 underline ">
+          <p class="txt-field items-center mt-10 underline">
             <router-link :to="signUpRoute">
               Crear una cuenta
             </router-link>
