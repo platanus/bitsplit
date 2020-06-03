@@ -25,6 +25,8 @@ import {
   GET_DEBTS_SUCCESS,
 } from '../../mutation-types';
 
+import { filterSingleDebts, filterGroupDebts } from '../../../helpers';
+
 export default {
   [GET_CURRENT_USER](state, currentUser) {
     state.currentUser = currentUser;
@@ -114,8 +116,17 @@ export default {
   [GET_DEBTS_FAIL](state) {
     state.getDebtsLoading = false;
   },
-  [GET_DEBTS_SUCCESS](state, debts) {
+  [GET_DEBTS_SUCCESS](state, user_to_friends, friends_to_user) {
     state.getDebtsLoading = false;
-    state.userDebts = debts;
+    state.userDebts = {
+      user_to_friends: {
+        single_user_to_friends: filterSingleDebts(user_to_friends),
+        group_user_to_friends: filterGroupDebts(user_to_friends),
+      },
+      friends_to_user: {
+        single_friends_to_user: filterSingleDebts(friends_to_user),
+        group_friends_to_user: filterGroupDebts(friends_to_user),
+      },
+    };
   },
 };
