@@ -13,20 +13,19 @@ module Api::V2::BalancesHelper
   end
 
   def buda_balance(balance_curr)
+    balance = balance_curr&.[]('balance')
     {
-      amount: balance_curr & ['balance'] & ['amount'][0] || '0.0',
-      available_amount: balance_curr & ['balance'] & ['available_amount'][0] || '0.0',
-      frozen_amount: balance_curr & ['balance'] & ['frozen_amount'][0] || '0.0',
-      pending_withdraw_amount: balance_curr & ['balance'] & ['pending_withdraw_amount'][0] || '0.0'
+      amount: balance&.[]('amount')&.[](0) || '0.0',
+      available_amount: balance&.[]('available_amount')&.[](0) || '0.0',
+      frozen_amount: balance&.[]('frozen_amount')&.[](0) || '0.0',
+      pending_withdraw_amount: balance&.[]('pending_withdraw_amount')&.[](0) || '0.0'
     }
   end
 
   def balance_buda_btc_to_clp(balance_buda_btc, clp_equivalence_btc)
-    hash = {}
-    balance_buda_btc.keys.each do |key|
-      hash[key] = (clp_equivalence_btc * balance_buda_btc[key].to_f).to_s
-    end
-    hash
+    balance_buda_btc.map do |key, value|
+      [key, (clp_equivalence_btc * value.to_f).to_s]
+    end.to_h
   end
 
   def bitsplit_balance(factor)
