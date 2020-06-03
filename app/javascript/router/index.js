@@ -45,7 +45,7 @@ const router = new Router({
           component: SplitwiseLink,
         },
         {
-          path: 'opennode',
+          path: 'wallet',
           component: ProfileOpenNode,
         },
         {
