@@ -23,9 +23,9 @@ export default {
   },
   computed: {},
   methods: {
-    ...mapActions('user', ['signOut', 'splitwiseUrlConnection']),
+    ...mapActions('user', ['signOut', 'getSplitwiseUrl']),
     openSplitwiseUrl() {
-      this.splitwiseUrlConnection()
+      this.getSplitwiseUrl()
         .then(res => {
           window.open(res.authorize_url);
           this.$router.push('/home');

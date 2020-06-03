@@ -1,21 +1,22 @@
 <template>
   <div class="flex justify-center m-16">
     <div class="w-full max-w-xs">
-      <spinner v-if="paymentLoading" />
+      <spinner v-if="sendPaymentLoading" />
       <form @submit.prevent="handleSubmit">
         <div class="flex flex-col mb-6 mt-6">
-          <label
-            class="block text-gray-700 text-lg"
-            for="account_balance"
-          >Saldo disponible:</label>
-          <label
-            class="mb-4 uppercase font-bold text-xl text-indigo-600"
-            for="account_balance"
-          >${{ userBalanceCLP }} CLP</label>
+          <label class="block text-gray-700 text-lg" for="account_balance"
+            >Saldo disponible:</label
+          >
           <label
             class="mb-4 uppercase font-bold text-xl text-indigo-600"
             for="account_balance"
-          >${{ userBalanceBTC }} BTC</label>
+            >${{ userBalanceCLP }} CLP</label
+          >
+          <label
+            class="mb-4 uppercase font-bold text-xl text-indigo-600"
+            for="account_balance"
+            >${{ userBalanceBTC }} BTC</label
+          >
           <textInput
             field-id="amount"
             field-type="number"
@@ -25,18 +26,19 @@
           />
         </div>
         <div class="flex flex-col mb-6 mt-6">
-          <label
-            class="block mt-4 text-gray-700 text-lg"
-            for="account_balance"
-          >Equivalente a:</label>
-          <label
-            class="mb-8 uppercase font-bold text-xl text-indigo-600"
-            for="account_balance"
-          >{{ quotationCLP }} CLP</label>
+          <label class="block mt-4 text-gray-700 text-lg" for="account_balance"
+            >Equivalente a:</label
+          >
           <label
             class="mb-8 uppercase font-bold text-xl text-indigo-600"
             for="account_balance"
-          >{{ quotationBTC }} BTC</label>
+            >{{ quotationCLP }} CLP</label
+          >
+          <label
+            class="mb-8 uppercase font-bold text-xl text-indigo-600"
+            for="account_balance"
+            >{{ quotationBTC }} BTC</label
+          >
           <textInput
             field-id="receiver_email"
             field-type="text"
@@ -46,10 +48,7 @@
           />
         </div>
         <div>
-          <submitButton
-            width="full"
-            :loading="paymentLoading"
-          >
+          <submitButton width="full" :loading="sendPaymentLoading">
             Pagar
           </submitButton>
         </div>
@@ -100,7 +99,12 @@ export default {
     spinner,
   },
   computed: {
-    ...mapState('user', ['currentUser', 'paymentLoading', 'userBalanceCLP', 'userBalanceBTC']),
+    ...mapState('user', [
+      'currentUser',
+      'sendPaymentLoading',
+      'userBalanceCLP',
+      'userBalanceBTC',
+    ]),
   },
   created() {
     this.getUserBalance();
@@ -143,7 +147,6 @@ export default {
     },
   },
 };
-
 </script>
 
 <style scoped>

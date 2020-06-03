@@ -85,11 +85,11 @@ export default {
     NavBarNotifications,
   },
   methods: {
-    ...mapActions('user', ['signOut', 'splitwiseUrlConnection']),
+    ...mapActions('user', ['signOut', 'getSplitwiseUrl']),
     ...mapActions('notification', ['bindNotifications', 'unbindNotifications']),
     openSplitwiseUrl() {
-      this.splitwiseUrlConnection()
-        .then((res) => {
+      this.getSplitwiseUrl()
+        .then(res => {
           window.open(res.authorize_url);
         })
         .catch(err => {

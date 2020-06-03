@@ -54,10 +54,10 @@ const sendPaymentApi = payload =>
 
 const getPaymentsApi = () => authedAxios.get('/api/v1/payments/');
 
-const splitwiseUrlConnectionApi = () =>
+const getSplitwiseUrlApi = () =>
   authedAxios.post('/api/v1/splitwise/authentications/');
 
-const getDebtsApi = () => authedAxios.get('/api/v1/splitwise/debts/');
+const getSplitwiseDebtsApi = () => authedAxios.get('/api/v1/splitwise/debts/');
 
 export {
   loginApi,
@@ -69,6 +69,6 @@ export {
   getUserBalanceApi,
   sendPaymentApi,
   getPaymentsApi,
-  splitwiseUrlConnectionApi,
-  getDebtsApi,
+  getSplitwiseUrlApi,
+  getSplitwiseDebtsApi,
 };
