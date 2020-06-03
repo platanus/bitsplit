@@ -1,13 +1,7 @@
 class PushNotificationService < PowerTypes::Service.new
-  # para llamarlo desde un controlador:
-  # PushNotificationService.new(user).send_notifications
 
   def send_notification(type, messages)
-    # MAX 100 messages at a time
-    handler = @push_client.send_messages(messages)
-    # Array of all errors returned from the API
-    # puts handler.errors
-    #@push_client.verify_deliveries(handler.receipt_ids)
+    @push_client.send_messages(messages)
   end
 
   def payment_message(token)

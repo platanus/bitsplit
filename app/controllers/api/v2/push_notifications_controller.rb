@@ -1,7 +1,6 @@
 class Api::V2::PushNotificationsController < Api::V2::BaseController
 
   def create
-    #check if entry already exists
     exists = NotificationToken.find_by(:token => params[:token], :user => current_user)
     if exists.nil?
       NotificationToken.create(:token => params[:token], :user => current_user)
