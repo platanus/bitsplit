@@ -10,17 +10,18 @@ export const getQuotation = 'getQuotation';
 export const getUserBalance = 'getUserBalance';
 export const sendPayment = 'sendPayment';
 
-export const changeBudaComp = 'changeBudaComp';
-export const changePaymentComp = 'changePaymentComp';
+export const getPayments = 'getPayments';
 
 export const splitwiseUrlConnection = 'splitwiseUrlConnection';
+
 export const getDebts = 'getDebts';
+
+export const changeBudaComp = 'changeBudaComp';
+export const changePaymentComp = 'changePaymentComp';
 
 export const successAlert = 'successAlert';
 export const errorAlert = 'errorAlert';
 export const clearAlert = 'clearAlert';
-
-export const getPayments = 'getPayments';
 
 export const currentStepOk = 'currentStepOk';
 export const chargeOpenNode = 'chargeOpenNode';
