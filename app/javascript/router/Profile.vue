@@ -19,9 +19,9 @@
             Splitwise
           </router-link>
         </button>
-        <button :class="getTabClass('/opennode')">
-          <router-link to="/profile/opennode">
-            Open Node
+        <button :class="getTabClass('/wallet')">
+          <router-link to="/profile/wallet">
+            wallet
           </router-link>
         </button>
         <button :class="getTabClass('/settings')">

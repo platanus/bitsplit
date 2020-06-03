@@ -4,6 +4,9 @@
       <text-field font-size="full">
         Cargar a Bitsplit
       </text-field>
+      <InputLabel>
+        Elige un monto a cargar y nosotros crearemos un invoice para que pagues.
+      </InputLabel>
       <form
         @submit.prevent="handleChargeSubmit"
         class="flex flex-col md:flex-row"
