@@ -87,18 +87,18 @@ export default {
     state.getBalanceLoading = false;
   },
   [SEND_PAYMENT_ATTEMPT](state) {
-    state.paymentLoading = true;
+    state.sendPaymentLoading = true;
   },
   [SEND_PAYMENT_SUCCESS](state, attributes) {
-    state.paymentLoading = false;
-    state.lastPayment = {
+    state.sendPaymentLoading = false;
+    state.userLastPaymentData = {
       amount: parseFloat(attributes.amount),
       receiver: attributes.receiver_email,
       date: attributes.created_at,
     };
   },
   [SEND_PAYMENT_FAIL](state) {
-    state.paymentLoading = false;
+    state.sendPaymentLoading = false;
   },
   [GET_PAYMENTS_ATTEMPT](state) {
     state.getPaymentsLoading = true;
@@ -108,17 +108,17 @@ export default {
   },
   [GET_PAYMENTS_SUCCESS](state, payments) {
     state.getPaymentsLoading = false;
-    state.paymentsHistory = payments;
+    state.userPaymentsHistory = payments;
   },
   [GET_DEBTS_ATTEMPT](state) {
-    state.getDebtsLoading = true;
+    state.getSplitwiseDebtsLoading = true;
   },
   [GET_DEBTS_FAIL](state) {
-    state.getDebtsLoading = false;
+    state.getSplitwiseDebtsLoading = false;
   },
   [GET_DEBTS_SUCCESS](state, user_to_friends, friends_to_user) {
-    state.getDebtsLoading = false;
-    state.userDebts = {
+    state.getSplitwiseDebtsLoading = false;
+    state.userSplitwiseDebts = {
       user_to_friends: {
         single_user_to_friends: filterSingleDebts(user_to_friends),
         group_user_to_friends: filterGroupDebts(user_to_friends),

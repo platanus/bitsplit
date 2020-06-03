@@ -40,9 +40,9 @@
             <p>Cargando...</p>
           </div>
           <div v-else class="bg-gray-200 rounded-md">
-            <div v-if="paymentsHistory.length">
+            <div v-if="userPaymentsHistory.length">
               <CustomTable
-                :data="paymentsHistory.slice().reverse()"
+                :data="userPaymentsHistory.slice().reverse()"
                 :columns="tableColumns"
               >
                 <template slot-scope="{ row }">
@@ -88,7 +88,7 @@
           </p>
         </div>
         <div>
-          <div v-if="getDebtsLoading">
+          <div v-if="getSplitwiseDebtsLoading">
             <p>Cargando...</p>
           </div>
 
@@ -96,19 +96,24 @@
             <div>
               <div
                 v-if="
-                  userDebts.user_to_friends.single_user_to_friends.length ||
-                  userDebts.user_to_friends.group_user_to_friends.length
+                  userSplitwiseDebts.user_to_friends.single_user_to_friends
+                    .length ||
+                  userSplitwiseDebts.user_to_friends.group_user_to_friends
+                    .length
                 "
               >
                 <div
-                  v-if="userDebts.user_to_friends.single_user_to_friends.length"
+                  v-if="
+                    userSplitwiseDebts.user_to_friends.single_user_to_friends
+                      .length
+                  "
                 >
                   <p class="text-5xl font-bold">
                     Deudas Individuales
                   </p>
                   <CustomTable
                     :data="
-                      userDebts.user_to_friends.single_user_to_friends
+                      userSplitwiseDebts.user_to_friends.single_user_to_friends
                         .slice()
                         .reverse()
                     "
@@ -132,14 +137,17 @@
                   </CustomTable>
                 </div>
                 <div
-                  v-if="userDebts.user_to_friends.group_user_to_friends.length"
+                  v-if="
+                    userSplitwiseDebts.user_to_friends.group_user_to_friends
+                      .length
+                  "
                 >
                   <p class="text-5xl font-bold">
                     Deudas Grupales
                   </p>
                   <div
                     v-for="(group_debt,
-                    index) in userDebts.user_to_friends.group_user_to_friends
+                    index) in userSplitwiseDebts.user_to_friends.group_user_to_friends
                       .slice()
                       .reverse()"
                     :key="index"
@@ -199,7 +207,7 @@ export default {
   },
 
   created() {
-    this.getDebts();
+    this.getSplitwiseDebts();
     if (this.budaSignedIn) {
       this.getUserBalance();
       this.getPayments();
@@ -212,7 +220,11 @@ export default {
     CustomTable,
   },
   methods: {
-    ...mapActions('user', ['getUserBalance', 'getPayments', 'getDebts']),
+    ...mapActions('user', [
+      'getUserBalance',
+      'getPayments',
+      'getSplitwiseDebts',
+    ]),
     getDate(date) {
       const d = new Date(date);
 
@@ -223,9 +235,9 @@ export default {
     ...mapState('user', [
       'currentUser',
       'getPaymentsLoading',
-      'paymentsHistory',
-      'getDebtsLoading',
-      'userDebts',
+      'userPaymentsHistory',
+      'getSplitwiseDebtsLoading',
+      'userSplitwiseDebts',
     ]),
     ...mapGetters('user', ['budaSignedIn']),
   },

@@ -9,8 +9,8 @@ import {
   getUserBalance,
   sendPayment,
   getPayments,
-  splitwiseUrlConnection,
-  getDebts,
+  getSplitwiseUrl,
+  getSplitwiseDebts,
   chargeOpenNode,
   withdrawalOpenNode,
 } from '../../action-types';
@@ -52,8 +52,8 @@ import {
   getUserBalanceApi,
   sendPaymentApi,
   getPaymentsApi,
-  splitwiseUrlConnectionApi,
-  getDebtsApi,
+  getSplitwiseUrlApi,
+  getSplitwiseDebtsApi,
 } from '../../../api/user.js';
 
 import { widthdrawalTestApi, chargeTestApi } from '../../../api/wallet';
@@ -406,8 +406,8 @@ export default {
         }
       });
   },
-  [splitwiseUrlConnection]({ dispatch }, payload) {
-    return splitwiseUrlConnectionApi(payload)
+  [getSplitwiseUrl]({ dispatch }, payload) {
+    return getSplitwiseUrlApi(payload)
       .then(res => res.data.data.attributes)
       .catch(err => {
         if (err.response) {
@@ -421,10 +421,10 @@ export default {
         }
       });
   },
-  [getDebts]({ commit, dispatch }, payload) {
+  [getSplitwiseDebts]({ commit, dispatch }, payload) {
     commit(GET_DEBTS_ATTEMPT);
 
-    return getDebtsApi(payload)
+    return getSplitwiseDebtsApi(payload)
       .then(res => {
         commit(
           GET_DEBTS_SUCCESS,
