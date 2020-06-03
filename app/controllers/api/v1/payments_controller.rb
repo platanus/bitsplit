@@ -8,8 +8,8 @@ class Api::V1::PaymentsController < Api::V1::BaseController
 
     render('error') && return unless success
 
-    # Use firebase service to send payment notification
-    FirebaseService.new(receiver).payment_notification(new_payment)
+    # Use firebase service to send payment notification deprecated
+    # FirebaseService.new(receiver).payment_notification(new_payment)
 
     respond_with new_payment
   end
