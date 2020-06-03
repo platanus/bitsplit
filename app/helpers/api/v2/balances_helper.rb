@@ -1,9 +1,8 @@
 module Api::V2::BalancesHelper
-
   def generate_answer(buda_user)
     buda_answer_clp = buda_user.balance('clp')
     buda_answer_btc = buda_user.balance('btc')
-    balance_buda_clp = buda_balance(buda_answer_clp )
+    balance_buda_clp = buda_balance(buda_answer_clp)
     balance_buda_btc = buda_balance(buda_answer_btc)
     balance_bitsplit_btc = bitsplit_balance
     [balance_buda_clp, balance_buda_btc, balance_bitsplit_btc]
@@ -25,5 +24,4 @@ module Api::V2::BalancesHelper
       'amount' => amount
     }
   end
-  
 end
