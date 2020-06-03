@@ -1,17 +1,17 @@
 module Api::V2::TransactionsHelper
 
   def generate_answer(user_friends)
+    clp_equivalence_btc = ConvertBtcToClp.for(amount: 1).to_f
     transactions = current_user.wallet_account.ledger_lines
     transactions_list = []
     transactions.each do |line|
-      transaction = transaction_info(line, user_friends)
+      transaction = transaction_info(line, user_friends, clp_equivalence_btc)
       transactions_list.push(transaction)
     end
     transactions_list
   end
 
-  def transaction_info(line, user_friends)
-    amount = ConvertSatoshisToBitcoins.for(satoshis: line.amount_cents.to_f).abs
+  def transaction_info(line, user_friends, clp_equivalence_btc)
     if line.document_type == 'Transfer'
       sender_id = line.document.sender_id
       receiver_id = line.document.receiver_id
@@ -21,15 +21,18 @@ module Api::V2::TransactionsHelper
     end
     sender = get_user_info(line, user_friends, sender_id)
     receiver = get_user_info(line, user_friends, receiver_id)
+    amount_btc = ConvertSatoshisToBitcoins.for(satoshis: line.amount_cents.to_f).abs
+    amount_clp = amount_btc * clp_equivalence_btc
     transaction =
     {
       'id' => line.id,
       'type' => line.document_type,
       'attributes'=> {
-          'created_at' => line.entry_time,
-          'amount' => amount,
-          'sender' => sender,
-          'receiver' => receiver
+        'created_at' => line.entry_time,
+        'amount_btc' => amount_btc,
+        'amount_clp' => amount_clp,
+        'sender' => sender,
+        'receiver' => receiver
       }
     }
   end

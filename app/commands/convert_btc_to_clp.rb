@@ -5,10 +5,9 @@ class ConvertBtcToClp < PowerTypes::Command.new(:amount)
         buda_service = BudaUserService.new
         quotation = buda_service.quotation(market_id, 'ask_given_size', @amount)
         unless quotation.has_key? 'quotation'
-          @error_message = quotation
-          render('error') && return
+          return 0
         end
-        quotation
+        quotation['quotation']['quote_exchanged'][0]
     end
 
 end
