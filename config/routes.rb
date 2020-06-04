@@ -25,6 +25,7 @@ Rails.application.routes.draw do
       resource :transfers, only: [:create]
       resource :balances, only: [:show]
       resource :push_notifications, only: [:create]
+      resource :transactions, only: [:show]
     end
   end
   
