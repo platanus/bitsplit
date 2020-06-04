@@ -35,9 +35,9 @@ import {
   GET_PAYMENTS_ATTEMPT,
   GET_PAYMENTS_FAIL,
   GET_PAYMENTS_SUCCESS,
-  GET_DEBTS_ATTEMPT,
-  GET_DEBTS_FAIL,
-  GET_DEBTS_SUCCESS,
+  GET_SPLIWITSE_DEBTS_ATTEMPT,
+  GET_SPLIWITSE_DEBTS_FAIL,
+  GET_SPLIWITSE_DEBTS_SUCCESS,
 } from '../../mutation-types';
 
 import {
@@ -418,12 +418,12 @@ export default {
       });
   },
   [getSplitwiseDebts]({ commit, dispatch }, payload) {
-    commit(GET_DEBTS_ATTEMPT);
+    commit(GET_SPLIWITSE_DEBTS_ATTEMPT);
 
     return getSplitwiseDebtsApi(payload)
       .then(res => {
         commit(
-          GET_DEBTS_SUCCESS,
+          GET_SPLIWITSE_DEBTS_SUCCESS,
           res.data.data.attributes.user_to_friends,
           res.data.data.attributes.friends_to_user
         );
@@ -431,7 +431,7 @@ export default {
         return;
       })
       .catch(err => {
-        commit(GET_DEBTS_FAIL);
+        commit(GET_SPLIWITSE_DEBTS_FAIL);
         if (err.response) {
           dispatch(
             'alert/errorAlert',
