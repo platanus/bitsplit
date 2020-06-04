@@ -19,8 +19,8 @@
       <div class="lg:pr-5 flex flex-col">
         <UserCard
           :email="currentUser.email"
-          :clp_balance="userBalanceCLP"
-          :btc_balance="userBalanceBTC"
+          :clp_balance="userBudaBalance.CLP"
+          :btc_balance="userBudaBalance.BTC"
           classmod="self-center"
         />
         <div class="text-center px-4 py-2">
@@ -214,7 +214,7 @@ export default {
   created() {
     this.getSplitwiseDebts();
     if (this.budaSignedIn) {
-      this.getUserBalance();
+      this.getUserBudaBalance();
       this.getPayments();
     }
   },
@@ -226,7 +226,7 @@ export default {
   },
   methods: {
     ...mapActions('user', [
-      'getUserBalance',
+      'getUserBudaBalance',
       'getPayments',
       'getSplitwiseDebts',
     ]),
@@ -240,8 +240,7 @@ export default {
     ...mapState('user', [
       'currentUser',
       'getBalanceLoading',
-      'userBalanceCLP',
-      'userBalanceBTC',
+      'userBudaBalance',
       'getPaymentsLoading',
       'userPaymentsHistory',
       'getSplitwiseDebtsLoading',

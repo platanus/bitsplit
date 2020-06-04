@@ -7,7 +7,7 @@ export const budaSignIn = 'budaSignIn';
 export const budaSignOut = 'budaSignOut';
 
 export const getQuotation = 'getQuotation';
-export const getUserBalance = 'getUserBalance';
+export const getUserBudaBalance = 'getUserBudaBalance';
 export const sendPayment = 'sendPayment';
 
 export const getPayments = 'getPayments';

@@ -6,7 +6,7 @@ import {
   budaSignIn,
   budaSignOut,
   getQuotation,
-  getUserBalance,
+  getUserBudaBalance,
   sendPayment,
   getPayments,
   getSplitwiseUrl,
@@ -26,9 +26,9 @@ import {
   BUDA_SIGNIN_FAIL,
   BUDA_SIGNIN_SUCCESS,
   BUDA_SIGNOUT,
-  GET_USER_BALANCE_ATTEMPT,
-  GET_USER_BALANCE_FAIL,
-  GET_USER_BALANCE_SUCCESS,
+  GET_USER_BUDA_BALANCE_ATTEMPT,
+  GET_USER_BUDA_BALANCE_FAIL,
+  GET_USER_BUDA_BALANCE_SUCCESS,
   SEND_PAYMENT_ATTEMPT,
   SEND_PAYMENT_FAIL,
   SEND_PAYMENT_SUCCESS,
@@ -47,7 +47,7 @@ import {
   budaSyncApi,
   getCurrentUserApi,
   getQuotationApi,
-  getUserBalanceApi,
+  getUserBudaBalanceApi,
   sendPaymentApi,
   getPaymentsApi,
   getSplitwiseUrlApi,
@@ -202,7 +202,7 @@ export default {
     return fetchPromise
       .then(() => {
         // Buscamos verificar credenciales Buda
-        const checkPromise = getUserBalanceApi(payload);
+        const checkPromise = getUserBudaBalanceApi(payload);
 
         return checkPromise;
       })
@@ -321,17 +321,17 @@ export default {
         }
       });
   },
-  [getUserBalance]({ commit, dispatch }, payload) {
-    commit(GET_USER_BALANCE_ATTEMPT);
+  [getUserBudaBalance]({ commit, dispatch }, payload) {
+    commit(GET_USER_BUDA_BALANCE_ATTEMPT);
 
-    return getUserBalanceApi(payload)
+    return getUserBudaBalanceApi(payload)
       .then(res => {
-        commit(GET_USER_BALANCE_SUCCESS, res.data.data.balance);
+        commit(GET_USER_BUDA_BALANCE_SUCCESS, res.data.data.balance);
 
         return;
       })
       .catch(err => {
-        commit(GET_USER_BALANCE_FAIL);
+        commit(GET_USER_BUDA_BALANCE_FAIL);
         if (err.response) {
           dispatch(
             'alert/errorAlert',

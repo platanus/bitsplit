@@ -44,7 +44,7 @@ const getQuotationApi = payload =>
     amount: payload.amount,
   });
 
-const getUserBalanceApi = () => authedAxios.get('/api/v1/balances/');
+const getUserBudaBalanceApi = () => authedAxios.get('/api/v1/balances/');
 
 const sendPaymentApi = payload =>
   authedAxios.post('/api/v1/payments/', {
@@ -66,7 +66,7 @@ export {
   budaSyncApi,
   getCurrentUserApi,
   getQuotationApi,
-  getUserBalanceApi,
+  getUserBudaBalanceApi,
   sendPaymentApi,
   getPaymentsApi,
   getSplitwiseUrlApi,
