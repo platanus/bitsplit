@@ -7,7 +7,6 @@ export default {
   budaSignInLoading: false,
   getBalanceLoading: false,
   getPaymentsLoading: false,
-  getSplitwiseDebtsLoading: false,
   sendPaymentLoading: false,
   userBalanceBudaCLP: 0,
   userBalanceBudaBTC: 0,
@@ -16,5 +15,4 @@ export default {
   userBalanceBitsplitBTCCLP: 0,
   userLastPaymentData: null,
   userPaymentsHistory: [],
-  userSplitwiseDebts: [],
 };

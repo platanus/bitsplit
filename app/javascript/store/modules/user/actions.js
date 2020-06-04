@@ -37,9 +37,6 @@ import {
   GET_PAYMENTS_ATTEMPT,
   GET_PAYMENTS_FAIL,
   GET_PAYMENTS_SUCCESS,
-  GET_SPLIWITSE_DEBTS_ATTEMPT,
-  GET_SPLIWITSE_DEBTS_FAIL,
-  GET_SPLIWITSE_DEBTS_SUCCESS,
 } from '../../mutation-types';
 
 import {
@@ -53,7 +50,6 @@ import {
   sendPaymentApi,
   getPaymentsApi,
   getSplitwiseUrlApi,
-  getSplitwiseDebtsApi,
 } from '../../../api/user.js';
 
 import { widthdrawalTestApi, chargeTestApi } from '../../../api/wallet';

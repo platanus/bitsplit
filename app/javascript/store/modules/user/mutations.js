@@ -20,12 +20,7 @@ import {
   GET_PAYMENTS_ATTEMPT,
   GET_PAYMENTS_FAIL,
   GET_PAYMENTS_SUCCESS,
-  GET_SPLIWITSE_DEBTS_ATTEMPT,
-  GET_SPLIWITSE_DEBTS_FAIL,
-  GET_SPLIWITSE_DEBTS_SUCCESS,
 } from '../../mutation-types';
-
-import { filterSingleDebts, filterGroupDebts } from '../../../helpers';
 
 export default {
   [GET_CURRENT_USER](state, currentUser) {
@@ -109,24 +104,5 @@ export default {
   [GET_PAYMENTS_SUCCESS](state, payments) {
     state.getPaymentsLoading = false;
     state.userPaymentsHistory = payments;
-  },
-  [GET_SPLIWITSE_DEBTS_ATTEMPT](state) {
-    state.getSplitwiseDebtsLoading = true;
-  },
-  [GET_SPLIWITSE_DEBTS_FAIL](state) {
-    state.getSplitwiseDebtsLoading = false;
-  },
-  [GET_SPLIWITSE_DEBTS_SUCCESS](state, user_to_friends, friends_to_user) {
-    state.getSplitwiseDebtsLoading = false;
-    state.userSplitwiseDebts = {
-      user_to_friends: {
-        single_user_to_friends: filterSingleDebts(user_to_friends),
-        group_user_to_friends: filterGroupDebts(user_to_friends),
-      },
-      friends_to_user: {
-        single_friends_to_user: filterSingleDebts(friends_to_user),
-        group_friends_to_user: filterGroupDebts(friends_to_user),
-      },
-    };
   },
 };

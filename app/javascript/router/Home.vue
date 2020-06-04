@@ -91,7 +91,6 @@
           <div v-if="getSplitwiseDebtsLoading">
             <p>Cargando...</p>
           </div>
-
           <div v-else class="bg-gray-200 rounded-md">
             <div>
               <div
@@ -175,7 +174,6 @@
                   </div>
                 </div>
               </div>
-
               <div v-else>
                 <p class="text-5xl font-bold">
                   No hay deudas para mostrar
@@ -205,7 +203,6 @@ export default {
       debtsColumns: ['De', 'Para', 'Monto', 'Grupo', 'Pagar'],
     };
   },
-
   created() {
     this.getSplitwiseDebts();
     if (this.budaSignedIn) {
@@ -220,11 +217,8 @@ export default {
     CustomTable,
   },
   methods: {
-    ...mapActions('user', [
-      'getUserBudaBalance',
-      'getPayments',
-      'getSplitwiseDebts',
-    ]),
+    ...mapActions('user', ['getUserBudaBalance', 'getPayments']),
+    ...mapActions('splitwiseDebts', ['getSplitwiseDebts']),
     getDate(date) {
       const d = new Date(date);
 
@@ -236,6 +230,8 @@ export default {
       'currentUser',
       'getPaymentsLoading',
       'userPaymentsHistory',
+    ]),
+    ...mapState('splitwiseDebts', [
       'getSplitwiseDebtsLoading',
       'userSplitwiseDebts',
     ]),
