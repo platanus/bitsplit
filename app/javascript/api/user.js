@@ -44,7 +44,7 @@ const getQuotationApi = payload =>
     amount: payload.amount,
   });
 
-const getUserBalanceApi = () => authedAxios.get('/api/v1/balances/');
+const getUserBalanceApi = () => authedAxios.get('/api/v2/balances/');
 
 const sendPaymentApi = payload =>
   authedAxios.post('/api/v1/payments/', {

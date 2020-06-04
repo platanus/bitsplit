@@ -17,13 +17,8 @@
       class="flex flex-col justify-center lg:flex-row lg:justify-between bg-gray-200 p-10 rounded-md"
     >
       <div class="lg:pr-5 flex flex-col">
-        <UserCard
-          :email="currentUser.email"
-          :clp_balance="userBalanceCLP"
-          :btc_balance="userBalanceBTC"
-          classmod="self-center"
-        />
-        <div class="text-center px-4 py-2 ">
+        <UserCard classmod="self-center" />
+        <div class="text-center px-4 py-2">
           <LinkButton
             v-if="budaSignedIn"
             classmod="bg-blue-500 hover:bg-blue-700 my-3 md:my-0"
@@ -50,10 +45,7 @@
                 Recibido
               </span>
             </td>
-            <td
-              v-else
-              class="border-grey-light border hover:bg-gray-100 p-3"
-            >
+            <td v-else class="border-grey-light border hover:bg-gray-100 p-3">
               <span
                 class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"
               >
@@ -183,13 +175,7 @@ export default {
     },
   },
   computed: {
-    ...mapState('user', [
-      'currentUser',
-      'userBalanceCLP',
-      'userBalanceBTC',
-      'paymentsHistory',
-      'userDebts',
-    ]),
+    ...mapState('user', ['currentUser', 'paymentsHistory', 'userDebts']),
     ...mapGetters('user', ['budaSignedIn']),
   },
 };
