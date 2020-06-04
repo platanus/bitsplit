@@ -93,6 +93,11 @@
           </div>
           <div v-else class="bg-gray-200 rounded-md">
             <div>
+              <div>
+                <p class="text-5xl font-bold">
+                  Deudas hacia amigos
+                </p>
+              </div>
               <div
                 v-if="
                   userSplitwiseDebts.user_to_friends.single_user_to_friends
@@ -126,9 +131,6 @@
                         {{ row.to.first_name + ' ' + row.to.last_name }}
                       </td>
                       <td>${{ row.amount }}</td>
-                      <td>
-                        {{ row.group_name }}
-                      </td>
                       <td v-show="row.is_payable">
                         Pagar
                       </td>
@@ -163,9 +165,94 @@
                           {{ row.to.first_name + ' ' + row.to.last_name }}
                         </td>
                         <td>${{ row.amount }}</td>
-                        <td>
-                          {{ row.group_name }}
+                        <td v-show="row.is_payable">
+                          Pagar
                         </td>
+                      </template>
+                    </CustomTable>
+                  </div>
+                </div>
+              </div>
+              <div v-else>
+                <p class="text-5xl font-bold">
+                  No hay deudas para mostrar
+                </p>
+              </div>
+            </div>
+
+            <div>
+              <div>
+                <p class="text-5xl font-bold">
+                  Deudas de amigos hacia ti
+                </p>
+              </div>
+              <div
+                v-if="
+                  userSplitwiseDebts.friends_to_user.single_friends_to_user
+                    .length ||
+                  userSplitwiseDebts.friends_to_user.group_friends_to_user
+                    .length
+                "
+              >
+                <div
+                  v-if="
+                    userSplitwiseDebts.friends_to_user.single_friends_to_user
+                      .length
+                  "
+                >
+                  <p class="text-5xl font-bold">
+                    Deudas Individuales
+                  </p>
+                  <CustomTable
+                    :data="
+                      userSplitwiseDebts.friends_to_user.single_friends_to_user
+                        .slice()
+                        .reverse()
+                    "
+                    :columns="debtsColumns"
+                  >
+                    <template slot-scope="{ row }">
+                      <td>
+                        {{ row.from.first_name + ' ' + row.from.last_name }}
+                      </td>
+                      <td>
+                        {{ row.to.first_name + ' ' + row.to.last_name }}
+                      </td>
+                      <td>${{ row.amount }}</td>
+                      <td v-show="row.is_payable">
+                        Pagar
+                      </td>
+                    </template>
+                  </CustomTable>
+                </div>
+                <div
+                  v-if="
+                    userSplitwiseDebts.friends_to_user.group_friends_to_user
+                      .length
+                  "
+                >
+                  <p class="text-5xl font-bold">
+                    Deudas Grupales
+                  </p>
+                  <div
+                    v-for="(group_debt,
+                    index) in userSplitwiseDebts.friends_to_user.group_friends_to_user
+                      .slice()
+                      .reverse()"
+                    :key="index"
+                  >
+                    <p class="text-5xl font-bold">
+                      Grupo: {{ group_debt[0].group_name }}
+                    </p>
+                    <CustomTable :data="group_debt" :columns="debtsColumns">
+                      <template slot-scope="{ row }">
+                        <td>
+                          {{ row.from.first_name + ' ' + row.from.last_name }}
+                        </td>
+                        <td>
+                          {{ row.to.first_name + ' ' + row.to.last_name }}
+                        </td>
+                        <td>${{ row.amount }}</td>
                         <td v-show="row.is_payable">
                           Pagar
                         </td>
@@ -200,7 +287,7 @@ export default {
     return {
       routeName: 'home',
       tableColumns: ['Tipo', 'Envía', 'Recibe', 'Cantidad', 'Fecha'],
-      debtsColumns: ['De', 'Para', 'Monto', 'Grupo', 'Pagar'],
+      debtsColumns: ['De', 'Para', 'Monto', 'Pagar'],
     };
   },
   created() {
