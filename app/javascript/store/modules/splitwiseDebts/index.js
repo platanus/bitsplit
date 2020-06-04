@@ -21,11 +21,10 @@ const actions = {
 
     return getSplitwiseDebtsApi(payload)
       .then(res => {
-        commit(
-          GET_SPLIWITSE_DEBTS_SUCCESS,
+        commit(GET_SPLIWITSE_DEBTS_SUCCESS, [
           res.data.data.attributes.user_to_friends,
-          res.data.data.attributes.friends_to_user
-        );
+          res.data.data.attributes.friends_to_user,
+        ]);
 
         return;
       })
@@ -53,7 +52,7 @@ const mutations = {
   [GET_SPLIWITSE_DEBTS_FAIL](state) {
     state.getSplitwiseDebtsLoading = false;
   },
-  [GET_SPLIWITSE_DEBTS_SUCCESS](state, user_to_friends, friends_to_user) {
+  [GET_SPLIWITSE_DEBTS_SUCCESS](state, [user_to_friends, friends_to_user]) {
     state.getSplitwiseDebtsLoading = false;
     state.userSplitwiseDebts = {
       user_to_friends: {

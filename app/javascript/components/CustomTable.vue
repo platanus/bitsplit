@@ -1,14 +1,18 @@
 <template>
-  <table class="table-auto bg-white">
+  <table class="table-auto bg-white sm:bg-white sm:shadow-lg">
     <thead class="bg-indigo-500 text-white">
-      <tr>
+      <tr class="sm:table-row sm:mb-0">
         <th class="p-3" v-for="(column, index) in columns" :key="index">
           {{ column }}
         </th>
       </tr>
     </thead>
-    <tbody>
-      <tr v-for="(item, index) in data" :key="index">
+    <tbody class="sm:flex-none">
+      <tr
+        class="sm:table-row sm:mb-0"
+        v-for="(item, index) in data"
+        :key="index"
+      >
         <slot :row="item" />
       </tr>
     </tbody>
