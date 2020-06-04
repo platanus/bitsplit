@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
+import { mapState } from 'vuex';
 import textField from '../components/TextField';
 
 export default {
@@ -37,18 +37,9 @@ export default {
     textField,
   },
   computed: {
-    ...mapState('user', [
-      'currentUser',
-      'userBalanceCLP',
-      'userBalanceBTC',
-      'userLastPaymentData',
-    ]),
-  },
-  created() {
-    this.getUserBalance();
+    ...mapState('user', ['currentUser', 'userLastPaymentData']),
   },
   methods: {
-    ...mapActions('user', ['getQuotation', 'getUserBalance', 'sendPayment']),
     getDate(date) {
       const d = new Date(date);
 

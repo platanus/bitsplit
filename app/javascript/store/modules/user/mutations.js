@@ -11,9 +11,9 @@ import {
   BUDA_SIGNIN_FAIL,
   BUDA_SIGNIN_SUCCESS,
   BUDA_SIGNOUT,
-  GET_USER_BALANCE_ATTEMPT,
-  GET_USER_BALANCE_FAIL,
-  GET_USER_BALANCE_SUCCESS,
+  GET_USER_BUDA_BALANCE_ATTEMPT,
+  GET_USER_BUDA_BALANCE_FAIL,
+  GET_USER_BUDA_BALANCE_SUCCESS,
   SEND_PAYMENT_ATTEMPT,
   SEND_PAYMENT_FAIL,
   SEND_PAYMENT_SUCCESS,
@@ -66,7 +66,7 @@ export default {
   [BUDA_SIGNOUT](state, currentUser) {
     state.currentUser = currentUser;
   },
-  [GET_USER_BALANCE_ATTEMPT](state) {
+  [GET_USER_BUDA_BALANCE_ATTEMPT](state) {
     state.getBalanceLoading = true;
   },
   [GET_USER_BALANCE_SUCCESS](state, balance) {
@@ -83,7 +83,7 @@ export default {
       10
     );
   },
-  [GET_USER_BALANCE_FAIL](state) {
+  [GET_USER_BUDA_BALANCE_FAIL](state) {
     state.getBalanceLoading = false;
   },
   [SEND_PAYMENT_ATTEMPT](state) {

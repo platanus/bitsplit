@@ -66,7 +66,7 @@ export {
   budaSyncApi,
   getCurrentUserApi,
   getQuotationApi,
-  getUserBalanceApi,
+  getUserBudaBalanceApi,
   sendPaymentApi,
   getPaymentsApi,
   getSplitwiseUrlApi,

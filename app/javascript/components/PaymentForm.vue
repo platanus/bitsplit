@@ -10,12 +10,12 @@
           <label
             class="mb-4 uppercase font-bold text-xl text-indigo-600"
             for="account_balance"
-            >${{ userBalanceCLP }} CLP</label
+            >${{ userBudaBalance.CLP }} CLP</label
           >
           <label
             class="mb-4 uppercase font-bold text-xl text-indigo-600"
             for="account_balance"
-            >${{ userBalanceBTC }} BTC</label
+            >${{ userBudaBalance.BTC }} BTC</label
           >
           <textInput
             field-id="amount"
@@ -102,12 +102,11 @@ export default {
     ...mapState('user', [
       'currentUser',
       'sendPaymentLoading',
-      'userBalanceCLP',
-      'userBalanceBTC',
+      'userBudaBalance',
     ]),
   },
   created() {
-    this.getUserBalance();
+    this.getUserBudaBalance();
   },
   watch: {
     amount: debounce(function () {
@@ -115,7 +114,11 @@ export default {
     }, DEBOUNCE_TIMER),
   },
   methods: {
-    ...mapActions('user', ['getQuotation', 'getUserBalance', 'sendPayment']),
+    ...mapActions('user', [
+      'getQuotation',
+      'getUserBudaBalance',
+      'sendPayment',
+    ]),
     ...mapActions('component', ['changePaymentComp']),
     getNewQuotation() {
       const { amount } = this;

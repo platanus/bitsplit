@@ -66,7 +66,7 @@ export default {
   },
   methods: {
     ...mapActions('notification', ['markAsSeen']),
-    ...mapActions('user', ['getUserBalance', 'getPayments']),
+    ...mapActions('user', ['getUserBudaBalance', 'getPayments']),
   },
   computed: {
     ...mapGetters('notification', ['unSeenNotifications']),
@@ -85,7 +85,7 @@ export default {
 
       // Recargo el balance si hay una notificacion tipo payment nueva
       if (nPaymentsNew > nPaymentsOld) {
-        this.getUserBalance();
+        this.getUserBudaBalance();
         this.getPayments();
       }
     },

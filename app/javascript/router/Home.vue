@@ -209,7 +209,7 @@ export default {
   created() {
     this.getSplitwiseDebts();
     if (this.budaSignedIn) {
-      this.getUserBalance();
+      this.getUserBudaBalance();
       this.getPayments();
     }
   },
@@ -221,7 +221,7 @@ export default {
   },
   methods: {
     ...mapActions('user', [
-      'getUserBalance',
+      'getUserBudaBalance',
       'getPayments',
       'getSplitwiseDebts',
     ]),
