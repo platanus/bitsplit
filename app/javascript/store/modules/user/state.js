@@ -7,10 +7,8 @@ export default {
   budaSignInLoading: false,
   getBalanceLoading: false,
   getPaymentsLoading: false,
-  getSplitwiseDebtsLoading: false,
   sendPaymentLoading: false,
   userBudaBalance: {},
   userLastPaymentData: null,
   userPaymentsHistory: [],
-  userSplitwiseDebts: [],
 };

@@ -10,7 +10,6 @@ import {
   sendPayment,
   getPayments,
   getSplitwiseUrl,
-  getSplitwiseDebts,
 } from '../../action-types';
 
 import {
@@ -35,9 +34,6 @@ import {
   GET_PAYMENTS_ATTEMPT,
   GET_PAYMENTS_FAIL,
   GET_PAYMENTS_SUCCESS,
-  GET_SPLIWITSE_DEBTS_ATTEMPT,
-  GET_SPLIWITSE_DEBTS_FAIL,
-  GET_SPLIWITSE_DEBTS_SUCCESS,
 } from '../../mutation-types';
 
 import {
@@ -51,7 +47,6 @@ import {
   sendPaymentApi,
   getPaymentsApi,
   getSplitwiseUrlApi,
-  getSplitwiseDebtsApi,
 } from '../../../api/user.js';
 
 const commitAndSetUser = ({ commit, mutation, user }) => {
@@ -411,34 +406,6 @@ export default {
             root: true,
           });
           throw new Error('Error redireccionando a Splitwise.');
-        } else {
-          dispatch('alert/errorAlert', 'Error desconocido.', { root: true });
-          throw new Error('Error desconocido');
-        }
-      });
-  },
-  [getSplitwiseDebts]({ commit, dispatch }, payload) {
-    commit(GET_SPLIWITSE_DEBTS_ATTEMPT);
-
-    return getSplitwiseDebtsApi(payload)
-      .then(res => {
-        commit(
-          GET_SPLIWITSE_DEBTS_SUCCESS,
-          res.data.data.attributes.user_to_friends,
-          res.data.data.attributes.friends_to_user
-        );
-
-        return;
-      })
-      .catch(err => {
-        commit(GET_SPLIWITSE_DEBTS_FAIL);
-        if (err.response) {
-          dispatch(
-            'alert/errorAlert',
-            'Error obteniendo las deudas de Splitwise.',
-            { root: true }
-          );
-          throw new Error('Error obteniendo las deudas de Splitwise.');
         } else {
           dispatch('alert/errorAlert', 'Error desconocido.', { root: true });
           throw new Error('Error desconocido');
