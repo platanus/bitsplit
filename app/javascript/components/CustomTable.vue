@@ -31,13 +31,6 @@ export default {
     columns: Array,
     data: Array,
   },
-  mounted() {
-    this.$nextTick(() => {
-      this.$el.querySelectorAll('td').forEach(td => {
-        td.classList.add('p-3');
-      });
-    });
-  },
 };
 </script>
 <style lang="scss"></style>
