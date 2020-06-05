@@ -32,21 +32,19 @@ const mergeDebts = array => {
     r[a.group_id].push(a);
 
     return r;
-  }, Object.create(null));
+  }, {});
 
   return Object.values(result);
 };
 
 const filterSingleDebts = array => {
-  const result = array ? array.filter(debt => debt.group_id === 0) : null;
+  const result = array && array.filter(debt => debt.group_id === 0);
 
   return result;
 };
 
 const filterGroupDebts = array => {
-  const result = array
-    ? mergeDebts(array.filter(debt => debt.group_id > 0))
-    : null;
+  const result = array && mergeDebts(array.filter(debt => debt.group_id > 0));
 
   return result;
 };
