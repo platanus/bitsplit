@@ -90,7 +90,7 @@
             Splitwise
           </p>
         </div>
-        <div>
+        <div v-if="splitwiseSignedIn">
           <div v-if="getSplitwiseDebtsLoading">
             <p>Cargando...</p>
           </div>
@@ -264,6 +264,11 @@
             </div>
           </div>
         </div>
+        <div v-else>
+          <p class="text-5xl font-bold">
+            No estás conectado a Splitwise
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -288,7 +293,6 @@ export default {
   created() {
     this.getSplitwiseDebts();
     if (this.budaSignedIn) {
-      this.getUserBudaBalance();
       this.getPayments();
     }
   },
@@ -299,7 +303,7 @@ export default {
     CustomTable,
   },
   methods: {
-    ...mapActions('user', ['getUserBudaBalance', 'getPayments']),
+    ...mapActions('user', ['getPayments']),
     ...mapActions('splitwiseDebts', ['getSplitwiseDebts']),
     getDate(date) {
       const d = new Date(date);
@@ -317,7 +321,7 @@ export default {
       'getSplitwiseDebtsLoading',
       'userSplitwiseDebts',
     ]),
-    ...mapGetters('user', ['budaSignedIn']),
+    ...mapGetters('user', ['budaSignedIn', 'splitwiseSignedIn']),
   },
 };
 </script>

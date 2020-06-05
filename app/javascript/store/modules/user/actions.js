@@ -6,7 +6,7 @@ import {
   budaSignIn,
   budaSignOut,
   getQuotation,
-  getUserBudaBalance,
+  getUserBalance,
   sendPayment,
   getPayments,
   getSplitwiseUrl,
@@ -28,15 +28,18 @@ import {
   BUDA_SIGNIN_FAIL,
   BUDA_SIGNIN_SUCCESS,
   BUDA_SIGNOUT,
-  GET_USER_BUDA_BALANCE_ATTEMPT,
-  GET_USER_BUDA_BALANCE_FAIL,
-  GET_USER_BUDA_BALANCE_SUCCESS,
+  GET_USER_BALANCE_ATTEMPT,
+  GET_USER_BALANCE_FAIL,
+  GET_USER_BALANCE_SUCCESS,
   SEND_PAYMENT_ATTEMPT,
   SEND_PAYMENT_FAIL,
   SEND_PAYMENT_SUCCESS,
   GET_PAYMENTS_ATTEMPT,
   GET_PAYMENTS_FAIL,
   GET_PAYMENTS_SUCCESS,
+  GET_SPLIWITSE_DEBTS_ATTEMPT,
+  GET_SPLIWITSE_DEBTS_SUCCESS,
+  GET_SPLIWITSE_DEBTS_FAIL,
 } from '../../mutation-types';
 
 import {
@@ -46,10 +49,11 @@ import {
   budaSyncApi,
   getCurrentUserApi,
   getQuotationApi,
-  getUserBudaBalanceApi,
+  getUserBalanceApi,
   sendPaymentApi,
   getPaymentsApi,
   getSplitwiseUrlApi,
+  getSplitwiseDebtsApi,
 } from '../../../api/user.js';
 
 import { widthdrawalTestApi, chargeTestApi } from '../../../api/wallet';
@@ -202,7 +206,7 @@ export default {
     return fetchPromise
       .then(() => {
         // Buscamos verificar credenciales Buda
-        const checkPromise = getUserBudaBalanceApi(payload);
+        const checkPromise = getUserBalanceApi(payload);
 
         return checkPromise;
       })
@@ -321,17 +325,17 @@ export default {
         }
       });
   },
-  [getUserBudaBalance]({ commit, dispatch }, payload) {
-    commit(GET_USER_BUDA_BALANCE_ATTEMPT);
+  [getUserBalance]({ commit, dispatch }, payload) {
+    commit(GET_USER_BALANCE_ATTEMPT);
 
-    return getUserBudaBalanceApi(payload)
+    return getUserBalanceApi(payload)
       .then(res => {
-        commit(GET_USER_BUDA_BALANCE_SUCCESS, res.data.data.balance);
+        commit(GET_USER_BALANCE_SUCCESS, res.data.data.balance);
 
         return;
       })
       .catch(err => {
-        commit(GET_USER_BUDA_BALANCE_FAIL);
+        commit(GET_USER_BALANCE_FAIL);
         if (err.response) {
           dispatch(
             'alert/errorAlert',

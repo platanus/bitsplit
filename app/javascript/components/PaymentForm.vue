@@ -10,12 +10,12 @@
           <label
             class="mb-4 uppercase font-bold text-xl text-indigo-600"
             for="account_balance"
-            >${{ userBudaBalance.CLP }} CLP</label
+            >${{ userBalanceBudaCLP }} CLP</label
           >
           <label
             class="mb-4 uppercase font-bold text-xl text-indigo-600"
             for="account_balance"
-            >${{ userBudaBalance.BTC }} BTC</label
+            >${{ userBalanceBudaBTC }} BTC</label
           >
           <textInput
             field-id="amount"
@@ -68,18 +68,17 @@ function debounce(func, wait, immediate) {
   let timeout;
 
   return function (...args) {
-    var context = this
+    const self = this;
     const later = function () {
       timeout = null;
-      if (!immediate) func.apply(context, args);
+      if (!immediate) func.apply(self, args);
     };
     const callNow = immediate && !timeout;
     clearTimeout(timeout);
     timeout = setTimeout(later, wait);
-    if (callNow) func.apply(context, args);
+    if (callNow) func.apply(self, args);
   };
 }
-
 
 const DEBOUNCE_TIMER = 1000;
 const MIN_PAYMENT = 100;
@@ -104,11 +103,12 @@ export default {
     ...mapState('user', [
       'currentUser',
       'sendPaymentLoading',
-      'userBudaBalance',
+      'userBalanceBudaCLP',
+      'userBalanceBudaBTC',
     ]),
   },
   created() {
-    this.getUserBudaBalance();
+    this.getUserBalance();
   },
   watch: {
     amount: debounce(function () {
@@ -116,11 +116,7 @@ export default {
     }, DEBOUNCE_TIMER),
   },
   methods: {
-    ...mapActions('user', [
-      'getQuotation',
-      'getUserBudaBalance',
-      'sendPayment',
-    ]),
+    ...mapActions('user', ['getQuotation', 'getUserBalance', 'sendPayment']),
     ...mapActions('component', ['changePaymentComp']),
     getNewQuotation() {
       const { amount } = this;

@@ -95,7 +95,6 @@ export default {
             this.signIn({ email, password })
           )
           .then(() => {
-            console.log('signed in');
             this.$router.push('/onboarding');
           })
           .catch(err => {
