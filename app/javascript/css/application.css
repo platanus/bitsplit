@@ -1,5 +1,6 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
 @media (min-width: 640px) {
   table {
     display: inline-table !important;
@@ -95,5 +96,3 @@ th:not(:last-child) {
   right: 16%;
   bottom: 37%;
 }
-
-@import 'tailwindcss/utilities';
