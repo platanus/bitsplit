@@ -113,7 +113,7 @@ export default {
           dispatch(
             'alert/errorAlert',
             'Error iniciando sesion (revise credenciales otorgadas)',
-            { root: true }
+            { root: true },
           );
           throw new Error('Error desconocido');
         } else {
@@ -122,7 +122,7 @@ export default {
           dispatch(
             'alert/errorAlert',
             'Error desconocido, intente nuevamente',
-            { root: true }
+            { root: true },
           );
           throw new Error('Error desconocido');
         }
@@ -151,7 +151,7 @@ export default {
             'Error cerrando sesion, intente nuevamente',
             {
               root: true,
-            }
+            },
           );
           throw new Error('Error al ingresar datos');
         }
@@ -212,7 +212,7 @@ export default {
           dispatch(
             'alert/successAlert',
             'Cuenta Buda sincronizada correctamente',
-            { root: true }
+            { root: true },
           );
           const fetchPromiseUser = getCurrentUserApi();
 
@@ -223,7 +223,7 @@ export default {
         dispatch(
           'alert/errorAlert',
           'Datos incorrectos. Revise los datos ingresados',
-          { root: true }
+          { root: true },
         );
         throw new Error('Datos incorrectos. Revise los datos ingresados');
       })
@@ -256,7 +256,7 @@ export default {
               dispatch(
                 'alert/errorAlert',
                 'Datos incorrectos. Revise los datos ingresados',
-                { root: true }
+                { root: true },
               );
               throw new Error('Datos incorrectos. Revise los datos ingresados');
             } else {
@@ -274,7 +274,7 @@ export default {
         dispatch(
           'alert/successAlert',
           'Cuenta Buda desconectada correctamente',
-          { root: true }
+          { root: true },
         );
         const fetchPromiseUser = getCurrentUserApi();
 
@@ -291,10 +291,10 @@ export default {
           dispatch(
             'alert/errorAlert',
             'Error desconectando cuenta. Revise la contraseña ingresada',
-            { root: true }
+            { root: true },
           );
           throw new Error(
-            'Error desconectando cuenta. Revise la contraseña ingresada'
+            'Error desconectando cuenta. Revise la contraseña ingresada',
           );
         } else {
           dispatch('alert/errorAlert', 'Error desconocido', { root: true });
@@ -310,10 +310,10 @@ export default {
           dispatch(
             'alert/errorAlert',
             'Error obteniendo cotización. Revise los datos ingresados',
-            { root: true }
+            { root: true },
           );
           throw new Error(
-            'Error obteniendo cotización. Revise los datos ingresados'
+            'Error obteniendo cotización. Revise los datos ingresados',
           );
         } else {
           dispatch('alert/errorAlert', 'Error desconocido.', { root: true });
@@ -333,16 +333,16 @@ export default {
           dispatch(
             'alert/errorAlert',
             'Error obteniendo balance. Revise sus datos de cuenta',
-            { root: true }
+            { root: true },
           );
           throw new Error(
-            'Error obteniendo balance. Revise sus datos de cuenta'
+            'Error obteniendo balance. Revise sus datos de cuenta',
           );
         } else {
           dispatch(
             'alert/errorAlert',
             'Error obteniendo su balance, revise sus datos de cuenta o agregue sus credenciales de buda.',
-            { root: true }
+            { root: true },
           );
           throw new Error('Error desconocido');
         }
@@ -366,7 +366,7 @@ export default {
           dispatch(
             'alert/errorAlert',
             'Error enviando pago. Revise los datos ingresados',
-            { root: true }
+            { root: true },
           );
           throw new Error('Error enviando pago. Revise los datos ingresados');
         } else {
@@ -387,7 +387,7 @@ export default {
           dispatch(
             'alert/errorAlert',
             'Error obteniendo el historial de transacciones.',
-            { root: true }
+            { root: true },
           );
           throw new Error('Error obteniendo el historial de transacciones.');
         } else {
@@ -423,7 +423,7 @@ export default {
           dispatch(
             'alert/errorAlert',
             'Error obteniendo las deudas de Splitwise.',
-            { root: true }
+            { root: true },
           );
           throw new Error('Error obteniendo las deudas de Splitwise.');
         } else {

@@ -69,12 +69,12 @@ export default {
     state.userBalanceBudaBTC = parseFloat(balance.buda.BTC.available_amount);
     state.userBalanceBudaBTCCLP = parseInt(
       balance.buda.BTC_CLP.available_amount,
-      10
+      10,
     );
     state.userBalanceBitsplitBTC = parseFloat(balance.bitsplit.BTC.amount);
     state.userBalanceBitsplitBTCCLP = parseInt(
       balance.bitsplit.BTC_CLP.amount,
-      10
+      10,
     );
   },
   // [GET_USER_BALANCE_FAIL](state) {
