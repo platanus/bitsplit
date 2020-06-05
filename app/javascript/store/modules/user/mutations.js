@@ -19,6 +19,7 @@ import {
   SEND_PAYMENT_SUCCESS,
   GET_PAYMENTS_SUCCESS,
   GET_DEBTS_SUCCESS,
+  CHANGE_WALLET_SUCCESS,
 } from '../../mutation-types';
 
 export default {
@@ -89,5 +90,8 @@ export default {
   },
   [GET_DEBTS_SUCCESS](state, debts) {
     state.userDebts = debts;
+  },
+  [CHANGE_WALLET_SUCCESS](state, wallet) {
+    state.currentWallet = wallet;
   },
 };

@@ -11,6 +11,7 @@ import {
   getPayments,
   splitwiseUrlConnection,
   getDebts,
+  changeWallet,
 } from '../../action-types';
 
 import {
@@ -32,6 +33,7 @@ import {
   SEND_PAYMENT_SUCCESS,
   GET_PAYMENTS_SUCCESS,
   GET_DEBTS_SUCCESS,
+  CHANGE_WALLET_SUCCESS,
 } from '../../mutation-types';
 
 import {
@@ -478,5 +480,12 @@ export default {
         throw Error(err);
         // }
       });
+  },
+  [changeWallet]({ commit }, payload) {
+    if (payload === 'Bitsplit') {
+      commit(CHANGE_WALLET_SUCCESS, 'Buda');
+    } else {
+      commit(CHANGE_WALLET_SUCCESS, 'Bitsplit');
+    }
   },
 };

@@ -23,3 +23,5 @@ export const clearAlert = 'clearAlert';
 export const getPayments = 'getPayments';
 
 export const currentStepOk = 'currentStepOk';
+
+export const changeWallet = 'changeWallet';

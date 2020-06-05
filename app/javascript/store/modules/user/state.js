@@ -11,4 +11,5 @@ export default {
   lastPayment: null,
   paymentsHistory: [],
   userDebts: [],
+  currentWallet: 'Bitsplit',
 };
