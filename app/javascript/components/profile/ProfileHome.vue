@@ -8,7 +8,10 @@
             <span class="text-xl align-top">Bitsplit Wallet</span>
           </div>
           <div class="text-sm uppercase text-grey tracking-wide py-10">
-            Balance: 0.0006 BTC
+            0.0003 BTC
+          </div>
+          <div class="text-sm uppercase text-grey tracking-wide">
+            $ 6.000 CLP
           </div>
         </div>
       </div>

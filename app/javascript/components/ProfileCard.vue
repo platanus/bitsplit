@@ -10,7 +10,7 @@
           class="btn-secondary ext-black font-bold p-1 ml-2 mt-4 rounded focus:outline-none"
           to="/profile/settings"
         >
-          Cerrar session
+          Cerrar sesión
         </router-link>
       </div>
       <div class="w-1/5 txt-card text-sm mb-4 mt-4 ml-4">

@@ -19,7 +19,7 @@
                       <div class="flex -mb-px mr-8">
                         <button :class="getTabClass('/')">
                           <router-link to="/profile/">
-                            Home
+                            Inicio
                           </router-link>
                         </button>
                       </div>
@@ -47,7 +47,7 @@
                       <div class="flex -mb-px">
                         <button :class="getTabClass('/settings')">
                           <router-link to="/profile/settings">
-                            Settings
+                            Configuración
                           </router-link>
                         </button>
                       </div>
