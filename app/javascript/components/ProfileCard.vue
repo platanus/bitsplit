@@ -46,7 +46,7 @@
             <img :src="splitwiseLogo" />
             <span class="text-xl mt-6 ml-2">Splitwise</span>
           </p>
-          <div v-if="!splitwiseSignedIn" class="mt-6 txt-card">
+          <div v-if="splitwiseSignedIn" class="mt-6 txt-card">
             <h2>¡Ya estás conectado a Splitwise!</h2>
           </div>
           <div v-else class="mb-6">
