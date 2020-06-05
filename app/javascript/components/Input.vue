@@ -1,14 +1,19 @@
 <template>
   <input
     class="txt-input"
-    :class="[classmod, 'appearance-none border rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline']"
+    :class="[
+      'appearance-none border rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline',
+      classmod,
+    ]"
     :id="fieldId"
     :type="fieldType"
     :placeholder="fieldPlaceholder"
     :name="fieldName"
     :value="value"
+    min="0"
+    step="0.000001"
     @input="$emit('update', $event.target.value)"
-  >
+  />
 </template>
 <script>
 export default {

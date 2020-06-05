@@ -47,7 +47,7 @@
               v-model="checkboxField"
             />
           </div>
-          <submitButton :loading="signUpLoading">
+          <submitButton :loading="signUpLoading" width="full">
             Crear Cuenta
           </submitButton>
         </form>

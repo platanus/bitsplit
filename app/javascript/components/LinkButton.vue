@@ -1,7 +1,10 @@
 <template>
   <button
     @click="moveMe()"
-    :class="[classmod,'text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline']"
+    :class="[
+      'text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline',
+      classmod,
+    ]"
     :disabled="fieldDisabled"
   >
     <slot />

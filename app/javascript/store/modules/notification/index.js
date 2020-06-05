@@ -25,7 +25,8 @@ const actions = {
   unbindNotifications: firebaseAction(({ unbindFirebaseRef }) => {
     unbindFirebaseRef('notifications');
   }),
-  markAsSeen: firebaseAction(notificationToken =>
+  // eslint-disable-next-line no-empty-pattern
+  markAsSeen: firebaseAction(({}, notificationToken) =>
     markAsSeenApi(notificationToken)
   ),
 };

@@ -71,8 +71,17 @@ export default {
   },
   [GET_USER_BALANCE_SUCCESS](state, balance) {
     state.getBalanceLoading = false;
-    state.userBalanceCLP = parseFloat(balance.CLP.available_amount);
-    state.userBalanceBTC = parseFloat(balance.BTC.available_amount);
+    state.userBalanceBudaCLP = parseFloat(balance.buda.CLP.available_amount);
+    state.userBalanceBudaBTC = parseFloat(balance.buda.BTC.available_amount);
+    state.userBalanceBudaBTCCLP = parseInt(
+      balance.buda.BTC_CLP.available_amount,
+      10
+    );
+    state.userBalanceBitsplitBTC = parseFloat(balance.bitsplit.BTC.amount);
+    state.userBalanceBitsplitBTCCLP = parseInt(
+      balance.bitsplit.BTC_CLP.amount,
+      10
+    );
   },
   [GET_USER_BALANCE_FAIL](state) {
     state.getBalanceLoading = false;

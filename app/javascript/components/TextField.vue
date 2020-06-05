@@ -2,8 +2,8 @@
   <p
     class="txt-field block mb-5 font-bold text-gray-700"
     :class="[
-      fontSize === 'full' ? 'text-xxl' : 'text-md',
-      fontColor === 'secondary' ? 'text-blue-500' : 'text-gray-700'
+      fontSize === 'full' ? 'text-xl' : 'text-md',
+      fontColor === 'secondary' ? 'text-blue-500' : 'text-gray-700',
     ]"
   >
     <slot />

@@ -17,12 +17,7 @@
       class="flex flex-col justify-start lg:flex-row bg-gray-200 p-10 rounded-md"
     >
       <div class="lg:pr-5 flex flex-col">
-        <UserCard
-          :email="currentUser.email"
-          :clp_balance="userBalanceCLP"
-          :btc_balance="userBalanceBTC"
-          classmod="self-center"
-        />
+        <UserCard classmod="self-center" />
         <div class="text-center px-4 py-2">
           <LinkButton
             v-if="budaSignedIn"
@@ -227,9 +222,6 @@ export default {
   computed: {
     ...mapState('user', [
       'currentUser',
-      'getBalanceLoading',
-      'userBalanceCLP',
-      'userBalanceBTC',
       'getPaymentsLoading',
       'paymentsHistory',
       'getDebtsLoading',

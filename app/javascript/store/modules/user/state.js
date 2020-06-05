@@ -1,7 +1,7 @@
 const user = JSON.parse(localStorage.getItem('currentUser'));
 
 export default {
-  currentUser: user, // Si no esta es null
+  currentUser: user, // Si no esta es null, lo que devuelve get
   signInLoading: false,
   signUpLoading: false,
   budaSignInLoading: false,
@@ -9,8 +9,11 @@ export default {
   getPaymentsLoading: false,
   getDebtsLoading: false,
   paymentLoading: false,
-  userBalanceCLP: 0,
-  userBalanceBTC: 0,
+  userBalanceBudaCLP: 0,
+  userBalanceBudaBTC: 0,
+  userBalanceBudaBTCCLP: 0,
+  userBalanceBitsplitBTC: 0,
+  userBalanceBitsplitBTCCLP: 0,
   lastPayment: null,
   paymentsHistory: [],
   userDebts: [],

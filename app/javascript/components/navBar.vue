@@ -10,21 +10,6 @@
         </router-link>
       </button>
       <button
-        type="button"
-        class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
-      >
-        <router-link :to="budaRoute">
-          Buda
-        </router-link>
-      </button>
-      <button
-        @click="openSplitwiseUrl()"
-        type="button"
-        class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
-      >
-        Splitwise
-      </button>
-      <button
         v-if="budaSignedIn"
         type="button"
         class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
@@ -34,7 +19,14 @@
         </router-link>
       </button>
       <NavBarNotifications />
-
+      <button
+        type="button"
+        class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
+      >
+        <router-link :to="profileRoute">
+          Mi perfil
+        </router-link>
+      </button>
       <button
         type="button"
         class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
@@ -73,12 +65,13 @@ export default {
   name: 'NavBar',
   data() {
     return {
-      signInRoute: 'sign-in',
-      signUpRoute: 'sign-up',
-      homeRoute: 'home',
-      budaRoute: 'buda',
+      signInRoute: '/sign-in',
+      signUpRoute: '/sign-up',
+      homeRoute: '/home',
+      budaRoute: '/buda',
       landingRoute: '/',
-      payRoute: 'payment',
+      payRoute: '/payment',
+      profileRoute: '/profile/', // No borrar el ultimo '/'
     };
   },
   components: {
@@ -87,15 +80,6 @@ export default {
   methods: {
     ...mapActions('user', ['signOut', 'splitwiseUrlConnection']),
     ...mapActions('notification', ['bindNotifications', 'unbindNotifications']),
-    openSplitwiseUrl() {
-      this.splitwiseUrlConnection()
-        .then((res) => {
-          window.open(res.authorize_url);
-        })
-        .catch(err => {
-          console.error(err);
-        });
-    },
   },
   computed: {
     ...mapState('user', ['currentUser']),

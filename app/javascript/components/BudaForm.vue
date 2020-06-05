@@ -35,7 +35,7 @@
         />
       </div>
       <div>
-        <submitButton :loading="budaSignInLoading">
+        <submitButton :loading="budaSignInLoading" width="full">
           Sincronizar Buda
         </submitButton>
       </div>
