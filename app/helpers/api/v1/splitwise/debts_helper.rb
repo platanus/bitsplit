@@ -16,10 +16,7 @@ module Api::V1::Splitwise::DebtsHelper
   end
 
   def simplified_debts(group)
-    if group['simplify_by_default']
-      return "simplified_debts"
-    end
-    "original_debts"
+    group['simplify_by_default'] ? 'simplified_debts' : 'original_debts'
   end
 
   def insert_debt_info(list, debt, group, user_friends)
