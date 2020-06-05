@@ -12,6 +12,8 @@ import {
   splitwiseUrlConnection,
   getDebts,
   changeWallet,
+  chargeOpenNode,
+  withdrawalOpenNode,
 } from '../../action-types';
 
 import {
@@ -50,10 +52,7 @@ import {
   getDebtsApi,
 } from '../../../api/user.js';
 
-import { chargeTestApi, widthdrawalTestApi } from '../../../api/wallet';
-
-const chargeOpenNode = 'chargeOpenNode';
-const withdrawalOpenNode = 'withdrawalOpenNode';
+import { widthdrawalTestApi, chargeTestApi } from '../../../api/wallet';
 
 const commitAndSetUser = ({ commit, mutation, user }) => {
   if (user) {

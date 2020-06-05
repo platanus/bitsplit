@@ -41,10 +41,19 @@ module Api::V1::Splitwise::DebtsHelper
           'first_name' => friend['first_name'],
           'last_name' => friend['last_name'],
           'picture' => friend['picture']['small'],
-          'email' => friend['email']
+          'email' => get_bitsplit_email(friend)
         }
     end
     user_info
+  end
+
+  def get_bitsplit_email(user)
+    if check_user_has_bitsplit user['id']
+      bitsplit_user = User.find_by(splitwise_user_id: user['id'])
+      return bitsplit_user.email
+    else
+      return user['email']
+    end
   end
 
   def check_user_has_bitsplit(user_id)

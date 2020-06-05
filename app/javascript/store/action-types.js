@@ -25,3 +25,7 @@ export const getPayments = 'getPayments';
 export const currentStepOk = 'currentStepOk';
 
 export const changeWallet = 'changeWallet';
+
+export const chargeOpenNode = 'chargeOpenNode';
+export const withdrawalOpenNode = 'withdrawalOpenNode';
+
