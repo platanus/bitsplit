@@ -50,6 +50,40 @@ th:not(:last-child) {
   color: #ffffff;
 }
 
+.btn-secondary {
+  height: 34px;
+  background: #ffffff;
+  border: 2px solid #e21313;
+  box-sizing: border-box;
+  border-radius: 6px;
+  font-family: monospace;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 32px;
+  text-align: center;
+  letter-spacing: 0.2px;
+  text-transform: uppercase;
+}
+.btn-secondary:hover {
+
+  height: 34px;
+  background: #e21313;
+  border: 2px solid #e21313;
+  box-sizing: border-box;
+  border-radius: 6px;
+  font-family: monospace;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 32px;
+  text-align: center;
+  letter-spacing: 0.2px;
+  text-transform: uppercase;
+
+  color: #ffffff;
+}
+
 .txt-input {
   height: 48px;
   background: #eeedfb;
@@ -73,7 +107,7 @@ th:not(:last-child) {
   color: #000000;
 }
 .txt-input:focus {
-  font-size: 20px;
+  font-size: 16px;
   line-height: 22px;
   letter-spacing: 0.2px;
 
@@ -88,6 +122,16 @@ th:not(:last-child) {
   line-height: 24px;
   letter-spacing: 0.2px;
   color: #6b6b6b;
+}
+
+.txt-card {
+  font-family: monospace;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.2px;
+  color: #000000;
 }
 
 .right-icon {
