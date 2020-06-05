@@ -68,16 +68,18 @@ function debounce(func, wait, immediate) {
   let timeout;
 
   return function (...args) {
+    var context = this
     const later = function () {
       timeout = null;
-      if (!immediate) func.apply(this, args);
+      if (!immediate) func.apply(context, args);
     };
     const callNow = immediate && !timeout;
     clearTimeout(timeout);
     timeout = setTimeout(later, wait);
-    if (callNow) func.apply(this, args);
+    if (callNow) func.apply(context, args);
   };
 }
+
 
 const DEBOUNCE_TIMER = 1000;
 const MIN_PAYMENT = 100;

@@ -45,25 +45,28 @@
                 :data="userPaymentsHistory.slice().reverse()"
                 :columns="tableColumns"
               >
-                <template slot-scope="{ row }">
-                  <td v-if="row.attributes.sender_email != currentUser.email">
+                <template #default="{ row, tdClass }">
+                  <td
+                    :class="tdClass"
+                    v-if="row.attributes.sender_email != currentUser.email"
+                  >
                     <span>
                       Recibido
                     </span>
                   </td>
-                  <td v-else>
+                  <td v-else :class="tdClass">
                     <span>
                       Enviado
                     </span>
                   </td>
-                  <td>
+                  <td :class="tdClass">
                     {{ row.attributes.sender_email }}
                   </td>
-                  <td>
+                  <td :class="tdClass">
                     {{ row.attributes.receiver_email }}
                   </td>
-                  <td>{{ row.attributes.amount }} BTC</td>
-                  <td>
+                  <td :class="tdClass">{{ row.attributes.amount }} BTC</td>
+                  <td :class="tdClass">
                     {{ getDate(row.attributes.created_at) }}
                   </td>
                 </template>
@@ -100,16 +103,13 @@
               </div>
               <div
                 v-if="
-                  userSplitwiseDebts.user_to_friends.single_user_to_friends
-                    .length ||
-                  userSplitwiseDebts.user_to_friends.group_user_to_friends
-                    .length
+                  userSplitwiseDebts.userToFriends.singleUserToFriends.length ||
+                  userSplitwiseDebts.userToFriends.groupUserToFriends.length
                 "
               >
                 <div
                   v-if="
-                    userSplitwiseDebts.user_to_friends.single_user_to_friends
-                      .length
+                    userSplitwiseDebts.userToFriends.singleUserToFriends.length
                   "
                 >
                   <p class="text-5xl font-bold">
@@ -117,21 +117,21 @@
                   </p>
                   <CustomTable
                     :data="
-                      userSplitwiseDebts.user_to_friends.single_user_to_friends
+                      userSplitwiseDebts.userToFriends.singleUserToFriends
                         .slice()
                         .reverse()
                     "
                     :columns="debtsColumns"
                   >
-                    <template slot-scope="{ row }">
-                      <td>
+                    <template #default="{ row, tdClass }">
+                      <td :class="tdClass">
                         {{ row.from.first_name + ' ' + row.from.last_name }}
                       </td>
-                      <td>
+                      <td :class="tdClass">
                         {{ row.to.first_name + ' ' + row.to.last_name }}
                       </td>
-                      <td>${{ row.amount }}</td>
-                      <td v-show="row.is_payable">
+                      <td :class="tdClass">${{ row.amount }}</td>
+                      <td v-show="row.is_payable" :class="tdClass">
                         Pagar
                       </td>
                     </template>
@@ -139,8 +139,7 @@
                 </div>
                 <div
                   v-if="
-                    userSplitwiseDebts.user_to_friends.group_user_to_friends
-                      .length
+                    userSplitwiseDebts.userToFriends.groupUserToFriends.length
                   "
                 >
                   <p class="text-5xl font-bold">
@@ -148,7 +147,7 @@
                   </p>
                   <div
                     v-for="(group_debt,
-                    index) in userSplitwiseDebts.user_to_friends.group_user_to_friends
+                    index) in userSplitwiseDebts.userToFriends.groupUserToFriends
                       .slice()
                       .reverse()"
                     :key="index"
@@ -157,15 +156,15 @@
                       Grupo: {{ group_debt[0].group_name }}
                     </p>
                     <CustomTable :data="group_debt" :columns="debtsColumns">
-                      <template slot-scope="{ row }">
-                        <td>
+                      <template #default="{ row, tdClass }">
+                        <td :class="tdClass">
                           {{ row.from.first_name + ' ' + row.from.last_name }}
                         </td>
-                        <td>
+                        <td :class="tdClass">
                           {{ row.to.first_name + ' ' + row.to.last_name }}
                         </td>
-                        <td>${{ row.amount }}</td>
-                        <td v-show="row.is_payable">
+                        <td :class="tdClass">${{ row.amount }}</td>
+                        <td v-show="row.is_payable" :class="tdClass">
                           Pagar
                         </td>
                       </template>
@@ -188,16 +187,13 @@
               </div>
               <div
                 v-if="
-                  userSplitwiseDebts.friends_to_user.single_friends_to_user
-                    .length ||
-                  userSplitwiseDebts.friends_to_user.group_friends_to_user
-                    .length
+                  userSplitwiseDebts.friendsToUser.singleFriendsToUser.length ||
+                  userSplitwiseDebts.friendsToUser.groupFriendsToUser.length
                 "
               >
                 <div
                   v-if="
-                    userSplitwiseDebts.friends_to_user.single_friends_to_user
-                      .length
+                    userSplitwiseDebts.friendsToUser.singleFriendsToUser.length
                   "
                 >
                   <p class="text-5xl font-bold">
@@ -205,21 +201,21 @@
                   </p>
                   <CustomTable
                     :data="
-                      userSplitwiseDebts.friends_to_user.single_friends_to_user
+                      userSplitwiseDebts.friendsToUser.singleFriendsToUser
                         .slice()
                         .reverse()
                     "
                     :columns="debtsColumns"
                   >
-                    <template slot-scope="{ row }">
-                      <td>
+                    <template #default="{ row, tdClass }">
+                      <td :class="tdClass">
                         {{ row.from.first_name + ' ' + row.from.last_name }}
                       </td>
-                      <td>
+                      <td :class="tdClass">
                         {{ row.to.first_name + ' ' + row.to.last_name }}
                       </td>
-                      <td>${{ row.amount }}</td>
-                      <td v-show="row.is_payable">
+                      <td :class="tdClass">${{ row.amount }}</td>
+                      <td v-show="row.is_payable" :class="tdClass">
                         Pagar
                       </td>
                     </template>
@@ -227,8 +223,7 @@
                 </div>
                 <div
                   v-if="
-                    userSplitwiseDebts.friends_to_user.group_friends_to_user
-                      .length
+                    userSplitwiseDebts.friendsToUser.groupFriendsToUser.length
                   "
                 >
                   <p class="text-5xl font-bold">
@@ -236,7 +231,7 @@
                   </p>
                   <div
                     v-for="(group_debt,
-                    index) in userSplitwiseDebts.friends_to_user.group_friends_to_user
+                    index) in userSplitwiseDebts.friendsToUser.groupFriendsToUser
                       .slice()
                       .reverse()"
                     :key="index"
@@ -245,15 +240,15 @@
                       Grupo: {{ group_debt[0].group_name }}
                     </p>
                     <CustomTable :data="group_debt" :columns="debtsColumns">
-                      <template slot-scope="{ row }">
-                        <td>
+                      <template #default="{ row, tdClass }">
+                        <td :class="tdClass">
                           {{ row.from.first_name + ' ' + row.from.last_name }}
                         </td>
-                        <td>
+                        <td :class="tdClass">
                           {{ row.to.first_name + ' ' + row.to.last_name }}
                         </td>
-                        <td>${{ row.amount }}</td>
-                        <td v-show="row.is_payable">
+                        <td :class="tdClass">${{ row.amount }}</td>
+                        <td v-show="row.is_payable" :class="tdClass">
                           Pagar
                         </td>
                       </template>

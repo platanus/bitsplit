@@ -13,7 +13,7 @@
         v-for="(item, index) in data"
         :key="index"
       >
-        <slot :row="item" />
+        <slot :row="item" :tdClass="tdClass" />
       </tr>
     </tbody>
   </table>
@@ -22,6 +22,11 @@
 <script>
 export default {
   name: 'CustomTable',
+  data() {
+    return {
+      tdClass: 'p-3',
+    };
+  },
   props: {
     columns: Array,
     data: Array,

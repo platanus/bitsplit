@@ -21,10 +21,10 @@ const actions = {
 
     return getSplitwiseDebtsApi(payload)
       .then(res => {
-        commit(GET_SPLIWITSE_DEBTS_SUCCESS, [
-          res.data.data.attributes.user_to_friends,
-          res.data.data.attributes.friends_to_user,
-        ]);
+        commit(GET_SPLIWITSE_DEBTS_SUCCESS, {
+          userToFriends: res.data.data.attributes.user_to_friends,
+          friendsToUser: res.data.data.attributes.friends_to_user,
+        });
 
         return;
       })
@@ -52,16 +52,16 @@ const mutations = {
   [GET_SPLIWITSE_DEBTS_FAIL](state) {
     state.getSplitwiseDebtsLoading = false;
   },
-  [GET_SPLIWITSE_DEBTS_SUCCESS](state, [user_to_friends, friends_to_user]) {
+  [GET_SPLIWITSE_DEBTS_SUCCESS](state, debts) {
     state.getSplitwiseDebtsLoading = false;
     state.userSplitwiseDebts = {
-      user_to_friends: {
-        single_user_to_friends: filterSingleDebts(user_to_friends),
-        group_user_to_friends: filterGroupDebts(user_to_friends),
+      userToFriends: {
+        singleUserToFriends: filterSingleDebts(debts.userToFriends),
+        groupUserToFriends: filterGroupDebts(debts.userToFriends),
       },
-      friends_to_user: {
-        single_friends_to_user: filterSingleDebts(friends_to_user),
-        group_friends_to_user: filterGroupDebts(friends_to_user),
+      friendsToUser: {
+        singleFriendsToUser: filterSingleDebts(debts.friendsToUser),
+        groupFriendsToUser: filterGroupDebts(debts.friendsToUser),
       },
     };
   },
