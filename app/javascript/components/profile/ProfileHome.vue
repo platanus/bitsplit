@@ -8,10 +8,10 @@
             <span class="text-xl align-top">Bitsplit Wallet</span>
           </div>
           <div class="text-sm uppercase text-grey tracking-wide py-10">
-            0.0003 BTC
+            {{ userBalanceBitsplitBTC }} BTC
           </div>
           <div class="text-sm uppercase text-grey tracking-wide">
-            $ 6.000 CLP
+            {{ userBalanceBitsplitCLP }} CLP Aprox
           </div>
         </div>
       </div>
@@ -21,10 +21,10 @@
             <span class="text-xl align-top"> Buda Wallet</span>
           </div>
           <div class="text-sm uppercase text-grey tracking-wide py-10">
-            0.0006 BTC
+            {{ userBalanceBudaBTC }} BTC
           </div>
           <div class="text-sm uppercase text-grey tracking-wide">
-            $ 3.000 CLP
+            {{ userBalanceBudaCLP }} CLP aprox
           </div>
         </div>
       </div>
@@ -45,7 +45,25 @@
   </div>
 </template>
 <script>
+import { mapState } from 'vuex';
+
 export default {
   name: 'ProfileHome',
+  props: {
+    classmod: {
+      type: String,
+      default: '',
+    },
+  },
+  computed: {
+    ...mapState('user', [
+      'currentUser',
+      'userBalanceBudaCLP',
+      'userBalanceBudaBTC',
+      'userBalanceBudaBTCCLP',
+      'userBalanceBitsplitBTC',
+      'userBalanceBitsplitBTCCLP',
+    ]),
+  },
 };
 </script>
