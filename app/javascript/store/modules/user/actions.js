@@ -9,8 +9,8 @@ import {
   getUserBalance,
   sendPayment,
   getPayments,
-  splitwiseUrlConnection,
-  getDebts,
+  getSplitwiseUrl,
+  getSplitwiseDebts,
   chargeOpenNode,
   withdrawalOpenNode,
 } from '../../action-types';
@@ -28,12 +28,18 @@ import {
   BUDA_SIGNIN_FAIL,
   BUDA_SIGNIN_SUCCESS,
   BUDA_SIGNOUT,
+  GET_USER_BALANCE_ATTEMPT,
+  GET_USER_BALANCE_FAIL,
   GET_USER_BALANCE_SUCCESS,
   SEND_PAYMENT_ATTEMPT,
   SEND_PAYMENT_FAIL,
   SEND_PAYMENT_SUCCESS,
+  GET_PAYMENTS_ATTEMPT,
+  GET_PAYMENTS_FAIL,
   GET_PAYMENTS_SUCCESS,
-  GET_DEBTS_SUCCESS,
+  GET_SPLIWITSE_DEBTS_ATTEMPT,
+  GET_SPLIWITSE_DEBTS_SUCCESS,
+  GET_SPLIWITSE_DEBTS_FAIL,
 } from '../../mutation-types';
 
 import {
@@ -46,8 +52,8 @@ import {
   getUserBalanceApi,
   sendPaymentApi,
   getPaymentsApi,
-  splitwiseUrlConnectionApi,
-  getDebtsApi,
+  getSplitwiseUrlApi,
+  getSplitwiseDebtsApi,
 } from '../../../api/user.js';
 
 import { widthdrawalTestApi, chargeTestApi } from '../../../api/wallet';
@@ -320,6 +326,8 @@ export default {
       });
   },
   [getUserBalance]({ commit, dispatch }, payload) {
+    commit(GET_USER_BALANCE_ATTEMPT);
+
     return getUserBalanceApi(payload)
       .then(res => {
         commit(GET_USER_BALANCE_SUCCESS, res.data.data.balance);
@@ -327,6 +335,7 @@ export default {
         return;
       })
       .catch(err => {
+        commit(GET_USER_BALANCE_FAIL);
         if (err.response) {
           dispatch(
             'alert/errorAlert',
@@ -374,6 +383,8 @@ export default {
       });
   },
   [getPayments]({ commit, dispatch }, payload) {
+    commit(GET_PAYMENTS_ATTEMPT);
+
     return getPaymentsApi(payload)
       .then(res => {
         commit(GET_PAYMENTS_SUCCESS, res.data.data);
@@ -381,6 +392,7 @@ export default {
         return;
       })
       .catch(err => {
+        commit(GET_PAYMENTS_FAIL);
         if (err.response) {
           dispatch(
             'alert/errorAlert',
@@ -394,8 +406,8 @@ export default {
         }
       });
   },
-  [splitwiseUrlConnection]({ dispatch }, payload) {
-    return splitwiseUrlConnectionApi(payload)
+  [getSplitwiseUrl]({ dispatch }, payload) {
+    return getSplitwiseUrlApi(payload)
       .then(res => res.data.data.attributes)
       .catch(err => {
         if (err.response) {
@@ -409,14 +421,21 @@ export default {
         }
       });
   },
-  [getDebts]({ commit, dispatch }, payload) {
-    return getDebtsApi(payload)
+  [getSplitwiseDebts]({ commit, dispatch }, payload) {
+    commit(GET_SPLIWITSE_DEBTS_ATTEMPT);
+
+    return getSplitwiseDebtsApi(payload)
       .then(res => {
-        commit(GET_DEBTS_SUCCESS, res.data.data.attributes);
+        commit(
+          GET_SPLIWITSE_DEBTS_SUCCESS,
+          res.data.data.attributes.user_to_friends,
+          res.data.data.attributes.friends_to_user
+        );
 
         return;
       })
       .catch(err => {
+        commit(GET_SPLIWITSE_DEBTS_FAIL);
         if (err.response) {
           dispatch(
             'alert/errorAlert',
