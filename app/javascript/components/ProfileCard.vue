@@ -66,7 +66,7 @@
         </div>
         <div class="w-1/3 bg-blue-200 rounded-md p-6 mb-4">
           <p class="text-5xl flex font-bold">
-            <img :src="budaLogo" class="ml-4" />
+            <img :src="budaLogo" class="w-20 h-20 flex-shrink-0" />
             <span class="font-bold text-xl ml-4 mt-6">Buda</span>
           </p>
           <div v-if="budaSignedIn" class="mt-6 txt-card">
@@ -94,7 +94,7 @@
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex';
 import submitButton from '../components/SubmitButton';
-import buda from '../assets/buda-logo.svg';
+import buda from '../assets/buda-icon.png';
 import splitwise from '../assets/splitwise-logo.svg';
 import bitsplit from '../assets/bitsplit-logo.svg';
 

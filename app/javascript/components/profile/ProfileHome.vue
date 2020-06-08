@@ -2,44 +2,36 @@
 <template>
   <div>
     <div class="txt-card lg:flex">
-      <div class="w-1/3 text-center py-8">
+      <div class="w-1/2 text-center py-8">
         <div class="border-r">
           <div class="text-grey-darker mb-2">
-            <span class="text-xl align-top">Bitsplit Wallet</span>
+            <span class="text-xl align-top text-indigo-600"
+              >Bitsplit Wallet</span
+            >
           </div>
-          <div class="text-sm uppercase text-grey tracking-wide py-10">
-            {{ userBalanceBitsplitBTC }} BTC
-          </div>
-          <div class="text-sm uppercase text-grey tracking-wide">
-            {{ userBalanceBitsplitBTCCLP }} CLP Aprox
-          </div>
+          <p class="text-grey-dark mb-4 mt-4 py-10">
+            <span class="font-bold text-lg"> {{ userBalanceBitsplitBTC }}</span>
+            BTC
+          </p>
+          <p class="text-grey-dark mb-4 mt-4">
+            <span class="font-bold text-lg">
+              {{ userBalanceBitsplitBTCCLP }}</span
+            >
+            CLP aprox
+          </p>
         </div>
       </div>
-      <div class="w-1/3 text-center py-8">
-        <div class="border-r">
-          <div class="text-grey-darker mb-2">
-            <span class="text-xl align-top"> Buda Wallet</span>
-          </div>
-          <div class="text-sm uppercase text-grey tracking-wide py-10">
-            {{ userBalanceBudaBTC }} BTC
-          </div>
-          <div class="text-sm uppercase text-grey tracking-wide">
-            {{ userBalanceBudaCLP }} CLP aprox
-          </div>
+      <div class="w-1/2 text-center py-8">
+        <div class="text-grey-darker mb-2">
+          <span class="text-xl align-top text-blue-800"> Buda Wallet</span>
         </div>
-      </div>
-      <div class="w-1/3 text-center py-8">
-        <div>
-          <div class="text-grey-darker mb-2">
-            <span class="text-xl align-top"> Splitwise </span>
-          </div>
-          <div class="text-sm text-grey tracking-wide py-10">
-            Me deben: $ 5.000
-          </div>
-          <div class="text-sm text-grey tracking-wide">
-            Debo a amigos: $ 3.000
-          </div>
-        </div>
+        <p class="text-grey-dark mb-4 mt-4 py-10">
+          <span class="font-bold text-lg"> {{ userBalanceBudaBTC }}</span> BTC
+        </p>
+        <p class="text-grey-dark mb-4 mt-4">
+          <span class="font-bold text-lg"> {{ userBalanceBudaBTCCLP }}</span>
+          CLP aprox
+        </p>
       </div>
     </div>
   </div>

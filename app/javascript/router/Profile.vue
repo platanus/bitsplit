@@ -81,9 +81,7 @@ export default {
     };
   },
   created() {
-    if (this.budaSignedIn) {
-      this.getUserBalance();
-    }
+    this.getUserBalance();
   },
   components: {
     ProfileCard,
