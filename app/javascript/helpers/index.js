@@ -26,6 +26,29 @@ const checkBudaAuth = (to, from, next) => {
   }
 };
 
+const mergeDebts = array => {
+  const result = array.reduce((r, a) => {
+    r[a.group_id] = r[a.group_id] || [];
+    r[a.group_id].push(a);
+
+    return r;
+  }, {});
+
+  return Object.values(result);
+};
+
+const filterSingleDebts = array => {
+  const result = array && array.filter(debt => debt.group_id === 0);
+
+  return result;
+};
+
+const filterGroupDebts = array => {
+  const result = array && mergeDebts(array.filter(debt => debt.group_id > 0));
+
+  return result;
+};
+
 const authedAxios = axios.create();
 
 authedAxios.interceptors.request.use(
@@ -37,7 +60,14 @@ authedAxios.interceptors.request.use(
 
     return config;
   },
-  error => Promise.reject(error),
+  error => Promise.reject(error)
 );
 
-export { checkAuth, checkNoAuth, checkBudaAuth, authedAxios };
+export {
+  checkAuth,
+  checkNoAuth,
+  checkBudaAuth,
+  filterSingleDebts,
+  filterGroupDebts,
+  authedAxios,
+};

@@ -4,7 +4,7 @@ module Api::V1::Splitwise::DebtsHelper
     user_to_friends = []
     friends_to_user = []
     user_groups['groups'].each do |group|
-      group['original_debts'].each do |debt|
+      group[simplified_debts(group)].each do |debt|
         if debt['from'] == user_id
           insert_debt_info(user_to_friends, debt, group, user_friends)
         elsif debt['to'] == user_id
@@ -13,6 +13,10 @@ module Api::V1::Splitwise::DebtsHelper
       end
     end
     [user_to_friends, friends_to_user]
+  end
+
+  def simplified_debts(group)
+    group['simplify_by_default'] ? 'simplified_debts' : 'original_debts'
   end
 
   def insert_debt_info(list, debt, group, user_friends)

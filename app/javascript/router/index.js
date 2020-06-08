@@ -9,6 +9,7 @@ import BudaIndex from './BudaIndex.vue';
 import PaymentIndex from './PaymentIndex.vue';
 import Profile from './Profile.vue';
 import OnBoarding from './OnBoarding.vue';
+import PaymentsHistory from './PaymentsHistory';
 
 import SplitwiseLink from '../components/profile/SplitwiseLink.vue';
 import ProfileHome from '../components/profile/ProfileHome.vue';
@@ -27,6 +28,11 @@ const router = new Router({
     { path: '/sign-up', component: SignUp, beforeEnter: checkNoAuth },
     { path: '/onboarding', component: OnBoarding, beforeEnter: checkAuth },
     { path: '/home', component: Home, beforeEnter: checkAuth },
+    {
+      path: '/payments-history',
+      component: PaymentsHistory,
+      beforeEnter: checkAuth,
+    },
     {
       path: '/profile/',
       component: Profile,

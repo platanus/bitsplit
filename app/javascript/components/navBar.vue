@@ -78,7 +78,7 @@ export default {
     NavBarNotifications,
   },
   methods: {
-    ...mapActions('user', ['signOut', 'splitwiseUrlConnection']),
+    ...mapActions('user', ['signOut', 'getSplitwiseUrl']),
     ...mapActions('notification', ['bindNotifications', 'unbindNotifications']),
   },
   computed: {
