@@ -10,7 +10,7 @@
     <tbody class="sm:flex-none">
       <tr
         class="sm:table-row sm:mb-0"
-        v-for="(item, index) in data"
+        v-for="(item, index) in data.slice(0, limit)"
         :key="index"
       >
         <slot :row="item" :tdClass="tdClass" />
@@ -30,6 +30,7 @@ export default {
   props: {
     columns: Array,
     data: Array,
+    limit: { type: Number, default: Infinity },
   },
 };
 </script>
