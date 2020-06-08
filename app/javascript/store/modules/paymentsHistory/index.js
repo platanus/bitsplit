@@ -20,8 +20,6 @@ const actions = {
     return getPaymentsApi(payload)
       .then(res => {
         commit(GET_PAYMENTS_SUCCESS, res.data.data.transactions);
-
-        return;
       })
       .catch(err => {
         commit(GET_PAYMENTS_FAIL);
@@ -31,10 +29,8 @@ const actions = {
             'Error obteniendo el historial de transacciones.',
             { root: true }
           );
-          throw new Error('Error obteniendo el historial de transacciones.');
         } else {
           dispatch('alert/errorAlert', 'Error desconocido.', { root: true });
-          throw new Error('Error desconocido');
         }
       });
   },
