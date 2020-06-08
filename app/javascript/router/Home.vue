@@ -31,8 +31,8 @@
       </div>
       <div>
         <div>
-          <p class="text-5xl font-bold">
-            Historial de Pagos
+          <p class="text-center text-xl font-bold mb-6">
+            Últimas 5 transacciones
           </p>
         </div>
         <div class="justify-start">
@@ -42,35 +42,57 @@
           <div v-else class="bg-gray-200 rounded-md">
             <div v-if="userPaymentsHistory.length">
               <CustomTable
-                :data="userPaymentsHistory.slice().reverse()"
+                :data="userPaymentsHistory"
                 :columns="tableColumns"
+                :limit="5"
               >
-                <template #default="{ row, tdClass }">
+                <template #default="{ row }">
                   <td
-                    :class="tdClass"
-                    v-if="row.attributes.sender_email != currentUser.email"
+                    class="border-grey-light border hover:bg-gray-100 p-3"
+                    v-if="row.attributes.sender.email != currentUser.email"
                   >
-                    <span>
+                    <span
+                      class="px-2 items-center inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+                    >
                       Recibido
                     </span>
                   </td>
-                  <td v-else :class="tdClass">
-                    <span>
+                  <td
+                    v-else
+                    class="border-grey-light border hover:bg-gray-100 p-3"
+                  >
+                    <span
+                      class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"
+                    >
                       Enviado
                     </span>
                   </td>
-                  <td :class="tdClass">
-                    {{ row.attributes.sender_email }}
+                  <td class="border-grey-light border hover:bg-gray-100 p-3">
+                    {{ row.attributes.sender.email }}
                   </td>
-                  <td :class="tdClass">
-                    {{ row.attributes.receiver_email }}
+                  <td class="border-grey-light border hover:bg-gray-100 p-3">
+                    {{ row.attributes.receiver.email }}
                   </td>
-                  <td :class="tdClass">{{ row.attributes.amount }} BTC</td>
-                  <td :class="tdClass">
+                  <td class="border-grey-light border hover:bg-gray-100 p-3">
+                    {{ row.attributes.amount_btc }} BTC
+                  </td>
+                  <td class="border-grey-light border hover:bg-gray-100 p-3">
+                    $ {{ row.attributes.amount_clp.toFixed(0) }} CLP
+                  </td>
+                  <td class="border-grey-light border hover:bg-gray-100 p-3">
                     {{ getDate(row.attributes.created_at) }}
                   </td>
                 </template>
               </CustomTable>
+              <div class="text-center px-4 py-2">
+                <LinkButton
+                  classmod="bg-blue-500 hover:bg-blue-700 my-3 md:my-0"
+                  :field-disabled="false"
+                  route="payments-history"
+                >
+                  Ver más
+                </LinkButton>
+              </div>
             </div>
             <div v-else>
               <p class="text-5xl font-bold">
@@ -286,15 +308,20 @@ export default {
   data() {
     return {
       routeName: 'home',
-      tableColumns: ['Tipo', 'Envía', 'Recibe', 'Cantidad', 'Fecha'],
+      tableColumns: [
+        'Tipo',
+        'Envía',
+        'Recibe',
+        'Cantidad BTC',
+        'Cantidad CLP',
+        'Fecha',
+      ],
       debtsColumns: ['De', 'Para', 'Monto', 'Pagar'],
     };
   },
   created() {
     this.getSplitwiseDebts();
-    if (this.budaSignedIn) {
-      this.getPayments();
-    }
+    this.getPayments();
   },
   components: {
     BudaAlert,
@@ -303,8 +330,10 @@ export default {
     CustomTable,
   },
   methods: {
-    ...mapActions('user', ['getPayments']),
+    ...mapActions('user', ['getUserBalance']),
     ...mapActions('splitwiseDebts', ['getSplitwiseDebts']),
+    ...mapActions('paymentsHistory', ['getPayments']),
+
     getDate(date) {
       const d = new Date(date);
 
@@ -312,15 +341,12 @@ export default {
     },
   },
   computed: {
-    ...mapState('user', [
-      'currentUser',
-      'getPaymentsLoading',
-      'userPaymentsHistory',
-    ]),
+    ...mapState('user', ['currentUser', 'getPaymentsLoading']),
     ...mapState('splitwiseDebts', [
       'getSplitwiseDebtsLoading',
       'userSplitwiseDebts',
     ]),
+    ...mapState('paymentsHistory', ['userPaymentsHistory']),
     ...mapGetters('user', ['budaSignedIn', 'splitwiseSignedIn']),
   },
 };

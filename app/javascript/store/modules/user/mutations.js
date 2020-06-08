@@ -20,6 +20,7 @@ import {
   GET_PAYMENTS_ATTEMPT,
   GET_PAYMENTS_FAIL,
   GET_PAYMENTS_SUCCESS,
+  GET_DEBTS_SUCCESS,
 } from '../../mutation-types';
 
 export default {
@@ -104,5 +105,8 @@ export default {
   [GET_PAYMENTS_SUCCESS](state, payments) {
     state.getPaymentsLoading = false;
     state.userPaymentsHistory = payments;
+  },
+  [GET_DEBTS_SUCCESS](state, debts) {
+    state.userDebts = debts;
   },
 };
