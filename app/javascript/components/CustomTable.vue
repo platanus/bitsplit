@@ -1,6 +1,6 @@
 <template>
   <table class="table-auto bg-white sm:bg-white sm:shadow-lg">
-    <thead class="bg-indigo-500 text-white">
+    <thead class="bg-secondary text-white">
       <tr class="sm:table-row sm:mb-0">
         <th class="p-3" v-for="(column, index) in columns" :key="index">
           {{ column }}
