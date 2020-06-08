@@ -20,7 +20,7 @@ th:not(:last-child) {
 
 .btn {
   height: 48px;
-  background: #ffffff;
+  background: #fff;
   border: 2px solid #000000;
   box-sizing: border-box;
   border-radius: 6px;
@@ -47,12 +47,12 @@ th:not(:last-child) {
   letter-spacing: 0.4px;
   text-transform: uppercase;
 
-  color: #ffffff;
+  color: #fff;
 }
 
 .btn-secondary {
   height: 34px;
-  background: #ffffff;
+  background: #fff;
   border: 2px solid #e21313;
   box-sizing: border-box;
   border-radius: 6px;
@@ -81,7 +81,7 @@ th:not(:last-child) {
   letter-spacing: 0.2px;
   text-transform: uppercase;
 
-  color: #ffffff;
+  color: #fff;
 }
 
 .txt-input {
@@ -98,7 +98,7 @@ th:not(:last-child) {
 }
 
 .txt-input:hover {
-  background: #ffffff;
+  background: #fff;
   border: 2px solid #8070e3;
   box-sizing: border-box;
   box-shadow: inset 0px 0px 6px rgba(128, 112, 227, 0.12);
