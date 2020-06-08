@@ -25,19 +25,26 @@
         <div class="text-grey-darker mb-2">
           <span class="text-xl align-top text-blue-800"> Buda Wallet</span>
         </div>
-        <p class="text-grey-dark mb-4 mt-4 py-10">
-          <span class="font-bold text-lg"> {{ userBalanceBudaBTC }}</span> BTC
-        </p>
-        <p class="text-grey-dark mb-4 mt-4">
-          <span class="font-bold text-lg"> {{ userBalanceBudaBTCCLP }}</span>
-          CLP aprox
-        </p>
+        <div v-if="budaSignedIn">
+          <p class="text-grey-dark mb-4 mt-4 py-10">
+            <span class="font-bold text-lg"> {{ userBalanceBudaBTC }}</span> BTC
+          </p>
+          <p class="text-grey-dark mb-4 mt-4">
+            <span class="font-bold text-lg"> {{ userBalanceBudaBTCCLP }}</span>
+            CLP aprox
+          </p>
+        </div>
+        <div v-else>
+          <p class="text-grey-dark mb-4 mt-4">
+            Aun no estas sincronizado con Buda!
+          </p>
+        </div>
       </div>
     </div>
   </div>
 </template>
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
 
 export default {
   name: 'ProfileHome',
@@ -48,6 +55,7 @@ export default {
     },
   },
   computed: {
+    ...mapGetters('user', ['budaSignedIn']),
     ...mapState('user', [
       'currentUser',
       'userBalanceBudaCLP',
