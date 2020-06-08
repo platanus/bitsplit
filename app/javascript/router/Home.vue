@@ -330,7 +330,6 @@ export default {
     CustomTable,
   },
   methods: {
-    ...mapActions('user', ['getUserBalance']),
     ...mapActions('splitwiseDebts', ['getSplitwiseDebts']),
     ...mapActions('paymentsHistory', ['getPayments']),
 

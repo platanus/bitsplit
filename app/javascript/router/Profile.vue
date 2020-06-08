@@ -70,7 +70,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
 import ProfileCard from '../components/ProfileCard';
 
 export default {
@@ -80,15 +80,10 @@ export default {
       routeName: 'profile',
     };
   },
-  created() {
-    this.getUserBalance();
-  },
   components: {
     ProfileCard,
   },
   methods: {
-    ...mapActions('user', ['getUserBalance']),
-
     getTabClass(tab) {
       // Dado el current url, retorna la clase correspondiente
       const url = this.$router.history.current.path;
