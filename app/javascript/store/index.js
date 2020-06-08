@@ -8,6 +8,7 @@ import component from './modules/component';
 import notification from './modules/notification';
 import onBoarding from './modules/onBoarding';
 import splitwiseDebts from './modules/splitwiseDebts';
+import paymentsHistory from './modules/paymentsHistory';
 
 Vue.use(Vuex);
 
@@ -19,6 +20,7 @@ const store = new Vuex.Store({
     notification,
     onBoarding,
     splitwiseDebts,
+    paymentsHistory,
   },
   mutations: vuexfireMutations,
 });

@@ -133,6 +133,7 @@ export default {
     },
     handleSubmit() {
       const { amount, receiver_email } = this;
+      console.log(parseFloat(this.quotationBTC), receiver_email);
       if (amount && receiver_email) {
         this.sendPayment({
           payment_amount: parseFloat(this.quotationBTC),
