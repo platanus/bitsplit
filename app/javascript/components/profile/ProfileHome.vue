@@ -11,7 +11,7 @@
             {{ userBalanceBitsplitBTC }} BTC
           </div>
           <div class="text-sm uppercase text-grey tracking-wide">
-            {{ userBalanceBitsplitCLP }} CLP Aprox
+            {{ userBalanceBitsplitBTCCLP }} CLP Aprox
           </div>
         </div>
       </div>
