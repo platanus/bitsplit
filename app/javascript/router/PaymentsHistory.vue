@@ -96,7 +96,6 @@ export default {
     CustomTable,
   },
   methods: {
-    ...mapActions('user', ['getUserBalance']),
     ...mapActions('paymentsHistory', ['getPayments']),
 
     getDate(date) {

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col justify-between flex-grow">
+  <div class="flex flex-col justify-between flex-grow p-12">
     <textField class="self-center">
       Haz click en el boton de abajo para linkear tu cuenta de BitSplit a
       <a href="https://www.spliwise.com">Splitwise</a>

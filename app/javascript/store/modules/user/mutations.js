@@ -21,6 +21,7 @@ import {
   GET_PAYMENTS_FAIL,
   GET_PAYMENTS_SUCCESS,
   GET_DEBTS_SUCCESS,
+  CHANGE_WALLET_SUCCESS,
 } from '../../mutation-types';
 
 export default {
@@ -71,12 +72,12 @@ export default {
     state.userBalanceBudaBTC = parseFloat(balance.buda.BTC.available_amount);
     state.userBalanceBudaBTCCLP = parseInt(
       balance.buda.BTC_CLP.available_amount,
-      10
+      10,
     );
     state.userBalanceBitsplitBTC = parseFloat(balance.bitsplit.BTC.amount);
     state.userBalanceBitsplitBTCCLP = parseInt(
       balance.bitsplit.BTC_CLP.amount,
-      10
+      10,
     );
   },
   [GET_USER_BALANCE_FAIL](state) {
@@ -108,5 +109,8 @@ export default {
   },
   [GET_DEBTS_SUCCESS](state, debts) {
     state.userDebts = debts;
+  },
+  [CHANGE_WALLET_SUCCESS](state, wallet) {
+    state.currentWallet = wallet;
   },
 };

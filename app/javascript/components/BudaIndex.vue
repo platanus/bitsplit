@@ -1,7 +1,7 @@
 <template>
   <div>
     <center>
-      <div class="w-full max-w-xs">
+      <div class="w-full max-w-xs pb-16">
         <div>
           <textField>
             ¡Ya estás conectado a una cuenta Buda! ¿Qué desear hacer?"
@@ -12,7 +12,7 @@
             <submitButton
               @do-click="change('BudaForm')"
               width="full"
-              color="secondary"
+              color="primary"
             >
               Actualizar Keys
             </submitButton>
@@ -21,7 +21,7 @@
             <submitButton
               @do-click="change('BudaLogoutForm')"
               width="full"
-              color="secondary"
+              color="primary"
             >
               Desconectar Buda
             </submitButton>
