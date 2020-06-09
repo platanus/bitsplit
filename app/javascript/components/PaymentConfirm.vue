@@ -8,13 +8,10 @@
       </div>
       <div>
         <textField>
-          Monto: {{ this.userLastPaymentData.amount }} BTC
+          Monto: {{ this.userLastPaymentData.payment_amount }} BTC
         </textField>
         <textField>
-          Receptor: {{ this.userLastPaymentData.receiver }}
-        </textField>
-        <textField>
-          Fecha: {{ getDate(this.userLastPaymentData.date) }}
+          Correo: {{ this.userLastPaymentData.receiver_email }}
         </textField>
       </div>
     </div>
@@ -38,13 +35,6 @@ export default {
   },
   computed: {
     ...mapState('user', ['currentUser', 'userLastPaymentData']),
-  },
-  methods: {
-    getDate(date) {
-      const d = new Date(date);
-
-      return d.toLocaleString('en-US', { hour12: false });
-    },
   },
 };
 </script>
