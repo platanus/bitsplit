@@ -1,11 +1,18 @@
 <template>
   <button
     @click="moveMe()"
+    class="btn ext-black font-bold p-2 rounded focus:outline-none"
     :class="[
-      'text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline',
-      classmod,
+      width === 'full' ? 'w-full' : 'w-normal',
+      !loading
+        ? color === 'secondary'
+          ? 'bg-indigo-500 hover:bg-indigo-700'
+          : ''
+        : color === 'secondary'
+        ? 'bg-indigo-200 cursor-not-allowed'
+        : 'cursor-not-allowed',
     ]"
-    :disabled="fieldDisabled"
+    :disabled="loading"
   >
     <slot />
   </button>
@@ -17,14 +24,17 @@ export default {
   name: 'LinkButton',
   props: {
     fieldDisabled: Boolean,
+    fieldPlaceholder: String,
+    color: String,
+    width: String,
     route: String,
+    loading: {
+      type: Boolean,
+      default: false,
+    },
     paymentData: {
       type: Object,
       default: null,
-    },
-    classmod: {
-      type: String,
-      default: '',
     },
   },
   methods: {
