@@ -19,14 +19,11 @@
       <div class="lg:pr-5 flex flex-col">
         <UserCard classmod="self-center" />
         <div class="text-center px-4 py-2">
-          <LinkButton
-            v-if="budaSignedIn"
-            classmod="bg-blue-500 hover:bg-blue-700 my-3 md:my-0"
-            :field-disabled="false"
-            route="payment"
-          >
-            Hacer un pago
-          </LinkButton>
+          <submitButton>
+            <router-link class="px-6" to="/payment">
+              Hacer un pago
+            </router-link>
+          </submitButton>
         </div>
       </div>
       <div>
@@ -85,13 +82,13 @@
                 </template>
               </CustomTable>
               <div class="text-center px-4 py-2">
-                <LinkButton
+                <linkButton
                   classmod="bg-blue-500 hover:bg-blue-700 my-3 md:my-0"
                   :field-disabled="false"
                   route="payments-history"
                 >
                   Ver más
-                </LinkButton>
+                </linkButton>
               </div>
             </div>
             <div v-else>
@@ -155,7 +152,7 @@
                     </td>
                     <td :class="tdClass">${{ row.amount }}</td>
                     <td v-show="row.is_payable" :class="tdClass">
-                      <LinkButton
+                      <linkButton
                         classmod="bg-blue-500 hover:bg-blue-700 my-3 md:my-0"
                         route="splitwisepayment"
                         :payment-data="{
@@ -170,7 +167,7 @@
                         :field-disabled="false"
                       >
                         Pagar
-                      </LinkButton>
+                      </linkButton>
                     </td>
                   </template>
                 </CustomTable>
@@ -216,7 +213,7 @@
                       </td>
                       <td :class="tdClass">${{ row.amount }}</td>
                       <td v-show="row.is_payable" :class="tdClass">
-                        <LinkButton
+                        <linkButton
                           classmod="bg-blue-500 hover:bg-blue-700 my-3 md:my-0"
                           route="splitwisepayment"
                           :payment-data="{
@@ -231,7 +228,7 @@
                           :field-disabled="false"
                         >
                           Pagar
-                        </LinkButton>
+                        </linkButton>
                       </td>
                     </template>
                   </CustomTable>
@@ -258,7 +255,8 @@
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex';
 import BudaAlert from 'components/BudaAlert.vue';
-import LinkButton from '../components/LinkButton';
+import submitButton from '../components/SubmitButton';
+import linkButton from '../components/LinkButton';
 import UserCard from '../components/UserCard';
 import CustomTable from '../components/CustomTable';
 
@@ -284,7 +282,8 @@ export default {
   },
   components: {
     BudaAlert,
-    LinkButton,
+    submitButton,
+    linkButton,
     UserCard,
     CustomTable,
   },
