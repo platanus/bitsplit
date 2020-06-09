@@ -21,6 +21,10 @@ import {
   GET_PAYMENTS_FAIL,
   GET_PAYMENTS_SUCCESS,
   GET_DEBTS_SUCCESS,
+  SET_SPLITWISE_PAYMENT_DATA,
+  SEND_SPLITWISE_PAYMENT_ATTEMPT,
+  SEND_SPLITWISE_PAYMENT_FAIL,
+  SEND_SPLITWISE_PAYMENT_SUCCESS,
 } from '../../mutation-types';
 
 export default {
@@ -108,5 +112,8 @@ export default {
   },
   [GET_DEBTS_SUCCESS](state, debts) {
     state.userDebts = debts;
+  },
+  [SET_SPLITWISE_PAYMENT_DATA](state, data) {
+    state.splitwisePaymentData = data
   },
 };

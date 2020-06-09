@@ -26,6 +26,15 @@ const checkBudaAuth = (to, from, next) => {
   }
 };
 
+const checkSplitwiseData = (to, from, next) => {
+  // Cuando trato de ir a /splitwisepayments pero no he cargado los datos
+  if (store.getters['user/splitwisePaymentChecked']) {
+    next();
+  } else {
+    next('/home');
+  }
+};
+
 const groupDebtsById = (friendsToUser, userToFriends) => {
   const debts = {};
   friendsToUser &&
@@ -44,7 +53,7 @@ const groupDebtsById = (friendsToUser, userToFriends) => {
     );
   userToFriends &&
     userToFriends.forEach(
-      ({ group_id, group_name, to, amount, currency_code }) => {
+      ({ group_id, group_name, to, amount, currency_code, is_payable }) => {
         if (!debts[group_id]) {
           debts[group_id] = {
             group_id,
@@ -53,7 +62,7 @@ const groupDebtsById = (friendsToUser, userToFriends) => {
             userToFriends: [],
           };
         }
-        debts[group_id].userToFriends.push({ ...to, amount, currency_code, type: 0 });
+        debts[group_id].userToFriends.push({ ...to, amount, currency_code, is_payable, type: 0 });
       }
     );
   return debts;
@@ -77,6 +86,7 @@ export {
   checkAuth,
   checkNoAuth,
   checkBudaAuth,
+  checkSplitwiseData,
   groupDebtsById,
   authedAxios,
 };
