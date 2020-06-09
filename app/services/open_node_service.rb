@@ -1,12 +1,11 @@
 class OpenNodeService < PowerTypes::Service.new
   # Service code goes here
 
-  def send_charge_request(amount, currency)
+  def send_charge_request(amount, currency, order_id)
     url = url('/v1/charges')
+    webhook_url = ENV.fetch('DEPOSIT_WEBHOOK_URL')
     headers = headers(@charges_api_key)
-    # 100,000,000 satoshis = 1 btc
-    amount_satoshis = (amount * 100_000_000).to_i
-    body = { amount: amount_satoshis, currency: currency }.to_json
+    body = { amount: amount, currency: currency, order_id: order_id, callback_url: webhook_url }.to_json
     post_request(url, body, headers)
   end
 
