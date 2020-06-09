@@ -1,0 +1,2 @@
+class UserDeposit < ApplicationRecord
+end
