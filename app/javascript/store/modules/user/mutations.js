@@ -89,13 +89,9 @@ export default {
   [SEND_PAYMENT_ATTEMPT](state) {
     state.sendPaymentLoading = true;
   },
-  [SEND_PAYMENT_SUCCESS](state, attributes) {
+  [SEND_PAYMENT_SUCCESS](state, { data }) {
     state.sendPaymentLoading = false;
-    state.userLastPaymentData = {
-      amount: parseFloat(attributes.amount),
-      receiver: attributes.receiver_email,
-      date: attributes.created_at,
-    };
+    state.userLastPaymentData = data;
   },
   [SEND_PAYMENT_FAIL](state) {
     state.sendPaymentLoading = false;
@@ -114,6 +110,16 @@ export default {
     state.userDebts = debts;
   },
   [SET_SPLITWISE_PAYMENT_DATA](state, data) {
-    state.splitwisePaymentData = data
+    state.splitwisePaymentData = data;
+  },
+  [SEND_SPLITWISE_PAYMENT_ATTEMPT](state) {
+    state.sendPaymentLoading = true;
+  },
+  [SEND_SPLITWISE_PAYMENT_SUCCESS](state, { data }) {
+    state.sendPaymentLoading = false;
+    state.userLastPaymentData = data;
+  },
+  [SEND_SPLITWISE_PAYMENT_FAIL](state) {
+    state.sendPaymentLoading = false;
   },
 };

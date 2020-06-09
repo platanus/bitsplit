@@ -48,13 +48,12 @@ const getQuotationApi = payload =>
 
 const getUserBalanceApi = () => authedAxios.get('/api/v2/balances/');
 
-const sendPaymentApi = payload => {
+const sendPaymentApi = payload =>
   authedAxios.post('/api/v2/transfers/', {
     amount: payload.payment_amount,
     receiver_email: payload.receiver_email,
     wallet_origin: payload.wallet_origin,
   });
-}
 
 const getPaymentsApi = () => authedAxios.get('/api/v1/payments/');
 
@@ -62,6 +61,13 @@ const getSplitwiseUrlApi = () =>
   authedAxios.post('/api/v1/splitwise/authentications/');
 
 const getSplitwiseDebtsApi = () => authedAxios.get('/api/v1/splitwise/debts/');
+
+const payOffSplitwiseDebtApi = payload =>
+  authedAxios.post('/api/v1/splitwise/debts/', {
+    amount_clp: payload.amount_clp,
+    group_id: payload.group_id,
+    to_user_id: payload.to_user_id,
+  });
 
 export {
   loginApi,
@@ -76,4 +82,5 @@ export {
   getSplitwiseUrlApi,
   getSplitwiseDebtsApi,
   updateUserApi,
+  payOffSplitwiseDebtApi,
 };
