@@ -119,15 +119,10 @@
           <div v-else class="bg-gray-200 rounded-md">
             <div
               v-if="
-                userSplitwiseDebts.singleDebts ||
-                userSplitwiseDebts.groupDebts
+                userSplitwiseDebts.singleDebts || userSplitwiseDebts.groupDebts
               "
             >
-              <div
-                v-if="
-                  userSplitwiseDebts.singleDebts
-                "
-              >
+              <div v-if="userSplitwiseDebts.singleDebts">
                 <p class="text-5xl font-bold">
                   Deudas Individuales
                 </p>
@@ -141,20 +136,14 @@
                   :columns="debtsColumns"
                 >
                   <template #default="{ row, tdClass }">
-                    <td
-                      v-if="row.type"
-                      :class="tdClass"
-                    >
+                    <td v-if="row.type" :class="tdClass">
                       <span
                         class="text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
                       >
                         Te deben
                       </span>
                     </td>
-                    <td
-                      v-else
-                      :class="tdClass"
-                    >
+                    <td v-else :class="tdClass">
                       <span
                         class="text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"
                       >
@@ -166,52 +155,56 @@
                     </td>
                     <td :class="tdClass">${{ row.amount }}</td>
                     <td v-show="row.is_payable" :class="tdClass">
-                      Pagar
+                      <LinkButton
+                        classmod="bg-blue-500 hover:bg-blue-700 my-3 md:my-0"
+                        route="splitwisepayment"
+                        :payment-data="{
+                          group_id: 0,
+                          to_user_id: row.id,
+                          first_name: row.first_name,
+                          last_name: row.last_name,
+                          email: row.email,
+                          amount: row.amount,
+                          currency_code: row.currency_code.toLowerCase(),
+                        }"
+                        :field-disabled="false"
+                      >
+                        Pagar
+                      </LinkButton>
                     </td>
                   </template>
                 </CustomTable>
               </div>
-              <div
-                v-if="
-                  userSplitwiseDebts.groupDebts
-                "
-              >
+              <div v-if="userSplitwiseDebts.groupDebts">
                 <p class="text-5xl font-bold">
                   Deudas Grupales
                 </p>
                 <div
                   v-for="(group_debt,
-                  index) in userSplitwiseDebts.groupDebts
-                    .slice()
-                    .reverse()"
+                  index) in userSplitwiseDebts.groupDebts.slice().reverse()"
                   :key="index"
                 >
                   <p class="text-5xl font-bold">
                     Grupo: {{ group_debt.group_name }}
                   </p>
-                  <CustomTable :data="
-                    group_debt.friendsToUser
-                      .concat(group_debt.userToFriends)
-                      .slice()
-                      .reverse()
+                  <CustomTable
+                    :data="
+                      group_debt.friendsToUser
+                        .concat(group_debt.userToFriends)
+                        .slice()
+                        .reverse()
                     "
                     :columns="debtsColumns"
                   >
                     <template #default="{ row, tdClass }">
-                      <td
-                        v-if="row.type"
-                        :class="tdClass"
-                      >
+                      <td v-if="row.type" :class="tdClass">
                         <span
-                          class="text-xs leading-5 font-semibol rounded-full bg-green-100 text-green-800"
+                          class="text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
                         >
                           Te deben
                         </span>
                       </td>
-                      <td
-                        v-else
-                        :class="tdClass"
-                      >
+                      <td v-else :class="tdClass">
                         <span
                           class="text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"
                         >
@@ -223,7 +216,22 @@
                       </td>
                       <td :class="tdClass">${{ row.amount }}</td>
                       <td v-show="row.is_payable" :class="tdClass">
-                        Pagar
+                        <LinkButton
+                          classmod="bg-blue-500 hover:bg-blue-700 my-3 md:my-0"
+                          route="splitwisepayment"
+                          :payment-data="{
+                            group_id: group_debt.group_id,
+                            to_user_id: row.id,
+                            first_name: row.first_name,
+                            last_name: row.last_name,
+                            email: row.email,
+                            amount: row.amount,
+                            currency_code: row.currency_code.toLowerCase(),
+                          }"
+                          :field-disabled="false"
+                        >
+                          Pagar
+                        </LinkButton>
                       </td>
                     </template>
                   </CustomTable>
