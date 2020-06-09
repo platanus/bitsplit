@@ -45,7 +45,7 @@
           class="flex flex-col items-center sm:flex-row justify-between pb-3 text-grey-dark"
         >
           <h2 class="font-normal">
-            Dinero en buda
+            Dinero en Buda
           </h2>
           <div class="flex mr-3 font-thin">
             <div class="text-center mr-3 pr-3">

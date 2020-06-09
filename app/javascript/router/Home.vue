@@ -117,40 +117,109 @@
             <p>Cargando...</p>
           </div>
           <div v-else class="bg-gray-200 rounded-md">
-            <div>
-              <div>
+            <div
+              v-if="
+                userSplitwiseDebts.singleDebts ||
+                userSplitwiseDebts.groupDebts
+              "
+            >
+              <div
+                v-if="
+                  userSplitwiseDebts.singleDebts
+                "
+              >
                 <p class="text-5xl font-bold">
-                  Deudas hacia amigos
+                  Deudas Individuales
                 </p>
+                <CustomTable
+                  :data="
+                    userSplitwiseDebts.singleDebts.friendsToUser
+                      .concat(userSplitwiseDebts.singleDebts.userToFriends)
+                      .slice()
+                      .reverse()
+                  "
+                  :columns="debtsColumns"
+                >
+                  <template #default="{ row, tdClass }">
+                    <td
+                      v-if="row.type"
+                      :class="tdClass"
+                    >
+                      <span
+                        class="text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+                      >
+                        Te deben
+                      </span>
+                    </td>
+                    <td
+                      v-else
+                      :class="tdClass"
+                    >
+                      <span
+                        class="text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"
+                      >
+                        Debes
+                      </span>
+                    </td>
+                    <td :class="tdClass">
+                      {{ row.first_name + ' ' + row.last_name }}
+                    </td>
+                    <td :class="tdClass">${{ row.amount }}</td>
+                    <td v-show="row.is_payable" :class="tdClass">
+                      Pagar
+                    </td>
+                  </template>
+                </CustomTable>
               </div>
               <div
                 v-if="
-                  userSplitwiseDebts.userToFriends.singleUserToFriends.length ||
-                  userSplitwiseDebts.userToFriends.groupUserToFriends.length
+                  userSplitwiseDebts.groupDebts
                 "
               >
+                <p class="text-5xl font-bold">
+                  Deudas Grupales
+                </p>
                 <div
-                  v-if="
-                    userSplitwiseDebts.userToFriends.singleUserToFriends.length
-                  "
+                  v-for="(group_debt,
+                  index) in userSplitwiseDebts.groupDebts
+                    .slice()
+                    .reverse()"
+                  :key="index"
                 >
                   <p class="text-5xl font-bold">
-                    Deudas Individuales
+                    Grupo: {{ group_debt.group_name }}
                   </p>
-                  <CustomTable
-                    :data="
-                      userSplitwiseDebts.userToFriends.singleUserToFriends
-                        .slice()
-                        .reverse()
+                  <CustomTable :data="
+                    group_debt.friendsToUser
+                      .concat(group_debt.userToFriends)
+                      .slice()
+                      .reverse()
                     "
                     :columns="debtsColumns"
                   >
                     <template #default="{ row, tdClass }">
-                      <td :class="tdClass">
-                        {{ row.from.first_name + ' ' + row.from.last_name }}
+                      <td
+                        v-if="row.type"
+                        :class="tdClass"
+                      >
+                        <span
+                          class="text-xs leading-5 font-semibol rounded-full bg-green-100 text-green-800"
+                        >
+                          Te deben
+                        </span>
+                      </td>
+                      <td
+                        v-else
+                        :class="tdClass"
+                      >
+                        <span
+                          class="text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"
+                        >
+                          Debes
+                        </span>
                       </td>
                       <td :class="tdClass">
-                        {{ row.to.first_name + ' ' + row.to.last_name }}
+                        {{ row.first_name + ' ' + row.last_name }}
                       </td>
                       <td :class="tdClass">${{ row.amount }}</td>
                       <td v-show="row.is_payable" :class="tdClass">
@@ -159,130 +228,12 @@
                     </template>
                   </CustomTable>
                 </div>
-                <div
-                  v-if="
-                    userSplitwiseDebts.userToFriends.groupUserToFriends.length
-                  "
-                >
-                  <p class="text-5xl font-bold">
-                    Deudas Grupales
-                  </p>
-                  <div
-                    v-for="(group_debt,
-                    index) in userSplitwiseDebts.userToFriends.groupUserToFriends
-                      .slice()
-                      .reverse()"
-                    :key="index"
-                  >
-                    <p class="text-5xl font-bold">
-                      Grupo: {{ group_debt[0].group_name }}
-                    </p>
-                    <CustomTable :data="group_debt" :columns="debtsColumns">
-                      <template #default="{ row, tdClass }">
-                        <td :class="tdClass">
-                          {{ row.from.first_name + ' ' + row.from.last_name }}
-                        </td>
-                        <td :class="tdClass">
-                          {{ row.to.first_name + ' ' + row.to.last_name }}
-                        </td>
-                        <td :class="tdClass">${{ row.amount }}</td>
-                        <td v-show="row.is_payable" :class="tdClass">
-                          Pagar
-                        </td>
-                      </template>
-                    </CustomTable>
-                  </div>
-                </div>
-              </div>
-              <div v-else>
-                <p class="text-5xl font-bold">
-                  No hay deudas para mostrar
-                </p>
               </div>
             </div>
-
-            <div>
-              <div>
-                <p class="text-5xl font-bold">
-                  Deudas de amigos hacia ti
-                </p>
-              </div>
-              <div
-                v-if="
-                  userSplitwiseDebts.friendsToUser.singleFriendsToUser.length ||
-                  userSplitwiseDebts.friendsToUser.groupFriendsToUser.length
-                "
-              >
-                <div
-                  v-if="
-                    userSplitwiseDebts.friendsToUser.singleFriendsToUser.length
-                  "
-                >
-                  <p class="text-5xl font-bold">
-                    Deudas Individuales
-                  </p>
-                  <CustomTable
-                    :data="
-                      userSplitwiseDebts.friendsToUser.singleFriendsToUser
-                        .slice()
-                        .reverse()
-                    "
-                    :columns="debtsColumns"
-                  >
-                    <template #default="{ row, tdClass }">
-                      <td :class="tdClass">
-                        {{ row.from.first_name + ' ' + row.from.last_name }}
-                      </td>
-                      <td :class="tdClass">
-                        {{ row.to.first_name + ' ' + row.to.last_name }}
-                      </td>
-                      <td :class="tdClass">${{ row.amount }}</td>
-                      <td v-show="row.is_payable" :class="tdClass">
-                        Pagar
-                      </td>
-                    </template>
-                  </CustomTable>
-                </div>
-                <div
-                  v-if="
-                    userSplitwiseDebts.friendsToUser.groupFriendsToUser.length
-                  "
-                >
-                  <p class="text-5xl font-bold">
-                    Deudas Grupales
-                  </p>
-                  <div
-                    v-for="(group_debt,
-                    index) in userSplitwiseDebts.friendsToUser.groupFriendsToUser
-                      .slice()
-                      .reverse()"
-                    :key="index"
-                  >
-                    <p class="text-5xl font-bold">
-                      Grupo: {{ group_debt[0].group_name }}
-                    </p>
-                    <CustomTable :data="group_debt" :columns="debtsColumns">
-                      <template #default="{ row, tdClass }">
-                        <td :class="tdClass">
-                          {{ row.from.first_name + ' ' + row.from.last_name }}
-                        </td>
-                        <td :class="tdClass">
-                          {{ row.to.first_name + ' ' + row.to.last_name }}
-                        </td>
-                        <td :class="tdClass">${{ row.amount }}</td>
-                        <td v-show="row.is_payable" :class="tdClass">
-                          Pagar
-                        </td>
-                      </template>
-                    </CustomTable>
-                  </div>
-                </div>
-              </div>
-              <div v-else>
-                <p class="text-5xl font-bold">
-                  No hay deudas para mostrar
-                </p>
-              </div>
+            <div v-else>
+              <p class="text-5xl font-bold">
+                No hay deudas para mostrar
+              </p>
             </div>
           </div>
         </div>
@@ -316,7 +267,7 @@ export default {
         'Cantidad CLP',
         'Fecha',
       ],
-      debtsColumns: ['De', 'Para', 'Monto', 'Pagar'],
+      debtsColumns: ['', 'Nombre', 'Monto', 'Pagar'],
     };
   },
   created() {

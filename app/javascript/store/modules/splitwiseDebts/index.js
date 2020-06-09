@@ -8,7 +8,7 @@ import {
 
 import { getSplitwiseDebtsApi } from '../../../api/user.js';
 
-import { filterSingleDebts, filterGroupDebts } from '../../../helpers';
+import { groupDebtsById } from '../../../helpers';
 
 const splitwiseDebtsState = {
   getSplitwiseDebtsLoading: false,
@@ -22,8 +22,7 @@ const actions = {
     return getSplitwiseDebtsApi(payload)
       .then(res => {
         commit(GET_SPLIWITSE_DEBTS_SUCCESS, {
-          userToFriends: res.data.data.attributes.user_to_friends,
-          friendsToUser: res.data.data.attributes.friends_to_user,
+          debts: res.data.data.attributes
         });
 
         return;
@@ -54,16 +53,12 @@ const mutations = {
   },
   [GET_SPLIWITSE_DEBTS_SUCCESS](state, debts) {
     state.getSplitwiseDebtsLoading = false;
-    state.userSplitwiseDebts = {
-      userToFriends: {
-        singleUserToFriends: filterSingleDebts(debts.userToFriends),
-        groupUserToFriends: filterGroupDebts(debts.userToFriends),
-      },
-      friendsToUser: {
-        singleFriendsToUser: filterSingleDebts(debts.friendsToUser),
-        groupFriendsToUser: filterGroupDebts(debts.friendsToUser),
-      },
-    };
+    const debtsByGroup = groupDebtsById(
+      debts.debts.friends_to_user,
+      debts.debts.user_to_friends
+    );
+    const { 0: singleDebts, ...groupDebts } = debtsByGroup;
+    state.userSplitwiseDebts = { singleDebts, groupDebts: Object.values(groupDebts) }
   },
 };
 

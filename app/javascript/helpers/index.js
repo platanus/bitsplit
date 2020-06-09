@@ -26,27 +26,39 @@ const checkBudaAuth = (to, from, next) => {
   }
 };
 
-const mergeDebts = array => {
-  const result = array.reduce((r, a) => {
-    r[a.group_id] = r[a.group_id] || [];
-    r[a.group_id].push(a);
-
-    return r;
-  }, {});
-
-  return Object.values(result);
-};
-
-const filterSingleDebts = array => {
-  const result = array && array.filter(debt => debt.group_id === 0);
-
-  return result;
-};
-
-const filterGroupDebts = array => {
-  const result = array && mergeDebts(array.filter(debt => debt.group_id > 0));
-
-  return result;
+const groupDebtsById = (friendsToUser, userToFriends) => {
+  const debts = {};
+  friendsToUser &&
+    function(){
+      friendsToUser.forEach(
+        ({ group_id, group_name, from, amount, currency_code }) => {
+          if (!debts[group_id]) {
+            debts[group_id] = {
+              group_id,
+              group_name,
+              friendsToUser: [],
+              userToFriends: [],
+            };
+          }
+          debts[group_id].friendsToUser.push({ ...from, amount, currency_code, type: 1 });
+        }
+      )
+    };
+  userToFriends &&
+    userToFriends.forEach(
+      ({ group_id, group_name, to, amount, currency_code }) => {
+        if (!debts[group_id]) {
+          debts[group_id] = {
+            group_id,
+            group_name,
+            friendsToUser: [],
+            userToFriends: [],
+          };
+        }
+        debts[group_id].userToFriends.push({ ...to, amount, currency_code, type: 0 });
+      }
+    );
+  return debts;
 };
 
 const authedAxios = axios.create();
@@ -67,7 +79,6 @@ export {
   checkAuth,
   checkNoAuth,
   checkBudaAuth,
-  filterSingleDebts,
-  filterGroupDebts,
+  groupDebtsById,
   authedAxios,
 };
