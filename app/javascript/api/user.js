@@ -48,11 +48,13 @@ const getQuotationApi = payload =>
 
 const getUserBalanceApi = () => authedAxios.get('/api/v2/balances/');
 
-const sendPaymentApi = payload =>
-  authedAxios.post('/api/v1/payments/', {
-    payment_amount: payload.payment_amount,
+const sendPaymentApi = payload => {
+  authedAxios.post('/api/v2/transfers/', {
+    amount: payload.payment_amount,
     receiver_email: payload.receiver_email,
+    wallet_origin: payload.wallet_origin,
   });
+}
 
 const getPaymentsApi = () => authedAxios.get('/api/v1/payments/');
 
