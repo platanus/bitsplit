@@ -29,21 +29,19 @@ const checkBudaAuth = (to, from, next) => {
 const groupDebtsById = (friendsToUser, userToFriends) => {
   const debts = {};
   friendsToUser &&
-    function(){
-      friendsToUser.forEach(
-        ({ group_id, group_name, from, amount, currency_code }) => {
-          if (!debts[group_id]) {
-            debts[group_id] = {
-              group_id,
-              group_name,
-              friendsToUser: [],
-              userToFriends: [],
-            };
-          }
-          debts[group_id].friendsToUser.push({ ...from, amount, currency_code, type: 1 });
+    friendsToUser.forEach(
+      ({ group_id, group_name, from, amount, currency_code }) => {
+        if (!debts[group_id]) {
+          debts[group_id] = {
+            group_id,
+            group_name,
+            friendsToUser: [],
+            userToFriends: [],
+          };
         }
-      )
-    };
+        debts[group_id].friendsToUser.push({ ...from, amount, currency_code, type: 1 });
+      }
+    );
   userToFriends &&
     userToFriends.forEach(
       ({ group_id, group_name, to, amount, currency_code }) => {
