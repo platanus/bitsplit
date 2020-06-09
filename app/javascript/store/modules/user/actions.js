@@ -55,6 +55,7 @@ import {
   sendPaymentApi,
   getPaymentsApi,
   getSplitwiseUrlApi,
+  payOffSplitwiseDebtApi,
 } from '../../../api/user.js';
 
 import { widthdrawalTestApi, chargeTestApi } from '../../../api/wallet';
@@ -360,8 +361,8 @@ export default {
     commit(SEND_PAYMENT_ATTEMPT);
 
     return sendPaymentApi(payload)
-      .then(res => {
-        commit(SEND_PAYMENT_SUCCESS, res.data.data.attributes);
+      .then(() => {
+        commit(SEND_PAYMENT_SUCCESS, { data: payload });
         dispatch('alert/successAlert', 'Pago realizado correctamente', {
           root: true,
         });
@@ -424,6 +425,35 @@ export default {
   },
   [setSplitwisePaymentData]({ commit }, payload) {
     commit(SET_SPLITWISE_PAYMENT_DATA, payload);
+  },
+  [sendSplitwisePayment]({ commit, dispatch }, payload) {
+    commit(SEND_SPLITWISE_PAYMENT_ATTEMPT);
+
+    return sendPaymentApi(payload)
+      .then(() =>
+        payOffSplitwiseDebtApi(payload).then(() => {
+          commit(SEND_SPLITWISE_PAYMENT_SUCCESS, { data: payload });
+          dispatch('alert/successAlert', 'Deuda saldada correctamente', {
+            root: true,
+          });
+
+          return;
+        })
+      )
+      .catch(err => {
+        commit(SEND_SPLITWISE_PAYMENT_FAIL);
+        if (err.response) {
+          dispatch(
+            'alert/errorAlert',
+            'Error enviando pago. Revise los datos ingresados',
+            { root: true }
+          );
+          throw new Error('Error enviando pago. Revise los datos ingresados');
+        } else {
+          dispatch('alert/errorAlert', 'Error desconocido', { root: true });
+          throw new Error('Error desconocido');
+        }
+      });
   },
   [chargeOpenNode]({ dispatch }, { amount, currency }) {
     if (!amount || !currency) {
