@@ -40,7 +40,7 @@
           </div>
         </div>
       </div>
-      <div class="p-3">
+      <div v-if="budaSignedIn" class="p-3">
         <div
           class="flex flex-col items-center sm:flex-row justify-between pb-3 text-grey-dark"
         >
@@ -67,7 +67,7 @@
   </div>
 </template>
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
 
 export default {
   name: 'UserCard',
@@ -78,6 +78,7 @@ export default {
     },
   },
   computed: {
+    ...mapGetters('user', ['budaSignedIn']),
     ...mapState('user', [
       'currentUser',
       'userBalanceBudaCLP',

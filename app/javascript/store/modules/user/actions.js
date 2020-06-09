@@ -9,6 +9,7 @@ import {
   getUserBalance,
   sendPayment,
   getPayments,
+  changeWallet,
   getSplitwiseUrl,
   setSplitwisePaymentData,
   sendSplitwisePayment,
@@ -42,6 +43,7 @@ import {
   SEND_SPLITWISE_PAYMENT_ATTEMPT,
   SEND_SPLITWISE_PAYMENT_FAIL,
   SEND_SPLITWISE_PAYMENT_SUCCESS,
+  CHANGE_WALLET_SUCCESS,
 } from '../../mutation-types';
 
 import {
@@ -502,5 +504,12 @@ export default {
         throw Error(err);
         // }
       });
+  },
+  [changeWallet]({ commit }, payload) {
+    if (payload === 'Bitsplit') {
+      commit(CHANGE_WALLET_SUCCESS, 'Buda');
+    } else {
+      commit(CHANGE_WALLET_SUCCESS, 'Bitsplit');
+    }
   },
 };

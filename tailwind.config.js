@@ -3,25 +3,26 @@ module.exports = {
   theme: {
     fontSize: {
       xxl: '3.6rem',
-      xl: '2.6rem'
+      xl: '2.6rem',
+      lg: '1.6rem',
     },
     fontFamily: {
       display: '',
-      body: ''
+      body: '',
     },
     extend: {
       colors: {
         purple: {
           100: '#8070E3',
-          900: '#1a202c'
-        }
+          900: '#1a202c',
+        },
       },
       backgroundColor: {
         primary: '#F8F8FD',
-        secondary: '#4434aa'
-      }
-    }
+        secondary: '#4434aa',
+      },
+    },
   },
   variants: {},
-  plugins: []
-}
+  plugins: [],
+};

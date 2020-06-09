@@ -181,16 +181,13 @@ export default {
     ]),
     ...mapGetters('user', ['budaSignedIn']),
   },
-  created() {
-    this.getUserBalance();
-  },
   watch: {
     amount: debounce(function () {
       this.getNewQuotation();
     }, DEBOUNCE_TIMER),
   },
   methods: {
-    ...mapActions('user', ['getQuotation', 'getUserBalance', 'sendPayment']),
+    ...mapActions('user', ['getQuotation', 'sendPayment']),
     ...mapActions('component', ['changePaymentComp']),
     getNewQuotation() {
       const { amount } = this;

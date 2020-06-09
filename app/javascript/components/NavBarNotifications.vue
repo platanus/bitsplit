@@ -66,17 +66,32 @@ export default {
   },
   methods: {
     ...mapActions('notification', ['markAsSeen']),
-    ...mapActions('user', ['getUserBalance', 'getPayments']),
+    ...mapActions('user', ['getCurrentUser', 'getUserBalance', 'getPayments']),
   },
   computed: {
     ...mapGetters('notification', ['unSeenNotifications']),
     ...mapState('notification', ['notifications']),
+    ...mapState('user', ['currentUser']),
 
     hasNotifications() {
       return !!this.unSeenNotifications[0];
     },
   },
+  // Cuando se carga la pagina con un usuario ingresado
+  created() {
+    this.getCurrentUser({
+      authentication_token: this.currentUser.authentication_token,
+    });
+    this.getUserBalance();
+  },
+  // Cuando se cambia de ruta con un usuario ingresado
   watch: {
+    $route() {
+      this.getCurrentUser({
+        authentication_token: this.currentUser.authentication_token,
+      });
+      this.getUserBalance();
+    },
     unSeenNotifications(newNotifications, oldNotifications) {
       const nPaymentsOld = oldNotifications.filter(d => d.type === 'payment')
         .length;
