@@ -10,7 +10,7 @@ class Api::V2::TransfersController < Api::V2::BaseController
 
     if success
       NotificationsService.new(receiver).payment_notifications(current_user.email, params[:amount])
-      render json: { payment: message }, status: 200
+      @response = message
     else
       render json: { error: message }, status: 400
     end
