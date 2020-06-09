@@ -2,28 +2,96 @@
   <div class="flex justify-center m-16">
     <div class="w-full max-w-xs">
       <spinner v-if="sendPaymentLoading" />
+      <div class="p-3">
+        <div class="border-b border-t p-3 mt-4">
+          <div
+            class="flex flex-col items-center sm:flex-row justify-between pb-3 text-grey-dark"
+          >
+            <h2 class="font-normal">
+              Dinero en Bitsplit
+            </h2>
+            <div class="flex mr-3 font-thin">
+              <div class="text-center mr-3 pr-3">
+                <h2>{{ userBalanceBitsplitBTC }}</h2>
+                <span>BTC</span>
+              </div>
+              <div class="text-center mr-3 pr-3">
+                <h2>${{ userBalanceBitsplitBTCCLP }}</h2>
+                <span>CLP aprox</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="p-3">
+          <div
+            class="flex flex-col items-center sm:flex-row justify-between pb-3 text-grey-dark"
+          >
+            <h2 class="font-normal">
+              Dinero en Buda
+            </h2>
+            <div class="flex mr-3 font-thin">
+              <div class="text-center mr-3 pr-3">
+                <h2>{{ userBalanceBudaBTC }}</h2>
+                <span>BTC</span>
+              </div>
+              <div class="text-center mr-3 border-r pr-3">
+                <h2>${{ userBalanceBudaBTCCLP }}</h2>
+                <span>CLP aprox</span>
+              </div>
+              <div class="text-center">
+                <h2>${{ userBalanceBudaCLP }}</h2>
+                <span>CLP</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <form @submit.prevent="handleSubmit">
         <div class="flex flex-col mb-6 mt-6">
           <label class="block text-gray-700 text-lg" for="account_balance"
-            >Saldo disponible:</label
+            >Wallet Actual:
+            {{
+              currentWallet().charAt(0).toUpperCase() + currentWallet().slice(1)
+            }}
+          </label>
+          <select
+            class="txt-input appearance-none border rounded w-full my-4 py-2 px-3 leading-tight"
+            v-model="wallet_origin_selected"
           >
-          <label
-            class="mb-4 uppercase font-bold text-xl text-indigo-600"
-            for="account_balance"
-            >${{ userBalanceBudaCLP }} CLP</label
-          >
-          <label
-            class="mb-4 uppercase font-bold text-xl text-indigo-600"
-            for="account_balance"
-            >${{ userBalanceBudaBTC }} BTC</label
-          >
-          <textInput
-            field-id="amount"
-            field-type="number"
-            field-placeholder="Monto a transferir"
-            field-name="amount"
-            v-model="amount"
-          />
+            <option value="" disabled selected>
+              Cambiar Wallet
+            </option>
+            <option value="bitsplit">
+              Bitsplit
+            </option>
+            <option v-if="budaSignedIn" value="buda">
+              Buda
+            </option>
+          </select>
+          <div class="flex">
+            <div class="w-5/6 pr-2">
+              <textInput
+                field-id="amount"
+                field-type="number"
+                field-placeholder="Monto a transferir"
+                field-name="amount"
+                v-model="amount"
+              />
+            </div>
+            <div class="w-1/6 pl-2">
+              <select
+                v-model="currency_seleced"
+                class="txt-input appearance-none border rounded w-full mb-4 py-2 px-3 leading-tight"
+              >
+                <option value="btc">
+                  BTC
+                </option>
+                <option v-if="currentWallet() === 'buda'" value="clp">
+                  CLP
+                </option>
+              </select>
+            </div>
+          </div>
         </div>
         <div class="flex flex-col mb-6 mt-6">
           <label class="block mt-4 text-gray-700 text-lg" for="account_balance"
@@ -58,7 +126,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
+import { mapActions, mapState, mapGetters } from 'vuex';
 import textInput from '../components/Input';
 import submitButton from '../components/SubmitButton';
 import spinner from '../components/Spinner';
@@ -81,7 +149,7 @@ function debounce(func, wait, immediate) {
 }
 
 const DEBOUNCE_TIMER = 1000;
-const MIN_PAYMENT = 100;
+const MIN_QUOTATION = 200;
 
 export default {
   name: 'Payment',
@@ -90,6 +158,8 @@ export default {
       routeName: 'PaymentRoute',
       amount: '',
       receiver_email: '',
+      wallet_origin_selected: '',
+      currency_seleced: 'btc',
       quotationCLP: 0,
       quotationBTC: 0,
     };
@@ -105,7 +175,11 @@ export default {
       'sendPaymentLoading',
       'userBalanceBudaCLP',
       'userBalanceBudaBTC',
+      'userBalanceBudaBTCCLP',
+      'userBalanceBitsplitBTC',
+      'userBalanceBitsplitBTCCLP',
     ]),
+    ...mapGetters('user', ['budaSignedIn']),
   },
   watch: {
     amount: debounce(function () {
@@ -117,7 +191,7 @@ export default {
     ...mapActions('component', ['changePaymentComp']),
     getNewQuotation() {
       const { amount } = this;
-      if (amount >= MIN_PAYMENT) {
+      if (amount >= MIN_QUOTATION && this.currency_seleced === 'clp') {
         this.getQuotation({ amount })
           .then(balance => {
             this.quotationCLP = balance.amount_clp[0];
@@ -128,12 +202,25 @@ export default {
           });
       }
     },
+    currentWallet() {
+      const wallet = this.wallet_origin_selected
+        ? this.wallet_origin_selected
+        : this.currentUser.wallet;
+      if (wallet === 'bitsplit') this.currency_seleced = 'btc';
+
+      return wallet;
+    },
     handleSubmit() {
-      const { amount, receiver_email } = this;
+      const wallet = this.currentWallet();
+      const { amount, receiver_email, currency_seleced } = this;
       if (amount && receiver_email) {
         this.sendPayment({
-          payment_amount: parseFloat(this.quotationBTC),
+          payment_amount:
+            currency_seleced === 'clp'
+              ? parseFloat(this.quotationBTC)
+              : parseFloat(amount),
           receiver_email,
+          wallet_origin: wallet,
         })
           .then(() => {
             this.changePaymentComp('PaymentConfirm');
