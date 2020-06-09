@@ -13,6 +13,8 @@ import {
   // getDebts,
   updateCurrentUser,
   getSplitwiseUrl,
+  setSplitwisePaymentData,
+  sendSplitwisePayment,
   chargeOpenNode,
   withdrawalOpenNode,
 } from '../../action-types';
@@ -39,6 +41,10 @@ import {
   GET_PAYMENTS_ATTEMPT,
   GET_PAYMENTS_FAIL,
   GET_PAYMENTS_SUCCESS,
+  SET_SPLITWISE_PAYMENT_DATA,
+  SEND_SPLITWISE_PAYMENT_ATTEMPT,
+  SEND_SPLITWISE_PAYMENT_FAIL,
+  SEND_SPLITWISE_PAYMENT_SUCCESS,
 } from '../../mutation-types';
 
 import {
@@ -419,6 +425,9 @@ export default {
           throw new Error('Error desconocido');
         }
       });
+  },
+  [setSplitwisePaymentData]({ commit }, payload) {
+    commit(SET_SPLITWISE_PAYMENT_DATA, payload);
   },
   [chargeOpenNode]({ dispatch }, { amount, currency }) {
     if (!amount || !currency) {
