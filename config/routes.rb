@@ -26,6 +26,7 @@ Rails.application.routes.draw do
       resource :balances, only: [:show]
       resource :push_notifications, only: [:create]
       resource :transactions, only: [:show]
+      resource :depositwebhooks, only: [:create]
     end
   end
   
