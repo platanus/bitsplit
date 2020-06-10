@@ -10,12 +10,19 @@
         </router-link>
       </button>
       <button
-        v-if="budaSignedIn"
         type="button"
         class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
       >
         <router-link :to="payRoute">
           Pagar
+        </router-link>
+      </button>
+      <button
+        type="button"
+        class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
+      >
+        <router-link :to="splitwiseRoute">
+          Splitwise
         </router-link>
       </button>
       <NavBarNotifications />
@@ -71,6 +78,7 @@ export default {
       budaRoute: '/buda',
       landingRoute: '/',
       payRoute: '/payment',
+      splitwiseRoute: '/splitwise',
       profileRoute: '/profile/', // No borrar el ultimo '/'
     };
   },
@@ -83,7 +91,7 @@ export default {
   },
   computed: {
     ...mapState('user', ['currentUser']),
-    ...mapGetters('user', ['signedIn', 'budaSignedIn']),
+    ...mapGetters('user', ['signedIn', 'budaSignedIn', 'splitwiseSignedIn']),
   },
   created() {
     if (this.signedIn) {
