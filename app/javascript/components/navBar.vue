@@ -18,12 +18,22 @@
         </router-link>
       </button>
       <button
+        v-if="splitwiseSignedIn"
         type="button"
         class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
       >
         <router-link :to="splitwiseRoute">
           Splitwise
         </router-link>
+      </button>
+      <button
+        v-else
+        type="button"
+        class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
+      >
+        <button @click="openSplitwiseUrl()">
+          Splitwise
+        </button>
       </button>
       <NavBarNotifications />
       <button
@@ -88,6 +98,16 @@ export default {
   methods: {
     ...mapActions('user', ['signOut', 'getSplitwiseUrl']),
     ...mapActions('notification', ['bindNotifications', 'unbindNotifications']),
+    openSplitwiseUrl() {
+      this.getSplitwiseUrl()
+        .then(res => {
+          window.open(res.authorize_url);
+          this.$router.push('/home');
+        })
+        .catch(err => {
+          console.error(err);
+        });
+    },
   },
   computed: {
     ...mapState('user', ['currentUser']),
