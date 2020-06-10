@@ -7,6 +7,7 @@ import Landing from './Landing.vue';
 import Home from './Home.vue';
 import BudaIndex from './BudaIndex.vue';
 import PaymentIndex from './PaymentIndex.vue';
+import SplitwiseIndex from './SplitwiseIndex.vue';
 import SplitwisePaymentIndex from './SplitwisePaymentIndex.vue';
 import Profile from './Profile.vue';
 import OnBoarding from './OnBoarding.vue';
@@ -17,7 +18,7 @@ import ProfileHome from '../components/profile/ProfileHome.vue';
 import ProfileSettings from '../components/profile/ProfileSettings.vue';
 import ProfileOpenNode from '../components/profile/ProfileOpenNode.vue';
 
-import { checkAuth, checkNoAuth, checkBudaAuth, checkSplitwiseData } from '../helpers';
+import { checkAuth, checkNoAuth, checkBudaAuth, checkSplitwiseData, checkSplitwiseAuth } from '../helpers';
 
 Vue.use(Router);
 
@@ -65,6 +66,11 @@ const router = new Router({
       path: '/payment',
       component: PaymentIndex,
       beforeEnter: checkAuth && checkBudaAuth,
+    },
+    {
+      path: '/splitwise',
+      component: SplitwiseIndex,
+      beforeEnter: checkAuth && checkBudaAuth && checkSplitwiseAuth,
     },
     {
       path: '/splitwisepayment',

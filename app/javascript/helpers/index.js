@@ -26,6 +26,15 @@ const checkBudaAuth = (to, from, next) => {
   }
 };
 
+const checkSplitwiseAuth = (to, from, next) => {
+  // Cuando trato de ir a /payments pero aun no estoy sincronizxado con buda
+  if (store.getters['user/splitwiseSignedIn']) {
+    next();
+  } else {
+    next('/home');
+  }
+};
+
 const checkSplitwiseData = (to, from, next) => {
   // Cuando trato de ir a /splitwisepayments pero no he cargado los datos
   if (store.getters['user/splitwisePaymentChecked']) {
@@ -86,6 +95,7 @@ export {
   checkAuth,
   checkNoAuth,
   checkBudaAuth,
+  checkSplitwiseAuth,
   checkSplitwiseData,
   groupDebtsById,
   authedAxios,
