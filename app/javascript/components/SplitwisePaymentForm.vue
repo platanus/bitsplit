@@ -22,7 +22,7 @@
             </div>
           </div>
         </div>
-        <div class="p-3">
+        <div v-if="budaSignedIn" class="p-3">
           <div
             class="flex flex-col items-center sm:flex-row justify-between pb-3 text-grey-dark"
           >
@@ -48,13 +48,13 @@
       </div>
       <form @submit.prevent="handleSubmit">
         <div class="flex flex-col mb-6 mt-6">
-          <label class="block text-gray-700 text-lg" for="account_balance"
-            >Wallet Actual:
+          <label class="block text-gray-700 text-lg py-2" for="account_balance"
+            >Wallet desde la que se enviará el pago:
             {{
-              currentWallet().charAt(0).toUpperCase() + currentWallet().slice(1)
+              currentWallet() | capitalize
             }}
           </label>
-          <select
+          <select v-if="budaSignedIn"
             class="txt-input appearance-none border rounded w-full my-4 py-2 px-3 leading-tight"
             v-model="wallet_origin_selected"
           >
@@ -64,7 +64,7 @@
             <option value="bitsplit">
               Bitsplit
             </option>
-            <option v-if="budaSignedIn" value="buda">
+            <option value="buda">
               Buda
             </option>
           </select>
@@ -89,19 +89,21 @@
           </div>
         </div>
         <div class="flex flex-col mb-6 mt-6">
-          <label class="block mt-4 text-gray-700 text-lg" for="account_balance"
-            >Equivalente:</label
-          >
-          <label
-            class="mb-8 uppercase font-bold text-xl text-indigo-600"
-            for="account_balance"
-            >{{ quotationCLP }} CLP</label
-          >
-          <label
-            class="mb-8 uppercase font-bold text-xl text-indigo-600"
-            for="account_balance"
-            >{{ quotationBTC }} BTC</label
-          >
+          <div v-if="splitwisePaymentData.currency_code === 'clp'" class="flex flex-col">
+            <label class="block mt-4 text-gray-700 text-lg" for="account_balance"
+              >Equivalente a:</label
+            >
+            <label
+              class="mb-8 uppercase font-bold text-xl text-indigo-600"
+              for="account_balance"
+              >{{ quotationCLP }} CLP</label
+            >
+            <label
+              class="mb-8 uppercase font-bold text-xl text-indigo-600"
+              for="account_balance"
+              >{{ quotationBTC }} BTC</label
+            >
+          </div>
           <textInput
             field-id="receiver_email"
             field-type="text"
@@ -188,6 +190,13 @@ export default {
       this.getNewQuotation();
     }, DEBOUNCE_TIMER),
   },
+  filters: {
+    capitalize: function (value) {
+      if (!value) return ''
+      value = value.toString()
+      return value.charAt(0).toUpperCase() + value.slice(1)
+    },
+  },
   methods: {
     ...mapActions('user', [
       'getQuotation',
@@ -215,8 +224,28 @@ export default {
 
       return wallet;
     },
+    checkBalance() {
+      const wallet = this.currentWallet()
+      const paymentAmountBTC = this.paymentAmountBTC()
+      const { userBalanceBitsplitBTC, userBalanceBudaBTC } = this
+      
+      const walletBalanceBTC = wallet === 'bitsplit' 
+                                ? userBalanceBitsplitBTC 
+                                : userBalanceBudaBTC
+
+      return walletBalanceBTC >= paymentAmountBTC
+    },
+    paymentAmountBTC() {
+      const { amount, quotationBTC } = this;
+      const { currency_code } = this.splitwisePaymentData
+      return currency_code === 'clp'
+              ? parseFloat(quotationBTC)
+              : parseFloat(amount)
+    },
     handleSubmit() {
       const wallet = this.currentWallet();
+      const checkBalance = this.checkBalance()
+      const paymentAmountBTC = this.paymentAmountBTC()
       const {
         group_id,
         to_user_id,
@@ -226,27 +255,27 @@ export default {
         amount,
         currency_code,
       } = this.splitwisePaymentData;
-      this.sendSplitwisePayment({
-        payment_amount:
-          currency_code === 'clp'
-            ? parseFloat(this.quotationBTC)
-            : parseFloat(amount),
-        group_id,
-        to_user_id,
-        first_name,
-        last_name,
-        receiver_email: email,
-        amount_clp: parseFloat(amount),
-        amount_btc: parseFloat(this.quotationBTC),
-        currency_code,
-        wallet_origin: wallet,
-      })
-        .then(() => {
-          this.changeSplitwisePaymentComp('SplitwisePaymentConfirm');
+
+      if (amount && email && checkBalance ) {
+        this.sendSplitwisePayment({
+          payment_amount: paymentAmountBTC,
+          group_id,
+          to_user_id,
+          first_name,
+          last_name,
+          receiver_email: email,
+          amount_clp: parseFloat(amount),
+          amount_btc: parseFloat(this.quotationBTC),
+          currency_code,
+          wallet_origin: wallet,
         })
-        .catch(err => {
-          console.error(err);
-        });
+          .then(() => {
+            this.changeSplitwisePaymentComp('SplitwisePaymentConfirm');
+          })
+          .catch(err => {
+            console.error(err);
+          });
+      }
     },
   },
 };

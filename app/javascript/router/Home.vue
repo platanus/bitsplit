@@ -1,8 +1,5 @@
 <template>
   <div class="m-12">
-    <div v-if="!budaSignedIn">
-      <BudaAlert />
-    </div>
     <div class="bg-gray-200 p-10 my-4 rounded-md">
       <p class="text-5xl font-bold">
         BitSplit
@@ -105,7 +102,6 @@
 
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex';
-import BudaAlert from 'components/BudaAlert.vue';
 import submitButton from '../components/SubmitButton';
 import linkButton from '../components/LinkButton';
 import UserCard from '../components/UserCard';
@@ -130,7 +126,6 @@ export default {
     this.getPayments();
   },
   components: {
-    BudaAlert,
     submitButton,
     linkButton,
     UserCard,
@@ -148,7 +143,7 @@ export default {
   computed: {
     ...mapState('user', ['currentUser', 'getPaymentsLoading']),
     ...mapState('paymentsHistory', ['userPaymentsHistory']),
-    ...mapGetters('user', ['budaSignedIn', 'splitwiseSignedIn']),
+    ...mapGetters('user', ['splitwiseSignedIn']),
   },
 };
 </script>

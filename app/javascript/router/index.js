@@ -18,7 +18,7 @@ import ProfileHome from '../components/profile/ProfileHome.vue';
 import ProfileSettings from '../components/profile/ProfileSettings.vue';
 import ProfileOpenNode from '../components/profile/ProfileOpenNode.vue';
 
-import { checkAuth, checkNoAuth, checkBudaAuth, checkSplitwiseData, checkSplitwiseAuth } from '../helpers';
+import { checkAuth, checkNoAuth, checkSplitwiseData, checkSplitwiseAuth } from '../helpers';
 
 Vue.use(Router);
 
@@ -65,17 +65,17 @@ const router = new Router({
     {
       path: '/payment',
       component: PaymentIndex,
-      beforeEnter: checkAuth && checkBudaAuth,
+      beforeEnter: checkAuth,
     },
     {
       path: '/splitwise',
       component: SplitwiseIndex,
-      beforeEnter: checkAuth && checkBudaAuth && checkSplitwiseAuth,
+      beforeEnter: checkAuth && checkSplitwiseAuth,
     },
     {
       path: '/splitwisepayment',
       component: SplitwisePaymentIndex,
-      beforeEnter: checkAuth && checkBudaAuth && checkSplitwiseData,
+      beforeEnter: checkAuth && checkSplitwiseAuth && checkSplitwiseData,
     },
   ],
 });

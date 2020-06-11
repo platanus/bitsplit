@@ -17,17 +17,17 @@ const checkNoAuth = (to, from, next) => {
   }
 };
 
+/*
 const checkBudaAuth = (to, from, next) => {
-  // Cuando trato de ir a /payments pero aun no estoy sincronizxado con buda
   if (store.getters['user/budaSignedIn']) {
     next();
   } else {
     next('/buda');
   }
 };
+*/
 
 const checkSplitwiseAuth = (to, from, next) => {
-  // Cuando trato de ir a /payments pero aun no estoy sincronizxado con buda
   if (store.getters['user/splitwiseSignedIn']) {
     next();
   } else {
@@ -36,7 +36,7 @@ const checkSplitwiseAuth = (to, from, next) => {
 };
 
 const checkSplitwiseData = (to, from, next) => {
-  // Cuando trato de ir a /splitwisepayments pero no he cargado los datos
+  // It checks if data is loaded
   if (store.getters['user/splitwisePaymentChecked']) {
     next();
   } else {
@@ -94,7 +94,6 @@ authedAxios.interceptors.request.use(
 export {
   checkAuth,
   checkNoAuth,
-  checkBudaAuth,
   checkSplitwiseAuth,
   checkSplitwiseData,
   groupDebtsById,
