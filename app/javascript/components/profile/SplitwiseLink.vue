@@ -27,8 +27,7 @@ export default {
     openSplitwiseUrl() {
       this.getSplitwiseUrl()
         .then(res => {
-          window.open(res.authorize_url);
-          this.$router.push('/home');
+          window.location.href = res.authorize_url;
         })
         .catch(err => {
           console.error(err);

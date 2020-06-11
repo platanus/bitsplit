@@ -17,7 +17,7 @@ class Api::V1::Splitwise::AuthenticationsController < ApplicationController
     @user = User.find_by(oauth_token: params[:oauth_token])
     @splitwise_service = SplitwiseService.new(user: @user)
     @splitwise_service.grant_access(params)
-    redirect_to :root
+    redirect_to '/splitwise-connection'
   end
 
   private

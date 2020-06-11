@@ -1,6 +1,7 @@
 import Vue from 'vue/dist/vue.esm';
 import Router from 'vue-router';
 
+import SplitwiseConnectionReady from './SplitwiseConnectionReady.vue';
 import SignIn from './SignIn.vue';
 import SignUp from './SignUp.vue';
 import Landing from './Landing.vue';
@@ -28,6 +29,7 @@ const router = new Router({
     { path: '/sign-up', component: SignUp, beforeEnter: checkNoAuth },
     { path: '/onboarding', component: OnBoarding, beforeEnter: checkAuth },
     { path: '/home', component: Home, beforeEnter: checkAuth },
+    { path: '/splitwise-connection', component: SplitwiseConnectionReady },
     {
       path: '/payments-history',
       component: PaymentsHistory,
