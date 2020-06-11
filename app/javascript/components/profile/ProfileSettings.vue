@@ -6,18 +6,33 @@
           <div class="text-left pl-4 pt-8 mb-8">
             <span class="text-base text-xl mr-2">{{ currentUser.email }}</span>
           </div>
-          <div class="text-left pl-4 pt-3">
-            <span class="text-base font-semibold mr-2">
-              <b>Wallet actual:</b> {{ currentWallet }}
-            </span>
-
-            <button
-              class="btn ext-black font-bold p-1 rounded focus:outline-none"
-              @click="change()"
-            >
-              Cambiar Wallet
-            </button>
-          </div>
+          <form @submit.prevent="handleSubmit()">
+            <div>
+              <inputLabel field-name="wallet">
+                Nueva wallet
+              </inputLabel>
+              <select-input
+                field-name="newWallet"
+                field-id="newWallet"
+                v-model="newWallet"
+                :options="walletOptions"
+                :name-mappings="walletNameMappings"
+              />
+            </div>
+            <div>
+              <inputLabel field-name="password">
+                Contraseña actual
+              </inputLabel>
+              <passwordInput
+                field-id="password"
+                field-name="password"
+                v-model="password"
+              />
+            </div>
+            <submitButton :loading="loading" class="">
+              <p>Cambiar Wallet</p>
+            </submitButton>
+          </form>
         </div>
         <div class="w-full md:w-1/4 p-4 text-center">
           <div class="w-full relative md:w-3/4 text-center mt-8">
@@ -35,25 +50,55 @@
 </template>
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex';
+import SelectInput from '../Select';
+import InputLabel from '../InputLabel';
+import passwordInput from '../PasswordInput';
+import SubmitButton from '../SubmitButton';
 
 export default {
   name: 'ProfileSettings',
   data() {
-    return {};
+    return {
+      password: '',
+      newWallet: '',
+      walletOptions: ['buda', 'bitsplit'],
+      walletNameMappings: { buda: 'Buda', bitsplit: 'Bitsplit' },
+      loading: false,
+    };
+  },
+  components: {
+    SelectInput,
+    InputLabel,
+    passwordInput,
+    SubmitButton,
+  },
+  mounted() {
+    this.newWallet = this.currentUser.wallet;
+    if (!this.budaSignedIn) {
+      this.walletOptions = ['bitsplit'];
+    }
   },
   methods: {
-    ...mapActions('user', ['changeWallet']),
-    change() {
-      this.changeWallet(this.currentWallet);
+    ...mapActions('user', ['updateCurrentUser']),
+    handleSubmit() {
+      const { password, newWallet } = this;
+      if (newWallet === this.currentUser.wallet || !password) return;
+
+      this.loading = true;
+
+      this.updateCurrentUser({ password, wallet: newWallet })
+        .then(() => {
+          this.loading = false;
+          this.$router.go();
+        })
+        .catch(() => {
+          this.loading = false;
+        });
     },
   },
   computed: {
-    ...mapState('user', [
-      'currentUser',
-      'userBalanceCLP',
-      'userBalanceBTC',
-      'currentWallet',
-    ]),
+    ...mapState('user', ['currentUser', 'userBalanceCLP', 'userBalanceBTC']),
+    ...mapState('user', ['currentUser']),
     ...mapGetters('user', ['budaSignedIn', 'splitwiseSignedIn']),
   },
 };

@@ -25,7 +25,8 @@
             field-name="currency"
             field-id="currency"
             v-model="currency"
-            :currency-options="currencyOptions"
+            :options="currencyOptions"
+            :name-mappings="nameMappings"
           />
         </div>
         <submitButton :loading="chargeAllowed" class="my-1 flex items-center">
@@ -33,13 +34,19 @@
         </submitButton>
       </form>
       <div v-show="showChargeInvoice" class="pt-4 flex flex-col md:flex-row">
-        <text-field font-color="secondary">
+        <text-field font-color="secondary" class="text-left p-2">
           Paga el siguiente invoice y apenas recibamos la confirmación la
           cargamos a tu cuenta:
         </text-field>
-        <p class="break-all">
+        <p class="break-all text-left p-2">
           {{ chargeInvoice }}
         </p>
+        <qrcode-vue
+          :value="chargeInvoice ? chargeInvoice : ''"
+          size="200"
+          level="L"
+          class="self-center p-2"
+        />
       </div>
     </div>
     <div>
@@ -71,6 +78,7 @@
 </template>
 <script>
 import { mapActions } from 'vuex';
+import QrcodeVue from 'qrcode.vue';
 
 import TextField from '../TextField';
 import textInput from '../Input';
@@ -86,10 +94,12 @@ export default {
     submitButton,
     SelectInput,
     InputLabel,
+    QrcodeVue,
   },
   data() {
     return {
       currencyOptions: ['BTC'],
+      nameMappings: { BTC: 'Satoshi' },
       amount: '',
       currency: 'BTC',
       invoice: '',
@@ -114,7 +124,7 @@ export default {
 
       return this.chargeOpenNode({ amount, currency })
         .then(res => {
-          this.setShowChargeInvoice(res.response.lightning_invoice.payreq);
+          this.setShowChargeInvoice(res.response.data.lightning_invoice.payreq);
           this.loading = false;
         })
         .catch(() => {

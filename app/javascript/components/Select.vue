@@ -13,11 +13,12 @@
       Seleccione una opción
     </option>
     <option
-      v-for="currencyCode in currencyOptions"
-      :key="currencyCode"
-      :value="currencyCode"
+      v-for="option in options"
+      :key="option"
+      :value="option"
+      :selected="option === value ? 'selected' : null"
     >
-      {{ currencyCode }}
+      {{ nameMappings[option] }}
     </option>
   </select>
 </template>
@@ -28,7 +29,8 @@ export default {
     fieldName: String,
     fieldId: String,
     value: String,
-    currencyOptions: Array,
+    options: Array,
+    nameMappings: Object,
     classmod: {
       type: String,
       default: '',

@@ -25,8 +25,7 @@ export const clearAlert = 'clearAlert';
 
 export const currentStepOk = 'currentStepOk';
 
-export const changeWallet = 'changeWallet';
+export const updateCurrentUser = 'updateCurrentUser';
 
 export const chargeOpenNode = 'chargeOpenNode';
 export const withdrawalOpenNode = 'withdrawalOpenNode';
-
