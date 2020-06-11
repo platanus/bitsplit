@@ -22,7 +22,7 @@
             </div>
           </div>
         </div>
-        <div class="p-3">
+        <div v-if="budaSignedIn" class="p-3">
           <div
             class="flex flex-col items-center sm:flex-row justify-between pb-3 text-grey-dark"
           >
@@ -48,13 +48,13 @@
       </div>
       <form @submit.prevent="handleSubmit">
         <div class="flex flex-col mb-6 mt-6">
-          <label class="block text-gray-700 text-lg" for="account_balance"
-            >Wallet Actual:
+          <label class="block text-gray-700 text-lg py-2" for="account_balance"
+            >Wallet desde la que se enviará el pago:
             {{
-              currentWallet().charAt(0).toUpperCase() + currentWallet().slice(1)
+              currentWallet() | capitalize
             }}
           </label>
-          <select
+          <select v-if="budaSignedIn"
             class="txt-input appearance-none border rounded w-full my-4 py-2 px-3 leading-tight"
             v-model="wallet_origin_selected"
           >
@@ -64,7 +64,7 @@
             <option value="bitsplit">
               Bitsplit
             </option>
-            <option v-if="budaSignedIn" value="buda">
+            <option value="buda">
               Buda
             </option>
           </select>
@@ -80,7 +80,7 @@
             </div>
             <div class="w-1/6 pl-2">
               <select
-                v-model="currency_seleced"
+                v-model="currency_selected"
                 class="txt-input appearance-none border rounded w-full mb-4 py-2 px-3 leading-tight"
               >
                 <option value="btc">
@@ -94,19 +94,21 @@
           </div>
         </div>
         <div class="flex flex-col mb-6 mt-6">
-          <label class="block mt-4 text-gray-700 text-lg" for="account_balance"
-            >Equivalente a:</label
-          >
-          <label
-            class="mb-8 uppercase font-bold text-xl text-indigo-600"
-            for="account_balance"
-            >{{ quotationCLP }} CLP</label
-          >
-          <label
-            class="mb-8 uppercase font-bold text-xl text-indigo-600"
-            for="account_balance"
-            >{{ quotationBTC }} BTC</label
-          >
+          <div v-if="currency_selected === 'clp'" class="flex flex-col">
+            <label class="block mt-4 text-gray-700 text-lg" for="account_balance"
+              >Equivalente a:</label
+            >
+            <label
+              class="mb-8 uppercase font-bold text-xl text-indigo-600"
+              for="account_balance"
+              >{{ quotationCLP }} CLP</label
+            >
+            <label
+              class="mb-8 uppercase font-bold text-xl text-indigo-600"
+              for="account_balance"
+              >{{ quotationBTC }} BTC</label
+            >
+          </div>
           <textInput
             field-id="receiver_email"
             field-type="text"
@@ -127,26 +129,10 @@
 
 <script>
 import { mapActions, mapState, mapGetters } from 'vuex';
+import _ from 'lodash';
 import textInput from '../components/Input';
 import submitButton from '../components/SubmitButton';
 import spinner from '../components/Spinner';
-
-// eslint-disable-next-line func-style
-function debounce(func, wait, immediate) {
-  let timeout;
-
-  return function (...args) {
-    const self = this;
-    const later = function () {
-      timeout = null;
-      if (!immediate) func.apply(self, args);
-    };
-    const callNow = immediate && !timeout;
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
-    if (callNow) func.apply(self, args);
-  };
-}
 
 const DEBOUNCE_TIMER = 1000;
 const MIN_QUOTATION = 200;
@@ -159,7 +145,7 @@ export default {
       amount: '',
       receiver_email: '',
       wallet_origin_selected: '',
-      currency_seleced: 'btc',
+      currency_selected: 'btc',
       quotationCLP: 0,
       quotationBTC: 0,
     };
@@ -182,16 +168,23 @@ export default {
     ...mapGetters('user', ['budaSignedIn']),
   },
   watch: {
-    amount: debounce(function () {
+    amount: _.debounce(function () {
       this.getNewQuotation();
     }, DEBOUNCE_TIMER),
+  },
+  filters: {
+    capitalize: function (value) {
+      if (!value) return ''
+      value = value.toString()
+      return value.charAt(0).toUpperCase() + value.slice(1)
+    },
   },
   methods: {
     ...mapActions('user', ['getQuotation', 'sendPayment']),
     ...mapActions('component', ['changePaymentComp']),
     getNewQuotation() {
       const { amount } = this;
-      if (amount >= MIN_QUOTATION && this.currency_seleced === 'clp') {
+      if (amount >= MIN_QUOTATION && this.currency_selected === 'clp') {
         this.getQuotation({ amount })
           .then(balance => {
             this.quotationCLP = balance.amount_clp[0];
@@ -201,25 +194,46 @@ export default {
             console.error(err);
           });
       }
+      else {
+        this.quotationCLP = 0
+        this.quotationBTC = 0
+      }
     },
     currentWallet() {
       const wallet = this.wallet_origin_selected
         ? this.wallet_origin_selected
         : this.currentUser.wallet;
-      if (wallet === 'bitsplit') this.currency_seleced = 'btc';
+      if (wallet === 'bitsplit') this.currency_selected = 'btc';
 
       return wallet;
     },
+    checkBalance() {
+      const wallet = this.currentWallet()
+      const paymentAmountBTC = this.paymentAmountBTC()
+      const { userBalanceBitsplitBTC, userBalanceBudaBTC } = this
+
+      const walletBalanceBTC = wallet === 'bitsplit' 
+                                ? userBalanceBitsplitBTC 
+                                : userBalanceBudaBTC
+
+      return walletBalanceBTC >= paymentAmountBTC
+    },
+    paymentAmountBTC() {
+      const { amount, quotationBTC, currency_selected } = this;
+      return currency_selected === 'clp'
+              ? parseFloat(quotationBTC)
+              : parseFloat(amount)
+    },
     handleSubmit() {
       const wallet = this.currentWallet();
-      const { amount, receiver_email, currency_seleced } = this;
-      if (amount && receiver_email) {
+      const checkBalance = this.checkBalance()
+      const paymentAmountBTC = this.paymentAmountBTC()
+      const { amount, receiver_email } = this;
+
+      if (amount && receiver_email && checkBalance ) {
         this.sendPayment({
-          payment_amount:
-            currency_seleced === 'clp'
-              ? parseFloat(this.quotationBTC)
-              : parseFloat(amount),
-          receiver_email,
+          payment_amount: paymentAmountBTC,
+          receiver_email: receiver_email,
           wallet_origin: wallet,
         })
           .then(() => {
