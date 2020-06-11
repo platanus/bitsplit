@@ -25,7 +25,7 @@
             field-name="currency"
             field-id="currency"
             v-model="currency"
-            :currency-options="currencyOptions"
+            :options="currencyOptions"
             :name-mappings="nameMappings"
           />
         </div>

@@ -11,7 +11,7 @@ import {
   getPayments,
   // splitwiseUrlConnection,
   // getDebts,
-  changeWallet,
+  updateCurrentUser,
   getSplitwiseUrl,
   getSplitwiseDebts,
   chargeOpenNode,
@@ -40,7 +40,6 @@ import {
   GET_PAYMENTS_ATTEMPT,
   GET_PAYMENTS_FAIL,
   GET_PAYMENTS_SUCCESS,
-  CHANGE_WALLET_SUCCESS,
   GET_SPLIWITSE_DEBTS_ATTEMPT,
   GET_SPLIWITSE_DEBTS_SUCCESS,
   GET_SPLIWITSE_DEBTS_FAIL,
@@ -58,6 +57,7 @@ import {
   getPaymentsApi,
   getSplitwiseUrlApi,
   getSplitwiseDebtsApi,
+  updateUserApi,
 } from '../../../api/user.js';
 
 import { widthdrawalApi, chargeApi } from '../../../api/wallet';
@@ -501,11 +501,40 @@ export default {
         // }
       });
   },
-  [changeWallet]({ commit }, payload) {
-    if (payload === 'Bitsplit') {
-      commit(CHANGE_WALLET_SUCCESS, 'Buda');
-    } else {
-      commit(CHANGE_WALLET_SUCCESS, 'Bitsplit');
+  [updateCurrentUser]({ state, dispatch }, payload) {
+    if (
+      (state.currentUser.api_key === '' ||
+        state.currentUser.api_key === null) &&
+      payload.wallet === 'buda'
+    ) {
+      dispatch('alert/errorAlert', 'No tiene su cuenta sincronizada con Buda', {
+        root: true,
+      });
+
+      return Promise.reject();
     }
+
+    return updateUserApi(payload)
+      .then(() => {
+        // commit(succes)
+        dispatch('alert/successAlert', 'Cambio exitoso!', {
+          root: true,
+        });
+      })
+      .catch(error => {
+        if (error.response) {
+          dispatch('alert/errorAlert', 'Contraseña incorrecta', {
+            root: true,
+          });
+        } else {
+          dispatch(
+            'alert/errorAlert',
+            'Error desconocido, intente nuevamente',
+            {
+              root: true,
+            }
+          );
+        }
+      });
   },
 };

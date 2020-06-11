@@ -37,6 +37,8 @@ const budaSyncApi = payload =>
     api_secret: payload.api_secret,
   });
 
+const updateUserApi = payload => authedAxios.patch('/api/v1/users/', payload);
+
 const getCurrentUserApi = () => authedAxios.get('/api/v1/users/');
 
 const getQuotationApi = payload =>
@@ -71,4 +73,5 @@ export {
   getPaymentsApi,
   getSplitwiseUrlApi,
   getSplitwiseDebtsApi,
+  updateUserApi,
 };

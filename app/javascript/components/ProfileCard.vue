@@ -21,7 +21,8 @@
           {{ currentUser.email }}
         </p>
         <p class="text-grey-dark mb-4 mt-4">
-          <span class="font-bold"> Wallet Actual:</span> {{ currentWallet }}
+          <span class="font-bold"> Wallet Actual:</span>
+          {{ currentUser.wallet }}
         </p>
         <submitButton>
           <router-link to="/profile/settings">
@@ -92,7 +93,7 @@
   </div>
 </template>
 <script>
-import { mapState, mapGetters, mapActions } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
 import submitButton from '../components/SubmitButton';
 import buda from '../assets/buda-icon.png';
 import splitwise from '../assets/splitwise-logo.svg';
@@ -116,19 +117,8 @@ export default {
   components: {
     submitButton,
   },
-  methods: {
-    ...mapActions('user', ['changeWallet']),
-    change() {
-      this.changeWallet(this.currentWallet);
-    },
-  },
   computed: {
-    ...mapState('user', [
-      'currentUser',
-      'userBalanceCLP',
-      'userBalanceBTC',
-      'currentWallet',
-    ]),
+    ...mapState('user', ['currentUser', 'userBalanceCLP', 'userBalanceBTC']),
     ...mapGetters('user', ['budaSignedIn', 'splitwiseSignedIn']),
   },
 };

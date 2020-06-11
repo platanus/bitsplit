@@ -13,7 +13,6 @@ export default {
   userBalanceBudaBTCCLP: 0,
   userBalanceBitsplitBTC: 0,
   userBalanceBitsplitBTCCLP: 0,
-  currentWallet: 'Bitsplit',
   userLastPaymentData: null,
   userPaymentsHistory: [],
 };
