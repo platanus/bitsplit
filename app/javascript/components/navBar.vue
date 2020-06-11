@@ -10,13 +10,30 @@
         </router-link>
       </button>
       <button
-        v-if="budaSignedIn"
         type="button"
         class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
       >
         <router-link :to="payRoute">
           Pagar
         </router-link>
+      </button>
+      <button
+        v-if="splitwiseSignedIn"
+        type="button"
+        class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
+      >
+        <router-link :to="splitwiseRoute">
+          Splitwise
+        </router-link>
+      </button>
+      <button
+        v-else
+        type="button"
+        class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
+      >
+        <button @click="openSplitwiseUrl()">
+          Splitwise
+        </button>
       </button>
       <NavBarNotifications />
       <button
@@ -71,6 +88,7 @@ export default {
       budaRoute: '/buda',
       landingRoute: '/',
       payRoute: '/payment',
+      splitwiseRoute: '/splitwise',
       profileRoute: '/profile/', // No borrar el ultimo '/'
     };
   },
@@ -80,10 +98,20 @@ export default {
   methods: {
     ...mapActions('user', ['signOut', 'getSplitwiseUrl']),
     ...mapActions('notification', ['bindNotifications', 'unbindNotifications']),
+    openSplitwiseUrl() {
+      this.getSplitwiseUrl()
+        .then(res => {
+          window.open(res.authorize_url);
+          this.$router.push('/home');
+        })
+        .catch(err => {
+          console.error(err);
+        });
+    },
   },
   computed: {
     ...mapState('user', ['currentUser']),
-    ...mapGetters('user', ['signedIn', 'budaSignedIn']),
+    ...mapGetters('user', ['signedIn', 'budaSignedIn', 'splitwiseSignedIn']),
   },
   created() {
     if (this.signedIn) {

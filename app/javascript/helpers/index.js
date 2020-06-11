@@ -17,36 +17,64 @@ const checkNoAuth = (to, from, next) => {
   }
 };
 
+/*
 const checkBudaAuth = (to, from, next) => {
-  // Cuando trato de ir a /payments pero aun no estoy sincronizxado con buda
   if (store.getters['user/budaSignedIn']) {
     next();
   } else {
     next('/buda');
   }
 };
+*/
 
-const mergeDebts = array => {
-  const result = array.reduce((r, a) => {
-    r[a.group_id] = r[a.group_id] || [];
-    r[a.group_id].push(a);
-
-    return r;
-  }, {});
-
-  return Object.values(result);
+const checkSplitwiseAuth = (to, from, next) => {
+  if (store.getters['user/splitwiseSignedIn']) {
+    next();
+  } else {
+    next('/home');
+  }
 };
 
-const filterSingleDebts = array => {
-  const result = array && array.filter(debt => debt.group_id === 0);
-
-  return result;
+const checkSplitwiseData = (to, from, next) => {
+  // It checks if data is loaded
+  if (store.getters['user/splitwisePaymentChecked']) {
+    next();
+  } else {
+    next('/home');
+  }
 };
 
-const filterGroupDebts = array => {
-  const result = array && mergeDebts(array.filter(debt => debt.group_id > 0));
-
-  return result;
+const groupDebtsById = (friendsToUser, userToFriends) => {
+  const debts = {};
+  friendsToUser &&
+    friendsToUser.forEach(
+      ({ group_id, group_name, from, amount, currency_code }) => {
+        if (!debts[group_id]) {
+          debts[group_id] = {
+            group_id,
+            group_name,
+            friendsToUser: [],
+            userToFriends: [],
+          };
+        }
+        debts[group_id].friendsToUser.push({ ...from, amount, currency_code, type: 1 });
+      }
+    );
+  userToFriends &&
+    userToFriends.forEach(
+      ({ group_id, group_name, to, amount, currency_code, is_payable }) => {
+        if (!debts[group_id]) {
+          debts[group_id] = {
+            group_id,
+            group_name,
+            friendsToUser: [],
+            userToFriends: [],
+          };
+        }
+        debts[group_id].userToFriends.push({ ...to, amount, currency_code, is_payable, type: 0 });
+      }
+    );
+  return debts;
 };
 
 const authedAxios = axios.create();
@@ -66,8 +94,8 @@ authedAxios.interceptors.request.use(
 export {
   checkAuth,
   checkNoAuth,
-  checkBudaAuth,
-  filterSingleDebts,
-  filterGroupDebts,
+  checkSplitwiseAuth,
+  checkSplitwiseData,
+  groupDebtsById,
   authedAxios,
 };

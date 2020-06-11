@@ -3,12 +3,20 @@
     <div class="flex flex-col mb-6 mt-6">
       <div>
         <textField font-size="full" font-color="secondary">
-          ¡Pago realizado con éxito!
+          ¡Deuda saldada con éxito!
         </textField>
       </div>
       <div>
         <textField>
-          Monto: {{ this.userLastPaymentData.payment_amount }} BTC
+          Monto: {{ this.userLastPaymentData.amount_btc }} BTC
+        </textField>
+        <textField>
+          Receptor:
+          {{
+            this.userLastPaymentData.first_name +
+            ' ' +
+            this.userLastPaymentData.last_name
+          }}
         </textField>
         <textField>
           Correo: {{ this.userLastPaymentData.receiver_email }}
@@ -23,10 +31,10 @@ import { mapState } from 'vuex';
 import textField from '../components/TextField';
 
 export default {
-  name: 'PaymentConfirm',
+  name: 'SplitwisePaymentConfirm',
   data() {
     return {
-      routeName: 'PaymentRoute',
+      routeName: 'SplitwisePaymentRoute',
       date: null,
     };
   },

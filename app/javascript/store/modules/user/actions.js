@@ -13,7 +13,8 @@ import {
   // getDebts,
   updateCurrentUser,
   getSplitwiseUrl,
-  getSplitwiseDebts,
+  setSplitwisePaymentData,
+  sendSplitwisePayment,
   chargeOpenNode,
   withdrawalOpenNode,
 } from '../../action-types';
@@ -40,9 +41,10 @@ import {
   GET_PAYMENTS_ATTEMPT,
   GET_PAYMENTS_FAIL,
   GET_PAYMENTS_SUCCESS,
-  GET_SPLIWITSE_DEBTS_ATTEMPT,
-  GET_SPLIWITSE_DEBTS_SUCCESS,
-  GET_SPLIWITSE_DEBTS_FAIL,
+  SET_SPLITWISE_PAYMENT_DATA,
+  SEND_SPLITWISE_PAYMENT_ATTEMPT,
+  SEND_SPLITWISE_PAYMENT_FAIL,
+  SEND_SPLITWISE_PAYMENT_SUCCESS,
 } from '../../mutation-types';
 
 import {
@@ -56,8 +58,8 @@ import {
   sendPaymentApi,
   getPaymentsApi,
   getSplitwiseUrlApi,
-  getSplitwiseDebtsApi,
   updateUserApi,
+  payOffSplitwiseDebtApi,
 } from '../../../api/user.js';
 
 import { widthdrawalApi, chargeApi } from '../../../api/wallet';
@@ -363,8 +365,8 @@ export default {
     commit(SEND_PAYMENT_ATTEMPT);
 
     return sendPaymentApi(payload)
-      .then(res => {
-        commit(SEND_PAYMENT_SUCCESS, res.data.data.attributes);
+      .then(() => {
+        commit(SEND_PAYMENT_SUCCESS, { data: payload });
         dispatch('alert/successAlert', 'Pago realizado correctamente', {
           root: true,
         });
@@ -425,30 +427,34 @@ export default {
         }
       });
   },
-  [getSplitwiseDebts]({ commit, dispatch }, payload) {
-    commit(GET_SPLIWITSE_DEBTS_ATTEMPT);
+  [setSplitwisePaymentData]({ commit }, payload) {
+    commit(SET_SPLITWISE_PAYMENT_DATA, payload);
+  },
+  [sendSplitwisePayment]({ commit, dispatch }, payload) {
+    commit(SEND_SPLITWISE_PAYMENT_ATTEMPT);
 
-    return getSplitwiseDebtsApi(payload)
-      .then(res => {
-        commit(
-          GET_SPLIWITSE_DEBTS_SUCCESS,
-          res.data.data.attributes.user_to_friends,
-          res.data.data.attributes.friends_to_user
-        );
+    return sendPaymentApi(payload)
+      .then(() =>
+        payOffSplitwiseDebtApi(payload).then(() => {
+          commit(SEND_SPLITWISE_PAYMENT_SUCCESS, { data: payload });
+          dispatch('alert/successAlert', 'Deuda saldada correctamente', {
+            root: true,
+          });
 
-        return;
-      })
+          return;
+        })
+      )
       .catch(err => {
-        commit(GET_SPLIWITSE_DEBTS_FAIL);
+        commit(SEND_SPLITWISE_PAYMENT_FAIL);
         if (err.response) {
           dispatch(
             'alert/errorAlert',
-            'Error obteniendo las deudas de Splitwise.',
+            'Error enviando pago. Revise los datos ingresados',
             { root: true }
           );
-          throw new Error('Error obteniendo las deudas de Splitwise.');
+          throw new Error('Error enviando pago. Revise los datos ingresados');
         } else {
-          dispatch('alert/errorAlert', 'Error desconocido.', { root: true });
+          dispatch('alert/errorAlert', 'Error desconocido', { root: true });
           throw new Error('Error desconocido');
         }
       });

@@ -1,8 +1,5 @@
 <template>
   <div class="m-12">
-    <div v-if="!budaSignedIn">
-      <BudaAlert />
-    </div>
     <div class="bg-gray-200 p-10 my-4 rounded-md">
       <p class="text-5xl font-bold">
         BitSplit
@@ -19,14 +16,11 @@
       <div class="lg:pr-5 flex flex-col">
         <UserCard classmod="self-center" />
         <div class="text-center px-4 py-2">
-          <LinkButton
-            v-if="budaSignedIn"
-            classmod="bg-blue-500 hover:bg-blue-700 my-3 md:my-0"
-            :field-disabled="false"
-            route="payment"
-          >
-            Hacer un pago
-          </LinkButton>
+          <submitButton>
+            <router-link class="px-6" to="/payment">
+              Hacer un pago
+            </router-link>
+          </submitButton>
         </div>
       </div>
       <div>
@@ -85,13 +79,13 @@
                 </template>
               </CustomTable>
               <div class="text-center px-4 py-2">
-                <LinkButton
+                <linkButton
                   classmod="bg-blue-500 hover:bg-blue-700 my-3 md:my-0"
                   :field-disabled="false"
                   route="payments-history"
                 >
                   Ver más
-                </LinkButton>
+                </linkButton>
               </div>
             </div>
             <div v-else>
@@ -103,203 +97,13 @@
         </div>
       </div>
     </div>
-    <div
-      class="flex flex-col justify-center lg:justify-between bg-gray-200 p-10 my-4 rounded-md"
-    >
-      <div>
-        <div>
-          <p class="text-5xl font-bold">
-            Splitwise
-          </p>
-        </div>
-        <div v-if="splitwiseSignedIn">
-          <div v-if="getSplitwiseDebtsLoading">
-            <p>Cargando...</p>
-          </div>
-          <div v-else class="bg-gray-200 rounded-md">
-            <div>
-              <div>
-                <p class="text-5xl font-bold">
-                  Deudas hacia amigos
-                </p>
-              </div>
-              <div
-                v-if="
-                  userSplitwiseDebts.userToFriends.singleUserToFriends.length ||
-                  userSplitwiseDebts.userToFriends.groupUserToFriends.length
-                "
-              >
-                <div
-                  v-if="
-                    userSplitwiseDebts.userToFriends.singleUserToFriends.length
-                  "
-                >
-                  <p class="text-5xl font-bold">
-                    Deudas Individuales
-                  </p>
-                  <CustomTable
-                    :data="
-                      userSplitwiseDebts.userToFriends.singleUserToFriends
-                        .slice()
-                        .reverse()
-                    "
-                    :columns="debtsColumns"
-                  >
-                    <template #default="{ row, tdClass }">
-                      <td :class="tdClass">
-                        {{ row.from.first_name + ' ' + row.from.last_name }}
-                      </td>
-                      <td :class="tdClass">
-                        {{ row.to.first_name + ' ' + row.to.last_name }}
-                      </td>
-                      <td :class="tdClass">${{ row.amount }}</td>
-                      <td v-show="row.is_payable" :class="tdClass">
-                        Pagar
-                      </td>
-                    </template>
-                  </CustomTable>
-                </div>
-                <div
-                  v-if="
-                    userSplitwiseDebts.userToFriends.groupUserToFriends.length
-                  "
-                >
-                  <p class="text-5xl font-bold">
-                    Deudas Grupales
-                  </p>
-                  <div
-                    v-for="(group_debt,
-                    index) in userSplitwiseDebts.userToFriends.groupUserToFriends
-                      .slice()
-                      .reverse()"
-                    :key="index"
-                  >
-                    <p class="text-5xl font-bold">
-                      Grupo: {{ group_debt[0].group_name }}
-                    </p>
-                    <CustomTable :data="group_debt" :columns="debtsColumns">
-                      <template #default="{ row, tdClass }">
-                        <td :class="tdClass">
-                          {{ row.from.first_name + ' ' + row.from.last_name }}
-                        </td>
-                        <td :class="tdClass">
-                          {{ row.to.first_name + ' ' + row.to.last_name }}
-                        </td>
-                        <td :class="tdClass">${{ row.amount }}</td>
-                        <td v-show="row.is_payable" :class="tdClass">
-                          Pagar
-                        </td>
-                      </template>
-                    </CustomTable>
-                  </div>
-                </div>
-              </div>
-              <div v-else>
-                <p class="text-5xl font-bold">
-                  No hay deudas para mostrar
-                </p>
-              </div>
-            </div>
-
-            <div>
-              <div>
-                <p class="text-5xl font-bold">
-                  Deudas de amigos hacia ti
-                </p>
-              </div>
-              <div
-                v-if="
-                  userSplitwiseDebts.friendsToUser.singleFriendsToUser.length ||
-                  userSplitwiseDebts.friendsToUser.groupFriendsToUser.length
-                "
-              >
-                <div
-                  v-if="
-                    userSplitwiseDebts.friendsToUser.singleFriendsToUser.length
-                  "
-                >
-                  <p class="text-5xl font-bold">
-                    Deudas Individuales
-                  </p>
-                  <CustomTable
-                    :data="
-                      userSplitwiseDebts.friendsToUser.singleFriendsToUser
-                        .slice()
-                        .reverse()
-                    "
-                    :columns="debtsColumns"
-                  >
-                    <template #default="{ row, tdClass }">
-                      <td :class="tdClass">
-                        {{ row.from.first_name + ' ' + row.from.last_name }}
-                      </td>
-                      <td :class="tdClass">
-                        {{ row.to.first_name + ' ' + row.to.last_name }}
-                      </td>
-                      <td :class="tdClass">${{ row.amount }}</td>
-                      <td v-show="row.is_payable" :class="tdClass">
-                        Pagar
-                      </td>
-                    </template>
-                  </CustomTable>
-                </div>
-                <div
-                  v-if="
-                    userSplitwiseDebts.friendsToUser.groupFriendsToUser.length
-                  "
-                >
-                  <p class="text-5xl font-bold">
-                    Deudas Grupales
-                  </p>
-                  <div
-                    v-for="(group_debt,
-                    index) in userSplitwiseDebts.friendsToUser.groupFriendsToUser
-                      .slice()
-                      .reverse()"
-                    :key="index"
-                  >
-                    <p class="text-5xl font-bold">
-                      Grupo: {{ group_debt[0].group_name }}
-                    </p>
-                    <CustomTable :data="group_debt" :columns="debtsColumns">
-                      <template #default="{ row, tdClass }">
-                        <td :class="tdClass">
-                          {{ row.from.first_name + ' ' + row.from.last_name }}
-                        </td>
-                        <td :class="tdClass">
-                          {{ row.to.first_name + ' ' + row.to.last_name }}
-                        </td>
-                        <td :class="tdClass">${{ row.amount }}</td>
-                        <td v-show="row.is_payable" :class="tdClass">
-                          Pagar
-                        </td>
-                      </template>
-                    </CustomTable>
-                  </div>
-                </div>
-              </div>
-              <div v-else>
-                <p class="text-5xl font-bold">
-                  No hay deudas para mostrar
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div v-else>
-          <p class="text-5xl font-bold">
-            No estás conectado a Splitwise
-          </p>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex';
-import BudaAlert from 'components/BudaAlert.vue';
-import LinkButton from '../components/LinkButton';
+import submitButton from '../components/SubmitButton';
+import linkButton from '../components/LinkButton';
 import UserCard from '../components/UserCard';
 import CustomTable from '../components/CustomTable';
 
@@ -316,21 +120,18 @@ export default {
         'Cantidad CLP',
         'Fecha',
       ],
-      debtsColumns: ['De', 'Para', 'Monto', 'Pagar'],
     };
   },
   created() {
-    this.getSplitwiseDebts();
     this.getPayments();
   },
   components: {
-    BudaAlert,
-    LinkButton,
+    submitButton,
+    linkButton,
     UserCard,
     CustomTable,
   },
   methods: {
-    ...mapActions('splitwiseDebts', ['getSplitwiseDebts']),
     ...mapActions('paymentsHistory', ['getPayments']),
 
     getDate(date) {
@@ -341,12 +142,8 @@ export default {
   },
   computed: {
     ...mapState('user', ['currentUser', 'getPaymentsLoading']),
-    ...mapState('splitwiseDebts', [
-      'getSplitwiseDebtsLoading',
-      'userSplitwiseDebts',
-    ]),
     ...mapState('paymentsHistory', ['userPaymentsHistory']),
-    ...mapGetters('user', ['budaSignedIn', 'splitwiseSignedIn']),
+    ...mapGetters('user', ['splitwiseSignedIn']),
   },
 };
 </script>

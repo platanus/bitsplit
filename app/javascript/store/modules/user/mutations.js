@@ -21,6 +21,10 @@ import {
   GET_PAYMENTS_FAIL,
   GET_PAYMENTS_SUCCESS,
   GET_DEBTS_SUCCESS,
+  SET_SPLITWISE_PAYMENT_DATA,
+  SEND_SPLITWISE_PAYMENT_ATTEMPT,
+  SEND_SPLITWISE_PAYMENT_FAIL,
+  SEND_SPLITWISE_PAYMENT_SUCCESS,
 } from '../../mutation-types';
 
 export default {
@@ -85,13 +89,9 @@ export default {
   [SEND_PAYMENT_ATTEMPT](state) {
     state.sendPaymentLoading = true;
   },
-  [SEND_PAYMENT_SUCCESS](state, attributes) {
+  [SEND_PAYMENT_SUCCESS](state, { data }) {
     state.sendPaymentLoading = false;
-    state.userLastPaymentData = {
-      amount: parseFloat(attributes.amount),
-      receiver: attributes.receiver_email,
-      date: attributes.created_at,
-    };
+    state.userLastPaymentData = data;
   },
   [SEND_PAYMENT_FAIL](state) {
     state.sendPaymentLoading = false;
@@ -108,5 +108,18 @@ export default {
   },
   [GET_DEBTS_SUCCESS](state, debts) {
     state.userDebts = debts;
+  },
+  [SET_SPLITWISE_PAYMENT_DATA](state, data) {
+    state.splitwisePaymentData = data;
+  },
+  [SEND_SPLITWISE_PAYMENT_ATTEMPT](state) {
+    state.sendPaymentLoading = true;
+  },
+  [SEND_SPLITWISE_PAYMENT_SUCCESS](state, { data }) {
+    state.sendPaymentLoading = false;
+    state.userLastPaymentData = data;
+  },
+  [SEND_SPLITWISE_PAYMENT_FAIL](state) {
+    state.sendPaymentLoading = false;
   },
 };

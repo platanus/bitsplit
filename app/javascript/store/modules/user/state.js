@@ -15,4 +15,5 @@ export default {
   userBalanceBitsplitBTCCLP: 0,
   userLastPaymentData: null,
   userPaymentsHistory: [],
+  splitwisePaymentData: null,
 };

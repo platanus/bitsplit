@@ -73,28 +73,23 @@
               <textInput
                 field-id="amount"
                 field-type="number"
-                field-placeholder="Monto a transferir"
                 field-name="amount"
-                v-model="amount"
+                :value="splitwisePaymentData.amount"
+                disabled
               />
             </div>
             <div class="w-1/6 pl-2">
-              <select
-                v-model="currency_selected"
-                class="txt-input appearance-none border rounded w-full mb-4 py-2 px-3 leading-tight"
-              >
-                <option value="btc">
-                  BTC
-                </option>
-                <option v-if="currentWallet() === 'buda'" value="clp">
-                  CLP
-                </option>
-              </select>
+              <textInput
+                field-id="currency_code"
+                field-name="currency_code"
+                :value="splitwisePaymentData.currency_code.toUpperCase()"
+                disabled
+              />
             </div>
           </div>
         </div>
         <div class="flex flex-col mb-6 mt-6">
-          <div v-if="currency_selected === 'clp'" class="flex flex-col">
+          <div v-if="splitwisePaymentData.currency_code === 'clp'" class="flex flex-col">
             <label class="block mt-4 text-gray-700 text-lg" for="account_balance"
               >Equivalente a:</label
             >
@@ -114,7 +109,8 @@
             field-type="text"
             field-placeholder="Email destinatario"
             field-name="receiver_email"
-            v-model="receiver_email"
+            :value="splitwisePaymentData.email"
+            disabled
           />
         </div>
         <div>
@@ -129,13 +125,29 @@
 
 <script>
 import { mapActions, mapState, mapGetters } from 'vuex';
-import _ from 'lodash';
 import textInput from '../components/Input';
 import submitButton from '../components/SubmitButton';
 import spinner from '../components/Spinner';
 
+// eslint-disable-next-line func-style
+function debounce(func, wait, immediate) {
+  let timeout;
+
+  return function (...args) {
+    const self = this;
+    const later = function () {
+      timeout = null;
+      if (!immediate) func.apply(self, args);
+    };
+    const callNow = immediate && !timeout;
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+    if (callNow) func.apply(self, args);
+  };
+}
+
 const DEBOUNCE_TIMER = 1000;
-const MIN_QUOTATION = 200;
+const MIN_PAYMENT = 100;
 
 export default {
   name: 'Payment',
@@ -145,7 +157,6 @@ export default {
       amount: '',
       receiver_email: '',
       wallet_origin_selected: '',
-      currency_selected: 'btc',
       quotationCLP: 0,
       quotationBTC: 0,
     };
@@ -164,11 +175,18 @@ export default {
       'userBalanceBudaBTCCLP',
       'userBalanceBitsplitBTC',
       'userBalanceBitsplitBTCCLP',
+      'splitwisePaymentData',
     ]),
     ...mapGetters('user', ['budaSignedIn']),
   },
+  created() {
+    this.getUserBalance();
+  },
+  mounted() {
+    this.getNewQuotation();
+  },
   watch: {
-    amount: _.debounce(function () {
+    amount: debounce(function () {
       this.getNewQuotation();
     }, DEBOUNCE_TIMER),
   },
@@ -180,11 +198,15 @@ export default {
     },
   },
   methods: {
-    ...mapActions('user', ['getQuotation', 'sendPayment']),
-    ...mapActions('component', ['changePaymentComp']),
+    ...mapActions('user', [
+      'getQuotation',
+      'getUserBalance',
+      'sendSplitwisePayment',
+    ]),
+    ...mapActions('component', ['changeSplitwisePaymentComp']),
     getNewQuotation() {
-      const { amount } = this;
-      if (amount >= MIN_QUOTATION && this.currency_selected === 'clp') {
+      const { amount, currency_code } = this.splitwisePaymentData;
+      if (amount >= MIN_PAYMENT && currency_code === 'clp') {
         this.getQuotation({ amount })
           .then(balance => {
             this.quotationCLP = balance.amount_clp[0];
@@ -194,16 +216,11 @@ export default {
             console.error(err);
           });
       }
-      else {
-        this.quotationCLP = 0
-        this.quotationBTC = 0
-      }
     },
     currentWallet() {
       const wallet = this.wallet_origin_selected
         ? this.wallet_origin_selected
         : this.currentUser.wallet;
-      if (wallet === 'bitsplit') this.currency_selected = 'btc';
 
       return wallet;
     },
@@ -211,7 +228,7 @@ export default {
       const wallet = this.currentWallet()
       const paymentAmountBTC = this.paymentAmountBTC()
       const { userBalanceBitsplitBTC, userBalanceBudaBTC } = this
-
+      
       const walletBalanceBTC = wallet === 'bitsplit' 
                                 ? userBalanceBitsplitBTC 
                                 : userBalanceBudaBTC
@@ -219,8 +236,9 @@ export default {
       return walletBalanceBTC >= paymentAmountBTC
     },
     paymentAmountBTC() {
-      const { amount, quotationBTC, currency_selected } = this;
-      return currency_selected === 'clp'
+      const { amount, quotationBTC } = this;
+      const { currency_code } = this.splitwisePaymentData
+      return currency_code === 'clp'
               ? parseFloat(quotationBTC)
               : parseFloat(amount)
     },
@@ -228,16 +246,31 @@ export default {
       const wallet = this.currentWallet();
       const checkBalance = this.checkBalance()
       const paymentAmountBTC = this.paymentAmountBTC()
-      const { amount, receiver_email } = this;
+      const {
+        group_id,
+        to_user_id,
+        first_name,
+        last_name,
+        email,
+        amount,
+        currency_code,
+      } = this.splitwisePaymentData;
 
-      if (amount && receiver_email && checkBalance ) {
-        this.sendPayment({
+      if (amount && email && checkBalance ) {
+        this.sendSplitwisePayment({
           payment_amount: paymentAmountBTC,
-          receiver_email: receiver_email,
+          group_id,
+          to_user_id,
+          first_name,
+          last_name,
+          receiver_email: email,
+          amount_clp: parseFloat(amount),
+          amount_btc: parseFloat(this.quotationBTC),
+          currency_code,
           wallet_origin: wallet,
         })
           .then(() => {
-            this.changePaymentComp('PaymentConfirm');
+            this.changeSplitwisePaymentComp('SplitwisePaymentConfirm');
           })
           .catch(err => {
             console.error(err);
