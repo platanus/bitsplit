@@ -1,5 +1,6 @@
 class Api::V2::DepositwebhooksController < Api::V2::BaseController
     # class Api::V2::DepositwebhooksController < ApplicationController
+    before_action :authenticate_user!, except: [:create]
   
     def create
         order_id = params[:order_id]
