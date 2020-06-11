@@ -6,7 +6,7 @@ class PushNotificationService < PowerTypes::Service.new
 
   def payment_message(token)
     message = {
-      to: "ExponentPushToken[#{token}]",
+      to: token,
       sound: "default",
       body: "Has recibido un nuevo pago!"
     }
