@@ -60,7 +60,7 @@ import {
   getSplitwiseDebtsApi,
 } from '../../../api/user.js';
 
-import { widthdrawalTestApi, chargeApi } from '../../../api/wallet';
+import { widthdrawalApi, chargeApi } from '../../../api/wallet';
 
 const commitAndSetUser = ({ commit, mutation, user }) => {
   if (user) {
@@ -482,7 +482,7 @@ export default {
       return Promise.reject('Error');
     }
 
-    return widthdrawalTestApi({ invoice })
+    return widthdrawalApi({ invoice })
       .then(res => {
         const { data } = res.data;
         dispatch('alert/successAlert', 'Solicitud recibida con exito', {
