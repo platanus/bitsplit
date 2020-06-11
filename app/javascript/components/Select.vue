@@ -17,7 +17,7 @@
       :key="currencyCode"
       :value="currencyCode"
     >
-      {{ currencyCode }}
+      {{ nameMappings[currencyCode] }}
     </option>
   </select>
 </template>
@@ -29,6 +29,7 @@ export default {
     fieldId: String,
     value: String,
     currencyOptions: Array,
+    nameMappings: Object,
     classmod: {
       type: String,
       default: '',

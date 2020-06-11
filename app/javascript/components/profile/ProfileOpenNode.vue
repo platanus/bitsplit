@@ -26,6 +26,7 @@
             field-id="currency"
             v-model="currency"
             :currency-options="currencyOptions"
+            :name-mappings="nameMappings"
           />
         </div>
         <submitButton :loading="chargeAllowed" class="my-1 flex items-center">
@@ -41,7 +42,7 @@
           {{ chargeInvoice }}
         </p>
         <qrcode-vue
-          :value="chargeInvoice"
+          :value="chargeInvoice ? chargeInvoice : ''"
           size="200"
           level="L"
           class="self-center p-2"
@@ -98,6 +99,7 @@ export default {
   data() {
     return {
       currencyOptions: ['BTC'],
+      nameMappings: { BTC: 'Satoshi' },
       amount: '',
       currency: 'BTC',
       invoice: '',
@@ -122,7 +124,7 @@ export default {
 
       return this.chargeOpenNode({ amount, currency })
         .then(res => {
-          this.setShowChargeInvoice(res.response.lightning_invoice.payreq);
+          this.setShowChargeInvoice(res.response.data.lightning_invoice.payreq);
           this.loading = false;
         })
         .catch(() => {
