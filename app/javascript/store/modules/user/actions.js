@@ -12,7 +12,6 @@ import {
   // splitwiseUrlConnection,
   // getDebts,
   updateCurrentUser,
-  changeWallet,
   getSplitwiseUrl,
   setSplitwisePaymentData,
   sendSplitwisePayment,
@@ -46,7 +45,6 @@ import {
   SEND_SPLITWISE_PAYMENT_ATTEMPT,
   SEND_SPLITWISE_PAYMENT_FAIL,
   SEND_SPLITWISE_PAYMENT_SUCCESS,
-  CHANGE_WALLET_SUCCESS,
 } from '../../mutation-types';
 
 import {
