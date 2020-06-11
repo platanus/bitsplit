@@ -25,6 +25,7 @@ import {
   SEND_SPLITWISE_PAYMENT_ATTEMPT,
   SEND_SPLITWISE_PAYMENT_FAIL,
   SEND_SPLITWISE_PAYMENT_SUCCESS,
+  CHANGE_WALLET_SUCCESS,
 } from '../../mutation-types';
 
 export default {
@@ -121,5 +122,8 @@ export default {
   },
   [SEND_SPLITWISE_PAYMENT_FAIL](state) {
     state.sendPaymentLoading = false;
+  },
+  [CHANGE_WALLET_SUCCESS](state, wallet) {
+    state.currentWallet = wallet;
   },
 };
