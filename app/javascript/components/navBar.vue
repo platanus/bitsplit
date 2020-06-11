@@ -90,7 +90,10 @@ export default {
       this.bindNotifications();
     } else {
       this.unbindNotifications();
-      this.$router.push('/');
+
+      if (!(this.$router.history.current.path === '/splitwise-connection')) {
+        this.$router.push('/');
+      }
     }
   },
   watch: {
