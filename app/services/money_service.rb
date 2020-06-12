@@ -39,7 +39,7 @@ class MoneyService < PowerTypes::Service.new(:sender, :receiver, :amount, :walle
     else
       return false unless @wallet_origin != @receiver.wallet
       open_node_service = OpenNodeService.new
-      response = open_node_service.send_charge_request(@amount, 'BTC')
+      response = open_node_service.send_charge_request(@amount, 'BTC', nil)
       return nil unless check_opennode_response(response)
       invoice = JSON.parse(response.body)['data']['lightning_invoice']['payreq']
     

@@ -5,8 +5,11 @@ class OpenNodeService < PowerTypes::Service.new
     url = url('/v1/charges')
     webhook_url = ENV.fetch('DEPOSIT_WEBHOOK_URL')
     headers = headers(@charges_api_key)
-    body = { amount: amount, currency: currency, order_id: order_id, callback_url: webhook_url }.to_json
-    post_request(url, body, headers)
+    body = { amount: amount, currency: currency, order_id: order_id }.to_json
+    if order_id != nil
+      body = { amount: amount, currency: currency, order_id: order_id, callback_url: webhook_url }.to_json
+    end
+      post_request(url, body, headers)
   end
 
   def send_withdrawal_request(invoice)
