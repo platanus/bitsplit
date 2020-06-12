@@ -103,7 +103,7 @@ class MoneyService < PowerTypes::Service.new(:sender, :receiver, :amount, :walle
       @ledgerizer.deposit(@sender, @amount)
     end
 
-    @ledgerizer.transfer(@sender, @receiver, @amount)
+    @ledgerizer.transfer(@sender, @receiver, @amount.to_f)
 
     if @receiver.wallet != 'bitsplit'
       @ledgerizer.withdrawal(@receiver, @amount)
