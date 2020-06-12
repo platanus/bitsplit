@@ -4,7 +4,7 @@
       <div class="w-full max-w-xs pb-16">
         <div>
           <textField>
-            ¡Ya estás conectado a una cuenta Buda! ¿Qué desear hacer?"
+            ¡Ya estás conectado a una cuenta Buda! ¿Qué desear hacer?
           </textField>
         </div>
         <div class="inline">
