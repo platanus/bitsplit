@@ -48,7 +48,7 @@
         type="button"
         class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
       >
-        <button @click="signOut()">
+        <button :disabled="signOutLoading" @click="signOut()">
           Cerrar Sesión
         </button>
       </button>
@@ -110,7 +110,7 @@ export default {
     },
   },
   computed: {
-    ...mapState('user', ['currentUser']),
+    ...mapState('user', ['currentUser', 'signOutLoading']),
     ...mapGetters('user', ['signedIn', 'budaSignedIn', 'splitwiseSignedIn']),
   },
   created() {

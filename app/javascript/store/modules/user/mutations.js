@@ -3,7 +3,9 @@ import {
   SIGNIN_ATTEMPT,
   SIGNIN_FAIL,
   SIGNIN_SUCCESS,
-  SIGNOUT,
+  SIGNOUT_ATTEMPT,
+  SIGNOUT_SUCCESS,
+  SIGNOUT_FAIL,
   SIGNUP_ATTEMPT,
   SIGNUP_FAIL,
   SIGNUP_SUCCESS,
@@ -41,8 +43,15 @@ export default {
   [SIGNIN_FAIL](state) {
     state.signInLoading = false;
   },
-  [SIGNOUT](state) {
+  [SIGNOUT_ATTEMPT](state) {
+    state.signOutLoading = true;
+  },
+  [SIGNOUT_SUCCESS](state) {
+    state.signOutLoading = false;
     state.currentUser = null;
+  },
+  [SIGNOUT_FAIL](state) {
+    state.signOutLoading = false;
   },
   [SIGNUP_ATTEMPT](state) {
     state.signUpLoading = true;
