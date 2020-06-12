@@ -5,7 +5,7 @@ class OpenNodeService < PowerTypes::Service.new
     url = url('/v1/charges')
     webhook_url = ENV.fetch('DEPOSIT_WEBHOOK_URL')
     headers = headers(@charges_api_key)
-    satoshis_amount = amount * 100000000
+    satoshis_amount = amount.to_f * 100000000
     body = { amount: satoshis_amount}.to_json
     if order_id != nil
       body = { amount: satoshis_amount, order_id: order_id, callback_url: webhook_url }.to_json
