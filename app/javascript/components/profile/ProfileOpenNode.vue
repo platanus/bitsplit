@@ -99,7 +99,7 @@ export default {
   data() {
     return {
       currencyOptions: ['BTC'],
-      nameMappings: { BTC: 'Satoshi' },
+      nameMappings: { BTC: 'BTC' },
       amount: '',
       currency: 'BTC',
       invoice: '',
