@@ -39,7 +39,7 @@ class MoneyService < PowerTypes::Service.new(:sender, :receiver, :amount, :walle
     else
       return false unless @wallet_origin != @receiver.wallet
       open_node_service = OpenNodeService.new
-      response = open_node_service.send_charge_request(@amount, 'BTC', nil)
+      response = open_node_service.send_charge_request(@amount, nil, nil)
       return nil unless check_opennode_response(response)
       invoice = JSON.parse(response.body)['data']['lightning_invoice']['payreq']
     
@@ -84,6 +84,10 @@ class MoneyService < PowerTypes::Service.new(:sender, :receiver, :amount, :walle
   end
 
   def check_opennode_response(response)
+    if !JSON.parse(response.body).has_key? 'data'
+      @error_message = response
+      return false
+    end
     data = JSON.parse(response.body)['data']
     if !data.has_key? 'id'
       @error_message = response
