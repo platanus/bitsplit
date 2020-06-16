@@ -80,3 +80,7 @@ gem "httparty", "~> 0.18.0"
 gem "firebase", "~> 0.2.8"
 
 gem 'devise-encryptable'
+
+gem 'delayed_job_active_record', "~> 4.1.4"
+
+gem "daemons", "~> 1.3.1"

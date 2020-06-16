@@ -23,7 +23,6 @@ class MoneyService < PowerTypes::Service.new(:sender, :receiver, :amount, :walle
     else
       payment = "internal payment done"
     end
-
     make_ledgerizer_registration
     return true, payment
   end
@@ -106,7 +105,7 @@ class MoneyService < PowerTypes::Service.new(:sender, :receiver, :amount, :walle
     @ledgerizer.transfer(@sender, @receiver, @amount.to_f)
 
     if @receiver.wallet != 'bitsplit'
-      @ledgerizer.withdrawal(@receiver, @amount)
+      @ledgerizer.delay.withdrawal(@receiver, @amount)
     end
   end
 
