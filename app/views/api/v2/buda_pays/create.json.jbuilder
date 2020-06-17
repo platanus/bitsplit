@@ -1,3 +1,5 @@
 json.data do
-    json.response @answer
+    json.type "buda_pay"
+    json.attributes @payment
 end
+

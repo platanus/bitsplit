@@ -52,6 +52,7 @@ class MoneyService < PowerTypes::Service.new(:sender, :receiver, :amount, :walle
       api_key, api_secret = @sender.buda_keys
       buda_service = BudaUserService.new(api_key: api_key, api_secret: api_secret)
       simulate = ENV.fetch('INVOICE_PAYMENT_SIMULATION')
+
       payment = buda_service.pay_invoice(@amount, invoice, simulate)
       return nil unless check_buda_invoice_payment(payment)
    
