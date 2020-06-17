@@ -1,19 +1,16 @@
 class MoneyService < PowerTypes::Service.new(:sender, :receiver, :amount, :wallet_origin)
   @error_message = 'error'
- 
   # all transaction will have a transfer within its transaction
   # as a minimun
   # 1) bitsplit-buda: transfer -> withdrawal
   # 2) buda-bitsplit: payment -> transfer
   # 3) buda-buda: payment -> transfer -> withdrawal
   # 4) bitsplit-bitsplit: transfer
-  
   def payment
     invoice = generate_invoice
     if invoice == nil
       return false, @error_message
     end
-
     
     if invoice != false
       payment = pay_invoice(invoice)
@@ -35,14 +32,12 @@ class MoneyService < PowerTypes::Service.new(:sender, :receiver, :amount, :walle
       response = buda_service.generate_invoice(@amount)
       return nil unless check_buda_invoice_creation(response)
       invoice = JSON.parse(response.body)['invoice']['encoded_payment_request']
-    
     else
       return false unless @wallet_origin != @receiver.wallet
       open_node_service = OpenNodeService.new
       response = open_node_service.send_charge_request(@amount, nil, nil)
       return nil unless check_opennode_response(response)
       invoice = JSON.parse(response.body)['data']['lightning_invoice']['payreq']
-    
     end
     invoice
   end
@@ -52,7 +47,6 @@ class MoneyService < PowerTypes::Service.new(:sender, :receiver, :amount, :walle
       api_key, api_secret = @sender.buda_keys
       buda_service = BudaUserService.new(api_key: api_key, api_secret: api_secret)
       simulate = ENV.fetch('INVOICE_PAYMENT_SIMULATION')
-
       payment = buda_service.pay_invoice(@amount, invoice, simulate)
       return nil unless check_buda_invoice_payment(payment)
    
