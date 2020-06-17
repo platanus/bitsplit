@@ -13,13 +13,13 @@ class PushNotificationService < PowerTypes::Service.new
   end
 
   def payment_notification
-    if @user.notification_tokens.any?
-      messages = []
-      @user.notification_tokens.each do |token|
-        messages.push(payment_message(token.token))
-      end
-      send_notification("payment", messages)
+    return unless @user.notification_tokens.any?
+    
+    messages = []
+    @user.notification_tokens.each do |token|
+      messages.push(payment_message(token.token))
     end
+    send_notification("payment", messages)
   end
 
   private
