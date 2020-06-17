@@ -20,6 +20,13 @@ class OpenNodeService < PowerTypes::Service.new
     post_request(url, body, headers)
   end
 
+  def get_invoice_amount(invoice)
+    url = url('/v1/charge/decode')
+    headers = headers(@charges_api_key)
+    body = { pay_req: invoice}.to_json
+    post_request(url, body, headers)
+  end
+
   def url(path)
     "https://api.opennode.co#{path}"
   end
