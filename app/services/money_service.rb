@@ -9,10 +9,13 @@ class MoneyService < PowerTypes::Service.new(sender: nil, receiver: nil, amount:
   # 4) bitsplit-bitsplit: transfer
   
   def payment
-    satoshis_amount =  @amount.to_f * 100000000
-    amount_validation, @error_message = validate_amount(@sender, satoshis_amount)
-    if !amount_validation
-      return false, @error_message
+
+    if @wallet_origin == 'bitsplit'
+      satoshis_amount =  @amount.to_f * 100000000
+      amount_validation, @error_message = validate_amount(@sender, satoshis_amount)
+      if !amount_validation
+        return false, @error_message
+      end
     end
 
     invoice = generate_invoice
