@@ -744,3 +744,66 @@ The `password` field is only required if the `api_key` or `api_secret` fields ar
             {
                 "message": "token already exists"
             }
+            
+## Buda pay [/v2/buda_pays]
+### Pay invoice with Buda [POST]
+
++ Request (application/json)
+
+    + Headers
+
+            X-User-Email: example@example.com
+            X-User-Token: smnozAAbYnEX2xVRfS5R
+   
+    + Body
+
+            {
+              "invoice": "LNBC20U1P0W5W6RPP5655R3A436CQ2H3756V2P3WZC7FM94MGF7R04TH4DWHK49FL0SZ7QDQ9FCH5ZCQZPGH4MTWS99Q372TTASXQVVXH2LZC83PHH4Q7WZ3WYQHM8LD84MD2SZYUSVQ8ZENXLCT57USFTWGN26L3VAP4TTPT8NXSEAKRL2397GYJGPLR8C6H", 
+              "order_id": "51"
+            }
+
++ Response 200 (application/json)
+
+        {
+            "data": {
+                "type": "buda_pay",
+                "attributes": {
+                    "withdrawal": {
+                        "id": 308797,
+                        "state": "pending_preparation",
+                        "currency": "BTC",
+                        "created_at": "2020-06-17T15:48:40.379Z",
+                        "withdrawal_data": {
+                            "type": "lightning_network_withdrawal_data",
+                            "payment_request": "LNBC20U1P0W5W6RPP5655R3A436CQ2H3756V2P3WZC7FM94MGF7R04TH4DWHK49FL0SZ7QDQ9FCH5ZCQZPGH4MTWS99Q372TTASXQVVXH2LZC83PHH4Q7WZ3WYQHM8LD84MD2SZYUSVQ8ZENXLCT57USFTWGN26L3VAP4TTPT8NXSEAKRL2397GYJGPLR8C6H",
+                            "payment_error": null,
+                            "total_fees": null
+                        },
+                        "forced_reason": null,
+                        "account_id": 151392,
+                        "user_id": 151392,
+                        "expected_execution_time": null,
+                        "expected_arrival_time": null,
+                        "amount": [
+                            "0.00002",
+                            "BTC"
+                        ],
+                        "fee": [
+                            "0.0",
+                            "BTC"
+                        ],
+                        "usd_amount": [
+                            "0.19",
+                            "USD"
+                        ]
+                    }
+                }
+            }
+        }
+            
+
++ Response 400 (application/json)
+
+            {
+                "message": "user does not have synchronized Buda"
+            }
