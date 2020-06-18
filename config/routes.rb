@@ -27,6 +27,7 @@ Rails.application.routes.draw do
       resource :push_notifications, only: [:create]
       resource :transactions, only: [:show]
       resource :depositwebhooks, only: [:create]
+      resource :buda_pays, only: [:create]
     end
   end
   
