@@ -1,18 +1,10 @@
 \<template>
   <div>
     <button
-      class="text-gray-500 rounded inline-flex items-center"
+      class="text-gray-500 rounded flex items-center"
       @click="hidden = !hidden"
     >
-      <svg
-        class="fill-current w-4 h-4 mr-2"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 20 20"
-      >
-        <path
-          d="M15 19a3 3 0 0 1-6 0H4a1 1 0 0 1 0-2h1v-6a7 7 0 0 1 4.02-6.34 3 3 0 0 1 5.96 0A7 7 0 0 1 19 11v6h1a1 1 0 0 1 0 2h-5zm-4 0a1 1 0 0 0 2 0h-2zm0-12.9A5 5 0 0 0 7 11v6h10v-6a5 5 0 0 0-4-4.9V5a1 1 0 0 0-2 0v1.1z"
-        />
-      </svg>
+      <i class="material-icons text-center mr-2">notifications</i>
       <span>{{ unSeenNotifications.length }}</span>
     </button>
     <div v-show="!hidden" class="absolute bg-gray-400 mt-4 ml-2">
@@ -29,7 +21,7 @@
         >
           <li class="p-3 border-black border-solid hover:bg-gray-500 z-40">
             <div v-show="notification.type === 'payment'" class="flex flex-row">
-              <RightArrow color="seaGreen" />
+              <i class="material-icons cursor-pointer text-green-700">east</i>
               <p v-if="notification.data.sender" class="pl-2 font-thin">
                 {{
                   `${notification.data.sender} te ha enviado ${notification.data.amount} BTC`
@@ -39,7 +31,7 @@
                 {{ `Has recibido ${notification.data.amount} BTC` }}
               </p>
               <button @click="markAsSeen(notification['.key'])">
-                <Cross class="ml-2 cursor-pointer" />
+                <i class="material-icons ml-2 cursor-pointer">cancel</i>
               </button>
             </div>
           </li>
@@ -50,15 +42,9 @@
 </template>
 <script>
 import { mapGetters, mapActions, mapState } from 'vuex';
-import RightArrow from './icons/RightArrow';
-import Cross from './icons/Cross';
 
 export default {
   name: 'NavBarNotifications',
-  components: {
-    RightArrow,
-    Cross,
-  },
   data() {
     return {
       hidden: true,
