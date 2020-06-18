@@ -7,14 +7,14 @@ class Api::V2::BudaPaysController < ApplicationController
       simulate = ENV.fetch('INVOICE_PAYMENT_SIMULATION')
       @payment = buda_service.pay_invoice(amount, params[:invoice], simulate)
     else
-      render(json: { error: 'user does not have synchronized Buda' }, status: 400) && return
+      render(json: { error: 'user does not have synchronized Buda' }, status: 400) 
     end
   end
 
   private
 
   def buda_pays_params
-    params.require(:invoice, :order_id)
+    params.permit(:invoice, :order_id)
   end
 
   def decrypt(text)
