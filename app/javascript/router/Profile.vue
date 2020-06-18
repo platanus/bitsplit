@@ -18,35 +18,44 @@
                     <div class="md:flex">
                       <div class="flex -mb-px mr-8">
                         <button :class="getTabClass('/')">
-                          <router-link to="/profile/">
-                            Inicio
+                          <router-link class="flex" to="/profile/">
+                            <i class="material-icons text-center mr-2">home</i>
+                            Balances
                           </router-link>
                         </button>
                       </div>
                       <div class="flex -mb-px mr-8">
                         <button :class="getTabClass('/buda')">
-                          <router-link to="/profile/buda">
+                          <router-link class="flex" to="/profile/buda">
+                            <i class="material-icons text-center mr-2">money</i>
                             Buda
                           </router-link>
                         </button>
                       </div>
                       <div class="flex -mb-px mr-8">
                         <button :class="getTabClass('/splitwise')">
-                          <router-link to="/profile/splitwise">
+                          <router-link class="flex" to="/profile/splitwise">
+                            <i class="material-icons text-center mr-2">group</i>
                             Splitwise
                           </router-link>
                         </button>
                       </div>
                       <div class="flex -mb-px mr-8">
                         <button :class="getTabClass('/wallet')">
-                          <router-link to="/profile/wallet">
+                          <router-link class="flex" to="/profile/wallet">
+                            <i class="material-icons text-center mr-2"
+                              >account_balance_wallet</i
+                            >
                             Wallet
                           </router-link>
                         </button>
                       </div>
                       <div class="flex -mb-px">
                         <button :class="getTabClass('/settings')">
-                          <router-link to="/profile/settings">
+                          <router-link class="flex" to="/profile/settings">
+                            <i class="material-icons text-center mr-2"
+                              >settings</i
+                            >
                             Configuración
                           </router-link>
                         </button>
