@@ -97,7 +97,6 @@ class MoneyService < PowerTypes::Service.new(:sender, :receiver, :amount, :walle
 
   def make_ledgerizer_registration
     @ledgerizer = LedgerizerService.new
-    
     if @wallet_origin != 'bitsplit'
       @ledgerizer.deposit(@sender, @amount)
     end
@@ -105,7 +104,7 @@ class MoneyService < PowerTypes::Service.new(:sender, :receiver, :amount, :walle
     @ledgerizer.transfer(@sender, @receiver, @amount.to_f)
 
     if @receiver.wallet != 'bitsplit'
-      @ledgerizer.delay.withdrawal(@receiver, @amount)
+      @ledgerizer.withdrawal(@receiver, @amount)
     end
   end
 
