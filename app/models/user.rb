@@ -9,6 +9,7 @@ class User < ApplicationRecord
   has_many :sent_payments, class_name: 'Payment', foreign_key: 'sender_id'
   has_many :received_payments, class_name: 'Payment', foreign_key: 'receiver_id'
   has_many :authentication_tokens, dependent: :delete_all
+  has_many :notification_tokens, dependent: :delete_all
 
   def wallet_balance
     wallet_account&.balance || Money.from_amount(0, 'SAT')

@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_15_233016) do
+
+ActiveRecord::Schema.define(version: 2020_06_16_011930) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -152,6 +153,8 @@ ActiveRecord::Schema.define(version: 2020_06_15_233016) do
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "authentication_token_id", null: false
+    t.index ["authentication_token_id"], name: "index_notification_tokens_on_authentication_token_id"
     t.index ["user_id"], name: "index_notification_tokens_on_user_id"
   end
 
@@ -225,6 +228,7 @@ ActiveRecord::Schema.define(version: 2020_06_15_233016) do
   add_foreign_key "deposits", "users"
   add_foreign_key "ledgerizer_lines", "ledgerizer_accounts", column: "account_id"
   add_foreign_key "ledgerizer_lines", "ledgerizer_entries", column: "entry_id"
+  add_foreign_key "notification_tokens", "authentication_tokens"
   add_foreign_key "notification_tokens", "users"
   add_foreign_key "payments", "users", column: "receiver_id"
   add_foreign_key "payments", "users", column: "sender_id"

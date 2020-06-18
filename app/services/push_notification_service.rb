@@ -13,8 +13,10 @@ class PushNotificationService < PowerTypes::Service.new
   end
 
   def payment_notification
+    return unless @user.notification_tokens.any?
+    
     messages = []
-    @tokens.each do |token|
+    @user.notification_tokens.each do |token|
       messages.push(payment_message(token.token))
     end
     send_notification("payment", messages)
@@ -24,7 +26,6 @@ class PushNotificationService < PowerTypes::Service.new
 
   def initialize(user)
     @user = user
-    @tokens = NotificationToken.where(user: @user)
     @push_client =  Exponent::Push::Client.new
   end
 end
