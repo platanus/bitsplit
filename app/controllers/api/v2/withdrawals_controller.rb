@@ -7,7 +7,7 @@ class Api::V2::WithdrawalsController < Api::V2::BaseController
     amount_response_body = JSON.parse(amount_response.body)
     @response = amount_response_body
     return unless amount_response_body.has_key? 'data'
-    return unless amount_response_body['data'].has_key? 'payreq'
+    return unless amount_response_body['data'].has_key? 'pay_req'
     satoshis_amount = amount_response_body['data']['pay_req']['amount'].to_f
     money_service = MoneyService.new
     amount_validation, message = money_service.validate_amount(current_user, satoshis_amount)
