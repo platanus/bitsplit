@@ -1,9 +1,7 @@
 class BudaUserService < PowerTypes::Service.new(user: nil, api_key: nil, api_secret: nil)
   def generate_invoice(bitcoins_amount)
     success, message = validate_keys
-    if !success
-      return message
-    end
+    return message unless success
     path = '/api/v2/lightning_network_invoices'
     url = 'https://www.buda.com/api/v2/lightning_network_invoices'
     request_type = 'POST'
@@ -16,9 +14,7 @@ class BudaUserService < PowerTypes::Service.new(user: nil, api_key: nil, api_sec
 
   def pay_invoice(bitcoins_amount, invoice_code, simulate)
     success, message = validate_keys
-    if !success
-      return message
-    end
+    return message unless success
     path = '/api/v2/reserves/ln-btc/withdrawals'
     url = 'https://www.buda.com/api/v2/reserves/ln-btc/withdrawals'
     request_type = 'POST'
@@ -34,9 +30,7 @@ class BudaUserService < PowerTypes::Service.new(user: nil, api_key: nil, api_sec
 
   def balance(currency)
     success, message = validate_keys
-    if !success
-      return message
-    end
+    return message unless success
     path = '/api/v2/balances/' + currency
     url = 'https://www.buda.com/api/v2/balances/' + currency
     request_type = 'GET'
