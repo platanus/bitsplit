@@ -69,13 +69,13 @@ class PaymentsService < PowerTypes::Service.new(:sender, :receiver)
   end
 
   def receiver_invoice(api_key, api_secret, bitcoins_amount)
-    buda_receiver = BudaUserService.new(api_key: api_key, api_secret: api_secret)
+    buda_receiver = BudaUserService.new(user: @receiver, api_key: api_key, api_secret: api_secret)
     buda_receiver.generate_invoice(bitcoins_amount)
   end
 
   def sender_payment(api_key, api_secret, bitcoins_amount, invoice_code)
     simulate = ENV.fetch('INVOICE_PAYMENT_SIMULATION')
-    buda_payer = BudaUserService.new(api_key: api_key, api_secret: api_secret)
+    buda_payer = BudaUserService.new(user: @sender, api_key: api_key, api_secret: api_secret)
     buda_payer.pay_invoice(bitcoins_amount, invoice_code, simulate)
   end
 end
