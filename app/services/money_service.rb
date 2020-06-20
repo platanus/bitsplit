@@ -1,4 +1,4 @@
-class MoneyService < PowerTypes::Service.new(:sender, :receiver, :amount, :wallet_origin)
+class MoneyService < PowerTypes::Service.new(sender: nil, receiver: nil, amount: nil, wallet_origin: nil)
   @error_message = 'error'
   # all transaction will have a transfer within its transaction
   # as a minimun
@@ -7,6 +7,15 @@ class MoneyService < PowerTypes::Service.new(:sender, :receiver, :amount, :walle
   # 3) buda-buda: payment -> transfer -> withdrawal
   # 4) bitsplit-bitsplit: transfer
   def payment
+
+    if @wallet_origin == 'bitsplit'
+      satoshis_amount =  @amount.to_f * 100000000
+      amount_validation, @error_message = validate_amount(@sender, satoshis_amount)
+      if !amount_validation
+        return false, @error_message
+      end
+    end
+
     invoice = generate_invoice
     if invoice == nil
       return false, @error_message
@@ -88,6 +97,18 @@ class MoneyService < PowerTypes::Service.new(:sender, :receiver, :amount, :walle
       return false
     end
     return true
+  end
+
+  def validate_amount(user, amount)
+    if amount <= 0
+      error_message = 'amount is less or equal to 0'
+      return false, error_message
+    end
+    if user.wallet_balance < Money.from_amount(amount, 'SAT')
+      error_message = 'amount is greater than balance'
+      return false, error_message
+    end
+    return true, nil
   end
 
   def make_ledgerizer_registration
