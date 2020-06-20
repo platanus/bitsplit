@@ -2,7 +2,7 @@ class Api::V2::BalancesController < ApplicationController
   def show
     if current_user.api_key && !decrypt(current_user.api_key).empty?
       api_key, api_secret = current_user.buda_keys
-      buda_user = BudaUserService.new(api_key: api_key, api_secret: api_secret)
+      buda_user = BudaUserService.new(user: current_user, api_key: api_key, api_secret: api_secret)
       unless buda_user.balance('btc').has_key? 'balance'
         @error_message = buda_user.balance('btc')
         render('error') && return
