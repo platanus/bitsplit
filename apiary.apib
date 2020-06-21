@@ -475,7 +475,7 @@ The `password` field is only required if the `api_key` or `api_secret` fields ar
 + Response 200
 
 
-## OpenNode Charge [/v2/charges]
+## OpenNode Deposit [/v2/deposits]
 ### Create OpenNode Charge [POST]
 
 + Request (application/json)
@@ -487,8 +487,8 @@ The `password` field is only required if the `api_key` or `api_secret` fields ar
     + Body
 
             {
-                "amount": 2000,
-                "currency": "CLP"
+                "amount": 0.002,
+                "currency": "BTC"
             }
             
 + Response 200 (application/json)
