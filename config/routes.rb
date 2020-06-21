@@ -28,6 +28,8 @@ Rails.application.routes.draw do
       resource :transactions, only: [:show]
       resource :depositwebhooks, only: [:create]
       resource :buda_pays, only: [:create]
+      resource :withdrawalwebhooks, only: [:create]
+
     end
   end
   

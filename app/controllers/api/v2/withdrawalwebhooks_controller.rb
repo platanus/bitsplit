@@ -4,7 +4,7 @@ class Api::V2::WithdrawalwebhooksController < Api::V2::BaseController
     before_action :authenticate_user!, except: [:create]
   
     def create
-        invoice = params[:address]
+        invoice = params[:reference]
         order = UserWithdrawal.find_by(invoice: invoice)
         order.update(completed: true)
         user = User.find_by(id: order.user_id)
