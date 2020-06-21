@@ -1,5 +1,5 @@
-class Api::V2::ChargesController < Api::V2::BaseController
-  # class Api::V2::ChargesController < ApplicationController
+class Api::V2::DepositsController < Api::V2::BaseController
+  # class Api::V2::DepositsController < ApplicationController
 
   def create
     new_user_deposit = UserDeposit.create!(user_id: current_user.id,
