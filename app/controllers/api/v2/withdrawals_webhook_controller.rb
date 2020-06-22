@@ -1,5 +1,5 @@
-class Api::V2::WithdrawalwebhooksController < Api::V2::BaseController
-    # class Api::V2::WithdrawalwebhooksController < ApplicationController
+class Api::V2::WithdrawalsWebhookController < Api::V2::BaseController
+    # class Api::V2::WithdrawalsWebhookController < ApplicationController
     
     before_action :authenticate_user!, except: [:create]
   
