@@ -99,12 +99,12 @@
               >Equivalente a:</label
             >
             <label
-              class="mb-8 uppercase font-bold text-xl text-indigo-600"
+              class="mb-4 uppercase font-bold text-xl text-indigo-600"
               for="account_balance"
               >{{ quotationCLP }} CLP</label
             >
             <label
-              class="mb-8 uppercase font-bold text-xl text-indigo-600"
+              class="mb-4 uppercase font-bold text-xl text-indigo-600"
               for="account_balance"
               >{{ quotationBTC }} BTC</label
             >

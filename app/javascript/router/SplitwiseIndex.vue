@@ -1,156 +1,167 @@
 <template>
-  <div class="flex justify-center m-16">
+  <div class="flex justify-center m-8">
     <div>
-      <div>
-        <label class="block text-gray-700 text-lg flex justify-center mb-5">
-          Deudas de Splitwise
-        </label>
+      <div class="text-grey-darker mb-2">
+        <span class="text-xl flex justify-center align-top text-indigo-600"
+          >Deudas de Splitwise
+        </span>
       </div>
-      <div v-if="splitwiseSignedIn">
-        <div v-if="getSplitwiseDebtsLoading">
-          <p>Cargando...</p>
-        </div>
-        <div v-else class="rounded-md">
-          <div
-            v-if="
-              userSplitwiseDebts.singleDebts || userSplitwiseDebts.groupDebts
-            "
-          >
-            <div class="p-3" v-if="userSplitwiseDebts.singleDebts">
-              <label class="block text-gray-500 text-lg flex justify-left mb-3">
-                Deudas Individuales
-              </label>
-              <CustomTable
-                :data="
-                  userSplitwiseDebts.singleDebts.friendsToUser
-                    .concat(userSplitwiseDebts.singleDebts.userToFriends)
-                    .slice()
-                    .reverse()
+      <div v-if="getSplitwiseDebtsLoading">
+        <p>Cargando...</p>
+      </div>
+      <div v-else class="rounded-md">
+        <div
+          v-if="userSplitwiseDebts.singleDebts || userSplitwiseDebts.groupDebts"
+        >
+        
+          <div v-if="userSplitwiseDebts.singleDebts">
+            <div class="text-grey-darker">
+              <span class="text-lg align-top text-blue-800">Deudas Individuales</span>
+            </div>
+            <div>
+              <div
+                v-for="(single_debt,index) in userSplitwiseDebts.singleDebts.friendsToUser
+                      .concat(userSplitwiseDebts.singleDebts.userToFriends)
+                      .slice()
+                      .reverse()
                 "
-                :columns="debtsColumns"
+                class="flex items-center"
+                :key="index"
               >
-                <template #default="{ row, tdClass }">
+                <div class="flex-column content-center">
                   <img
-                    :src="row.picture"
-                    class="rounded-full border-solid border-white border-2 mt-3 w-12 ml-6 mr-6 mb-3"
+                    :src="single_debt.picture"
+                    class="rounded-full border-solid border-white border-2 mt-3 w-16 ml-2 mr-6 mb-3"
                   />
-                  <td v-if="row.type" :class="tdClass">
+                </div>
+                <div class="flex-column content-center">
+                  <div>
                     <span
-                      class="text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
-                    >
-                      Te deben
+                      class="text-xs leading-5 font-semibold rounded-full"
+                      :class="[
+                        single_debt.type ? 'text-green-800' : 'text-red-800',
+                      ]"                 >
+                      {{ single_debt.first_name + ' ' + single_debt.last_name  | removeNull }} 
                     </span>
-                  </td>
-                  <td v-else :class="tdClass">
+                  </div>
+                  <div>
                     <span
-                      class="text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"
+                      v-if="single_debt.type"
                     >
-                      Debes
+                      Te deben ${{ single_debt.amount }}
                     </span>
-                  </td>
-                  <td :class="tdClass">
-                    {{ row.first_name + ' ' + row.last_name }}
-                  </td>
-                  <td :class="tdClass">${{ row.amount }}</td>
-                  <td v-show="row.is_payable" :class="tdClass">
+                    <span
+                      v-else
+                    >
+                      Debes ${{ single_debt.amount }}
+                    </span>
+                  </div>
+                </div>
+                <div 
+                  v-if="single_debt.is_payable && !single_debt.type" 
+                  class="flex-column content-center bg-indigo-800 ml-auto"
+                >
+                  <linkButton
+                    classmod="bg-blue-500 hover:bg-blue-700 my-3 md:my-0"
+                    route="splitwisepayment"
+                    :payment-data="{
+                      group_id: 0,
+                      to_user_id: single_debt.id,
+                      first_name: single_debt.first_name,
+                      last_name: single_debt.last_name,
+                      email: single_debt.email,
+                      amount: single_debt.amount,
+                      currency_code: single_debt.currency_code.toLowerCase(),
+                    }"
+                    :field-disabled="false"
+                  >
+                    Pagar
+                  </linkButton>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div v-if="userSplitwiseDebts.groupDebts">
+            <div
+              v-for="(group,
+              index) in userSplitwiseDebts.groupDebts.slice().reverse()"
+              class="mb-4"
+              :key="index"
+            >
+              <div class="text-grey-darker">
+                <span class="text-lg align-top text-blue-800">{{ group.group_name }}</span>
+              </div>
+              <div>
+                <div
+                  v-for="(group_debt,index) in group.friendsToUser
+                      .concat(group.userToFriends)
+                      .slice()
+                      .reverse()
+                  "
+                  class="flex items-center"
+                  :key="index"
+                >
+                  <div class="flex-column content-center">
+                    <img
+                      :src="group_debt.picture"
+                      class="rounded-full border-solid border-white border-2 mt-3 w-16 ml-2 mr-6 mb-3"
+                    />
+                  </div>
+                  <div class="flex-column content-center">
+                    <div>
+                      <span
+                        class="text-xs leading-5 font-semibold rounded-full"
+                        :class="[
+                          group_debt.type ? 'text-green-800' : 'text-red-800',
+                        ]"                 >
+                        {{ group_debt.first_name + ' ' + group_debt.last_name  | removeNull }} 
+                      </span>
+                    </div>
+                    <div>
+                      <span
+                        v-if="group_debt.type"
+                      >
+                        Te deben ${{ group_debt.amount }}
+                      </span>
+                      <span
+                        v-else
+                      >
+                        Debes ${{ group_debt.amount }}
+                      </span>
+                    </div>
+                  </div>
+                  <div 
+                    v-if="group_debt.is_payable && !group_debt.type" 
+                    class="flex-column content-center bg-indigo-800 ml-auto"
+                  >
                     <linkButton
                       classmod="bg-blue-500 hover:bg-blue-700 my-3 md:my-0"
                       route="splitwisepayment"
                       :payment-data="{
-                        group_id: 0,
-                        to_user_id: row.id,
-                        first_name: row.first_name,
-                        last_name: row.last_name,
-                        email: row.email,
-                        amount: row.amount,
-                        currency_code: row.currency_code.toLowerCase(),
+                        group_id: group.group_id,
+                        to_user_id: group_debt.id,
+                        first_name: group_debt.first_name,
+                        last_name: group_debt.last_name,
+                        email: group_debt.email,
+                        amount: group_debt.amount,
+                        currency_code: group_debt.currency_code.toLowerCase(),
                       }"
                       :field-disabled="false"
                     >
                       Pagar
                     </linkButton>
-                  </td>
-                </template>
-              </CustomTable>
-            </div>
-            <div class="p-3" v-if="userSplitwiseDebts.groupDebts">
-              <label class="block text-gray-500 text-lg flex justify-left mb-3">
-                Deudas Grupales
-              </label>
-              <div
-                v-for="(group_debt,
-                index) in userSplitwiseDebts.groupDebts.slice().reverse()"
-                :key="index"
-              >
-                <p class="text-5xl font-bold my-3">
-                  Grupo: {{ group_debt.group_name }}
-                </p>
-                <CustomTable
-                  :data="
-                    group_debt.friendsToUser
-                      .concat(group_debt.userToFriends)
-                      .slice()
-                      .reverse()
-                  "
-                  :columns="debtsColumns"
-                >
-                  <template #default="{ row, tdClass }">
-                    <img
-                        :src="row.picture"
-                        class="rounded-full border-solid border-white border-2 mt-3 w-12 ml-6 mr-6 mb-3"
-                      />
-                    <td v-if="row.type" :class="tdClass">
-                      <span
-                        class="text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
-                      >
-                        Te deben
-                      </span>
-                    </td>
-                    <td v-else :class="tdClass">
-                      <span
-                        class="text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"
-                      >
-                        Debes
-                      </span>
-                    </td>
-                    <td :class="tdClass">
-                      {{ row.first_name + ' ' + row.last_name  | removeNull }} 
-                    </td>
-                    <td :class="tdClass">${{ row.amount }}</td>
-                    <td v-show="row.is_payable" :class="tdClass">
-                      <linkButton
-                        classmod="bg-blue-500 hover:bg-blue-700 my-3 md:my-0"
-                        route="splitwisepayment"
-                        :payment-data="{
-                          group_id: group_debt.group_id,
-                          to_user_id: row.id,
-                          first_name: row.first_name,
-                          last_name: row.last_name,
-                          email: row.email,
-                          amount: row.amount,
-                          currency_code: row.currency_code.toLowerCase(),
-                        }"
-                        :field-disabled="false"
-                      >
-                        Pagar
-                      </linkButton>
-                    </td>
-                  </template>
-                </CustomTable>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-          <div v-else>
-            <p class="text-5xl font-bold">
-              No hay deudas para mostrar
-            </p>
-          </div>
         </div>
-      </div>
-      <div v-else>
-        <p class="text-5xl font-bold">
-          No estás conectado a Splitwise
-        </p>
+        <div v-else>
+          <p class="text-5xl font-bold">
+            No hay deudas para mostrar
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -159,14 +170,13 @@
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex';
 import linkButton from '../components/LinkButton';
-import CustomTable from '../components/CustomTable';
 
 export default {
   name: 'Home',
   data() {
     return {
       routeName: 'home',
-      debtsColumns: ['', '', 'Nombre', 'Monto', 'Pagar'],
+      debtsColumns: ['', '', 'Nombre', 'Monto', ''],
     };
   },
   created() {
@@ -174,7 +184,6 @@ export default {
   },
   components: {
     linkButton,
-    CustomTable,
   },
   methods: {
     ...mapActions('splitwiseDebts', ['getSplitwiseDebts']),
