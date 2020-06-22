@@ -70,7 +70,7 @@
 
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex';
-import BudaAlert from 'components/BudaAlert.vue';
+import BudaAlert from 'components/buda/BudaAlert.vue';
 import CustomTable from '../components/CustomTable';
 
 export default {

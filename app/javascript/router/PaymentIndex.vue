@@ -6,8 +6,8 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
-import PaymentForm from '../components/PaymentForm';
-import PaymentConfirm from '../components/PaymentConfirm';
+import PaymentForm from '../components/payment/PaymentForm';
+import PaymentConfirm from '../components/payment/PaymentConfirm';
 
 export default {
   name: 'Payment',
