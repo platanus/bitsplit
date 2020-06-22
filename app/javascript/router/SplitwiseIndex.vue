@@ -30,6 +30,10 @@
                 :columns="debtsColumns"
               >
                 <template #default="{ row, tdClass }">
+                  <img
+                    :src="row.picture"
+                    class="rounded-full border-solid border-white border-2 mt-3 w-12 ml-6 mr-6 mb-3"
+                  />
                   <td v-if="row.type" :class="tdClass">
                     <span
                       class="text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
@@ -91,6 +95,10 @@
                   :columns="debtsColumns"
                 >
                   <template #default="{ row, tdClass }">
+                    <img
+                        :src="row.picture"
+                        class="rounded-full border-solid border-white border-2 mt-3 w-12 ml-6 mr-6 mb-3"
+                      />
                     <td v-if="row.type" :class="tdClass">
                       <span
                         class="text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
@@ -106,7 +114,7 @@
                       </span>
                     </td>
                     <td :class="tdClass">
-                      {{ row.first_name + ' ' + row.last_name }}
+                      {{ row.first_name + ' ' + row.last_name  | removeNull }} 
                     </td>
                     <td :class="tdClass">${{ row.amount }}</td>
                     <td v-show="row.is_payable" :class="tdClass">
@@ -158,7 +166,7 @@ export default {
   data() {
     return {
       routeName: 'home',
-      debtsColumns: ['', 'Nombre', 'Monto', 'Pagar'],
+      debtsColumns: ['', '', 'Nombre', 'Monto', 'Pagar'],
     };
   },
   created() {
@@ -170,7 +178,6 @@ export default {
   },
   methods: {
     ...mapActions('splitwiseDebts', ['getSplitwiseDebts']),
-
     getDate(date) {
       const d = new Date(date);
 
@@ -184,6 +191,13 @@ export default {
       'userSplitwiseDebts',
     ]),
     ...mapGetters('user', ['splitwiseSignedIn']),
+  },
+  filters: {
+    removeNull: function (value) {
+      if (!value) return ''
+      value = value.replace('null', '');
+      return value
+    },
   },
 };
 </script>
