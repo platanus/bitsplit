@@ -1,12 +1,12 @@
 /* eslint-disable camelcase */
 import { authedAxios } from '../helpers';
 
-const chargeApi = payload => {
+const depositApi = payload => {
   const { amount, currency } = payload;
 
   if (!amount || !currency) return Promise.reject('Error');
 
-  return authedAxios.post('/api/v2/charges/', {
+  return authedAxios.post('/api/v2/deposits/', {
     amount,
     currency,
   });
@@ -21,4 +21,4 @@ const widthdrawalApi = payload => {
   });
 };
 
-export { chargeApi, widthdrawalApi };
+export { depositApi, widthdrawalApi };

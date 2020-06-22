@@ -13,7 +13,7 @@ import {
   getSplitwiseUrl,
   setSplitwisePaymentData,
   sendSplitwisePayment,
-  chargeOpenNode,
+  depositOpenNode,
   withdrawalOpenNode,
 } from '../../action-types';
 
@@ -62,7 +62,7 @@ import {
   payOffSplitwiseDebtApi,
 } from '../../../api/user.js';
 
-import { widthdrawalApi, chargeApi } from '../../../api/wallet';
+import { widthdrawalApi, depositApi } from '../../../api/wallet';
 
 const commitAndSetUser = ({ commit, mutation, user }) => {
   if (user) {
@@ -462,12 +462,12 @@ export default {
         }
       });
   },
-  [chargeOpenNode]({ dispatch }, { amount, currency }) {
+  [depositOpenNode]({ dispatch }, { amount, currency }) {
     if (!amount || !currency) {
       return Promise.reject('Error');
     }
 
-    return chargeApi({ amount, currency })
+    return depositApi({ amount, currency })
       .then(res => {
         const { data } = res.data;
         dispatch('alert/successAlert', 'Solicitud recibida con exito', {
