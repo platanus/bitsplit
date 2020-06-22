@@ -20,7 +20,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import textField from '../components/TextField';
+import textField from '../TextField';
 
 export default {
   name: 'PaymentConfirm',

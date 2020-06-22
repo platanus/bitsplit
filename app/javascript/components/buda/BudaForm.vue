@@ -45,10 +45,10 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
-import passwordInput from '../components/PasswordInput';
-import submitButton from '../components/SubmitButton';
-import inputLabel from '../components/InputLabel';
-import textField from '../components/TextField';
+import passwordInput from '../PasswordInput';
+import submitButton from '../SubmitButton';
+import inputLabel from '../InputLabel';
+import textField from '../TextField';
 
 export default {
   name: 'BudaForm',

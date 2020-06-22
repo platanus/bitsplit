@@ -130,9 +130,9 @@
 <script>
 import { mapActions, mapState, mapGetters } from 'vuex';
 import _ from 'lodash';
-import textInput from '../components/Input';
-import submitButton from '../components/SubmitButton';
-import spinner from '../components/Spinner';
+import textInput from '../Input';
+import submitButton from '../SubmitButton';
+import spinner from '../Spinner';
 
 const DEBOUNCE_TIMER = 1000;
 const MIN_QUOTATION = 200;
