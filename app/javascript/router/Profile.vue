@@ -27,7 +27,9 @@
                       <div class="flex -mb-px mr-8">
                         <button :class="getTabClass('/buda')">
                           <router-link class="flex" to="/profile/buda">
-                            <i class="material-icons text-center mr-2">money</i>
+                            <i class="material-icons text-center mr-2"
+                              >attach_money</i
+                            >
                             Buda
                           </router-link>
                         </button>

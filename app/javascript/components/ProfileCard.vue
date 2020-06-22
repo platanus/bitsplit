@@ -14,12 +14,6 @@
             class="rounded-full border-solid border-white border-2 mt-3 w-24 ml-6 mr-6 mb-3"
           />
         </div>
-        <router-link
-          class="btn-secondary ext-black font-bold p-1 ml-2 mt-4 rounded focus:outline-none"
-          to="/profile/settings"
-        >
-          Cerrar sesión
-        </router-link>
       </div>
       <div class="w-1/5 txt-card text-sm mb-4 mt-4 ml-4">
         <p class="text-black leading-none mb-4 mt-4 font-bold">
