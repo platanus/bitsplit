@@ -6,6 +6,9 @@ class Api::V1::UsersController < Api::V1::BaseController
 
   def create
     new_user = User.create!(user_params)
+    if new_user.save
+      UserMailer.with(user: new_user).welcome_email.deliver_later
+    end
     respond_with new_user
   end
 
