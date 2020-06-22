@@ -12,6 +12,7 @@
 
 ActiveRecord::Schema.define(version: 2020_06_21_031722) do
 
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -66,9 +67,6 @@ ActiveRecord::Schema.define(version: 2020_06_21_031722) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["body"], name: "index_authentication_tokens_on_body"
     t.index ["user_id"], name: "index_authentication_tokens_on_user_id"
-  end
-
-  create_table "data_migrations", primary_key: "version", id: :string, force: :cascade do |t|
   end
 
   create_table "delayed_jobs", force: :cascade do |t|
@@ -189,6 +187,15 @@ ActiveRecord::Schema.define(version: 2020_06_21_031722) do
     t.integer "user_id"
     t.float "amount"
     t.boolean "completed"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "user_withdrawals", force: :cascade do |t|
+    t.integer "user_id"
+    t.float "amount"
+    t.boolean "completed"
+    t.string "invoice"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
