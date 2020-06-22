@@ -14,7 +14,7 @@
 import { mapActions, mapState, mapGetters } from 'vuex';
 import BudaForm from '../components/buda/BudaForm';
 import BudaLogoutForm from '../components/buda/BudaLogoutForm';
-import BudaIndex from '../components/buda/BudaIndex';
+import BudaIndex from '../components/buda/BudaMenu';
 
 export default {
   name: 'BudaProfile',
