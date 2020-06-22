@@ -8,7 +8,7 @@
         Elige un monto a cargar y nosotros crearemos un invoice para que pagues.
       </InputLabel>
       <form
-        @submit.prevent="handleChargeSubmit"
+        @submit.prevent="handleDepositSubmit"
         class="flex flex-col md:flex-row"
       >
         <div class="md:mr-2 my-1 flex-grow">
@@ -29,20 +29,20 @@
             :name-mappings="nameMappings"
           />
         </div>
-        <submitButton :loading="chargeAllowed" class="my-1 flex items-center">
+        <submitButton :loading="depositAllowed" class="my-1 flex items-center">
           <p>cargar</p>
         </submitButton>
       </form>
-      <div v-show="showChargeInvoice" class="pt-4 flex flex-col md:flex-row">
+      <div v-show="showDepositInvoice" class="pt-4 flex flex-col md:flex-row">
         <text-field font-color="secondary" class="text-left p-2">
           Paga el siguiente invoice y apenas recibamos la confirmación la
           cargamos a tu cuenta:
         </text-field>
         <p class="break-all text-left p-2">
-          {{ chargeInvoice }}
+          {{ depositInvoice }}
         </p>
         <qrcode-vue
-          :value="chargeInvoice ? chargeInvoice : ''"
+          :value="depositInvoice ? depositInvoice : ''"
           size="200"
           level="L"
           class="self-center p-2"
@@ -104,12 +104,12 @@ export default {
       currency: 'BTC',
       invoice: '',
       loading: false,
-      showChargeInvoice: false,
-      chargeInvoice: null,
+      showDepositInvoice: false,
+      depositInvoice: null,
     };
   },
   computed: {
-    chargeAllowed() {
+    depositAllowed() {
       return this.loading || !(this.amount && this.currency);
     },
     withdrawalAllowed() {
@@ -117,14 +117,16 @@ export default {
     },
   },
   methods: {
-    ...mapActions('user', ['withdrawalOpenNode', 'chargeOpenNode']),
-    handleChargeSubmit() {
+    ...mapActions('user', ['withdrawalOpenNode', 'depositOpenNode']),
+    handleDepositSubmit() {
       this.loading = true;
       const { amount, currency } = this;
 
-      return this.chargeOpenNode({ amount, currency })
+      return this.depositOpenNode({ amount, currency })
         .then(res => {
-          this.setShowChargeInvoice(res.response.data.lightning_invoice.payreq);
+          this.setShowDepositInvoice(
+            res.response.data.lightning_invoice.payreq
+          );
           this.loading = false;
         })
         .catch(() => {
@@ -144,9 +146,9 @@ export default {
           this.loading = false;
         });
     },
-    setShowChargeInvoice(invoice) {
-      this.showChargeInvoice = true;
-      this.chargeInvoice = invoice;
+    setShowDepositInvoice(invoice) {
+      this.showDepositInvoice = true;
+      this.depositInvoice = invoice;
     },
   },
 };
