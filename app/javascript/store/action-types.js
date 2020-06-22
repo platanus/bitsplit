@@ -30,5 +30,5 @@ export const currentStepOk = 'currentStepOk';
 
 export const updateCurrentUser = 'updateCurrentUser';
 
-export const chargeOpenNode = 'chargeOpenNode';
+export const depositOpenNode = 'depositOpenNode';
 export const withdrawalOpenNode = 'withdrawalOpenNode';
