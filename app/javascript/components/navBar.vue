@@ -1,12 +1,15 @@
 <template>
-  <header class="flex items- justify-around px-6 py-3 bg-secondary">
+  <header class="flex items- justify-around px-8 py-1 bg-secondary">
     <template v-if="signedIn">
       <button
         type="button"
         class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
       >
         <router-link class="flex" :to="homeRoute">
-          <img :src="bitsplitLogo" class="pl-6 w-5/6" />
+          <img
+            :src="bitsplitLogo"
+            class="py-2 px-2 w-4/6 bg-gray-400 rounded"
+          />
         </router-link>
       </button>
       <button
@@ -61,7 +64,7 @@
     <template v-else>
       <button
         type="button"
-        class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
+        class="block text-gray-500 py-2 hover:text-white focus:text-white focus:outline-none"
       >
         <router-link :to="signInRoute">
           Iniciar sesión
@@ -69,7 +72,7 @@
       </button>
       <button
         type="button"
-        class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
+        class="block text-gray-500 py-2 hover:text-white focus:text-white focus:outline-none"
       >
         <router-link :to="signUpRoute">
           Registrarse

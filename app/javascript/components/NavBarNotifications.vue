@@ -7,7 +7,7 @@
       <i class="material-icons text-center mr-2">notifications</i>
       <span>{{ unSeenNotifications.length }}</span>
     </button>
-    <div v-show="!hidden" class="absolute bg-gray-400 mt-4 ml-2">
+    <div v-show="!hidden" class="absolute bg-gray-400 mt-12 ml-2">
       <div
         class="absolute z-0 w-4 h-4 origin-center transform rotate-45 translate-x-5 -translate-y-2 bg-gray-400 border-t border-l border-gray-200 rounded-sm pointer-events-none"
       />
