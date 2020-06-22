@@ -34,8 +34,8 @@
 
 <script>
 import { mapActions } from 'vuex';
-import submitButton from '../components/SubmitButton';
-import textField from '../components/TextField';
+import submitButton from '../SubmitButton';
+import textField from '../TextField';
 
 export default {
   name: 'BudaIndex',

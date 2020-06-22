@@ -125,9 +125,9 @@
 
 <script>
 import { mapActions, mapState, mapGetters } from 'vuex';
-import textInput from '../components/Input';
-import submitButton from '../components/SubmitButton';
-import spinner from '../components/Spinner';
+import textInput from '../Input';
+import submitButton from '../SubmitButton';
+import spinner from '../Spinner';
 
 // eslint-disable-next-line func-style
 function debounce(func, wait, immediate) {
