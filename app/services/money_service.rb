@@ -1,19 +1,25 @@
-class MoneyService < PowerTypes::Service.new(:sender, :receiver, :amount, :wallet_origin)
+class MoneyService < PowerTypes::Service.new(sender: nil, receiver: nil, amount: nil, wallet_origin: nil)
   @error_message = 'error'
- 
   # all transaction will have a transfer within its transaction
   # as a minimun
   # 1) bitsplit-buda: transfer -> withdrawal
   # 2) buda-bitsplit: payment -> transfer
   # 3) buda-buda: payment -> transfer -> withdrawal
   # 4) bitsplit-bitsplit: transfer
-  
   def payment
+
+    if @wallet_origin == 'bitsplit'
+      satoshis_amount =  @amount.to_f * 100000000
+      amount_validation, @error_message = validate_amount(@sender, satoshis_amount)
+      if !amount_validation
+        return false, @error_message
+      end
+    end
+
     invoice = generate_invoice
     if invoice == nil
       return false, @error_message
     end
-
     
     if invoice != false
       payment = pay_invoice(invoice)
@@ -23,7 +29,6 @@ class MoneyService < PowerTypes::Service.new(:sender, :receiver, :amount, :walle
     else
       payment = "internal payment done"
     end
-
     make_ledgerizer_registration
     return true, payment
   end
@@ -35,14 +40,12 @@ class MoneyService < PowerTypes::Service.new(:sender, :receiver, :amount, :walle
       response = buda_service.generate_invoice(@amount)
       return nil unless check_buda_invoice_creation(response)
       invoice = JSON.parse(response.body)['invoice']['encoded_payment_request']
-    
     else
       return false unless @wallet_origin != @receiver.wallet
       open_node_service = OpenNodeService.new
       response = open_node_service.send_charge_request(@amount, nil, nil)
       return nil unless check_opennode_response(response)
       invoice = JSON.parse(response.body)['data']['lightning_invoice']['payreq']
-    
     end
     invoice
   end
@@ -96,9 +99,20 @@ class MoneyService < PowerTypes::Service.new(:sender, :receiver, :amount, :walle
     return true
   end
 
+  def validate_amount(user, amount)
+    if amount <= 0
+      error_message = 'amount is less or equal to 0'
+      return false, error_message
+    end
+    if user.wallet_balance < Money.from_amount(amount, 'SAT')
+      error_message = 'amount is greater than balance'
+      return false, error_message
+    end
+    return true, nil
+  end
+
   def make_ledgerizer_registration
     @ledgerizer = LedgerizerService.new
-    
     if @wallet_origin != 'bitsplit'
       @ledgerizer.deposit(@sender, @amount)
     end

@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_09_162246) do
+
+ActiveRecord::Schema.define(version: 2020_06_16_011930) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,6 +67,24 @@ ActiveRecord::Schema.define(version: 2020_06_09_162246) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["body"], name: "index_authentication_tokens_on_body"
     t.index ["user_id"], name: "index_authentication_tokens_on_user_id"
+  end
+
+  create_table "data_migrations", primary_key: "version", id: :string, force: :cascade do |t|
+  end
+
+  create_table "delayed_jobs", force: :cascade do |t|
+    t.integer "priority", default: 0, null: false
+    t.integer "attempts", default: 0, null: false
+    t.text "handler", null: false
+    t.text "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string "locked_by"
+    t.string "queue"
+    t.datetime "created_at", precision: 6
+    t.datetime "updated_at", precision: 6
+    t.index ["priority", "run_at"], name: "delayed_jobs_priority"
   end
 
   create_table "deposits", force: :cascade do |t|
@@ -134,6 +153,8 @@ ActiveRecord::Schema.define(version: 2020_06_09_162246) do
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "authentication_token_id", null: false
+    t.index ["authentication_token_id"], name: "index_notification_tokens_on_authentication_token_id"
     t.index ["user_id"], name: "index_notification_tokens_on_user_id"
   end
 
@@ -207,6 +228,7 @@ ActiveRecord::Schema.define(version: 2020_06_09_162246) do
   add_foreign_key "deposits", "users"
   add_foreign_key "ledgerizer_lines", "ledgerizer_accounts", column: "account_id"
   add_foreign_key "ledgerizer_lines", "ledgerizer_entries", column: "entry_id"
+  add_foreign_key "notification_tokens", "authentication_tokens"
   add_foreign_key "notification_tokens", "users"
   add_foreign_key "payments", "users", column: "receiver_id"
   add_foreign_key "payments", "users", column: "sender_id"

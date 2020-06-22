@@ -1,5 +1,6 @@
 class AuthenticationToken < ApplicationRecord
   belongs_to :user
+  has_one :notification_token, dependent: :destroy
 end
 
 # == Schema Information
