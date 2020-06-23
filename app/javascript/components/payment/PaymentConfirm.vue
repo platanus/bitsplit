@@ -1,20 +1,21 @@
 <template>
-  <div class="flex justify-center m-16">
-    <div class="flex flex-col mb-6 mt-6">
-      <div>
-        <textField font-size="full" font-color="secondary">
-          ¡Pago realizado con éxito!
-        </textField>
-      </div>
-      <div>
-        <textField>
-          Monto: {{ this.userLastPaymentData.payment_amount }} BTC
-        </textField>
-        <textField>
-          Correo: {{ this.userLastPaymentData.receiver_email }}
-        </textField>
-      </div>
+  <div class="items-center h-screen w-full bg-primary p-12 mt-24 text-center">
+    <textField font-size="full">
+      ¡Pago realizado con éxito!
+    </textField>
+    <div>
+      <textField>
+        Monto: {{ this.userLastPaymentData.payment_amount }} BTC
+      </textField>
+      <textField>
+        Correo: {{ this.userLastPaymentData.receiver_email }}
+      </textField>
     </div>
+    <router-link to="/">
+      <button class="btn p-2">
+        Ir a Bitsplit
+      </button>
+    </router-link>
   </div>
 </template>
 
