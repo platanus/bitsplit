@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils';
-import BudaAlert from '../BudaAlert';
+import BudaAlert from '../buda/BudaAlert';
 
 describe('BudaAlert', () => {
   it('matches snapshot', () => {

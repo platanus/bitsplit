@@ -1,12 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`BudaIndex matches snapshot 1`] = `
+exports[`BudaMenu matches snapshot 1`] = `
 <div>
   <center>
     <div class="w-full max-w-xs pb-16">
       <div>
         <textfield-stub>
-          ¡Ya estás conectado a una cuenta Buda! ¿Qué desear hacer?"
+          ¡Ya estás conectado a una cuenta Buda! ¿Qué desear hacer?
         </textfield-stub>
       </div>
       <div class="inline">
