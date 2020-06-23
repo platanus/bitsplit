@@ -118,7 +118,7 @@
           />
         </div>
         <div>
-          <submitButton width="full" :loading="sendPaymentLoading">
+          <submitButton width="full" :loading="sendPaymentLoading || button_disabled">
             Pagar
           </submitButton>
         </div>
@@ -134,7 +134,7 @@ import textInput from '../Input';
 import submitButton from '../SubmitButton';
 import spinner from '../Spinner';
 
-const DEBOUNCE_TIMER = 1000;
+const DEBOUNCE_TIMER = 1500;
 const MIN_QUOTATION = 200;
 
 export default {
@@ -148,12 +148,22 @@ export default {
       currency_selected: 'btc',
       quotationCLP: 0,
       quotationBTC: 0,
+      button_disabled: false,
     };
   },
   components: {
     textInput,
     submitButton,
     spinner,
+  },
+  created() {
+    this.debounceAmount = _.debounce( function() {
+      this.getNewQuotation()
+      this.button_disabled = false
+    }, DEBOUNCE_TIMER)
+    this.debounceEmail = _.debounce( function() {
+      this.button_disabled = false
+    }, DEBOUNCE_TIMER)
   },
   computed: {
     ...mapState('user', [
@@ -168,9 +178,18 @@ export default {
     ...mapGetters('user', ['budaSignedIn']),
   },
   watch: {
-    amount: _.debounce(function () {
-      this.getNewQuotation();
-    }, DEBOUNCE_TIMER),
+    amount: {
+      handler: function() {
+        this.button_disabled = true
+        this.debounceAmount()
+      }
+    },
+    receiver_email: {
+      handler: function() {
+        this.button_disabled = true
+        this.debounceEmail()
+      }
+    },
   },
   filters: {
     capitalize: function (value) {
