@@ -32,6 +32,11 @@
               Crear una cuenta
             </router-link>
           </p>
+          <p class="txt-field items-center mt-10 underline">
+            <router-link :to="recoverRoute">
+              ¿Olvidaste tu contraseña?
+            </router-link>
+          </p>
         </form>
       </div>
     </center>
@@ -53,6 +58,7 @@ export default {
       email: '',
       password: '',
       signUpRoute: 'sign-up',
+      recoverRoute: 'recover',
       bitsplitLogo: logo,
     };
   },

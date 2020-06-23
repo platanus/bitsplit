@@ -46,6 +46,7 @@ const checkSplitwiseData = (to, from, next) => {
 
 const groupDebtsById = (friendsToUser, userToFriends) => {
   const debts = {};
+  // eslint-disable-next-line no-unused-expressions
   friendsToUser &&
     friendsToUser.forEach(
       ({ group_id, group_name, from, amount, currency_code }) => {
@@ -57,9 +58,15 @@ const groupDebtsById = (friendsToUser, userToFriends) => {
             userToFriends: [],
           };
         }
-        debts[group_id].friendsToUser.push({ ...from, amount, currency_code, type: 1 });
+        debts[group_id].friendsToUser.push({
+          ...from,
+          amount,
+          currency_code,
+          type: 1,
+        });
       }
     );
+  // eslint-disable-next-line no-unused-expressions
   userToFriends &&
     userToFriends.forEach(
       ({ group_id, group_name, to, amount, currency_code, is_payable }) => {
@@ -71,11 +78,22 @@ const groupDebtsById = (friendsToUser, userToFriends) => {
             userToFriends: [],
           };
         }
-        debts[group_id].userToFriends.push({ ...to, amount, currency_code, is_payable, type: 0 });
+        debts[group_id].userToFriends.push({
+          ...to,
+          amount,
+          currency_code,
+          is_payable,
+          type: 0,
+        });
       }
     );
+
   return debts;
 };
+
+// eslint-disable-next-line no-useless-escape
+const validateEmail = mail =>
+  /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail);
 
 const authedAxios = axios.create();
 
@@ -98,4 +116,5 @@ export {
   checkSplitwiseData,
   groupDebtsById,
   authedAxios,
+  validateEmail,
 };

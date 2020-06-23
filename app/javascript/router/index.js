@@ -13,13 +13,19 @@ import SplitwisePaymentIndex from './SplitwisePaymentIndex.vue';
 import Profile from './Profile.vue';
 import OnBoarding from './OnBoarding.vue';
 import PaymentsHistory from './PaymentsHistory';
+import RecoverAccount from './RecoverAccount';
 
 import SplitwiseLink from '../components/profile/SplitwiseLink.vue';
 import ProfileHome from '../components/profile/ProfileHome.vue';
 import ProfileSettings from '../components/profile/ProfileSettings.vue';
 import ProfileOpenNode from '../components/profile/ProfileOpenNode.vue';
 
-import { checkAuth, checkNoAuth, checkSplitwiseData, checkSplitwiseAuth } from '../helpers';
+import {
+  checkAuth,
+  checkNoAuth,
+  checkSplitwiseData,
+  checkSplitwiseAuth,
+} from '../helpers';
 
 Vue.use(Router);
 
@@ -29,6 +35,7 @@ const router = new Router({
     { path: '/', component: Landing, beforeEnter: checkNoAuth },
     { path: '/sign-in', component: SignIn, beforeEnter: checkNoAuth },
     { path: '/sign-up', component: SignUp, beforeEnter: checkNoAuth },
+    { path: '/recover', component: RecoverAccount, beforeEnter: checkNoAuth },
     { path: '/onboarding', component: OnBoarding, beforeEnter: checkAuth },
     { path: '/home', component: Home, beforeEnter: checkAuth },
     { path: '/splitwise-connection', component: SplitwiseConnectionReady },

@@ -30,6 +30,9 @@ const signUpApi = payload =>
       headers: { 'Content-Type': 'application/json' },
     }
   );
+
+const sendRecoveryEmailApi = email => Promise.resolve({ data: email });
+
 const budaSyncApi = payload =>
   authedAxios.patch('/api/v1/users/', {
     password: payload.password,
@@ -82,5 +85,6 @@ export {
   getSplitwiseUrlApi,
   getSplitwiseDebtsApi,
   updateUserApi,
+  sendRecoveryEmailApi,
   payOffSplitwiseDebtApi,
 };

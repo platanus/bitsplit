@@ -15,6 +15,7 @@ import {
   sendSplitwisePayment,
   depositOpenNode,
   withdrawalOpenNode,
+  sendRecoveryEmail,
 } from '../../action-types';
 
 import {
@@ -60,9 +61,12 @@ import {
   getSplitwiseUrlApi,
   updateUserApi,
   payOffSplitwiseDebtApi,
+  sendRecoveryEmailApi,
 } from '../../../api/user.js';
 
 import { widthdrawalApi, depositApi } from '../../../api/wallet';
+
+import { validateEmail } from '../../../helpers';
 
 const commitAndSetUser = ({ commit, mutation, user }) => {
   if (user) {
@@ -533,6 +537,38 @@ export default {
       .catch(error => {
         if (error.response) {
           dispatch('alert/errorAlert', 'Contraseña incorrecta', {
+            root: true,
+          });
+        } else {
+          dispatch(
+            'alert/errorAlert',
+            'Error desconocido, intente nuevamente',
+            {
+              root: true,
+            }
+          );
+        }
+      });
+  },
+  [sendRecoveryEmail]({ dispatch }, payload) {
+    const { email } = payload;
+    if (!validateEmail(email)) {
+      dispatch('alert/errorAlert', 'Ingrese un mail valido', {
+        root: true,
+      });
+
+      return Promise.reject('invalid format');
+    }
+
+    return sendRecoveryEmailApi(email)
+      .then(() => {
+        dispatch('alert/successAlert', 'Se envió el correo de recuperación', {
+          root: true,
+        });
+      })
+      .catch(error => {
+        if (error.response) {
+          dispatch('alert/errorAlert', 'No hay un usuario con ese email', {
             root: true,
           });
         } else {
