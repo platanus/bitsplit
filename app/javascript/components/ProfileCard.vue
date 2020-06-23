@@ -2,16 +2,18 @@
   <div class="lg:flex">
     <div class="flex items-center">
       <div class="flex-column ml-4">
-        <img
-          src="https://t4.ftcdn.net/jpg/00/64/67/63/240_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg"
-          class="rounded-full border-solid border-white border-2 mt-3 w-24 ml-6 mr-6 mb-3"
-        />
-        <router-link
-          class="btn-secondary ext-black font-bold p-1 ml-2 mt-4 rounded focus:outline-none"
-          to="/profile/settings"
-        >
-          Cerrar sesión
-        </router-link>
+        <div v-if="currentUser.picture_url">
+          <img
+            :src="currentUser.picture_url.large"
+            class="rounded-full border-solid border-white border-2 mt-3 w-24 ml-6 mr-6 mb-3"
+          />
+        </div>
+        <div v-else>
+          <img
+            src="https://t4.ftcdn.net/jpg/00/64/67/63/240_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg"
+            class="rounded-full border-solid border-white border-2 mt-3 w-24 ml-6 mr-6 mb-3"
+          />
+        </div>
       </div>
       <div class="w-1/5 txt-card text-sm mb-4 mt-4 ml-4">
         <p class="text-black leading-none mb-4 mt-4 font-bold">

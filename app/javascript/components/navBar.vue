@@ -1,19 +1,23 @@
 <template>
-  <header class="flex items- justify-around px-4 py-3 bg-secondary">
+  <header class="flex items- justify-around px-8 py-1 bg-secondary">
     <template v-if="signedIn">
       <button
         type="button"
         class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
       >
-        <router-link :to="homeRoute">
-          Inicio
+        <router-link class="flex" :to="homeRoute">
+          <img
+            :src="bitsplitLogo"
+            class="py-2 px-2 w-4/6 bg-gray-400 rounded"
+          />
         </router-link>
       </button>
       <button
         type="button"
         class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
       >
-        <router-link :to="payRoute">
+        <router-link class="flex" :to="payRoute">
+          <i class="material-icons text-center mr-2">payments</i>
           Pagar
         </router-link>
       </button>
@@ -22,7 +26,8 @@
         type="button"
         class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
       >
-        <router-link :to="splitwiseRoute">
+        <router-link class="flex" :to="splitwiseRoute">
+          <i class="material-icons text-center mr-2">people</i>
           Splitwise
         </router-link>
       </button>
@@ -31,24 +36,27 @@
         type="button"
         class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
       >
-        <button @click="openSplitwiseUrl()">
+        <button class="flex" @click="openSplitwiseUrl()">
+          <i class="material-icons text-center mr-2">people</i>
           Splitwise
         </button>
       </button>
-      <NavBarNotifications />
+      <NavBarNotifications class="flex" />
       <button
         type="button"
         class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
       >
-        <router-link :to="profileRoute">
+        <router-link class="flex" :to="profileRoute">
+          <i class="material-icons text-center mr-2">account_circle</i>
           Mi perfil
         </router-link>
       </button>
       <button
         type="button"
-        class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
+        class="block mr-8 text-gray-500 hover:text-white focus:text-white focus:outline-none"
       >
-        <button :disabled="signOutLoading" @click="signOut()">
+        <button class="flex" @click="signOut() :disabled="signOutLoading"">
+          <i class="material-icons text-center mr-2">exit_to_app</i>
           Cerrar Sesión
         </button>
       </button>
@@ -56,7 +64,7 @@
     <template v-else>
       <button
         type="button"
-        class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
+        class="block text-gray-500 py-2 hover:text-white focus:text-white focus:outline-none"
       >
         <router-link :to="signInRoute">
           Iniciar sesión
@@ -64,7 +72,7 @@
       </button>
       <button
         type="button"
-        class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
+        class="block text-gray-500 py-2 hover:text-white focus:text-white focus:outline-none"
       >
         <router-link :to="signUpRoute">
           Registrarse
@@ -78,6 +86,8 @@
 import { mapGetters, mapActions, mapState } from 'vuex';
 import NavBarNotifications from '../components/NavBarNotifications';
 
+import logo from '../assets/bitsplit-logo.svg';
+
 export default {
   name: 'NavBar',
   data() {
@@ -89,7 +99,8 @@ export default {
       landingRoute: '/',
       payRoute: '/payment',
       splitwiseRoute: '/splitwise',
-      profileRoute: '/profile/', // No borrar el ultimo '/'
+      profileRoute: '/profile/', // No borrar el ultimo '/',
+      bitsplitLogo: logo,
     };
   },
   components: {
