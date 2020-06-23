@@ -612,7 +612,9 @@ export default {
         } else {
           dispatch(
             'alert/errorAlert',
-            'Error desconocido, intente nuevamente',
+            // 'Error desconocido, intente nuevamente',
+            'Falta el endpoint en el backend',
+
             {
               root: true,
             }
@@ -657,7 +659,8 @@ export default {
         } else {
           dispatch(
             'alert/errorAlert',
-            'Error desconocido, intente nuevamente',
+            // 'Error desconocido, intente nuevamente',
+            'Falta el endpoint en el backend',
             {
               root: true,
             }
