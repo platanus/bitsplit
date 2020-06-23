@@ -4,8 +4,9 @@ import router from '../../../router';
 
 const onBoardingState = {
   loading: false, // Para que no se haga doble click
-  currentStep: 'buda', // buda - splitwise
+  currentStep: 'buda', // buda - splitwise - userInfo
   splitwiseDone: false,
+  userInfoDone: false,
 };
 
 const actions = {
@@ -16,14 +17,22 @@ const actions = {
 
 const mutations = {
   [NEXT_STEP](state) {
+    if (state.currentStep === 'userInfo') {
+      router.push('/home');
+    }
+    if (state.currentStep === 'splitwise') {
+      state.currentStep = 'userInfo';
+    }
     if (state.currentStep === 'buda') {
       state.currentStep = 'splitwise';
-    } else {
-      router.push('/home');
     }
   },
   [PREVIOUS_STEP](state) {
-    state.currentStep = 'buda';
+    if (state.currentStep === 'userInfo') {
+      state.currentStep = 'splitwise';
+    } else {
+      state.currentStep = 'buda';
+    }
   },
 };
 

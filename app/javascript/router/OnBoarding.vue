@@ -1,9 +1,10 @@
 <template>
   <div>
     <CurrentStep />
-    <div class="max-w-xs mx-auto fixed-size flex flex-col justify-between">
+    <div class="max-w-md mx-auto fixed-size flex flex-col justify-between">
       <budaIndex v-if="currentStep === 'buda'" />
       <SplitwiseOnBoarding v-if="currentStep === 'splitwise'" />
+      <UserInfoOnboarding v-if="currentStep == 'userInfo'" />
       <div class="flex flex-row justify-between flex-grow-0 py-4">
         <StepButton
           @do-click="PREVIOUS_STEP"
@@ -36,6 +37,7 @@ import BudaIndex from '../components/BudaOnBoarding';
 import CurrentStep from '../components/CurrentStep';
 import StepButton from '../components/StepButton';
 import SplitwiseOnBoarding from '../components/SplitwiseOnBoarding';
+import UserInfoOnboarding from '../components/UserInfoOnboarding';
 
 export default {
   name: 'OnBoarding',
@@ -49,6 +51,7 @@ export default {
     StepButton,
     BudaIndex,
     SplitwiseOnBoarding,
+    UserInfoOnboarding,
   },
   methods: {
     ...mapMutations('onBoarding', ['NEXT_STEP', 'PREVIOUS_STEP', 'CURRENT_OK']),
