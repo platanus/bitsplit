@@ -55,7 +55,7 @@
         type="button"
         class="block mr-8 text-gray-500 hover:text-white focus:text-white focus:outline-none"
       >
-        <button class="flex" @click="signOut() :disabled="signOutLoading"">
+        <button class="flex" @click="signOut()" :disabled="signOutLoading">
           <i class="material-icons text-center mr-2">exit_to_app</i>
           Cerrar Sesión
         </button>
