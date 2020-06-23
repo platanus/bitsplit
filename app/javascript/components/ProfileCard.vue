@@ -24,7 +24,7 @@
         </p>
         <p class="text-grey-dark mb-4 mt-4">
           <span class="font-bold"> Wallet Actual:</span>
-          {{ currentUser.wallet }}
+          {{ currentUser.wallet | capitalize }}
         </p>
         <submitButton>
           <router-link to="/profile/settings">
@@ -119,9 +119,17 @@ export default {
   components: {
     submitButton,
   },
+  
   computed: {
     ...mapState('user', ['currentUser', 'userBalanceCLP', 'userBalanceBTC']),
     ...mapGetters('user', ['budaSignedIn', 'splitwiseSignedIn']),
+  },
+  filters: {
+    capitalize: function (value) {
+      if (!value) return ''
+      value = value.toString()
+      return value.charAt(0).toUpperCase() + value.slice(1)
+    },
   },
 };
 </script>

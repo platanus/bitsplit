@@ -6,8 +6,8 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
-import SplitwisePaymentForm from '../components/SplitwisePaymentForm';
-import SplitwisePaymentConfirm from '../components/SplitwisePaymentConfirm';
+import SplitwisePaymentForm from '../components/splitwisePayment/SplitwisePaymentForm';
+import SplitwisePaymentConfirm from '../components/splitwisePayment/SplitwisePaymentConfirm';
 
 export default {
   name: 'SplitwisePayment',

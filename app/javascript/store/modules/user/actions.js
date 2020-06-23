@@ -9,8 +9,6 @@ import {
   getUserBalance,
   sendPayment,
   getPayments,
-  // splitwiseUrlConnection,
-  // getDebts,
   updateCurrentUser,
   getSplitwiseUrl,
   setSplitwisePaymentData,
@@ -24,7 +22,9 @@ import {
   SIGNIN_FAIL,
   SIGNIN_SUCCESS,
   SIGNIN_ATTEMPT,
-  SIGNOUT,
+  SIGNOUT_ATTEMPT,
+  SIGNOUT_SUCCESS,
+  SIGNOUT_FAIL,
   SIGNUP_ATTEMPT,
   SIGNUP_FAIL,
   SIGNUP_SUCCESS,
@@ -139,10 +139,12 @@ export default {
       });
   },
   [signOut]({ commit, dispatch }) {
+    commit(SIGNOUT_ATTEMPT);
+
     return logoutApi()
       .then(() => {
         localStorage.removeItem('currentUser');
-        commit(SIGNOUT);
+        commit(SIGNOUT_SUCCESS);
         dispatch('alert/successAlert', 'Sesión cerrada correctamente', {
           root: true,
         });
@@ -150,6 +152,7 @@ export default {
         return;
       })
       .catch(err => {
+        commit(SIGNOUT_FAIL);
         if (err.response) {
           dispatch('alert/errorAlert', 'Error interno, intente nuevamente', {
             root: true,

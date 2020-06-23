@@ -12,9 +12,9 @@
 
 <script>
 import { mapActions, mapState, mapGetters } from 'vuex';
-import BudaForm from '../components/BudaForm';
-import BudaLogoutForm from '../components/BudaLogoutForm';
-import BudaIndex from '../components/BudaIndex';
+import BudaForm from '../components/buda/BudaForm';
+import BudaLogoutForm from '../components/buda/BudaLogoutForm';
+import BudaIndex from '../components/buda/BudaMenu';
 
 export default {
   name: 'BudaProfile',

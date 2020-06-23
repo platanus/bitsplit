@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils';
-import BudaForm from '../BudaForm';
+import BudaForm from '../buda/BudaForm';
 
 describe('BudaForm', () => {
   xit('matches snapshot', () => {

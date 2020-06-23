@@ -1,9 +1,9 @@
 import { shallowMount } from '@vue/test-utils';
-import BudaIndex from '../BudaIndex';
+import BudaMenu from '../buda/BudaMenu';
 
-describe('BudaIndex', () => {
+describe('BudaMenu', () => {
   it('matches snapshot', () => {
-    const wrapper = shallowMount(BudaIndex);
+    const wrapper = shallowMount(BudaMenu);
     expect(wrapper).toMatchSnapshot();
   });
 });
