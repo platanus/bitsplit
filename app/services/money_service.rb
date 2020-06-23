@@ -60,7 +60,7 @@ class MoneyService < PowerTypes::Service.new(sender: nil, receiver: nil, amount:
    
     elsif @wallet_origin == 'bitsplit'
       open_node_service = OpenNodeService.new
-      payment = open_node_service.send_withdrawal_request(invoice)
+      payment = open_node_service.send_withdrawal_request(invoice, false)
       return nil unless check_opennode_response(payment)
     
     else

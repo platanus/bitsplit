@@ -6,6 +6,10 @@ class Api::V1::UserSerializer < ActiveModel::Serializer
   attributes(
     :id,
     :email,
+    :name,
+    :last_name,
+    :birth_date,
+    :picture,
     :api_key,
     :picture_url,
     :wallet
