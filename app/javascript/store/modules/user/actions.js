@@ -16,6 +16,7 @@ import {
   depositOpenNode,
   withdrawalOpenNode,
   sendRecoveryEmail,
+  passwordRecovery,
 } from '../../action-types';
 
 import {
@@ -62,6 +63,7 @@ import {
   updateUserApi,
   payOffSplitwiseDebtApi,
   sendRecoveryEmailApi,
+  passwordRecoveryApi,
 } from '../../../api/user.js';
 
 import { widthdrawalApi, depositApi } from '../../../api/wallet';
@@ -73,6 +75,39 @@ const commitAndSetUser = ({ commit, mutation, user }) => {
     localStorage.setItem('currentUser', JSON.stringify(user));
     commit(mutation, user);
   }
+};
+
+const checkRecoveryParams = (
+  email,
+  token,
+  passwordOne,
+  passwordTwo,
+  dispatch
+) => {
+  if (!passwordOne || !passwordTwo || !token || !email) {
+    dispatch('alert/errorAlert', 'Faltan datos', {
+      root: true,
+    });
+
+    return false;
+  }
+
+  if (passwordOne !== passwordTwo) {
+    dispatch('alert/errorAlert', 'Las contraseñas no son iguales', {
+      root: true,
+    });
+
+    return false;
+  }
+  if (!validateEmail(email)) {
+    dispatch('alert/errorAlert', 'Datos incorrectos', {
+      root: true,
+    });
+
+    return false;
+  }
+
+  return true;
 };
 
 export default {
@@ -550,6 +585,7 @@ export default {
         }
       });
   },
+
   [sendRecoveryEmail]({ dispatch }, payload) {
     const { email } = payload;
     if (!validateEmail(email)) {
@@ -565,6 +601,8 @@ export default {
         dispatch('alert/successAlert', 'Se envió el correo de recuperación', {
           root: true,
         });
+
+        return;
       })
       .catch(error => {
         if (error.response) {
@@ -580,6 +618,53 @@ export default {
             }
           );
         }
+
+        throw Error(error);
+      });
+  },
+  [passwordRecovery]({ dispatch }, payload) {
+    const { email, recoveryToken, passwordOne, passwordTwo } = payload;
+
+    if (
+      !checkRecoveryParams(
+        email,
+        recoveryToken,
+        passwordOne,
+        passwordTwo,
+        dispatch
+      )
+    ) {
+      return Promise.reject('error');
+    }
+
+    return passwordRecoveryApi(payload)
+      .then(() => {
+        dispatch(
+          'alert/successAlert',
+          '¡Se ha seteado la nueva contraseña con éxito!',
+          {
+            root: true,
+          }
+        );
+
+        return;
+      })
+      .catch(error => {
+        if (error.response) {
+          dispatch('alert/errorAlert', 'Los datos ingresados son incorrectos', {
+            root: true,
+          });
+        } else {
+          dispatch(
+            'alert/errorAlert',
+            'Error desconocido, intente nuevamente',
+            {
+              root: true,
+            }
+          );
+        }
+
+        throw Error(error);
       });
   },
 };

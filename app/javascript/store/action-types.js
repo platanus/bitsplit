@@ -32,4 +32,6 @@ export const updateCurrentUser = 'updateCurrentUser';
 
 export const depositOpenNode = 'depositOpenNode';
 export const withdrawalOpenNode = 'withdrawalOpenNode';
+
 export const sendRecoveryEmail = 'sendRecoveryEmail';
+export const passwordRecovery = 'passwordRecovery';

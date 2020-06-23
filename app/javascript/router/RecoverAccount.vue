@@ -10,10 +10,9 @@
       class="bg-primary rounded pt-6 pb-8 mb-4"
     >
       <div class="mb-4">
-        <inputLabel
-          >Ingresa tu correo aqui y enviaremos un link para cambiar tu
-          contraseña</inputLabel
-        >
+        <inputLabel>
+          Ingresa tu correo aqui y enviaremos un link para cambiar tu contraseña
+        </inputLabel>
         <textInput
           field-id="email"
           field-type="text"
@@ -22,7 +21,7 @@
           v-model="email"
         />
       </div>
-      <submitButton :loading="signInLoading" width="full">
+      <submitButton width="full">
         Ingresar
       </submitButton>
     </form>
@@ -54,9 +53,13 @@ export default {
     handleSubmit() {
       const { email } = this;
       if (email) {
-        this.sendRecoveryEmail({ email }).then(() => {
-          this.$router.push('/');
-        });
+        this.sendRecoveryEmail({ email })
+          .then(() => {
+            this.$router.push('/');
+          })
+          .catch(e => {
+            console.error(e);
+          });
       }
     },
   },

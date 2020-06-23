@@ -31,7 +31,8 @@ const signUpApi = payload =>
     }
   );
 
-const sendRecoveryEmailApi = email => Promise.resolve({ data: email });
+const sendRecoveryEmailApi = email => Promise.reject({ data: email });
+const passwordRecoveryApi = payload => Promise.reject({ data: payload });
 
 const budaSyncApi = payload =>
   authedAxios.patch('/api/v1/users/', {
@@ -87,4 +88,5 @@ export {
   updateUserApi,
   sendRecoveryEmailApi,
   payOffSplitwiseDebtApi,
+  passwordRecoveryApi,
 };

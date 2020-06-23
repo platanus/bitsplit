@@ -14,6 +14,7 @@ import Profile from './Profile.vue';
 import OnBoarding from './OnBoarding.vue';
 import PaymentsHistory from './PaymentsHistory';
 import RecoverAccount from './RecoverAccount';
+import NewPassword from './NewPassword';
 
 import SplitwiseLink from '../components/profile/SplitwiseLink.vue';
 import ProfileHome from '../components/profile/ProfileHome.vue';
@@ -36,6 +37,8 @@ const router = new Router({
     { path: '/sign-in', component: SignIn, beforeEnter: checkNoAuth },
     { path: '/sign-up', component: SignUp, beforeEnter: checkNoAuth },
     { path: '/recover', component: RecoverAccount, beforeEnter: checkNoAuth },
+    { path: '/new-password', component: NewPassword, beforeEnter: checkNoAuth },
+    { path: '/new-account', component: NewPassword, beforeEnter: checkNoAuth },
     { path: '/onboarding', component: OnBoarding, beforeEnter: checkAuth },
     { path: '/home', component: Home, beforeEnter: checkAuth },
     { path: '/splitwise-connection', component: SplitwiseConnectionReady },
