@@ -7,11 +7,11 @@
       Ingresa tu nombre
     </label>
     <textInput
-      field-id="name"
+      field-id="userName"
       field-type="text"
-      field-name="name"
-      :value="name"
-      v-model="name"
+      field-name="userName"
+      :value="userName"
+      v-model="userName"
     />
     <label
       class="txt-field block uppercase tracking-wide text-gray-700 text-xs font-bold my-2"
@@ -20,11 +20,11 @@
       Ingresa tu Apellido
     </label>
     <textInput
-      field-id="lastName"
+      field-id="userLastName"
       field-type="text"
-      field-name="lastName"
-      :value="lastName"
-      v-model="lastName"
+      field-name="userLastName"
+      :value="userLastName"
+      v-model="userLastName"
     /><label
       class="txt-field block uppercase tracking-wide text-gray-700 text-xs font-bold mt-4"
       for="grid-last-name"
@@ -32,11 +32,11 @@
       Agrega tu foto de perfil
     </label>
     <textInput
-      field-id="photo"
+      field-id="userPhoto"
       field-type="text"
-      field-name="photo"
-      :value="photo"
-      v-model="photo"
+      field-name="userPhoto"
+      :value="userPhoto"
+      v-model="userPhoto"
     /><label
       class="txt-field text-center block uppercase tracking-wide text-gray-700 text-xs font-bold mt-4"
       for="grid-last-name"
@@ -49,11 +49,9 @@
       max="2021"
       v-model="selectedDate"
     />
-    <SubmitButton @do-click="openSplitwiseUrl()">
+    <SubmitButton :loading="loading" @do-click="handleSubmit()">
       Agregar Información
     </SubmitButton>
-
-    <p>El mensaje es: {{ selectedDate }}{{ name }}</p>
   </div>
 </template>
 
@@ -68,9 +66,10 @@ export default {
   data() {
     return {
       selectedDate: '',
-      name: '',
-      lastName: '',
-      photo: '',
+      userName: '',
+      userLastName: '',
+      userPhoto: '',
+      loading: false,
     };
   },
   components: {
@@ -79,15 +78,21 @@ export default {
     DatePicker,
   },
   methods: {
-    ...mapActions('user', ['signOut', 'getSplitwiseUrl']),
-    openSplitwiseUrl() {
-      this.getSplitwiseUrl()
-        .then(res => {
-          window.open(res.authorize_url);
-          this.$router.push('/home');
+    ...mapActions('user', ['updateCurrentUser']),
+    handleSubmit() {
+      const { userName, userLastName, userPhoto, selectedDate } = this;
+      this.loading = true;
+      this.updateCurrentUser({
+        name: userName,
+        last_name: userLastName,
+        birth_date: selectedDate,
+        picture: userPhoto,
+      })
+        .then(() => {
+          this.loading = false;
         })
-        .catch(err => {
-          console.error(err);
+        .catch(() => {
+          this.loading = false;
         });
     },
   },
