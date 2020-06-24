@@ -1,13 +1,13 @@
 <template>
   <div class="flex justify-center">
-    <div class="flex inline-flex border-2 border-black mr-2 rounded">
+    <div class="inline-flex border-2 border-black mr-2 rounded">
       <select v-model="selectedDay" class="p-2">
         <option v-for="day in days" :key="day.day" :value="day.day">
           {{ day.day }}
         </option>
       </select>
     </div>
-    <div class="flex inline-flex border-2 border-black mr-2 rounded">
+    <div class="inline-flex border-2 border-black mr-2 rounded">
       <select v-model="selectedMonth" @change="updateDays()" class="p-2">
         <option
           v-for="(month, index) in months"
@@ -18,7 +18,7 @@
         </option>
       </select>
     </div>
-    <div class="flex inline-flex border-2 border-black rounded">
+    <div class="inline-flex border-2 border-black rounded">
       <select v-model="selectedYear" @change="updateDays()" class="p-2">
         <option v-for="year in years" :key="year.year" :value="year.year">
           {{ year.year }}
@@ -45,7 +45,6 @@ const defaultMonths = {
 };
 
 /* eslint no-magic-numbers: ["error", { "ignore": [10,1, 12, 101, 0] }]*/
-
 export default {
   name: 'DateDropdown',
   props: {
