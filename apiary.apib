@@ -60,6 +60,10 @@ HOST: http://localhost:5000/api/
                      "type": "user",
                      "attributes": {
                          "email": "example@gmail.com",
+                         "name": "example",
+                         "last_name": "example",
+                         "birth_date": "10/04/1999",
+                         "picture": "https://www.theBestImgHostingSite.com/profile.jpeg",
                          "api_key": "th3b3stAP1K3Y",
                          "picture_url": {
                             "small": "https://www.theBestImgHostingSite.com/small-img.jpeg",
@@ -83,6 +87,10 @@ HOST: http://localhost:5000/api/
             "password_confirmation": "bestPa55W0rd3ver",
             "api_key": "th3b3stAP1K3Y",
             "api_secret": "th3B3s1S3Cr31"
+            "name": "example",
+            "last_name": "example",
+            "birth_date": "10/04/1999",
+            "picture": "https://www.theBestImgHostingSite.com/profile.jpeg",
         }
 
 + Response 201 (application/json)
@@ -93,6 +101,10 @@ HOST: http://localhost:5000/api/
                  "type": "user",
                  "attributes": {
                      "email": "example@gmail.com",
+                     "name": "example",
+                     "last_name": "example",
+                     "birth_date": "10/04/1999",
+                     "picture": "https://www.theBestImgHostingSite.com/profile.jpeg",
                      "api_key": "th3b3stAP1K3Y",
                  }
              }
@@ -115,6 +127,10 @@ The `password` field is only required if the `api_key` or `api_secret` fields ar
                 "password": "bestPa55W0rd3ver",
                 "api_key": "th3b3stAP1K3Y_v2",
                 "api_secret": "th3B3s1S3Cr31"
+                "name": "example",
+                "last_name": "example",
+                "birth_date": "10/04/1999",
+                "picture": "https://www.theBestImgHostingSite.com/profile.jpeg",
             }
             
 + Response 200 (application/json)
@@ -124,6 +140,10 @@ The `password` field is only required if the `api_key` or `api_secret` fields ar
                  "id": "1",
                  "type": "user",
                  "attributes": {
+                    "name": "example",
+                    "last_name": "example",
+                     "birth_date": "10/04/1999",
+                     "picture": "https://www.theBestImgHostingSite.com/profile.jpeg",
                      "email": "new_example@gmail.com",
                      "api_key": "th3b3stAP1K3Y_v2",
                  }
