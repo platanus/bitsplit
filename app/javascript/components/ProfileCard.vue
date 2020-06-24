@@ -2,7 +2,13 @@
   <div class="lg:flex">
     <div class="flex items-center">
       <div class="flex-column ml-4">
-        <div v-if="currentUser.picture_url">
+        <div v-if="currentUser.picture">
+          <img
+            :src="currentUser.picture"
+            class="rounded-full border-solid border-white border-2 mt-3 w-24 ml-6 mr-6 mb-3"
+          />
+        </div>
+        <div v-else-if="currentUser.picture_url">
           <img
             :src="currentUser.picture_url.large"
             class="rounded-full border-solid border-white border-2 mt-3 w-24 ml-6 mr-6 mb-3"
@@ -16,16 +22,21 @@
         </div>
       </div>
       <div class="w-1/5 txt-card text-sm mb-4 mt-4 ml-4">
-        <p class="text-black leading-none mb-4 mt-4 font-bold">
-          Nombre Usuario
+        <p class="text-black text-lg leading-none mb-4 mt-4 font-bold">
+          {{ currentUser.name }} {{ currentUser.last_name }}
         </p>
-        <p class="text-grey-dark mb-4 mt-4">
-          {{ currentUser.email }}
-        </p>
-        <p class="text-grey-dark mb-4 mt-4">
-          <span class="font-bold"> Wallet Actual:</span>
-          {{ currentUser.wallet | capitalize }}
-        </p>
+        <div class="flex">
+          <i class="material-icons text-center mr-2">account_balance_wallet</i>
+          <span class="mb-1">{{ currentUser.wallet | capitalize }}</span>
+        </div>
+        <div class="flex">
+          <i class="material-icons text-center mr-2">mail</i>
+          <span class="mb-1"> {{ currentUser.email }}</span>
+        </div>
+        <div class="flex">
+          <i class="material-icons text-center mr-2">cake</i>
+          <span class="mt-1 mb-4"> {{ currentUser.birth_date }}</span>
+        </div>
         <submitButton>
           <router-link to="/profile/settings">
             Editar
@@ -119,16 +130,17 @@ export default {
   components: {
     submitButton,
   },
-  
+
   computed: {
     ...mapState('user', ['currentUser', 'userBalanceCLP', 'userBalanceBTC']),
     ...mapGetters('user', ['budaSignedIn', 'splitwiseSignedIn']),
   },
   filters: {
-    capitalize: function (value) {
-      if (!value) return ''
-      value = value.toString()
-      return value.charAt(0).toUpperCase() + value.slice(1)
+    capitalize(value) {
+      if (!value) return '';
+      const new_value = value.toString();
+
+      return new_value.charAt(0).toUpperCase() + new_value.slice(1);
     },
   },
 };
