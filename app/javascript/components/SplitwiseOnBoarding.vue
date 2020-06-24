@@ -24,11 +24,12 @@ export default {
   computed: {},
   methods: {
     ...mapActions('user', ['signOut', 'getSplitwiseUrl']),
+    ...mapActions('onBoarding', ['currentStepOk']),
     openSplitwiseUrl() {
       this.getSplitwiseUrl()
         .then(res => {
           window.open(res.authorize_url);
-          this.$router.push('/home');
+          this.currentStepOk();
         })
         .catch(err => {
           console.error(err);

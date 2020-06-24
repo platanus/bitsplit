@@ -1,12 +1,69 @@
 <template>
   <div>
-    <div class="txt-card h-auto px-48">
-      <div class="flex md:flex-row-reverse flex-wrap">
-        <div class="w-full md:w-3/4 p-4 text-center">
-          <div class="text-left pl-4 pt-8 mb-8">
-            <span class="text-base text-xl mr-2">{{ currentUser.email }}</span>
-          </div>
-          <form @submit.prevent="handleSubmit()">
+    <div class="txt-card h-auto px-20">
+      <div class="flex px-40 md:flex-row-reverse flex-wrap">
+        <div class="w-full p-4 text-center">
+          <form
+            class="bg-gray-100 p-4 rounded shadow-lg"
+            @submit.prevent="handleUpdate()"
+          >
+            <label
+              class="txt-field text-left block uppercase tracking-wide text-black text-xs font-bold mb-2"
+              for="grid-last-name"
+            >
+              Ingresa tu nombre
+            </label>
+            <textInput
+              field-id="userName"
+              field-type="text"
+              field-name="userName"
+              :value="userName"
+              v-model="userName"
+            />
+            <label
+              class="txt-field text-left block uppercase tracking-wide text-black text-xs font-bold my-2"
+              for="grid-last-name"
+            >
+              Ingresa tu Apellido
+            </label>
+            <textInput
+              field-id="userLastName"
+              field-type="text"
+              field-name="userLastName"
+              :value="userLastName"
+              v-model="userLastName"
+            /><label
+              class="txt-field text-left block uppercase tracking-wide text-black text-xs font-bold mt-4"
+              for="grid-last-name"
+            >
+              Agrega tu foto de perfil
+            </label>
+            <textInput
+              field-id="userPhoto"
+              field-type="text"
+              field-name="userPhoto"
+              :value="userPhoto"
+              v-model="userPhoto"
+            /><label
+              class="txt-field text-center block uppercase tracking-wide text-black text-xs font-bold mt-4"
+              for="grid-last-name"
+            >
+              Selecciona tu fecha de nacimiento
+            </label>
+            <DatePicker
+              class="mb-6 mt-2"
+              min="1930"
+              max="2021"
+              v-model="selectedDate"
+            />
+            <submitButton :loading="loading" class="">
+              <p>Actualizar</p>
+            </submitButton>
+          </form>
+          <form
+            class="bg-gray-100 p-4 rounded shadow-lg mt-6"
+            @submit.prevent="handleSubmit()"
+          >
             <div>
               <inputLabel field-name="wallet">
                 Nueva wallet
@@ -34,24 +91,6 @@
             </submitButton>
           </form>
         </div>
-        <div class="w-full md:w-1/4 p-4 text-center">
-          <div class="w-full relative md:w-3/4 text-center mt-8">
-            <button class="flex">
-              <div v-if="currentUser.picture_url">
-                <img
-                  :src="currentUser.picture_url.large"
-                  class="rounded-full border-solid border-white border-2 mt-3 w-24 ml-6 mr-6 mb-3"
-                />
-              </div>
-              <div v-else>
-                <img
-                  src="https://t4.ftcdn.net/jpg/00/64/67/63/240_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg"
-                  class="rounded-full border-solid border-white border-2 mt-3 w-24 ml-6 mr-6 mb-3"
-                />
-              </div>
-            </button>
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -62,6 +101,8 @@ import SelectInput from '../Select';
 import InputLabel from '../InputLabel';
 import passwordInput from '../PasswordInput';
 import SubmitButton from '../SubmitButton';
+import DatePicker from '../DatePicker';
+import textInput from '../Input';
 
 export default {
   name: 'ProfileSettings',
@@ -72,6 +113,10 @@ export default {
       walletOptions: ['buda', 'bitsplit'],
       walletNameMappings: { buda: 'Buda', bitsplit: 'Bitsplit' },
       loading: false,
+      selectedDate: '',
+      userName: '',
+      userLastName: '',
+      userPhoto: '',
     };
   },
   components: {
@@ -79,6 +124,8 @@ export default {
     InputLabel,
     passwordInput,
     SubmitButton,
+    DatePicker,
+    textInput,
   },
   mounted() {
     this.newWallet = this.currentUser.wallet;
@@ -102,6 +149,44 @@ export default {
         .catch(() => {
           this.loading = false;
         });
+    },
+    handleUpdate() {
+      const { userName, userLastName, userPhoto, selectedDate } = this;
+      if (userName) {
+        this.updateCurrentUser({ name: userName })
+          .then(() => {
+            this.loading = false;
+          })
+          .catch(() => {
+            this.loading = false;
+          });
+      }
+      if (userLastName) {
+        this.updateCurrentUser({ last_name: userLastName })
+          .then(() => {
+            this.loading = false;
+          })
+          .catch(() => {
+            this.loading = false;
+          });
+      }
+      if (userPhoto) {
+        this.updateCurrentUser({ picture: userPhoto })
+          .then(() => {
+            this.loading = false;
+          })
+          .catch(() => {
+            this.loading = false;
+          });
+      }
+      this.updateCurrentUser({ birth_date: selectedDate })
+        .then(() => {
+          this.loading = false;
+        })
+        .catch(() => {
+          this.loading = false;
+        });
+      this.$router.go();
     },
   },
   computed: {

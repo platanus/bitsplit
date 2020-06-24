@@ -68,7 +68,7 @@
               </div>
             </div>
             <div>
-              <div class="text-center px-6 py-4">
+              <div class="text-center py-4">
                 <!-- en router-view, se muestra el componente segun la ruta en /profile/:name => app/js/router/index.js -->
                 <router-view />
               </div>

@@ -70,6 +70,7 @@ import { widthdrawalApi, depositApi } from '../../../api/wallet';
 
 import { validateEmail } from '../../../helpers';
 
+
 const commitAndSetUser = ({ commit, mutation, user }) => {
   if (user) {
     localStorage.setItem('currentUser', JSON.stringify(user));
