@@ -130,7 +130,6 @@ export default {
   components: {
     submitButton,
   },
-
   computed: {
     ...mapState('user', ['currentUser', 'userBalanceCLP', 'userBalanceBTC']),
     ...mapGetters('user', ['budaSignedIn', 'splitwiseSignedIn']),

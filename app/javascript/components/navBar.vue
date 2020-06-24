@@ -129,8 +129,14 @@ export default {
       this.bindNotifications();
     } else {
       this.unbindNotifications();
+      const noRedirectUrls = [
+        '/splitwise-connection',
+        '/new-password',
+        '/recover',
+        '/new-account',
+      ];
 
-      if (!(this.$router.history.current.path === '/splitwise-connection')) {
+      if (!noRedirectUrls.includes(this.$router.history.current.path)) {
         this.$router.push('/');
       }
     }
