@@ -18,6 +18,7 @@ const actions = {
 const mutations = {
   [NEXT_STEP](state) {
     if (state.currentStep === 'userInfo') {
+      state.currentStep = 'buda';
       router.push('/home');
     }
     if (state.currentStep === 'splitwise') {

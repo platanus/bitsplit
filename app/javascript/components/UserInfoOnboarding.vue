@@ -79,6 +79,7 @@ export default {
   },
   methods: {
     ...mapActions('user', ['updateCurrentUser']),
+    ...mapActions('onBoarding', ['currentStepOk']),
     handleSubmit() {
       const { userName, userLastName, userPhoto, selectedDate } = this;
       this.loading = true;
@@ -89,6 +90,7 @@ export default {
         picture: userPhoto,
       })
         .then(() => {
+          this.currentStepOk();
           this.loading = false;
         })
         .catch(() => {
