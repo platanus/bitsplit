@@ -84,10 +84,10 @@ export default {
       const { userName, userLastName, userPhoto, selectedDate } = this;
       this.loading = true;
       this.updateCurrentUser({
-        name: userName,
-        last_name: userLastName,
-        birth_date: selectedDate,
-        picture: userPhoto,
+        name: userName || '',
+        last_name: userLastName || '',
+        birth_date: selectedDate || '',
+        picture: userPhoto || '',
       })
         .then(() => {
           this.currentStepOk();
