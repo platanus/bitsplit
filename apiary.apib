@@ -827,3 +827,39 @@ The `password` field is only required if the `api_key` or `api_secret` fields ar
             {
                 "message": "user does not have synchronized Buda"
             }
+
+
+## Buda Withdrawal [/v2/buda_withdrawals]
+### Make direct withdrawal to Buda [POST]
+
++ Request (application/json)
+
+    + Headers
+
+            X-User-Email: example@example.com
+            X-User-Token: smnozAAbYnEX2xVRfS5R
+   
+    + Body
+
+            {
+                "amount": 0.000001
+            }
+
++ Response 200 (application/json)
+
+        {
+            "data": {
+                "id": "1a8a625f-7c3e-41d7-8b90-d71f9e18dc5c",
+                "type": "ln",
+                "amount": 100,
+                "reference": "lnbc1u1p00dd9hpp5sd7hsg2gvercz3pdyquem95g729vwhneqevlcrrllq35e83ag85qdqqcqzpg7pngu4epz4upcmhefthq57fnr6e554kcnurzqvgeydcuwxvjfytx9s3nuqwl836r4u23jfk6zaw7hygdjazkyjnexuhh2m43wl47fgsp9u08f8",
+                "fee": 0,
+                "status": "pending",
+                "processed_at": 1593226424
+            }
+        }
+            
+
++ Response 400 (application/json)
+
+            { "error": "example error message" }
