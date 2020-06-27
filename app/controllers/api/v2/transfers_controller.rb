@@ -2,7 +2,10 @@ class Api::V2::TransfersController < Api::V2::BaseController
   
   def create
     receiver = User.find_by(email: params[:receiver_email])
-    render(json: { error: 'invalid receiver email' }, status: 400) && return if receiver.nil?
+    if receiver.nil?
+      new_user_service = UnregisteredUserService.new(email: params[:receiver_email])
+      receiver = new_user_service.create
+    end
     render(json: { error: 'you can not transfer to yourself' }, status: 400) && return if receiver == current_user
 
     money_service = MoneyService.new(sender: current_user, receiver: receiver, amount: params[:amount], wallet_origin: params[:wallet_origin])
