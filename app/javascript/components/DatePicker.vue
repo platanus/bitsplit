@@ -163,7 +163,7 @@ export default {
       }
       if (this.initialDate) this.selectedDay = date.getDate() + 1;
       else this.selectedDay = date.getDate();
-      this.selectedDay = date.getDate();
+      this.selectedDay = date.getDate() + 1;
       this.selectedMonth = date.getMonth();
       this.selectedYear = date.getFullYear();
       this.sendDate();

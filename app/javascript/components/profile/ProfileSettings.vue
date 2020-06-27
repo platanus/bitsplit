@@ -54,6 +54,7 @@
               class="mb-6 mt-2"
               min="1930"
               max="2021"
+              :default="selectedDate"
               v-model="selectedDate"
             />
             <submitButton :loading="loading" class="">
@@ -133,6 +134,12 @@ export default {
       this.walletOptions = ['bitsplit'];
     }
   },
+  created() {
+    this.selectedDate = this.currentUser.birth_date;
+    this.userName = this.currentUser.name;
+    this.userLastName = this.currentUser.last_name;
+    this.userPhoto = this.currentUser.picture;
+  },
   methods: {
     ...mapActions('user', ['updateCurrentUser']),
     handleSubmit() {
@@ -152,45 +159,32 @@ export default {
     },
     handleUpdate() {
       const { userName, userLastName, userPhoto, selectedDate } = this;
-      if (userName) {
-        this.updateCurrentUser({ name: userName })
-          .then(() => {
-            this.loading = false;
-          })
-          .catch(() => {
-            this.loading = false;
-          });
-      }
-      if (userLastName) {
-        this.updateCurrentUser({ last_name: userLastName })
-          .then(() => {
-            this.loading = false;
-          })
-          .catch(() => {
-            this.loading = false;
-          });
-      }
-      if (userPhoto) {
-        this.updateCurrentUser({ picture: userPhoto })
-          .then(() => {
-            this.loading = false;
-          })
-          .catch(() => {
-            this.loading = false;
-          });
-      }
-      this.updateCurrentUser({ birth_date: selectedDate })
+
+      this.loading = true;
+
+      this.updateCurrentUser({
+        name: userName,
+        last_name: userLastName,
+        picture: userPhoto,
+        birth_date: selectedDate,
+      })
         .then(() => {
           this.loading = false;
+
+          this.getCurrentUser();
         })
         .catch(() => {
           this.loading = false;
         });
-      this.$router.go();
     },
   },
   computed: {
-    ...mapState('user', ['currentUser', 'userBalanceCLP', 'userBalanceBTC']),
+    ...mapState('user', [
+      'currentUser',
+      'userBalanceCLP',
+      'userBalanceBTC',
+      'getCurrentUser',
+    ]),
     ...mapState('user', ['currentUser']),
     ...mapGetters('user', ['budaSignedIn', 'splitwiseSignedIn']),
   },
