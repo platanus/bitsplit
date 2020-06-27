@@ -16,7 +16,7 @@ class Api::V2::BudaWithdrawalsController < ApplicationController
                                             completed: false,
                                             invoice: invoice )
       opennode_service = OpenNodeService.new
-      response = opennode_service.send_withdrawal_request(invoice, false)
+      response = opennode_service.send_withdrawal_request(invoice, true)
       render(json: { error: 'invalid opennode withdrawal request' }, status: 400) and return unless money_service.check_opennode_response(response)
       render(json: JSON.parse(response.body), status: 200) and return
     else
