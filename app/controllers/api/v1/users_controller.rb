@@ -24,6 +24,7 @@ class Api::V1::UsersController < Api::V1::BaseController
         respond_with({error: message}, :status => 400) && return unless success
       end
     end
+  
     current_user.update(user_params)
     respond_with current_user
   end
