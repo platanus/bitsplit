@@ -17,6 +17,7 @@ import {
   withdrawalOpenNode,
   sendRecoveryEmail,
   passwordRecovery,
+  budaDirectWithdrawal,
 } from '../../action-types';
 
 import {
@@ -66,10 +67,13 @@ import {
   passwordRecoveryApi,
 } from '../../../api/user.js';
 
-import { widthdrawalApi, depositApi } from '../../../api/wallet';
+import {
+  widthdrawalApi,
+  depositApi,
+  budaWidthdrawalApi,
+} from '../../../api/wallet';
 
 import { validateEmail } from '../../../helpers';
-
 
 const commitAndSetUser = ({ commit, mutation, user }) => {
   if (user) {
@@ -658,6 +662,29 @@ export default {
           });
         } else {
           dispatch('alert/errorAlert', 'Falta el endpoint en el backend', {
+            root: true,
+          });
+        }
+
+        throw Error(error);
+      });
+  },
+  [budaDirectWithdrawal]({ dispatch }, payload) {
+    return budaWidthdrawalApi(payload)
+      .then(() => {
+        dispatch('alert/successAlert', '¡Se ha hecho el deposito con exito!', {
+          root: true,
+        });
+
+        return;
+      })
+      .catch(error => {
+        if (error.response) {
+          dispatch('alert/errorAlert', 'Revisa tu saldo o tus datos de Buda', {
+            root: true,
+          });
+        } else {
+          dispatch('alert/errorAlert', 'Error desconocido', {
             root: true,
           });
         }

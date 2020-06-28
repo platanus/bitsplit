@@ -20,5 +20,14 @@ const widthdrawalApi = payload => {
     invoice,
   });
 };
+const budaWidthdrawalApi = payload => {
+  const { amount } = payload;
 
-export { depositApi, widthdrawalApi };
+  if (!amount) return Promise.reject('Error');
+
+  return authedAxios.post('/api/v2/buda_withdrawals', {
+    amount,
+  });
+};
+
+export { depositApi, widthdrawalApi, budaWidthdrawalApi };

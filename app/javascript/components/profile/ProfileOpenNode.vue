@@ -53,31 +53,65 @@
       <text-field font-size="full">
         Retirar de Bitsplit
       </text-field>
-      <InputLabel>
-        Crea un invoice con el monto que quieras retirar y nosotros lo pagamos.
-      </InputLabel>
-      <form
-        @submit.prevent="handleWithdrawalSubmit"
-        class="flex flex-col md:flex-row"
-      >
-        <div class="md:mr-2 mb-2 flex-grow">
-          <textInput
-            field-id="invoice"
-            field-type="text"
-            field-placeholder="Ingresa el invoice aqui "
-            field-name="invoice"
-            v-model="invoice"
-          />
-        </div>
-        <submitButton :loading="withdrawalAllowed">
-          Retirar
-        </submitButton>
-      </form>
+      <div>
+        <InputLabel>
+          Crea un invoice con el monto que quieras retirar y nosotros lo
+          pagamos.
+        </InputLabel>
+        <form
+          @submit.prevent="handleWithdrawalSubmit"
+          class="flex flex-col md:flex-row"
+        >
+          <div class="md:mr-2 mb-2 flex-grow">
+            <textInput
+              field-id="invoice"
+              field-type="text"
+              field-placeholder="Ingresa el invoice aqui "
+              field-name="invoice"
+              v-model="invoice"
+            />
+          </div>
+          <submitButton :loading="withdrawalAllowed">
+            Retirar
+          </submitButton>
+        </form>
+      </div>
+      <div class="pt-4" v-if="budaSignedIn">
+        <InputLabel>
+          Retirar directamente a tu cuenta de Buda.
+        </InputLabel>
+        <form
+          @submit.prevent="handleWithdrawalDirectSubmit"
+          class="flex flex-col md:flex-row"
+        >
+          <div class="md:mr-2 mb-2 flex-grow">
+            <textInput
+              field-id="budaWithdrawalDirect"
+              field-type="number"
+              field-placeholder="0.12"
+              field-name="budaWithdrawalDirect"
+              v-model="budaWithdrawalDirect"
+            />
+          </div>
+          <div class="mx-2">
+            <select-input
+              field-name="currency"
+              field-id="currency"
+              v-model="currency"
+              :options="currencyOptions"
+              :name-mappings="nameMappings"
+            />
+          </div>
+          <submitButton :loading="directWithdrawallAllowed">
+            Retirar
+          </submitButton>
+        </form>
+      </div>
     </div>
   </div>
 </template>
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapState, mapGetters } from 'vuex';
 import QrcodeVue from 'qrcode.vue';
 
 import TextField from '../TextField';
@@ -103,17 +137,27 @@ export default {
       amount: '',
       currency: 'BTC',
       invoice: '',
+      budaWithdrawalDirect: '',
       loading: false,
       showDepositInvoice: false,
       depositInvoice: null,
     };
   },
   computed: {
+    ...mapState('user', ['userBalanceBitsplitBTC']),
+    ...mapGetters('user', ['budaSignedIn']),
     depositAllowed() {
       return this.loading || !(this.amount && this.currency);
     },
     withdrawalAllowed() {
       return this.loading || !this.invoice;
+    },
+    directWithdrawallAllowed() {
+      if (this.userBalanceBitsplitBTC < parseFloat(this.budaWithdrawalDirect)) {
+        return true;
+      }
+
+      return this.loading || !this.budaWithdrawalDirect;
     },
   },
   methods: {
@@ -145,6 +189,20 @@ export default {
         .catch(() => {
           this.loading = false;
         });
+    },
+    handleWithdrawalDirectSubmit() {
+      // this.loading = true;
+
+      const { budaWithdrawalDirect } = this;
+      console.log(budaWithdrawalDirect);
+
+      // return this.withdrawalOpenNode({ invoice })
+      //   .then(() => {
+      //     this.loading = false;
+      //   })
+      //   .catch(() => {
+      //     this.loading = false;
+      //   });
     },
     setShowDepositInvoice(invoice) {
       this.showDepositInvoice = true;
