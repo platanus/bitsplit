@@ -30,4 +30,20 @@ const budaWidthdrawalApi = payload => {
   });
 };
 
-export { depositApi, widthdrawalApi, budaWidthdrawalApi };
+const budaDirectInvoicePayApi = payload => {
+  const { invoice, order_id } = payload;
+
+  if (!invoice || !order_id) return Promise.reject('Error');
+
+  return authedAxios.post('/api/v2/buda_pays', {
+    invoice,
+    order_id,
+  });
+};
+
+export {
+  depositApi,
+  widthdrawalApi,
+  budaWidthdrawalApi,
+  budaDirectInvoicePayApi,
+};

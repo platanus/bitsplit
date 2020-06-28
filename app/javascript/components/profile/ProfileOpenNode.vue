@@ -48,6 +48,15 @@
           class="self-center p-2"
         />
       </div>
+      <submit-button
+        width="full"
+        v-show="showDirectDepositButton"
+        @do-click="payInvoiceWithBuda()"
+        :loading="loading"
+        :key="directDepositButtonKey"
+      >
+        ¡Pagar directamente desde tu cuenta Buda!
+      </submit-button>
     </div>
     <div>
       <text-field font-size="full">
@@ -141,10 +150,13 @@ export default {
       loading: false,
       showDepositInvoice: false,
       depositInvoice: null,
+      depositOrderId: null,
+      showDirectDepositButton: false,
+      directDepositButtonKey: 0,
     };
   },
   computed: {
-    ...mapState('user', ['userBalanceBitsplitBTC']),
+    ...mapState('user', ['userBalanceBitsplitBTC', 'userBalanceBudaBTC']),
     ...mapGetters('user', ['budaSignedIn']),
     depositAllowed() {
       return this.loading || !(this.amount && this.currency);
@@ -161,15 +173,22 @@ export default {
     },
   },
   methods: {
-    ...mapActions('user', ['withdrawalOpenNode', 'depositOpenNode']),
+    ...mapActions('user', [
+      'withdrawalOpenNode',
+      'depositOpenNode',
+      'budaDirectWithdrawal',
+      'budaDirectInvoicePay',
+    ]),
     handleDepositSubmit() {
       this.loading = true;
+      this.showDirectDepositButton = false;
       const { amount, currency } = this;
 
       return this.depositOpenNode({ amount, currency })
         .then(res => {
           this.setShowDepositInvoice(
-            res.response.data.lightning_invoice.payreq
+            res.response.data.lightning_invoice.payreq,
+            res.response.data.order_id
           );
           this.loading = false;
         })
@@ -191,22 +210,40 @@ export default {
         });
     },
     handleWithdrawalDirectSubmit() {
-      // this.loading = true;
-
       const { budaWithdrawalDirect } = this;
-      console.log(budaWithdrawalDirect);
 
-      // return this.withdrawalOpenNode({ invoice })
-      //   .then(() => {
-      //     this.loading = false;
-      //   })
-      //   .catch(() => {
-      //     this.loading = false;
-      //   });
+      return this.budaDirectWithdrawal({ amount: budaWithdrawalDirect })
+        .then(() => {
+          this.loading = false;
+        })
+        .catch(() => {
+          this.loading = false;
+        });
     },
-    setShowDepositInvoice(invoice) {
+    payInvoiceWithBuda() {
+      const { depositInvoice, depositOrderId } = this;
+
+      return this.budaDirectInvoicePay({
+        invoice: depositInvoice,
+        order_id: depositOrderId,
+      })
+        .then(() => {
+          this.loading = false;
+        })
+        .catch(() => {
+          this.loading = false;
+        });
+    },
+    setShowDepositInvoice(invoice, orderId) {
       this.showDepositInvoice = true;
       this.depositInvoice = invoice;
+      this.depositOrderId = orderId;
+      if (this.budaSignedIn && this.userBalanceBudaBTC >= this.amount) {
+        this.showDirectDepositButton = true;
+        this.directDepositButtonKey++;
+      } else {
+        this.showDirectDepositButton = false;
+      }
     },
   },
 };

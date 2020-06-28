@@ -18,6 +18,7 @@ import {
   sendRecoveryEmail,
   passwordRecovery,
   budaDirectWithdrawal,
+  budaDirectInvoicePay,
 } from '../../action-types';
 
 import {
@@ -71,6 +72,7 @@ import {
   widthdrawalApi,
   depositApi,
   budaWidthdrawalApi,
+  budaDirectInvoicePayApi,
 } from '../../../api/wallet';
 
 import { validateEmail } from '../../../helpers';
@@ -671,6 +673,29 @@ export default {
   },
   [budaDirectWithdrawal]({ dispatch }, payload) {
     return budaWidthdrawalApi(payload)
+      .then(() => {
+        dispatch('alert/successAlert', '¡Se ha hecho el deposito con exito!', {
+          root: true,
+        });
+
+        return;
+      })
+      .catch(error => {
+        if (error.response) {
+          dispatch('alert/errorAlert', 'Revisa tu saldo o tus datos de Buda', {
+            root: true,
+          });
+        } else {
+          dispatch('alert/errorAlert', 'Error desconocido', {
+            root: true,
+          });
+        }
+
+        throw Error(error);
+      });
+  },
+  [budaDirectInvoicePay]({ dispatch }, payload) {
+    return budaDirectInvoicePayApi(payload)
       .then(() => {
         dispatch('alert/successAlert', '¡Se ha hecho el deposito con exito!', {
           root: true,
