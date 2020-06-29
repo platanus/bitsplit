@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Hola, <%= @user.email %>, somos Bitsplit</h1>
+    <p>
+      <%= @sender.email %> pagó la deuda que tenía contigo!
+    </p>
+    <p>
+      Tienes <%= @amount %> esperándote en la aplicación!
+    </p>
+    <p>
+      Para recibirlo ingresa al siguiente link: <%= @url %>.
+    </p>
+    <p>¡Que tengas un buen día!</p>
+  </body>
+</html>

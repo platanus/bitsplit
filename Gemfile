@@ -15,10 +15,10 @@ gem 'rack-cors', '~> 1.1'
 gem 'rails', '~> 6.0.0'
 gem 'rails-i18n'
 gem 'sass-rails', '~> 5'
+gem "send_grid_mailer"
 gem 'strong_migrations'
 gem 'turbolinks', '~> 5'
 gem 'webpacker', '~> 4.0'
-gem 'ledgerizer', github: 'platanus/ledgerizer', ref: 'master'
 
 
 #Power_API https://github.com/platanus/power_api#installation

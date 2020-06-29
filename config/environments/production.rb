@@ -11,6 +11,10 @@ Rails.application.configure do
   config.log_tags = [:request_id]
 
   config.action_mailer.perform_caching = false
+  config.action_mailer.delivery_method = :sendgrid
+  config.action_mailer.sendgrid_settings = {
+    api_key: ENV['SENDGRID_API_KEY']
+  }
   config.i18n.fallbacks = true
   config.active_support.deprecation = :notify
   config.log_formatter = ::Logger::Formatter.new
