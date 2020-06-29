@@ -847,22 +847,15 @@ The `password` field is only required if the `api_key` or `api_secret` fields ar
 
 + Response 200 (application/json)
 
-        {
-            "data": {
-                "id": "1a8a625f-7c3e-41d7-8b90-d71f9e18dc5c",
-                "type": "ln",
-                "amount": 100,
-                "reference": "lnbc1u1p00dd9hpp5sd7hsg2gvercz3pdyquem95g729vwhneqevlcrrllq35e83ag85qdqqcqzpg7pngu4epz4upcmhefthq57fnr6e554kcnurzqvgeydcuwxvjfytx9s3nuqwl836r4u23jfk6zaw7hygdjazkyjnexuhh2m43wl47fgsp9u08f8",
-                "fee": 0,
-                "status": "pending",
-                "processed_at": 1593226424
+            {
+                "invoice": "lnbc1u1p005as4pp5mvcgm0zgpm0uhnrvndfrk7v37yae0lnlt8zydv7e7tkeg2dy7wfsdqqcqzpg5u0fzrmhvnry8dkmdfcfa5r9hp7h3w8suxysqxrzp9ravm7nnrtk7w2f68mw2s9kapccveqyslvuxweypsvcjeew47e46sq0ygyrv7qqtqj7hn"
             }
-        }
             
 
 + Response 400 (application/json)
 
-            { "error": "example error message" 
+            { 
+                "error": "example error message" 
             }
 
 ## Reset Password [/v2/reset_passwords]
