@@ -862,4 +862,63 @@ The `password` field is only required if the `api_key` or `api_secret` fields ar
 
 + Response 400 (application/json)
 
-            { "error": "example error message" }
+            { "error": "example error message" 
+            }
+
+## Reset Password [/v2/reset_passwords]
+### User forgot password [POST]
+
++ Request (application/json)
+
+    + Headers
+
+
+    + Body
+
+            {
+                "email": "example@example.cl" 
+            }
+
++ Response 200 (application/json)
+
+            {
+                "data": {
+                    "type": "reset_password",
+                    "attributes": {
+                        "token": "16f6fc2d9a73a1a03cae953d137225a4d9880093b337fe4311455bc20dbbf9c7"
+                    }
+                }
+            }
+            
+
++ Response 404 (application/json)
+
+
+### Reset user password [PUT]
+
++ Request (application/json)
+
+    + Headers
+
+
+    + Body
+
+            {
+                "token": "16f6fc2d9a73a1a03cae953d137225a4d9880093b337fe4311455bc20dbbf9c7",
+                "password": "123456789"
+            }
+
++ Response 200 (application/json)
+
+        {
+            "data": {
+                "type": "reset_password",
+                "attributes": {
+                    "email": "example@example.cl",
+                    "password": "123456789"
+                }
+            }
+        }
+            
+
++ Response 404 (application/json)
