@@ -4,7 +4,10 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h1>Has recibido un nuevo pago, <%= @user.email %></h1>
+    <h1>Hola, <%= @user.email %></h1>
+    <p>
+      <%= @sender %> te ha transferido dinero.
+    </p>
     <p>
       Eres <%= @amount %> bitcoins más rico!
     </p>
@@ -12,5 +15,6 @@
       Para revisar tu billetera ingresa al sitio: <%= @url %>.
     </p>
     <p>¡Que tengas un buen día!</p>
+    <p>Equipo Bitsplit</p>
   </body>
 </html>

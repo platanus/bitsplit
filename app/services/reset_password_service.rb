@@ -8,17 +8,4 @@ class ResetPasswordService < PowerTypes::Service.new
         user.save
         hashed
     end
-    def decrypt(text)
-        if text.nil?
-          nil
-        else
-          salt, data = text.split '$$'
-          len   = ActiveSupport::MessageEncryptor.key_len
-          key   = ActiveSupport::KeyGenerator.new(Rails.application.secrets.secret_key_base).generate_key salt, len
-          crypt = ActiveSupport::MessageEncryptor.new key
-          crypt.decrypt_and_verify data
-        end
-      end
-
-
 end
