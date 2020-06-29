@@ -12,8 +12,6 @@
 
 ActiveRecord::Schema.define(version: 2020_06_21_031722) do
 
-
-
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -68,6 +66,9 @@ ActiveRecord::Schema.define(version: 2020_06_21_031722) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["body"], name: "index_authentication_tokens_on_body"
     t.index ["user_id"], name: "index_authentication_tokens_on_user_id"
+  end
+
+  create_table "data_migrations", primary_key: "version", id: :string, force: :cascade do |t|
   end
 
   create_table "delayed_jobs", force: :cascade do |t|
