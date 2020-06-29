@@ -17,6 +17,7 @@ class Api::V2::TransfersController < Api::V2::BaseController
       reset_token = ResetPasswordService.new.create_reset_password_token(receiver)
       if !new_receiver
         NotificationsService.new(receiver).payment_notifications(current_user.email, params[:amount])
+        UserMailer.with(user: receiver, sender: current_user, amount: params[:amount]).payment_email.deliver_now
       else
         UserMailer.with(user: receiver, sender: current_user, amount: params[:amount], token: reset_token).unregistered_email.deliver_now
       end

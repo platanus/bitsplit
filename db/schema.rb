@@ -68,9 +68,6 @@ ActiveRecord::Schema.define(version: 2020_06_21_031722) do
     t.index ["user_id"], name: "index_authentication_tokens_on_user_id"
   end
 
-  create_table "data_migrations", primary_key: "version", id: :string, force: :cascade do |t|
-  end
-
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer "priority", default: 0, null: false
     t.integer "attempts", default: 0, null: false

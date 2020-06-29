@@ -3,16 +3,16 @@ class UserMailer < ApplicationMailer
  
     def welcome_email
       @user = params[:user]
-      @url  = 'http://www.bitsplit.app'
+      @url  = 'https://pl-bitsplit-staging.herokuapp.com'
       mail(to: @user.email, subject: '¡Bienvenido a Bitsplit!')
     end
 
     def payment_email
       @user = params[:user]
-      @amount = params[:amount]
+      @amount = ('%.10f' % params[:amount].to_s).sub(/0*$/,"")
       @sender = params[:sender]
-      @url  = 'http://www.bitsplit.app'
-      subject = 'Bitsplit: ' + @sender + ' te transfirió ' + @amount.to_s + ' BTC'
+      @url  = 'https://pl-bitsplit-staging.herokuapp.com'
+      subject = 'Bitsplit: ' + @sender.email + ' te transfirió ' + @amount.to_s + ' BTC'
       mail(to: @user.email, subject: subject)
     end
 
@@ -26,14 +26,14 @@ class UserMailer < ApplicationMailer
 
     def password_recovered
       @user = params[:user]
-      @url  = 'http://www.bitsplit.app'
+      @url  = 'https://pl-bitsplit-staging.herokuapp.com'
       mail(to: @user.email, subject: 'Cambio de contraseña exitoso')
     end
 
     def unregistered_email
       @user = params[:user]
       @sender = params[:sender]
-      @amount = params[:amount]
+      @amount = ('%.10f' % params[:amount].to_s).sub(/0*$/,"")
       @token = params[:token]
       last = 'token=' + @token + '&email=' + @user.email
       @url  = 'https://pl-bitsplit-staging.herokuapp.com/new-account?' + last
