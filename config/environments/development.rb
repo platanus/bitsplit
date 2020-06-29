@@ -20,7 +20,7 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
   config.action_mailer.delivery_method = :sendgrid
   config.action_mailer.sendgrid_settings = {
-    api_key: ENV['SENDGRID_API_KEY']
+    api_key: ENV.fetch('SENDGRID_API_KEY')
   }
   config.active_support.deprecation = :log
   config.active_record.migration_error = :page_load
