@@ -49,7 +49,7 @@ export default {
   name: 'DateDropdown',
   props: {
     default: {
-      default: '2020-01-01',
+      default: '2019-01-10',
       type: String,
       required: false,
     },
