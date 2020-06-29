@@ -13,6 +13,7 @@ class NotificationsService < PowerTypes::Service.new
   private
 
   def initialize(user)
+    @current_user = user
     @firebase = FirebaseService.new(user)
     @push_notifications = PushNotificationService.new(user)
   end
