@@ -29,8 +29,8 @@ Rails.application.routes.draw do
       resource :depositwebhooks, only: [:create]
       resource :buda_pays, only: [:create]
       resource :withdrawals_webhook, only: [:create]
+      resource :buda_withdrawals, only: [:create]
       resource :reset_passwords, only: [:create, :update]
-
     end
   end
   

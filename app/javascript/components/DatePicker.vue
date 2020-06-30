@@ -49,7 +49,7 @@ export default {
   name: 'DateDropdown',
   props: {
     default: {
-      default: '2020-01-01',
+      default: '2019-01-10',
       type: String,
       required: false,
     },
@@ -163,7 +163,7 @@ export default {
       }
       if (this.initialDate) this.selectedDay = date.getDate() + 1;
       else this.selectedDay = date.getDate();
-      this.selectedDay = date.getDate();
+      this.selectedDay = date.getDate() + 1;
       this.selectedMonth = date.getMonth();
       this.selectedYear = date.getFullYear();
       this.sendDate();
