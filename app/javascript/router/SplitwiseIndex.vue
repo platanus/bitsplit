@@ -1,8 +1,8 @@
 <template>
   <div class="flex justify-center m-8">
     <div>
-      <div class="text-grey-darker mb-2">
-        <span class="text-xl flex justify-center align-top text-indigo-600"
+      <div class="text-grey-darker mb-6">
+        <span class="text-black text-xl leading-none mb-10 mt-4 font-bold"
           >Deudas de Splitwise
         </span>
       </div>
@@ -16,7 +16,7 @@
         
           <div v-if="userSplitwiseDebts.singleDebts">
             <div class="text-grey-darker">
-              <span class="text-lg align-top text-blue-800">Deudas Individuales</span>
+              <span class="text-blue-800 text-lg leading-none mb-4 mt-4 font-bold">Deudas Individuales</span>
             </div>
             <div>
               <div
@@ -90,7 +90,7 @@
               :key="index"
             >
               <div class="text-grey-darker">
-                <span class="text-lg align-top text-blue-800">{{ group.group_name }}</span>
+                <span class="text-blue-800 text-lg leading-none mb-4 mt-4 font-bold">{{ group.group_name }}</span>
               </div>
               <div>
                 <div
