@@ -79,7 +79,7 @@ export default {
     state.getBalanceLoading = true;
   },
   [GET_USER_BALANCE_SUCCESS](state, balance) {
-    state.getBalanceLoading = true;
+    state.getBalanceLoading = false;
     state.userBalanceBudaCLP = parseFloat(balance.buda.CLP.available_amount);
     state.userBalanceBudaBTC = parseFloat(balance.buda.BTC.available_amount);
     state.userBalanceBudaBTCCLP = parseInt(

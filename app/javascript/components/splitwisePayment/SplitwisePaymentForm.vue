@@ -48,12 +48,30 @@
       </div>
       <form @submit.prevent="handleSubmit">
         <div class="flex flex-col mb-6 mt-6">
-          <label class="block text-gray-700 text-lg py-2" for="account_balance"
-            >Wallet desde la que se enviará el pago:
-            {{
-              currentWallet() | capitalize
-            }}
-          </label>
+          <div v-if="this.getBalanceLoading">
+            <span
+              class="block text-gray-700 text-lg py-2"
+            >
+              Cargando tu saldo...
+            </span>
+          </div>
+          <div v-else>
+            <span
+              v-if="this.userBalanceBitsplitBTC || this.userBalanceBudaBTC"
+              class="block text-gray-700 text-lg py-2"
+            >
+              Wallet desde la que se enviará el pago:
+              {{
+                currentWallet() | capitalize
+              }}
+            </span>
+            <span
+              v-else
+              class="block text-gray-700 text-lg py-2"
+            >
+              No hay saldo en ninguna de tus wallet :(
+            </span>
+          </div>
           <select v-if="budaSignedIn"
             class="txt-input appearance-none border rounded w-full my-4 py-2 px-3 leading-tight"
             v-model="wallet_origin_selected"
@@ -61,10 +79,10 @@
             <option value="" disabled selected>
               Cambiar Wallet
             </option>
-            <option value="bitsplit">
+            <option value="bitsplit" :disabled="!this.userBalanceBitsplitBTC">
               Bitsplit
             </option>
-            <option value="buda">
+            <option value="buda" :disabled="!this.userBalanceBudaBTC">
               Buda
             </option>
           </select>
@@ -90,7 +108,7 @@
         </div>
         <div class="flex flex-col mb-6 mt-6">
           <div v-if="splitwisePaymentData.currency_code === 'clp'" class="flex flex-col">
-            <label class="block mt-4 text-gray-700 text-lg" for="account_balance"
+            <label class="block text-gray-700 text-lg" for="account_balance"
               >Equivalente a:</label
             >
             <label
@@ -170,6 +188,7 @@ export default {
     ...mapState('user', [
       'currentUser',
       'sendPaymentLoading',
+      'getBalanceLoading',
       'userBalanceBudaCLP',
       'userBalanceBudaBTC',
       'userBalanceBudaBTCCLP',
@@ -218,9 +237,39 @@ export default {
       }
     },
     currentWallet() {
-      const wallet = this.wallet_origin_selected
-        ? this.wallet_origin_selected
-        : this.currentUser.wallet;
+      var wallet;
+
+      if (this.wallet_origin_selected) {
+        wallet = this.wallet_origin_selected
+      }
+      else {
+        if (this.currentUser.wallet === 'bitsplit') {
+          if (this.userBalanceBitsplitBTC) {
+            wallet = 'bitsplit'
+          }
+          else {
+            if (this.userBalanceBudaBTC) {
+              wallet = 'buda'
+            }
+            else {
+              wallet = null
+            }
+          }
+        }
+        else if (this.currentUser.wallet === 'buda') {
+          if (this.userBalanceBudaBTC) {
+            wallet = 'buda'
+          }
+          else {
+            if (this.userBalanceBitsplitBTC) {
+              wallet = 'bitsplit'
+            }
+            else {
+              wallet = null
+            }
+          }
+        }
+      }
 
       return wallet;
     },
@@ -233,7 +282,7 @@ export default {
                                 ? userBalanceBitsplitBTC 
                                 : userBalanceBudaBTC
 
-      return walletBalanceBTC >= paymentAmountBTC
+      return wallet && walletBalanceBTC >= paymentAmountBTC
     },
     paymentAmountBTC() {
       const { amount, quotationBTC } = this;
