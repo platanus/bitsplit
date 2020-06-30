@@ -645,7 +645,7 @@ export default {
       return Promise.reject('error');
     }
 
-    return passwordRecoveryApi(payload)
+    return passwordRecoveryApi({ token: recoveryToken, password: passwordOne })
       .then(() => {
         dispatch(
           'alert/successAlert',
@@ -673,12 +673,11 @@ export default {
   },
   [budaDirectWithdrawal]({ dispatch }, payload) {
     return budaWidthdrawalApi(payload)
-      .then(() => {
-        dispatch('alert/successAlert', '¡Se ha hecho el deposito con exito!', {
-          root: true,
-        });
+      .then(res => {
+        // Ahora bitsplit debe pagar ese invoice
+        const { invoice } = res.data;
 
-        return;
+        return invoice;
       })
       .catch(error => {
         if (error.response) {
