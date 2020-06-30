@@ -18,7 +18,7 @@ class Api::V2::WithdrawalsController < Api::V2::BaseController
                                            amount: btc_amount, 
                                            completed: false,
                                            invoice: params[:invoice] )
-    response = opennode_service.send_withdrawal_request(params[:invoice], false)
+    response = opennode_service.send_withdrawal_request(params[:invoice], true)
     @response = JSON.parse(response.body)
   end
 end
