@@ -31,8 +31,10 @@ const signUpApi = payload =>
     }
   );
 
-const sendRecoveryEmailApi = email => Promise.reject({ data: email });
-const passwordRecoveryApi = payload => Promise.reject({ data: payload });
+const sendRecoveryEmailApi = email =>
+  axios.post('/api/v2/reset_passwords', { email });
+const passwordRecoveryApi = payload =>
+  axios.put('/api/v2/reset_passwords', payload);
 
 const budaSyncApi = payload =>
   authedAxios.patch('/api/v1/users/', {
