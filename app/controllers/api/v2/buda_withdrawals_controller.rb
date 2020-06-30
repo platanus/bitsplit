@@ -20,10 +20,6 @@ class Api::V2::BudaWithdrawalsController < ApplicationController
     params.permit(:amount)
   end
 
-  def satoshi_price(bitcoins_amount)
-    (bitcoins_amount * 100_000_000).round
-  end
-
   def decrypt(text)
     if text.nil?
       nil
