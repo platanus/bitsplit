@@ -94,7 +94,7 @@
           </div>
         </div>
         <div class="flex flex-col mb-6 mt-6">
-          <div v-if="currency_selected === 'clp'" class="flex flex-col">
+          <div class="flex flex-col">
             <label class="block mt-4 text-gray-700 text-lg" for="account_balance"
               >Equivalente a:</label
             >
@@ -103,7 +103,7 @@
               for="account_balance"
               >{{ quotationCLP }} CLP</label
             >
-            <label
+            <label v-if="currency_selected === 'clp'"
               class="mb-4 uppercase font-bold text-xl text-indigo-600"
               for="account_balance"
               >{{ quotationBTC }} BTC</label
@@ -135,7 +135,9 @@ import submitButton from '../SubmitButton';
 import spinner from '../Spinner';
 
 const DEBOUNCE_TIMER = 1500;
-const MIN_QUOTATION = 200;
+const MIN_QUOTATION_CLP = 200;
+const BTC_QUOTATION_BASE = 1000;
+const CLP_DECIMALS = 2;
 
 export default {
   name: 'Payment',
@@ -203,19 +205,26 @@ export default {
     ...mapActions('component', ['changePaymentComp']),
     getNewQuotation() {
       const { amount } = this;
-      if (amount >= MIN_QUOTATION && this.currency_selected === 'clp') {
-        this.getQuotation({ amount })
-          .then(balance => {
-            this.quotationCLP = balance.amount_clp[0];
-            this.quotationBTC = balance.amount_btc[0];
-          })
-          .catch(err => {
-            console.error(err);
-          });
-      }
-      else {
-        this.quotationCLP = 0
-        this.quotationBTC = 0
+      if (amount) {
+        if (this.currency_selected === 'clp' && amount >= MIN_QUOTATION_CLP) {
+          this.getQuotation({ amount })
+            .then(balance => {
+              this.quotationCLP = balance.amount_clp[0];
+              this.quotationBTC = balance.amount_btc[0];
+            })
+            .catch(err => {
+              console.error(err);
+            });
+        }
+        else if (this.currency_selected === 'btc') {
+          this.getQuotation({ amount: BTC_QUOTATION_BASE })
+            .then(balance => {
+              this.quotationCLP = ((amount * BTC_QUOTATION_BASE) / balance.amount_btc[0]).toFixed(CLP_DECIMALS);
+            })
+            .catch(err => {
+              console.error(err);
+            });
+        }
       }
     },
     currentWallet() {
