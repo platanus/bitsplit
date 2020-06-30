@@ -1,5 +1,7 @@
-class BudaUserService < PowerTypes::Service.new(api_key: nil, api_secret: nil)
+class BudaUserService < PowerTypes::Service.new(user: nil, api_key: nil, api_secret: nil)
   def generate_invoice(bitcoins_amount)
+    success, message = validate_keys
+    return message unless success
     path = '/api/v2/lightning_network_invoices'
     url = 'https://www.buda.com/api/v2/lightning_network_invoices'
     request_type = 'POST'
@@ -11,6 +13,8 @@ class BudaUserService < PowerTypes::Service.new(api_key: nil, api_secret: nil)
   end
 
   def pay_invoice(bitcoins_amount, invoice_code, simulate)
+    success, message = validate_keys
+    return message unless success
     path = '/api/v2/reserves/ln-btc/withdrawals'
     url = 'https://www.buda.com/api/v2/reserves/ln-btc/withdrawals'
     request_type = 'POST'
@@ -25,6 +29,8 @@ class BudaUserService < PowerTypes::Service.new(api_key: nil, api_secret: nil)
   end
 
   def balance(currency)
+    success, message = validate_keys
+    return message unless success
     path = '/api/v2/balances/' + currency
     url = 'https://www.buda.com/api/v2/balances/' + currency
     request_type = 'GET'
@@ -37,6 +43,26 @@ class BudaUserService < PowerTypes::Service.new(api_key: nil, api_secret: nil)
     url = 'https://www.buda.com/api/v2/markets/' + market_id + '/quotations'
     body = { type: type, amount: amount }
     post_request(url, body)
+  end
+
+  def get_btc_balance
+    path = '/api/v2/balances/btc'
+    url = 'https://www.buda.com/api/v2/balances/btc' 
+    request_type = 'GET'
+    nonce = generate_nonce
+    headers = generate_headers(@api_key, @api_secret, nonce, request_type, path)
+    get_request(url, headers)
+  end
+
+  def validate_keys
+    balance_response = get_btc_balance
+    unless balance_response.has_key? 'balance'
+      error_message = balance_response
+      user_params={"api_key": '' , "api_secret": ''}
+      @user.update(user_params)
+      return false, error_message
+    end
+    return true, "api_keys y api_secret correctas"
   end
 
   private

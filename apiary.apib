@@ -827,3 +827,91 @@ The `password` field is only required if the `api_key` or `api_secret` fields ar
             {
                 "message": "user does not have synchronized Buda"
             }
+
+
+## Buda Withdrawal [/v2/buda_withdrawals]
+### Make direct withdrawal to Buda [POST]
+
++ Request (application/json)
+
+    + Headers
+
+            X-User-Email: example@example.com
+            X-User-Token: smnozAAbYnEX2xVRfS5R
+   
+    + Body
+
+            {
+                "amount": 0.000001
+            }
+
++ Response 200 (application/json)
+
+            {
+                "invoice": "lnbc1u1p005as4pp5mvcgm0zgpm0uhnrvndfrk7v37yae0lnlt8zydv7e7tkeg2dy7wfsdqqcqzpg5u0fzrmhvnry8dkmdfcfa5r9hp7h3w8suxysqxrzp9ravm7nnrtk7w2f68mw2s9kapccveqyslvuxweypsvcjeew47e46sq0ygyrv7qqtqj7hn"
+            }
+            
+
++ Response 400 (application/json)
+
+            { 
+                "error": "example error message" 
+            }
+
+## Reset Password [/v2/reset_passwords]
+### User forgot password [POST]
+
++ Request (application/json)
+
+    + Headers
+
+
+    + Body
+
+            {
+                "email": "example@example.cl" 
+            }
+
++ Response 200 (application/json)
+
+            {
+                "data": {
+                    "type": "reset_password",
+                    "attributes": {
+                        "token": "16f6fc2d9a73a1a03cae953d137225a4d9880093b337fe4311455bc20dbbf9c7"
+                    }
+                }
+            }
+            
+
++ Response 404 (application/json)
+
+
+### Reset user password [PUT]
+
++ Request (application/json)
+
+    + Headers
+
+
+    + Body
+
+            {
+                "token": "16f6fc2d9a73a1a03cae953d137225a4d9880093b337fe4311455bc20dbbf9c7",
+                "password": "123456789"
+            }
+
++ Response 200 (application/json)
+
+        {
+            "data": {
+                "type": "reset_password",
+                "attributes": {
+                    "email": "example@example.cl",
+                    "password": "123456789"
+                }
+            }
+        }
+            
+
++ Response 404 (application/json)

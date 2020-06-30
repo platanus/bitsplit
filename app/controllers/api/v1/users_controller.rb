@@ -6,6 +6,9 @@ class Api::V1::UsersController < Api::V1::BaseController
 
   def create
     new_user = User.create!(user_params)
+    if new_user.save
+      UserMailer.with(user: new_user).welcome_email.deliver_now
+    end
     respond_with new_user
   end
 
@@ -14,13 +17,19 @@ class Api::V1::UsersController < Api::V1::BaseController
   end
 
   def update
-    if (user_params.has_key?(:api_key) || user_params.has_key?(:api_secret)) && !current_user&.valid_password?(params[:password])
-      # user does not have the correct password => cannot update correctly
-      head(:bad_request)
-    else
-      current_user.update(user_params)
-      respond_with current_user
+    if (user_params.has_key?(:api_key) || user_params.has_key?(:api_secret))
+      if !current_user&.valid_password?(params[:password])
+        # user does not have the correct password => cannot update correctly
+        respond_with({error:"incorrect password" }, :status => 400) && return 
+      else
+        buda_user = BudaUserService.new(user: current_user, api_key: params[:api_key], api_secret: params[:api_secret])
+        success, message = buda_user.validate_keys
+        respond_with({error: message}, :status => 400) && return unless success
+      end
     end
+  
+    current_user.update(user_params)
+    respond_with current_user
   end
 
   def destroy
