@@ -4,7 +4,7 @@ class Api::V2::BudaWithdrawalsController < ApplicationController
     if current_user.api_key && !decrypt(current_user.api_key).empty?
       api_key, api_secret = current_user.buda_keys
       buda_service = BudaUserService.new(api_key: api_key, api_secret: api_secret)
-      response = buda_service.generate_invoice(params[:amount])
+      response = buda_service.generate_invoice(params[:amount].to_f)
       invoice = JSON.parse(response.body)['invoice']['encoded_payment_request']
       money_service = MoneyService.new
       render(json: { error: 'invalid buda invoice' }, status: 400) and return unless money_service.check_buda_invoice_creation(response)
