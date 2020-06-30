@@ -7,7 +7,7 @@
         </span>
       </div>
       <div v-if="getSplitwiseDebtsLoading">
-        <p>Cargando...</p>
+        <spinner />
       </div>
       <div v-else class="rounded-md">
         <div
@@ -170,6 +170,7 @@
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex';
 import linkButton from '../components/LinkButton';
+import spinner from '../components/Spinner';
 
 export default {
   name: 'Home',
@@ -184,6 +185,7 @@ export default {
   },
   components: {
     linkButton,
+    spinner,
   },
   methods: {
     ...mapActions('splitwiseDebts', ['getSplitwiseDebts']),
