@@ -58,7 +58,7 @@
                   </div>
                 </div>
                 <div 
-                  v-if="single_debt.is_payable && !single_debt.type" 
+                  v-if="!single_debt.type" 
                   class="flex-column content-center bg-indigo-800 ml-auto"
                 >
                   <linkButton
