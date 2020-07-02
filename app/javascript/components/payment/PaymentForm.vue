@@ -48,7 +48,7 @@
       </div>
       <form @submit.prevent="handleSubmit">
         <div class="flex flex-col mb-6 mt-6">
-          <div v-if="this.getBalanceLoading">
+          <div v-if="getBalanceLoading">
             <span
               class="block text-gray-700 text-lg py-2"
             >
@@ -57,7 +57,7 @@
           </div>
           <div v-else>
             <span
-              v-if="this.userBalanceBitsplitBTC || this.userBalanceBudaBTC"
+              v-if="userBalanceBitsplitBTC || userBalanceBudaBTC"
               class="block text-gray-700 text-lg py-2"
             >
               Wallet desde la que se enviará el pago:
@@ -79,10 +79,10 @@
             <option value="" disabled selected>
               Cambiar Wallet
             </option>
-            <option value="bitsplit" :disabled="!this.userBalanceBitsplitBTC">
+            <option value="bitsplit" :disabled="!userBalanceBitsplitBTC">
               Bitsplit
             </option>
-            <option value="buda" :disabled="!this.userBalanceBudaBTC">
+            <option value="buda" :disabled="!userBalanceBudaBTC">
               Buda
             </option>
           </select>
@@ -116,7 +116,7 @@
             <label class="block text-gray-700 text-lg" for="account_balance"
               >Equivalente a:</label
             >
-            <label
+            <label v-if="currency_selected === 'btc'"
               class="mb-4 uppercase font-bold text-xl text-indigo-600"
               for="account_balance"
               >{{ quotationCLP }} CLP</label
@@ -136,7 +136,7 @@
           />
         </div>
         <div>
-          <submitButton width="full" :loading="sendPaymentLoading || button_disabled">
+          <submitButton width="full" :loading="sendPaymentLoading || button_disabled || !checkCurrentWalletBalance()">
             Pagar
           </submitButton>
         </div>
@@ -153,9 +153,9 @@ import submitButton from '../SubmitButton';
 import spinner from '../Spinner';
 
 const DEBOUNCE_TIMER = 1500;
-const MIN_QUOTATION_CLP = 200;
 const BTC_QUOTATION_BASE = 1000;
 const CLP_DECIMALS = 2;
+const BTC_DECIMALS = 8;
 
 export default {
   name: 'Payment',
@@ -230,27 +230,20 @@ export default {
     ...mapActions('user', ['getQuotation', 'sendPayment']),
     ...mapActions('component', ['changePaymentComp']),
     getNewQuotation() {
-      const { amount } = this;
+      const { amount , currency_selected } = this;
       if (amount) {
-        if (this.currency_selected === 'clp' && amount >= MIN_QUOTATION_CLP) {
-          this.getQuotation({ amount })
-            .then(balance => {
-              this.quotationCLP = balance.amount_clp[0];
-              this.quotationBTC = balance.amount_btc[0];
-            })
-            .catch(err => {
-              console.error(err);
-            });
-        }
-        else if (this.currency_selected === 'btc') {
-          this.getQuotation({ amount: BTC_QUOTATION_BASE })
-            .then(balance => {
+        this.getQuotation({ amount: BTC_QUOTATION_BASE })
+          .then(balance => {
+            if (currency_selected === 'clp') {
+              this.quotationBTC = ((amount * balance.amount_btc[0]) / BTC_QUOTATION_BASE).toFixed(BTC_DECIMALS);
+            }
+            else if (currency_selected === 'btc') {
               this.quotationCLP = ((amount * BTC_QUOTATION_BASE) / balance.amount_btc[0]).toFixed(CLP_DECIMALS);
-            })
-            .catch(err => {
-              console.error(err);
-            });
-        }
+            }
+          })
+          .catch(err => {
+            console.error(err);
+          });
       }
     },
     currentWallet() {
@@ -263,14 +256,10 @@ export default {
         if (this.currentUser.wallet === 'bitsplit') {
           if (this.userBalanceBitsplitBTC) {
             wallet = 'bitsplit'
-            this.currency_selected = 'btc';
           }
           else {
             if (this.budaSignedIn && this.userBalanceBudaBTC) {
               wallet = 'buda'
-            }
-            else {
-              wallet = null
             }
           }
         }
@@ -281,10 +270,6 @@ export default {
           else {
             if (this.userBalanceBitsplitBTC) {
               wallet = 'bitsplit'
-              this.currency_selected = 'btc';
-            }
-            else {
-              wallet = null
             }
           }
         }
@@ -292,16 +277,27 @@ export default {
 
       return wallet;
     },
-    checkBalance() {
+    checkCurrentWalletBalance() {
       const wallet = this.currentWallet()
+      if (wallet) {
+        const walletBalanceBTC = wallet === 'bitsplit' 
+                                ? this.checkBitsplitBalance()
+                                : this.checkBudaBalance()
+        return walletBalanceBTC
+      }
+      else return false   
+    },
+    checkBudaBalance() {
       const paymentAmountBTC = this.paymentAmountBTC()
-      const { userBalanceBitsplitBTC, userBalanceBudaBTC } = this
+      const { userBalanceBudaBTC, budaSignedIn } = this
 
-      const walletBalanceBTC = wallet === 'bitsplit' 
-                                ? userBalanceBitsplitBTC 
-                                : userBalanceBudaBTC
+      return budaSignedIn && userBalanceBudaBTC >= paymentAmountBTC
+    },
+    checkBitsplitBalance() {
+      const paymentAmountBTC = this.paymentAmountBTC()
+      const { userBalanceBitsplitBTC } = this
 
-      return wallet && walletBalanceBTC >= paymentAmountBTC
+      return userBalanceBitsplitBTC >= paymentAmountBTC
     },
     paymentAmountBTC() {
       const { amount, quotationBTC, currency_selected } = this;
@@ -311,11 +307,10 @@ export default {
     },
     handleSubmit() {
       const wallet = this.currentWallet();
-      const checkBalance = this.checkBalance()
       const paymentAmountBTC = this.paymentAmountBTC()
       const { amount, receiver_email } = this;
 
-      if (amount && receiver_email && checkBalance ) {
+      if (amount && receiver_email) {
         this.sendPayment({
           payment_amount: paymentAmountBTC,
           receiver_email: receiver_email,

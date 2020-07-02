@@ -256,7 +256,7 @@ export default {
             wallet = 'bitsplit'
           }
           else {
-            if (budaBalance) {
+            if (this.budaSignedIn && budaBalance) {
               wallet = 'buda'
             }
           }
@@ -289,7 +289,7 @@ export default {
       const paymentAmountBTC = this.paymentAmountBTC()
       const { userBalanceBudaBTC, budaSignedIn } = this
 
-      return budaSignedIn && userBalanceBudaBTC >= paymentAmountBTC
+      return userBalanceBudaBTC >= paymentAmountBTC
     },
     checkBitsplitBalance() {
       const paymentAmountBTC = this.paymentAmountBTC()
