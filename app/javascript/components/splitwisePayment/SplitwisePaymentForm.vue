@@ -57,7 +57,7 @@
           </div>
           <div v-else>
             <span
-              v-if="this.userBalanceBitsplitBTC || this.userBalanceBudaBTC"
+              v-if="this.checkBitsplitBalance() || this.checkBudaBalance()"
               class="block text-gray-700 text-lg py-2"
             >
               Wallet desde la que se enviará el pago:
@@ -69,7 +69,7 @@
               v-else
               class="block text-gray-700 text-lg py-2"
             >
-              No hay saldo en ninguna de tus wallet :(
+              No hay saldo suficiente en ninguna de tus wallet :(
             </span>
           </div>
           <select v-if="budaSignedIn"
@@ -79,10 +79,10 @@
             <option value="" disabled selected>
               Cambiar Wallet
             </option>
-            <option value="bitsplit" :disabled="!this.userBalanceBitsplitBTC">
+            <option value="bitsplit" :disabled="!this.checkBitsplitBalance()">
               Bitsplit
             </option>
-            <option value="buda" :disabled="!this.userBalanceBudaBTC">
+            <option value="buda" :disabled="!this.checkBudaBalance()">
               Buda
             </option>
           </select>
@@ -107,7 +107,7 @@
           </div>
         </div>
         <div class="flex flex-col mb-6 mt-6">
-          <div v-if="splitwisePaymentData.currency_code === 'clp'" class="flex flex-col">
+          <div class="flex flex-col">
             <label class="block text-gray-700 text-lg" for="account_balance"
               >Equivalente a:</label
             >
@@ -116,7 +116,7 @@
               for="account_balance"
               >{{ quotationCLP }} CLP</label
             >
-            <label
+            <label v-if="splitwisePaymentData.currency_code === 'clp'"
               class="mb-4 uppercase font-bold text-xl text-indigo-600"
               for="account_balance"
               >{{ quotationBTC }} BTC</label
@@ -166,6 +166,9 @@ function debounce(func, wait, immediate) {
 
 const DEBOUNCE_TIMER = 1000;
 const MIN_PAYMENT = 100;
+const BTC_QUOTATION_BASE = 1000;
+const CLP_DECIMALS = 2;
+const BTC_DECIMALS = 8;
 
 export default {
   name: 'Payment',
@@ -225,30 +228,43 @@ export default {
     ...mapActions('component', ['changeSplitwisePaymentComp']),
     getNewQuotation() {
       const { amount, currency_code } = this.splitwisePaymentData;
-      if (amount >= MIN_PAYMENT && currency_code === 'clp') {
-        this.getQuotation({ amount })
-          .then(balance => {
-            this.quotationCLP = balance.amount_clp[0];
-            this.quotationBTC = balance.amount_btc[0];
-          })
-          .catch(err => {
-            console.error(err);
-          });
+      if (amount) {
+        if (currency_code === 'clp') {
+          this.getQuotation({ amount: BTC_QUOTATION_BASE })
+            .then(balance => {
+              this.quotationCLP = ((amount * balance.amount_clp[0]) / BTC_QUOTATION_BASE).toFixed(CLP_DECIMALS);
+              this.quotationBTC = ((amount * balance.amount_btc[0]) / BTC_QUOTATION_BASE).toFixed(BTC_DECIMALS);
+            })
+            .catch(err => {
+              console.error(err);
+            });
+        }
+        else if (currency_code === 'btc') {
+          this.getQuotation({ amount: BTC_QUOTATION_BASE })
+            .then(balance => {
+              this.quotationCLP = ((amount * BTC_QUOTATION_BASE) / balance.amount_btc[0]).toFixed(CLP_DECIMALS);
+            })
+            .catch(err => {
+              console.error(err);
+            });
+        }
       }
     },
     currentWallet() {
       var wallet;
+      var bitsplitBalance = this.checkBitsplitBalance()
+      var budaBalance = this.checkBudaBalance()
 
       if (this.wallet_origin_selected) {
         wallet = this.wallet_origin_selected
       }
       else {
         if (this.currentUser.wallet === 'bitsplit') {
-          if (this.userBalanceBitsplitBTC) {
+          if (bitsplitBalance) {
             wallet = 'bitsplit'
           }
           else {
-            if (this.budaSignedIn && this.userBalanceBudaBTC) {
+            if (budaBalance) {
               wallet = 'buda'
             }
             else {
@@ -257,11 +273,11 @@ export default {
           }
         }
         else if (this.currentUser.wallet === 'buda') {
-          if (this.userBalanceBudaBTC) {
+          if (budaBalance) {
             wallet = 'buda'
           }
           else {
-            if (this.userBalanceBitsplitBTC) {
+            if (bitsplitBalance) {
               wallet = 'bitsplit'
             }
             else {
@@ -283,6 +299,18 @@ export default {
                                 : userBalanceBudaBTC
 
       return wallet && walletBalanceBTC >= paymentAmountBTC
+    },
+    checkBudaBalance() {
+      const paymentAmountBTC = this.paymentAmountBTC()
+      const { userBalanceBudaBTC, budaSignedIn } = this
+
+      return budaSignedIn && userBalanceBudaBTC >= paymentAmountBTC
+    },
+    checkBitsplitBalance() {
+      const paymentAmountBTC = this.paymentAmountBTC()
+      const { userBalanceBitsplitBTC } = this
+
+      return userBalanceBitsplitBTC >= paymentAmountBTC
     },
     paymentAmountBTC() {
       const { amount, quotationBTC } = this;

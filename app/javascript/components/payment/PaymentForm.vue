@@ -104,7 +104,7 @@
                 <option value="btc">
                   BTC
                 </option>
-                <option v-if="currentWallet() === 'buda'" value="clp">
+                <option value="clp">
                   CLP
                 </option>
               </select>
