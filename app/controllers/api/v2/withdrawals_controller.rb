@@ -18,7 +18,12 @@ class Api::V2::WithdrawalsController < Api::V2::BaseController
                                            amount: btc_amount, 
                                            completed: false,
                                            invoice: params[:invoice] )
-    response = opennode_service.send_withdrawal_request(params[:invoice], false)
-    @response = JSON.parse(response.body)
+    response = opennode_service.send_withdrawal_request(params[:invoice], true)
+    response_body = JSON.parse(response.body)
+    return unless response_body.has_key? 'data'
+    return unless response_body['data'].has_key? 'reference'
+    reference = response_body['data']['reference']
+    new_user_withdrawal.update(invoice: reference)
+    @response = response_body
   end
 end

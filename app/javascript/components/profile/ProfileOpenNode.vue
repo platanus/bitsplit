@@ -213,9 +213,10 @@ export default {
       const { budaWithdrawalDirect } = this;
 
       return this.budaDirectWithdrawal({ amount: budaWithdrawalDirect })
-        .then(() => {
-          this.loading = false;
-        })
+        .then(invoice =>
+          // Bitsplit paga el invoice
+          this.withdrawalOpenNode({ invoice })
+        )
         .catch(() => {
           this.loading = false;
         });
