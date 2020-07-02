@@ -266,7 +266,7 @@ export default {
             this.currency_selected = 'btc';
           }
           else {
-            if (this.userBalanceBudaBTC) {
+            if (this.budaSignedIn && this.userBalanceBudaBTC) {
               wallet = 'buda'
             }
             else {

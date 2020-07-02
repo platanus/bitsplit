@@ -248,7 +248,7 @@ export default {
             wallet = 'bitsplit'
           }
           else {
-            if (this.userBalanceBudaBTC) {
+            if (this.budaSignedIn && this.userBalanceBudaBTC) {
               wallet = 'buda'
             }
             else {
