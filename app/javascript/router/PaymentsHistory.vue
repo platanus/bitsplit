@@ -12,7 +12,7 @@
         </div>
         <div class="justify-start">
           <div v-if="getPaymentsLoading">
-            <p>Cargando...</p>
+            <spinner />
           </div>
           <div v-else class="text-black rounded-md">
             <div v-if="userPaymentsHistory.length">
@@ -72,6 +72,7 @@
 import { mapState, mapGetters, mapActions } from 'vuex';
 import BudaAlert from 'components/buda/BudaAlert.vue';
 import CustomTable from '../components/CustomTable';
+import spinner from '../components/Spinner';
 
 export default {
   name: 'Home',
@@ -94,6 +95,7 @@ export default {
   components: {
     BudaAlert,
     CustomTable,
+    spinner,
   },
   methods: {
     ...mapActions('paymentsHistory', ['getPayments']),

@@ -31,7 +31,7 @@
         </div>
         <div class="justify-start">
           <div v-if="getPaymentsLoading">
-            <p>Cargando...</p>
+            <spinner />
           </div>
           <div v-else class="bg-gray-200 rounded-md">
             <div v-if="userPaymentsHistory.length">
@@ -106,6 +106,7 @@ import submitButton from '../components/SubmitButton';
 import linkButton from '../components/LinkButton';
 import UserCard from '../components/UserCard';
 import CustomTable from '../components/CustomTable';
+import spinner from '../components/Spinner';
 
 export default {
   name: 'Home',
@@ -130,6 +131,7 @@ export default {
     linkButton,
     UserCard,
     CustomTable,
+    spinner,
   },
   methods: {
     ...mapActions('paymentsHistory', ['getPayments']),
