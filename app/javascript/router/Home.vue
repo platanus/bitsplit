@@ -1,5 +1,5 @@
 <template>
-  <div class="m-12">
+  <div class="m-12 bg-primary bg-screen">
     <div class="bg-gray-200 p-10 my-4 rounded-md">
       <p class="text-5xl font-bold">
         BitSplit
@@ -10,9 +10,7 @@
         intuitiva e internacional!
       </p>
     </div>
-    <div
-      class="flex flex-col justify-start lg:flex-row bg-gray-200 p-10 rounded-md"
-    >
+    <div class="flex flex-col justify-start lg:flex-row p-10 rounded-md">
       <div class="lg:pr-5 flex flex-col">
         <UserCard classmod="self-center" />
         <div class="text-center px-4 py-2">
@@ -23,78 +21,8 @@
           </submitButton>
         </div>
       </div>
-      <div>
-        <div>
-          <p class="text-center text-xl font-bold mb-6">
-            Últimas 5 transacciones
-          </p>
-        </div>
-        <div class="justify-start">
-          <div v-if="getPaymentsLoading">
-            <p>Cargando...</p>
-          </div>
-          <div v-else class="bg-gray-200 rounded-md">
-            <div v-if="userPaymentsHistory.length">
-              <CustomTable
-                :data="userPaymentsHistory"
-                :columns="tableColumns"
-                :limit="5"
-              >
-                <template #default="{ row }">
-                  <td
-                    class="border-grey-light border hover:bg-gray-100 p-3"
-                    v-if="row.attributes.sender.email != currentUser.email"
-                  >
-                    <span
-                      class="px-2 items-center inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
-                    >
-                      Recibido
-                    </span>
-                  </td>
-                  <td
-                    v-else
-                    class="border-grey-light border hover:bg-gray-100 p-3"
-                  >
-                    <span
-                      class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"
-                    >
-                      Enviado
-                    </span>
-                  </td>
-                  <td class="border-grey-light border hover:bg-gray-100 p-3">
-                    {{ row.attributes.sender.email }}
-                  </td>
-                  <td class="border-grey-light border hover:bg-gray-100 p-3">
-                    {{ row.attributes.receiver.email }}
-                  </td>
-                  <td class="border-grey-light border hover:bg-gray-100 p-3">
-                    {{ row.attributes.amount_btc }} BTC
-                  </td>
-                  <td class="border-grey-light border hover:bg-gray-100 p-3">
-                    $ {{ row.attributes.amount_clp.toFixed(0) }} CLP
-                  </td>
-                  <td class="border-grey-light border hover:bg-gray-100 p-3">
-                    {{ getDate(row.attributes.created_at) }}
-                  </td>
-                </template>
-              </CustomTable>
-              <div class="text-center px-4 py-2">
-                <linkButton
-                  classmod="bg-blue-500 hover:bg-blue-700 my-3 md:my-0"
-                  :field-disabled="false"
-                  route="payments-history"
-                >
-                  Ver más
-                </linkButton>
-              </div>
-            </div>
-            <div v-else>
-              <p class="text-5xl font-bold">
-                No hay pagos para mostrar
-              </p>
-            </div>
-          </div>
-        </div>
+      <div class="rounded-md flex-grow">
+        <SplitwiseIndex />
       </div>
     </div>
   </div>
@@ -103,9 +31,8 @@
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex';
 import submitButton from '../components/SubmitButton';
-import linkButton from '../components/LinkButton';
 import UserCard from '../components/UserCard';
-import CustomTable from '../components/CustomTable';
+import SplitwiseIndex from './SplitwiseIndex';
 
 export default {
   name: 'Home',
@@ -127,9 +54,8 @@ export default {
   },
   components: {
     submitButton,
-    linkButton,
     UserCard,
-    CustomTable,
+    SplitwiseIndex,
   },
   methods: {
     ...mapActions('paymentsHistory', ['getPayments']),
