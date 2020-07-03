@@ -9,7 +9,19 @@
       src="https://images.pexels.com/photos/1099339/pexels-photo-1099339.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
       class="w-full"
     />
-    <div class="flex justify-center -mt-8">
+    <div v-if="currentUser.picture" class="flex justify-center -mt-8">
+      <img
+        :src="currentUser.picture"
+        class="rounded-full border-solid border-white border-2 mt-3 w-24 ml-6 mr-6 mb-3"
+      />
+    </div>
+    <div v-else-if="currentUser.picture_url" class="flex justify-center -mt-8">
+      <img
+        :src="currentUser.picture_url.large"
+        class="rounded-full border-solid border-white border-2 mt-3 w-24 ml-6 mr-6 mb-3"
+      />
+    </div>
+    <div v-else class="flex justify-center -mt-8">
       <img
         src="https://t4.ftcdn.net/jpg/00/64/67/63/240_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg"
         class="rounded-full border-solid border-white border-2 -mt-3 w-20"
