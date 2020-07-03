@@ -6,16 +6,17 @@
           >Deudas de Splitwise
         </span>
       </div>
-      <div v-if="getSplitwiseDebtsLoading">
+      <div class="mt-10" v-if="getSplitwiseDebtsLoading">
         <spinner />
       </div>
       <div v-else class="rounded-md">
-        <div
-          v-if="userSplitwiseDebts.singleDebts || userSplitwiseDebts.groupDebts"
-        >
+        <div v-if="splitwiseSignedIn">
           <div v-if="userSplitwiseDebts.singleDebts">
-            <div class="text-grey-darker">
-              <span class="text-blue-800 text-lg leading-none mb-4 mt-4 font-bold">Deudas Individuales</span>
+            <div class="text-grey-darker mb-4">
+              <span
+                class="text-blue-800 text-lg leading-none mb-4 mt-4 font-bold"
+                >Deudas Individuales</span
+              >
             </div>
             <div>
               <div
@@ -54,8 +55,8 @@
                     <span v-else> Debes ${{ single_debt.amount }} </span>
                   </div>
                 </div>
-                <div 
-                  v-if="!single_debt.type" 
+                <div
+                  v-if="!single_debt.type"
                   class="flex-column content-center bg-indigo-800 mr-8 ml-auto"
                 >
                   <linkButton
@@ -78,20 +79,23 @@
               </div>
             </div>
           </div>
-          <div class="text-grey-darker">
-            <span class="flex font-bold text-lg align-top text-blue-800 my-6"
-              >Deudas grupales</span
-            >
-          </div>
           <div v-if="userSplitwiseDebts.groupDebts">
+            <div class="text-grey-darker">
+              <span class="flex font-bold text-lg align-top text-blue-800 my-6"
+                >Deudas grupales</span
+              >
+            </div>
             <div
               v-for="(group,
               index) in userSplitwiseDebts.groupDebts.slice().reverse()"
               class="flex mb-4 p-1"
               :key="index"
             >
-              <div class="text-grey-darker mr-6 ">
-                <span class="text-blue-800 text-lg leading-none mb-4 mt-4 font-bold">{{ group.group_name }}</span>
+              <div class="text-grey-darker mr-6">
+                <span
+                  class="text-blue-800 text-lg leading-none mb-4 mt-4 font-bold"
+                  >{{ group.group_name }}</span
+                >
               </div>
               <div>
                 <div
@@ -155,10 +159,15 @@
             </div>
           </div>
         </div>
-        <div v-else>
-          <p class="text-5xl font-bold">
+        <div class="flex-column" v-else>
+          <p class="text-center text-5xl font-bold mb-4">
             No hay deudas para mostrar
           </p>
+          <div class="text-center mb-10 mr-14">
+            <SubmitButton @do-click="openSplitwiseUrl()">
+              Sincronizar tu cuenta de Splitwise
+            </SubmitButton>
+          </div>
         </div>
       </div>
     </div>
@@ -169,6 +178,7 @@
 import { mapState, mapGetters, mapActions } from 'vuex';
 import linkButton from '../components/LinkButton';
 import spinner from '../components/Spinner';
+import SubmitButton from '../components/SubmitButton';
 
 export default {
   name: 'Home',
@@ -184,13 +194,24 @@ export default {
   components: {
     linkButton,
     spinner,
+    SubmitButton,
   },
   methods: {
     ...mapActions('splitwiseDebts', ['getSplitwiseDebts']),
+    ...mapActions('user', ['getSplitwiseUrl']),
     getDate(date) {
       const d = new Date(date);
 
       return d.toLocaleString('en-US', { hour12: false });
+    },
+    openSplitwiseUrl() {
+      this.getSplitwiseUrl()
+        .then(res => {
+          window.location.href = res.authorize_url;
+        })
+        .catch(err => {
+          console.error(err);
+        });
     },
   },
   computed: {
