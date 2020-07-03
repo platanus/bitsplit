@@ -4,6 +4,8 @@
       <text-field font-size="full">
         Cargar a Bitsplit
       </text-field>
+      <spinner v-if="depositLoading" />
+
       <InputLabel>
         Elige un monto a cargar y nosotros crearemos un invoice para que pagues.
       </InputLabel>
@@ -52,16 +54,18 @@
         width="full"
         v-show="showDirectDepositButton"
         @do-click="payInvoiceWithBuda()"
-        :loading="loading"
+        :loading="depositLoading"
         :key="directDepositButtonKey"
       >
         ¡Pagar directamente desde tu cuenta Buda!
       </submit-button>
     </div>
+
     <div>
       <text-field font-size="full">
         Retirar de Bitsplit
       </text-field>
+      <spinner v-if="withdrawalLoading" />
       <div>
         <InputLabel>
           Crea un invoice con el monto que quieras retirar y nosotros lo
@@ -121,8 +125,10 @@
 </template>
 <script>
 import { mapActions, mapState, mapGetters } from 'vuex';
+
 import QrcodeVue from 'qrcode.vue';
 
+import Spinner from '../Spinner';
 import TextField from '../TextField';
 import textInput from '../Input';
 import SelectInput from '../Select';
@@ -138,6 +144,7 @@ export default {
     SelectInput,
     InputLabel,
     QrcodeVue,
+    Spinner,
   },
   data() {
     return {
@@ -147,7 +154,8 @@ export default {
       currency: 'BTC',
       invoice: '',
       budaWithdrawalDirect: '',
-      loading: false,
+      depositLoading: false,
+      withdrawalLoading: false,
       showDepositInvoice: false,
       depositInvoice: null,
       depositOrderId: null,
@@ -159,17 +167,17 @@ export default {
     ...mapState('user', ['userBalanceBitsplitBTC', 'userBalanceBudaBTC']),
     ...mapGetters('user', ['budaSignedIn']),
     depositAllowed() {
-      return this.loading || !(this.amount && this.currency);
+      return this.depositLoading || !(this.amount && this.currency);
     },
     withdrawalAllowed() {
-      return this.loading || !this.invoice;
+      return this.withdrawalLoading || !this.invoice;
     },
     directWithdrawallAllowed() {
       if (this.userBalanceBitsplitBTC < parseFloat(this.budaWithdrawalDirect)) {
         return true;
       }
 
-      return this.loading || !this.budaWithdrawalDirect;
+      return this.withdrawalLoading || !this.budaWithdrawalDirect;
     },
   },
   methods: {
@@ -179,62 +187,6 @@ export default {
       'budaDirectWithdrawal',
       'budaDirectInvoicePay',
     ]),
-    handleDepositSubmit() {
-      this.loading = true;
-      this.showDirectDepositButton = false;
-      const { amount, currency } = this;
-
-      return this.depositOpenNode({ amount, currency })
-        .then(res => {
-          this.setShowDepositInvoice(
-            res.response.data.lightning_invoice.payreq,
-            res.response.data.order_id
-          );
-          this.loading = false;
-        })
-        .catch(() => {
-          this.loading = false;
-        });
-    },
-    handleWithdrawalSubmit() {
-      this.loading = true;
-
-      const { invoice } = this;
-
-      return this.withdrawalOpenNode({ invoice })
-        .then(() => {
-          this.loading = false;
-        })
-        .catch(() => {
-          this.loading = false;
-        });
-    },
-    handleWithdrawalDirectSubmit() {
-      const { budaWithdrawalDirect } = this;
-
-      return this.budaDirectWithdrawal({ amount: budaWithdrawalDirect })
-        .then(invoice =>
-          // Bitsplit paga el invoice
-          this.withdrawalOpenNode({ invoice })
-        )
-        .catch(() => {
-          this.loading = false;
-        });
-    },
-    payInvoiceWithBuda() {
-      const { depositInvoice, depositOrderId } = this;
-
-      return this.budaDirectInvoicePay({
-        invoice: depositInvoice,
-        order_id: depositOrderId,
-      })
-        .then(() => {
-          this.loading = false;
-        })
-        .catch(() => {
-          this.loading = false;
-        });
-    },
     setShowDepositInvoice(invoice, orderId) {
       this.showDepositInvoice = true;
       this.depositInvoice = invoice;
@@ -245,6 +197,64 @@ export default {
       } else {
         this.showDirectDepositButton = false;
       }
+    },
+    handleDepositSubmit() {
+      this.depositLoading = true;
+      this.showDirectDepositButton = false;
+      const { amount, currency } = this;
+
+      return this.depositOpenNode({ amount, currency })
+        .then(res => {
+          this.setShowDepositInvoice(
+            res.response.data.lightning_invoice.payreq,
+            res.response.data.order_id
+          );
+          this.depositLoading = false;
+        })
+        .catch(() => {
+          this.depositLoading = false;
+        });
+    },
+    payInvoiceWithBuda() {
+      const { depositInvoice, depositOrderId } = this;
+      this.depositLoading = true;
+
+      return this.budaDirectInvoicePay({
+        invoice: depositInvoice,
+        order_id: depositOrderId,
+      })
+        .then(() => {
+          this.depositLoading = false;
+        })
+        .catch(() => {
+          this.depositLoading = false;
+        });
+    },
+    handleWithdrawalSubmit() {
+      this.withdrawalLoading = true;
+
+      const { invoice } = this;
+
+      return this.withdrawalOpenNode({ invoice })
+        .then(() => {
+          this.withdrawalLoading = false;
+        })
+        .catch(() => {
+          this.withdrawalLoading = false;
+        });
+    },
+    handleWithdrawalDirectSubmit() {
+      const { budaWithdrawalDirect } = this;
+      this.withdrawalLoading = true;
+
+      return this.budaDirectWithdrawal({ amount: budaWithdrawalDirect })
+        .then(invoice =>
+          // Bitsplit paga el invoice
+          this.withdrawalOpenNode({ invoice })
+        )
+        .catch(() => {
+          this.withdrawalLoading = false;
+        });
     },
   },
 };
