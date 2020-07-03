@@ -1,34 +1,34 @@
 <template>
-  <div class="flex justify-center m-10">
+  <div class="flex justify-center mx-2 bg-gray-200 rounded-lg shadow-lg">
     <div>
-      <div class="text-grey-darker mb-6">
+      <div class="flex text-grey-darker mb-2 px-40">
         <span class="text-black text-xl leading-none mb-10 mt-4 font-bold"
           >Deudas de Splitwise
         </span>
       </div>
-      <div v-if="getSplitwiseDebtsLoading">
+      <div class="mt-10" v-if="getSplitwiseDebtsLoading">
         <spinner />
       </div>
       <div v-else class="rounded-md">
-        <div
-          v-if="userSplitwiseDebts.singleDebts || userSplitwiseDebts.groupDebts"
-        >
-        
+        <div v-if="splitwiseSignedIn">
           <div v-if="userSplitwiseDebts.singleDebts">
-            <div class="text-grey-darker">
-              <span class="text-blue-800 text-lg leading-none mb-4 mt-4 font-bold">Deudas Individuales</span>
+            <div class="text-grey-darker mb-4">
+              <span
+                class="text-blue-800 text-lg leading-none mb-4 mt-4 font-bold"
+                >Deudas Individuales</span
+              >
             </div>
             <div>
               <div
-                v-for="(single_debt,index) in userSplitwiseDebts.singleDebts.friendsToUser
-                      .concat(userSplitwiseDebts.singleDebts.userToFriends)
-                      .slice()
-                      .reverse()
-                "
-                class="flex items-center"
+                v-for="(single_debt,
+                index) in userSplitwiseDebts.singleDebts.friendsToUser
+                  .concat(userSplitwiseDebts.singleDebts.userToFriends)
+                  .slice()
+                  .reverse()"
+                class="flex items-center bg-white rounded shadow-md p-1 mb-2"
                 :key="index"
               >
-                <div class="flex-column content-center">
+                <div class="flex-column content-center ml-8">
                   <img
                     :src="single_debt.picture"
                     class="rounded-full border-solid border-white border-2 mt-3 w-16 ml-2 mr-6 mb-3"
@@ -40,8 +40,12 @@
                       class="text-xs leading-5 font-semibold rounded-full"
                       :class="[
                         single_debt.type ? 'text-green-800' : 'text-red-800',
-                      ]"                 >
-                      {{ single_debt.first_name + ' ' + single_debt.last_name  | removeNull }} 
+                      ]"
+                    >
+                      {{
+                        (single_debt.first_name + ' ' + single_debt.last_name)
+                          | removeNull
+                      }}
                     </span>
                   </div>
                   <div>
@@ -59,7 +63,7 @@
                 </div>
                 <div 
                   v-if="supportedCurrencies.includes(single_debt.currency_code) && !single_debt.type" 
-                  class="flex-column content-center bg-indigo-800 ml-auto"
+                  class="flex-column content-center bg-indigo-800 mr-8 ml-auto"
                 >
                   <linkButton
                     classmod="bg-blue-500 hover:bg-blue-700 my-3 md:my-0"
@@ -81,41 +85,51 @@
               </div>
             </div>
           </div>
-
           <div v-if="userSplitwiseDebts.groupDebts">
+            <div class="text-grey-darker">
+              <span class="flex font-bold text-lg align-top text-blue-800 my-6"
+                >Deudas grupales</span
+              >
+            </div>
             <div
               v-for="(group,
               index) in userSplitwiseDebts.groupDebts.slice().reverse()"
-              class="mb-4"
+              class="flex mb-4 p-1"
               :key="index"
             >
-              <div class="text-grey-darker">
-                <span class="text-blue-800 text-lg leading-none mb-4 mt-4 font-bold">{{ group.group_name }}</span>
+              <div class="text-grey-darker mr-6">
+                <span
+                  class="text-blue-800 text-lg leading-none mb-4 mt-4 font-bold"
+                  >{{ group.group_name }}</span
+                >
               </div>
               <div>
                 <div
-                  v-for="(group_debt,index) in group.friendsToUser
-                      .concat(group.userToFriends)
-                      .slice()
-                      .reverse()
-                  "
-                  class="flex items-center"
+                  v-for="(group_debt, index) in group.friendsToUser
+                    .concat(group.userToFriends)
+                    .slice()
+                    .reverse()"
+                  class="flex items-center bg-white rounded shadow-md p-1 mb-2"
                   :key="index"
                 >
-                  <div class="flex-column content-center">
+                  <div class="flex-column content-center ml-8">
                     <img
                       :src="group_debt.picture"
                       class="rounded-full border-solid border-white border-2 mt-3 w-16 ml-2 mr-6 mb-3"
                     />
                   </div>
-                  <div class="flex-column content-center">
+                  <div class="content-center mr-24">
                     <div>
                       <span
-                        class="text-xs leading-5 font-semibold rounded-full"
+                        class="text-xs leading-5 font-semibold rounded-full mr-20"
                         :class="[
                           group_debt.type ? 'text-green-800' : 'text-red-800',
-                        ]"                 >
-                        {{ group_debt.first_name + ' ' + group_debt.last_name  | removeNull }} 
+                        ]"
+                      >
+                        {{
+                          (group_debt.first_name + ' ' + group_debt.last_name)
+                            | removeNull
+                        }}
                       </span>
                     </div>
                     <div>
@@ -133,7 +147,7 @@
                   </div>
                   <div 
                     v-if="supportedCurrencies.includes(group_debt.currency_code) && !group_debt.type" 
-                    class="flex-column content-center bg-indigo-800 ml-auto"
+                    class="flex content-center bg-indigo-800 mr-8 ml-auto"
                   >
                     <linkButton
                       classmod="bg-blue-500 hover:bg-blue-700 my-3 md:my-0"
@@ -157,10 +171,15 @@
             </div>
           </div>
         </div>
-        <div v-else>
-          <p class="text-5xl font-bold">
+        <div class="flex-column" v-else>
+          <p class="text-center text-5xl font-bold mb-4">
             No hay deudas para mostrar
           </p>
+          <div class="text-center mb-10 mr-14">
+            <SubmitButton @do-click="openSplitwiseUrl()">
+              Sincronizar tu cuenta de Splitwise
+            </SubmitButton>
+          </div>
         </div>
       </div>
     </div>
@@ -171,6 +190,7 @@
 import { mapState, mapGetters, mapActions } from 'vuex';
 import linkButton from '../components/LinkButton';
 import spinner from '../components/Spinner';
+import SubmitButton from '../components/SubmitButton';
 
 export default {
   name: 'Home',
@@ -187,13 +207,24 @@ export default {
   components: {
     linkButton,
     spinner,
+    SubmitButton,
   },
   methods: {
     ...mapActions('splitwiseDebts', ['getSplitwiseDebts']),
+    ...mapActions('user', ['getSplitwiseUrl']),
     getDate(date) {
       const d = new Date(date);
 
       return d.toLocaleString('en-US', { hour12: false });
+    },
+    openSplitwiseUrl() {
+      this.getSplitwiseUrl()
+        .then(res => {
+          window.location.href = res.authorize_url;
+        })
+        .catch(err => {
+          console.error(err);
+        });
     },
   },
   computed: {
@@ -205,10 +236,12 @@ export default {
     ...mapGetters('user', ['splitwiseSignedIn']),
   },
   filters: {
-    removeNull: function (value) {
-      if (!value) return ''
+    removeNull(value) {
+      if (!value) return '';
+      // eslint-disable-next-line no-param-reassign
       value = value.replace('null', '');
-      return value
+
+      return value;
     },
   },
 };

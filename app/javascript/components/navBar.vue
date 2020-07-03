@@ -22,24 +22,13 @@
         </router-link>
       </button>
       <button
-        v-if="splitwiseSignedIn"
         type="button"
         class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
       >
-        <router-link class="flex" :to="splitwiseRoute">
-          <i class="material-icons text-center mr-2">people</i>
-          Splitwise
+        <router-link class="flex" :to="paymentsHistoryRoute">
+          <i class="material-icons text-center mr-2">format_list_bulleted</i>
+          Historial de transacciones
         </router-link>
-      </button>
-      <button
-        v-else
-        type="button"
-        class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
-      >
-        <button class="flex" @click="openSplitwiseUrl()">
-          <i class="material-icons text-center mr-2">people</i>
-          Splitwise
-        </button>
       </button>
       <NavBarNotifications class="flex" />
       <button
@@ -100,6 +89,7 @@ export default {
       payRoute: '/payment',
       splitwiseRoute: '/splitwise',
       profileRoute: '/profile/', // No borrar el ultimo '/',
+      paymentsHistoryRoute: '/payments-history',
       bitsplitLogo: logo,
     };
   },
