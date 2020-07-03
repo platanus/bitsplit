@@ -2,12 +2,12 @@
   <div class="flex justify-center mx-2 bg-gray-200 rounded-lg shadow-lg">
     <div>
       <div class="flex text-grey-darker mb-2 px-40">
-        <span class="text-xl flex justify-center align-top text-indigo-600"
+        <span class="text-black text-xl leading-none mb-10 mt-4 font-bold"
           >Deudas de Splitwise
         </span>
       </div>
-      <div class="content-center" v-if="getSplitwiseDebtsLoading">
-        <p>Cargando...</p>
+      <div v-if="getSplitwiseDebtsLoading">
+        <spinner />
       </div>
       <div v-else class="rounded-md">
         <div
@@ -15,9 +15,7 @@
         >
           <div v-if="userSplitwiseDebts.singleDebts">
             <div class="text-grey-darker">
-              <span class="flex font-bold text-lg align-top text-blue-800 my-6"
-                >Deudas Individuales</span
-              >
+              <span class="text-blue-800 text-lg leading-none mb-4 mt-4 font-bold">Deudas Individuales</span>
             </div>
             <div>
               <div
@@ -56,8 +54,8 @@
                     <span v-else> Debes ${{ single_debt.amount }} </span>
                   </div>
                 </div>
-                <div
-                  v-if="single_debt.is_payable && !single_debt.type"
+                <div 
+                  v-if="!single_debt.type" 
                   class="flex-column content-center bg-indigo-800 mr-8 ml-auto"
                 >
                   <linkButton
@@ -92,10 +90,8 @@
               class="flex mb-4 p-1"
               :key="index"
             >
-              <div class="text-grey-darker">
-                <span class="text-lg align-top text-blue-800 mr-8">{{
-                  group.group_name
-                }}</span>
+              <div class="text-grey-darker mr-6 ">
+                <span class="text-blue-800 text-lg leading-none mb-4 mt-4 font-bold">{{ group.group_name }}</span>
               </div>
               <div>
                 <div
@@ -172,6 +168,7 @@
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex';
 import linkButton from '../components/LinkButton';
+import spinner from '../components/Spinner';
 
 export default {
   name: 'Home',
@@ -186,6 +183,7 @@ export default {
   },
   components: {
     linkButton,
+    spinner,
   },
   methods: {
     ...mapActions('splitwiseDebts', ['getSplitwiseDebts']),

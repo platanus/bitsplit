@@ -36,7 +36,7 @@
         </div>
         <div v-else>
           <p class="text-grey-dark mb-4 mt-4">
-            Aun no estas sincronizado con Buda!
+            Aún no estás sincronizado con Buda!
           </p>
         </div>
       </div>
