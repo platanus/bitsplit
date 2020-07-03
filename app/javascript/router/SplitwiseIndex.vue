@@ -49,14 +49,20 @@
                     </span>
                   </div>
                   <div>
-                    <span v-if="single_debt.type">
-                      Te deben ${{ single_debt.amount }}
+                    <span
+                      v-if="single_debt.type"
+                    >
+                      Te deben ({{single_debt.currency_code }}) {{ single_debt.amount }}
                     </span>
-                    <span v-else> Debes ${{ single_debt.amount }} </span>
+                    <span
+                      v-else
+                    >
+                      Debes ({{single_debt.currency_code }}) {{ single_debt.amount }}
+                    </span>
                   </div>
                 </div>
-                <div
-                  v-if="!single_debt.type"
+                <div 
+                  v-if="supportedCurrencies.includes(single_debt.currency_code) && !single_debt.type" 
                   class="flex-column content-center bg-indigo-800 mr-8 ml-auto"
                 >
                   <linkButton
@@ -127,14 +133,20 @@
                       </span>
                     </div>
                     <div>
-                      <span v-if="group_debt.type">
-                        Te deben ${{ group_debt.amount }}
+                      <span
+                        v-if="group_debt.type"
+                      >
+                        Te deben ({{group_debt.currency_code }}) {{ group_debt.amount }}
                       </span>
-                      <span v-else> Debes ${{ group_debt.amount }} </span>
+                      <span
+                        v-else
+                      >
+                        Debes ({{group_debt.currency_code }}) {{ group_debt.amount }}
+                      </span>
                     </div>
                   </div>
-                  <div
-                    v-if="group_debt.is_payable && !group_debt.type"
+                  <div 
+                    v-if="supportedCurrencies.includes(group_debt.currency_code) && !group_debt.type" 
                     class="flex content-center bg-indigo-800 mr-8 ml-auto"
                   >
                     <linkButton
@@ -186,6 +198,7 @@ export default {
     return {
       routeName: 'home',
       debtsColumns: ['', '', 'Nombre', 'Monto', ''],
+      supportedCurrencies: ['BTC', 'CLP'],
     };
   },
   created() {
