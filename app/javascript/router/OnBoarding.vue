@@ -3,8 +3,8 @@
     <CurrentStep />
     <div class="max-w-md mx-auto fixed-size flex flex-col justify-between">
       <budaIndex v-if="currentStep === 'buda'" />
-      <SplitwiseOnBoarding v-if="currentStep === 'splitwise'" />
       <UserInfoOnboarding v-if="currentStep == 'userInfo'" />
+      <SplitwiseOnBoarding v-if="currentStep === 'splitwise'" />
       <div class="flex flex-row justify-between flex-grow-0 py-4">
         <StepButton
           @do-click="PREVIOUS_STEP"

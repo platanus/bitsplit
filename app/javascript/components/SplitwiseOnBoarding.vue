@@ -28,8 +28,7 @@ export default {
     openSplitwiseUrl() {
       this.getSplitwiseUrl()
         .then(res => {
-          window.open(res.authorize_url);
-          this.currentStepOk();
+          window.location.href = res.authorize_url;
         })
         .catch(err => {
           console.error(err);
