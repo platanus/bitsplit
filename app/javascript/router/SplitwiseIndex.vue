@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-center mx-2 bg-gray-200 rounded-lg shadow-lg">
+  <div class="flex justify-center">
     <div>
       <div class="flex text-grey-darker mb-2 px-40">
         <span class="text-black text-xl leading-none mb-10 mt-4 font-bold"
@@ -49,20 +49,21 @@
                     </span>
                   </div>
                   <div>
-                    <span
-                      v-if="single_debt.type"
-                    >
-                      Te deben ({{single_debt.currency_code }}) {{ single_debt.amount }}
+                    <span v-if="single_debt.type">
+                      Te deben ({{ single_debt.currency_code }})
+                      {{ single_debt.amount }}
                     </span>
-                    <span
-                      v-else
-                    >
-                      Debes ({{single_debt.currency_code }}) {{ single_debt.amount }}
+                    <span v-else>
+                      Debes ({{ single_debt.currency_code }})
+                      {{ single_debt.amount }}
                     </span>
                   </div>
                 </div>
-                <div 
-                  v-if="supportedCurrencies.includes(single_debt.currency_code) && !single_debt.type" 
+                <div
+                  v-if="
+                    supportedCurrencies.includes(single_debt.currency_code) &&
+                    !single_debt.type
+                  "
                   class="flex-column content-center bg-indigo-800 mr-8 ml-auto"
                 >
                   <linkButton
@@ -133,20 +134,21 @@
                       </span>
                     </div>
                     <div>
-                      <span
-                        v-if="group_debt.type"
-                      >
-                        Te deben ({{group_debt.currency_code }}) {{ group_debt.amount }}
+                      <span v-if="group_debt.type">
+                        Te deben ({{ group_debt.currency_code }})
+                        {{ group_debt.amount }}
                       </span>
-                      <span
-                        v-else
-                      >
-                        Debes ({{group_debt.currency_code }}) {{ group_debt.amount }}
+                      <span v-else>
+                        Debes ({{ group_debt.currency_code }})
+                        {{ group_debt.amount }}
                       </span>
                     </div>
                   </div>
-                  <div 
-                    v-if="supportedCurrencies.includes(group_debt.currency_code) && !group_debt.type" 
+                  <div
+                    v-if="
+                      supportedCurrencies.includes(group_debt.currency_code) &&
+                      !group_debt.type
+                    "
                     class="flex content-center bg-indigo-800 mr-8 ml-auto"
                   >
                     <linkButton
