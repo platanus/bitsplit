@@ -18,10 +18,11 @@ class SplitwiseService < PowerTypes::Service.new(:user)
 
   # POST methods from Splitwise API
 
-  def payoff_debt(amount, group_id, to_user_id)
+  def payoff_debt(amount, currency_code, group_id, to_user_id)
     create_expense_url = 'https://secure.splitwise.com/api/v3.0/create_expense'
     post_to_splitwise(create_expense_url, {
                         "cost": amount,
+                        "currency_code": currency_code,
                         "payment": true,
                         "group_id": group_id,
                         "description": 'Pago hecho a traves de BitSplit',
