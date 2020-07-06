@@ -128,10 +128,7 @@
           />
         </div>
         <div>
-          <submitButton
-            width="full"
-            :loading="sendPaymentLoading || !checkCurrentWalletBalance()"
-          >
+          <submitButton width="full" :loading="sendPaymentLoading">
             Pagar
           </submitButton>
         </div>
@@ -333,7 +330,7 @@ export default {
           amount_clp: parseFloat(amount),
           amount: parseFloat(amount),
           amount_btc: parseFloat(this.quotationBTC),
-          currency_code,
+          currency_code: currency_code.toUpperCase(),
           wallet_origin: wallet,
         })
           .then(() => {
