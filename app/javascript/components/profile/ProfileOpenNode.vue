@@ -252,6 +252,9 @@ export default {
           // Bitsplit paga el invoice
           this.withdrawalOpenNode({ invoice })
         )
+        .then(() => {
+          this.withdrawalLoading = false;
+        })
         .catch(() => {
           this.withdrawalLoading = false;
         });
