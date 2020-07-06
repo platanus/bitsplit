@@ -128,7 +128,10 @@
           />
         </div>
         <div>
-          <submitButton width="full" :loading="sendPaymentLoading">
+          <submitButton
+            width="full"
+            :loading="sendPaymentLoading || !checkCurrentWalletBalance()"
+          >
             Pagar
           </submitButton>
         </div>
