@@ -23,7 +23,7 @@
           </submitButton>
         </div>
       </div>
-      <div class="bg-gray-200 px-10 rounded-md flex-grow">
+      <div class="bg-gray-200 px-10 rounded-md flex-grow pt-2">
         <SplitwiseIndex />
       </div>
     </div>
