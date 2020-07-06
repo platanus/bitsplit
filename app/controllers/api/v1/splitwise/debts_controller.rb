@@ -10,7 +10,7 @@ class Api::V1::Splitwise::DebtsController < ApplicationController
   end
 
   def create
-    response = generate_splitwise_service.payoff_debt(params[:amount_clp], params[:currency_code], params[:group_id], params[:to_user_id])
+    response = generate_splitwise_service.payoff_debt(params[:amount], params[:currency_code], params[:group_id], params[:to_user_id])
     if response.code != '200'
       head(:unauthorized)
     end
