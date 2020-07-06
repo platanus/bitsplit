@@ -25,7 +25,6 @@ const actions = {
             payment.attributes.receiver.email
         );
         commit(GET_PAYMENTS_SUCCESS, payments);
-        commit(GET_PAYMENTS_SUCCESS, res.data.data.transactions);
       })
       .catch(err => {
         commit(GET_PAYMENTS_FAIL);
