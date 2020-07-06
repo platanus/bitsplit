@@ -86,7 +86,7 @@
               </div>
             </div>
           </div>
-          <div v-if="userSplitwiseDebts.groupDebts">
+          <div v-if="userSplitwiseDebts.groupDebts.length !== 0">
             <div class="text-grey-darker">
               <span class="flex font-bold text-lg align-top text-blue-800 my-6"
                 >Deudas grupales</span
