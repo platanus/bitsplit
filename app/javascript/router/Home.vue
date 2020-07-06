@@ -10,18 +10,20 @@
         intuitiva e internacional!
       </p>
     </div>
-    <div class="flex flex-col justify-start lg:flex-row p-10 rounded-md">
-      <div class="lg:pr-5 flex flex-col">
-        <UserCard classmod="self-center" />
-        <div class="text-center px-4 py-2">
+    <div class="flex flex-col lg:flex-row justify-between rounded-md">
+      <div
+        class="bg-gray-200 p-10 lg:mr-10 lg:self-auto self-center lg:w-auto w-full flex flex-col lg:block lg:justify-start mb-10 lg:mb-0"
+      >
+        <UserCard classmod="mx-auto" />
+        <div class="flex justify-center mt-6">
           <submitButton>
-            <router-link class="px-6" to="/payment">
+            <router-link to="/payment">
               Hacer un pago
             </router-link>
           </submitButton>
         </div>
       </div>
-      <div class="rounded-md flex-grow">
+      <div class="bg-gray-200 px-10 rounded-md flex-grow pt-2">
         <SplitwiseIndex />
       </div>
     </div>

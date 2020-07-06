@@ -70,7 +70,8 @@ const getSplitwiseDebtsApi = () => authedAxios.get('/api/v1/splitwise/debts/');
 
 const payOffSplitwiseDebtApi = payload =>
   authedAxios.post('/api/v1/splitwise/debts/', {
-    amount_clp: payload.amount_clp,
+    currency_code: payload.currency_code,
+    amount: payload.amount,
     group_id: payload.group_id,
     to_user_id: payload.to_user_id,
   });

@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import SubmitButton from '../components/SubmitButton';
 import DatePicker from '../components/DatePicker';
 import textInput from '../components/Input';
@@ -77,8 +77,17 @@ export default {
     SubmitButton,
     DatePicker,
   },
+  computed: {
+    ...mapState('user', ['currentUser']),
+  },
+  created() {
+    this.userName = this.currentUser.name;
+    this.selectedDate = this.currentUser.birth_date;
+    this.userLastName = this.currentUser.last_name;
+    this.userPhoto = this.currentUser.picture;
+  },
   methods: {
-    ...mapActions('user', ['updateCurrentUser']),
+    ...mapActions('user', ['updateCurrentUser', 'getCurrentUser']),
     ...mapActions('onBoarding', ['currentStepOk']),
     handleSubmit() {
       const { userName, userLastName, userPhoto, selectedDate } = this;
@@ -91,6 +100,9 @@ export default {
       })
         .then(() => {
           this.currentStepOk();
+          this.getCurrentUser({
+            authentication_token: this.currentUser.authentication_token,
+          });
           this.loading = false;
         })
         .catch(() => {

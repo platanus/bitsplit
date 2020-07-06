@@ -49,9 +49,7 @@
       <form @submit.prevent="handleSubmit">
         <div class="flex flex-col mb-6 mt-6">
           <div v-if="getBalanceLoading">
-            <span
-              class="block text-gray-700 text-lg py-2"
-            >
+            <span class="block text-gray-700 text-lg py-2">
               Cargando tu saldo...
             </span>
           </div>
@@ -61,18 +59,14 @@
               class="block text-gray-700 text-lg py-2"
             >
               Wallet desde la que se enviará el pago:
-              {{
-                currentWallet() | capitalize
-              }}
+              {{ currentWallet() | capitalize }}
             </span>
-            <span
-              v-else
-              class="block text-gray-700 text-lg py-2"
-            >
+            <span v-else class="block text-gray-700 text-lg py-2">
               No hay saldo suficiente en ninguna de tus wallet :(
             </span>
           </div>
-          <select v-if="budaSignedIn"
+          <select
+            v-if="budaSignedIn"
             class="txt-input appearance-none border rounded w-full my-4 py-2 px-3 leading-tight"
             v-model="wallet_origin_selected"
           >
@@ -111,12 +105,14 @@
             <label class="block text-gray-700 text-lg" for="account_balance"
               >Equivalente a:</label
             >
-            <label v-if="splitwisePaymentData.currency_code === 'btc'"
+            <label
+              v-if="splitwisePaymentData.currency_code === 'btc'"
               class="mb-4 uppercase font-bold text-xl text-indigo-600"
               for="account_balance"
               >{{ quotationCLP }} CLP</label
             >
-            <label v-if="splitwisePaymentData.currency_code === 'clp'"
+            <label
+              v-if="splitwisePaymentData.currency_code === 'clp'"
               class="mb-4 uppercase font-bold text-xl text-indigo-600"
               for="account_balance"
               >{{ quotationBTC }} BTC</label
@@ -132,7 +128,10 @@
           />
         </div>
         <div>
-          <submitButton width="full" :loading="sendPaymentLoading || !checkCurrentWalletBalance()">
+          <submitButton
+            width="full"
+            :loading="sendPaymentLoading || !checkCurrentWalletBalance()"
+          >
             Pagar
           </submitButton>
         </div>
@@ -212,10 +211,11 @@ export default {
     }, DEBOUNCE_TIMER),
   },
   filters: {
-    capitalize: function (value) {
-      if (!value) return ''
-      value = value.toString()
-      return value.charAt(0).toUpperCase() + value.slice(1)
+    capitalize(value) {
+      if (!value) return '';
+      const valueA = value.toString();
+
+      return valueA.charAt(0).toUpperCase() + valueA.slice(1);
     },
   },
   methods: {
@@ -231,10 +231,15 @@ export default {
         this.getQuotation({ amount: BTC_QUOTATION_BASE })
           .then(balance => {
             if (currency_code === 'clp') {
-              this.quotationBTC = ((amount * balance.amount_btc[0]) / BTC_QUOTATION_BASE).toFixed(BTC_DECIMALS);
-            }
-            else if (currency_code === 'btc') {
-              this.quotationCLP = ((amount * BTC_QUOTATION_BASE) / balance.amount_btc[0]).toFixed(CLP_DECIMALS);
+              this.quotationBTC = (
+                (amount * balance.amount_btc[0]) /
+                BTC_QUOTATION_BASE
+              ).toFixed(BTC_DECIMALS);
+            } else if (currency_code === 'btc') {
+              this.quotationCLP = (
+                (amount * BTC_QUOTATION_BASE) /
+                balance.amount_btc[0]
+              ).toFixed(CLP_DECIMALS);
             }
           })
           .catch(err => {
@@ -243,31 +248,27 @@ export default {
       }
     },
     currentWallet() {
-      var wallet;
-      var bitsplitBalance = this.checkBitsplitBalance()
-      var budaBalance = this.checkBudaBalance()
+      let wallet;
+      const bitsplitBalance = this.checkBitsplitBalance();
+      const budaBalance = this.checkBudaBalance();
 
       if (this.wallet_origin_selected) {
-        wallet = this.wallet_origin_selected
-      }
-      else {
+        wallet = this.wallet_origin_selected;
+      } else {
         if (this.currentUser.wallet === 'bitsplit') {
           if (bitsplitBalance) {
-            wallet = 'bitsplit'
-          }
-          else {
+            wallet = 'bitsplit';
+          } else {
             if (this.budaSignedIn && budaBalance) {
-              wallet = 'buda'
+              wallet = 'buda';
             }
           }
-        }
-        else if (this.currentUser.wallet === 'buda') {
+        } else if (this.currentUser.wallet === 'buda') {
           if (budaBalance) {
-            wallet = 'buda'
-          }
-          else {
+            wallet = 'buda';
+          } else {
             if (bitsplitBalance) {
-              wallet = 'bitsplit'
+              wallet = 'bitsplit';
             }
           }
         }
@@ -276,37 +277,41 @@ export default {
       return wallet;
     },
     checkCurrentWalletBalance() {
-      const wallet = this.currentWallet()
+      const wallet = this.currentWallet();
       if (wallet) {
-        const walletBalanceBTC = wallet === 'bitsplit' 
-                                ? this.checkBitsplitBalance()
-                                : this.checkBudaBalance()
-        return walletBalanceBTC
+        const walletBalanceBTC =
+          wallet === 'bitsplit'
+            ? this.checkBitsplitBalance()
+            : this.checkBudaBalance();
+
+        return walletBalanceBTC;
       }
-      else return false   
+
+      return false;
     },
     checkBudaBalance() {
-      const paymentAmountBTC = this.paymentAmountBTC()
-      const { userBalanceBudaBTC, budaSignedIn } = this
+      const paymentAmountBTC = this.paymentAmountBTC();
+      const { userBalanceBudaBTC } = this;
 
-      return userBalanceBudaBTC >= paymentAmountBTC
+      return userBalanceBudaBTC >= paymentAmountBTC;
     },
     checkBitsplitBalance() {
-      const paymentAmountBTC = this.paymentAmountBTC()
-      const { userBalanceBitsplitBTC } = this
+      const paymentAmountBTC = this.paymentAmountBTC();
+      const { userBalanceBitsplitBTC } = this;
 
-      return userBalanceBitsplitBTC >= paymentAmountBTC
+      return userBalanceBitsplitBTC >= paymentAmountBTC;
     },
     paymentAmountBTC() {
       const { amount, quotationBTC } = this;
-      const { currency_code } = this.splitwisePaymentData
+      const { currency_code } = this.splitwisePaymentData;
+
       return currency_code === 'clp'
-              ? parseFloat(quotationBTC)
-              : parseFloat(amount)
+        ? parseFloat(quotationBTC)
+        : parseFloat(amount);
     },
     handleSubmit() {
       const wallet = this.currentWallet();
-      const paymentAmountBTC = this.paymentAmountBTC()
+      const paymentAmountBTC = this.paymentAmountBTC();
       const {
         group_id,
         to_user_id,
@@ -317,7 +322,7 @@ export default {
         currency_code,
       } = this.splitwisePaymentData;
 
-      if (amount && email ) {
+      if (amount && email) {
         this.sendSplitwisePayment({
           payment_amount: paymentAmountBTC,
           group_id,
@@ -326,8 +331,9 @@ export default {
           last_name,
           receiver_email: email,
           amount_clp: parseFloat(amount),
+          amount: parseFloat(amount),
           amount_btc: parseFloat(this.quotationBTC),
-          currency_code,
+          currency_code: currency_code.toUpperCase(),
           wallet_origin: wallet,
         })
           .then(() => {

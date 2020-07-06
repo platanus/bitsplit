@@ -481,6 +481,7 @@ export default {
   },
   [sendSplitwisePayment]({ commit, dispatch }, payload) {
     commit(SEND_SPLITWISE_PAYMENT_ATTEMPT);
+    console.log(payload);
 
     return sendPaymentApi(payload)
       .then(() =>
