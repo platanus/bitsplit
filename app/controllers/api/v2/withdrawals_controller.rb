@@ -13,17 +13,13 @@ class Api::V2::WithdrawalsController < Api::V2::BaseController
     amount_validation, message = money_service.validate_amount(current_user, satoshis_amount)
     @response = message
     return unless amount_validation
-    btc_amount = (satoshis_amount/ 100000000).to_f
-    new_user_withdrawal = UserWithdrawal.create!(user_id: current_user.id,
-                                           amount: btc_amount, 
-                                           completed: false,
-                                           invoice: params[:invoice] )
-    response = opennode_service.send_withdrawal_request(params[:invoice], true)
+    response = opennode_service.send_withdrawal_request(params[:invoice], false)
     response_body = JSON.parse(response.body)
-    return unless response_body.has_key? 'data'
-    return unless response_body['data'].has_key? 'reference'
-    reference = response_body['data']['reference']
-    new_user_withdrawal.update(invoice: reference)
     @response = response_body
+    return unless response_body.has_key? 'data'
+    return unless response_body['data'].has_key? 'id'
+    btc_amount = (satoshis_amount/ 100000000).to_f
+    ledgerizer = LedgerizerService.new
+    ledgerizer.withdrawal(current_user, btc_amount)
   end
 end
