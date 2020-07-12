@@ -20,7 +20,27 @@
                 <template #default="{ row }">
                   <td
                     class="border-grey-light border hover:bg-gray-100 p-3"
-                    v-if="row.attributes.sender.email != currentUser.email"
+                    v-if="row.type == 'Deposit'"
+                  >
+                    <span
+                      class="px-2 items-center inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+                    >
+                      Deposito
+                    </span>
+                  </td>
+                  <td
+                    v-else-if="row.type == 'Withdrawal'"
+                    class="border-grey-light border hover:bg-gray-100 p-3"
+                  >
+                    <span
+                      class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"
+                    >
+                      Retiro
+                    </span>
+                  </td>
+                  <td
+                    class="border-grey-light border hover:bg-gray-100 p-3"
+                    v-else-if="row.attributes.sender.email != currentUser.email"
                   >
                     <span
                       class="px-2 items-center inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
@@ -38,10 +58,40 @@
                       Enviado
                     </span>
                   </td>
-                  <td class="border-grey-light border hover:bg-gray-100 p-3">
+                  <td
+                    v-if="row.type == 'Deposit'"
+                    class="border-grey-light border hover:bg-gray-100 p-3"
+                  >
+                    Buda
+                  </td>
+                  <td
+                    v-else-if="row.type == 'Withdrawal'"
+                    class="border-grey-light border hover:bg-gray-100 p-3"
+                  >
+                    Bitsplit
+                  </td>
+                  <td
+                    v-else
+                    class="border-grey-light border hover:bg-gray-100 p-3"
+                  >
                     {{ row.attributes.sender.email }}
                   </td>
-                  <td class="border-grey-light border hover:bg-gray-100 p-3">
+                  <td
+                    v-if="row.type == 'Deposit'"
+                    class="border-grey-light border hover:bg-gray-100 p-3"
+                  >
+                    Bisplit
+                  </td>
+                  <td
+                    v-else-if="row.type == 'Withdrawal'"
+                    class="border-grey-light border hover:bg-gray-100 p-3"
+                  >
+                    Buda
+                  </td>
+                  <td
+                    v-else
+                    class="border-grey-light border hover:bg-gray-100 p-3"
+                  >
                     {{ row.attributes.receiver.email }}
                   </td>
                   <td class="border-grey-light border hover:bg-gray-100 p-3">
@@ -81,8 +131,8 @@ export default {
       routeName: 'home',
       tableColumns: [
         'Tipo',
-        'Envía',
-        'Recibe',
+        'Origen',
+        'Destino',
         'Cantidad BTC',
         'Cantidad CLP',
         'Fecha',
