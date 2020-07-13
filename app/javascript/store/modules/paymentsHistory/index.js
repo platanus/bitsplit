@@ -19,12 +19,7 @@ const actions = {
 
     return getPaymentsApi(payload)
       .then(res => {
-        const payments = res.data.data.transactions.filter(
-          payment =>
-            payment.attributes.sender.email !==
-            payment.attributes.receiver.email
-        );
-        commit(GET_PAYMENTS_SUCCESS, payments);
+        commit(GET_PAYMENTS_SUCCESS, res.data.data.transactions);
       })
       .catch(err => {
         commit(GET_PAYMENTS_FAIL);
