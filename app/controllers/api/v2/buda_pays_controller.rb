@@ -7,7 +7,8 @@ class Api::V2::BudaPaysController < ApplicationController
       simulate = ENV.fetch('INVOICE_PAYMENT_SIMULATION')
       @payment = buda_service.pay_invoice(amount, params[:invoice], simulate)
     else
-      render(json: { error: 'user does not have synchronized Buda' }, status: 400) 
+      @error_message = "user does not have synchronized Buda"
+      render 'error', status: 401
     end
   end
 
