@@ -25,7 +25,7 @@
                     <span
                       class="px-2 items-center inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
                     >
-                      Deposito
+                      Depósito
                     </span>
                   </td>
                   <td
@@ -62,7 +62,7 @@
                     v-if="row.type === 'Deposit'"
                     class="border-grey-light border hover:bg-gray-100 p-3"
                   >
-                    Buda
+                    Externo
                   </td>
                   <td
                     v-else-if="row.type === 'Withdrawal'"
@@ -86,7 +86,7 @@
                     v-else-if="row.type === 'Withdrawal'"
                     class="border-grey-light border hover:bg-gray-100 p-3"
                   >
-                    Buda
+                    Externo
                   </td>
                   <td
                     v-else
