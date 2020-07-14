@@ -2,7 +2,7 @@ class Api::V2::UserExistsController < ApplicationController
     before_action :authenticate_user!, except: [:create]
 
     def create 
-        @user_exists = !User.find_by_email(params[:email]).nil?
+        @user_exists = User.find_by_email(params[:email]).present?
     end 
 
     private
