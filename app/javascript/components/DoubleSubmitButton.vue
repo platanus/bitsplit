@@ -51,7 +51,6 @@ export default {
   },
   methods: {
     confirm() {
-      console.log('confirm');
       this.confirmed = true;
     },
   },
