@@ -31,6 +31,7 @@ Rails.application.routes.draw do
       resource :withdrawals_webhooks, only: [:create]
       resource :buda_withdrawals, only: [:create]
       resource :reset_passwords, only: [:create, :update]
+      resource :user_exists, only: [:create]
     end
   end
   
