@@ -19,6 +19,7 @@ import {
   passwordRecovery,
   budaDirectWithdrawal,
   budaDirectInvoicePay,
+  checkEmailExists,
 } from '../../action-types';
 
 import {
@@ -66,6 +67,7 @@ import {
   payOffSplitwiseDebtApi,
   sendRecoveryEmailApi,
   passwordRecoveryApi,
+  checkExistingEmail,
 } from '../../../api/user.js';
 
 import {
@@ -481,7 +483,6 @@ export default {
   },
   [sendSplitwisePayment]({ commit, dispatch }, payload) {
     commit(SEND_SPLITWISE_PAYMENT_ATTEMPT);
-    console.log(payload);
 
     return sendPaymentApi(payload)
       .then(() =>
@@ -712,6 +713,19 @@ export default {
           dispatch('alert/errorAlert', 'Error desconocido', {
             root: true,
           });
+        }
+
+        throw Error(error);
+      });
+  },
+  [checkEmailExists](_, payload) {
+    const { email } = payload;
+
+    return checkExistingEmail({ email })
+      .then(res => res.data.data.attributes.user_exists)
+      .catch(error => {
+        if (error.response) {
+          return false;
         }
 
         throw Error(error);

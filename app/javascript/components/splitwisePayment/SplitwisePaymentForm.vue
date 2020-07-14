@@ -129,11 +129,20 @@
         </div>
         <div>
           <submitButton
+            v-if="existing_user"
             width="full"
             :loading="sendPaymentLoading || !checkCurrentWalletBalance()"
           >
             Pagar
           </submitButton>
+          <DoubleSubmitButton
+            v-else
+            width="full"
+            :email="receiver_email"
+            :loading="sendPaymentLoading || !checkCurrentWalletBalance()"
+          >
+            Pagar
+          </DoubleSubmitButton>
         </div>
       </form>
     </div>
@@ -144,6 +153,8 @@
 import { mapActions, mapState, mapGetters } from 'vuex';
 import textInput from '../Input';
 import submitButton from '../SubmitButton';
+import DoubleSubmitButton from '../DoubleSubmitButton';
+
 import spinner from '../Spinner';
 
 // eslint-disable-next-line func-style
@@ -178,12 +189,14 @@ export default {
       wallet_origin_selected: '',
       quotationCLP: 0,
       quotationBTC: 0,
+      existing_user: true,
     };
   },
   components: {
     textInput,
     submitButton,
     spinner,
+    DoubleSubmitButton,
   },
   computed: {
     ...mapState('user', [
@@ -204,6 +217,7 @@ export default {
   },
   mounted() {
     this.getNewQuotation();
+    this.checkExistingEmail();
   },
   watch: {
     amount: debounce(function () {
@@ -223,8 +237,21 @@ export default {
       'getQuotation',
       'getUserBalance',
       'sendSplitwisePayment',
+      'checkEmailExists',
     ]),
     ...mapActions('component', ['changeSplitwisePaymentComp']),
+    checkExistingEmail() {
+      const receiver_email = this.splitwisePaymentData.email;
+      if (receiver_email) {
+        this.checkEmailExists({ email: receiver_email })
+          .then(result => {
+            this.existing_user = result;
+          })
+          .catch(() => {
+            this.existing_user = false;
+          });
+      }
+    },
     getNewQuotation() {
       const { amount, currency_code } = this.splitwisePaymentData;
       if (amount) {

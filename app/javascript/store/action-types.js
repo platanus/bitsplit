@@ -37,3 +37,5 @@ export const budaDirectInvoicePay = 'budaDirectInvoicePay';
 
 export const sendRecoveryEmail = 'sendRecoveryEmail';
 export const passwordRecovery = 'passwordRecovery';
+
+export const checkEmailExists = 'checkEmailExists';

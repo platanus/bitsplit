@@ -76,6 +76,11 @@ const payOffSplitwiseDebtApi = payload =>
     to_user_id: payload.to_user_id,
   });
 
+const checkExistingEmail = payload =>
+  axios.post('/api/v2/user_exists', payload, {
+    headers: { 'Content-Type': 'application/json' },
+  });
+
 export {
   loginApi,
   logoutApi,
@@ -92,4 +97,5 @@ export {
   sendRecoveryEmailApi,
   payOffSplitwiseDebtApi,
   passwordRecoveryApi,
+  checkExistingEmail,
 };
