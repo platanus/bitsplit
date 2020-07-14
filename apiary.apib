@@ -941,3 +941,28 @@ The `password` field is only required if the `api_key` or `api_secret` fields ar
             {
                 "error": "invalid token"
             }
+            
+## User exists [/v2/user_exists]
+### Check if user exists [POST]
+
++ Request (application/json)
+
+    + Headers
+
+
+    + Body
+
+            {
+                "email": "example@example.cl" 
+            }
+
++ Response 200 (application/json)
+
+        {
+            "data": {
+                "type": "user_exists",
+                "attributes": {
+                    "user_exists": true
+                }
+            }
+        }*
