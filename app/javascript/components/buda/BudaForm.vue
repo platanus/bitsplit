@@ -90,7 +90,7 @@ export default {
             if (this.onBoardingScreen) {
               this.currentStepOk();
             } else {
-              this.$router.push('/home');
+              this.$router.go();
             }
           })
           .catch(err => {

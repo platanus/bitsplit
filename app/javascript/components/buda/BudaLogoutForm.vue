@@ -69,7 +69,7 @@ export default {
             if (this.onBoardingScreen) {
               this.changeBudaComp('BudaForm');
             } else {
-              this.$router.push('/home');
+              this.$router.go();
             }
           })
           .catch(err => {

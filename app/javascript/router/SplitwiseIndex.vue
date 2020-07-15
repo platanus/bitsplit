@@ -218,7 +218,9 @@ export default {
     };
   },
   created() {
-    this.getSplitwiseDebts();
+    if (this.splitwiseSignedIn){
+      this.getSplitwiseDebts();
+    }
   },
   components: {
     linkButton,
