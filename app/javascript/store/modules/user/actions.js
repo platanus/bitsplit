@@ -327,43 +327,7 @@ export default {
           });
       });
   },
-  [budaSignOut]({ state, commit, dispatch }, payload) {
-    /* Update endpoint needed
-    const fetchPromise = budaSyncApi(payload);
-
-    return fetchPromise
-      .then(() => {
-        dispatch(
-          'alert/successAlert',
-          'Cuenta Buda desconectada correctamente',
-          { root: true }
-        );
-        const fetchPromiseUser = getCurrentUserApi();
-
-        return fetchPromiseUser.then(res => {
-          commitAndSetUser({
-            commit,
-            mutation: BUDA_SIGNOUT,
-            user: { ...state.currentUser, ...res.data.data.attributes },
-          });
-        });
-      })
-      .catch(err => {
-        if (err.response) {
-          dispatch(
-            'alert/errorAlert',
-            'Error desconectando cuenta. Revise la contraseña ingresada',
-            { root: true }
-          );
-          throw new Error(
-            'Error desconectando cuenta. Revise la contraseña ingresada'
-          );
-        } else {
-          dispatch('alert/errorAlert', 'Error desconocido', { root: true });
-          throw new Error('Error desconocido');
-        }
-      });
-      */
+  [budaSignOut]({ dispatch }, payload) {
     const fetchPromise = budaSyncApi(payload);
 
     return fetchPromise
