@@ -1,4 +1,4 @@
-class ApplicationController < ActionController::API
+class ApplicationController < ActionController::Base
   # Prevent CSRF attacks, except for JSON requests (API clients)
   # protect_from_forgery unless: -> { request.format.json? }
 

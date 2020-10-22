@@ -20,14 +20,12 @@ gem 'strong_migrations'
 gem 'turbolinks', '~> 5'
 gem 'webpacker', '~> 4.0'
 
-
 #Power_API https://github.com/platanus/power_api#installation
 
 gem 'has_secure_token'
 gem 'power_api'
 gem 'tiddle'
 gem 'warden'
-
 
 # splitwise api requirements
 gem 'oauth-plugin'
@@ -84,3 +82,7 @@ gem 'devise-encryptable'
 gem 'delayed_job_active_record', "~> 4.1.4"
 
 gem "daemons", "~> 1.3.1"
+
+gem 'active_skin', github: 'SoftwareBrothers/active_skin'
+gem 'activeadmin', '~> 2.7'
+gem 'activeadmin_addons', '~> 1.7.1'
