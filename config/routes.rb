@@ -34,15 +34,19 @@ Rails.application.routes.draw do
       resource :user_exists, only: [:create]
     end
   end
-  
+
   mount Rswag::Api::Engine => '/api-docs'
   mount Rswag::Ui::Engine => '/api-docs'
-  
+
   if Rails.env.development?
     mount RailsDb::Engine => '/rails/db', :as => 'rails_db'
   end
-  
+
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
+
   devise_for :user
+
   root 'home#index'
 
   get '/*path', to: 'home#index'

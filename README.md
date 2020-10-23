@@ -82,6 +82,10 @@ If you need to generate data with **development purposes**, you can customize th
 
 ## Internal dependencies
 
+### Administration
+
+This project uses [Active Admin](https://github.com/activeadmin/activeadmin) which is a Ruby on Rails framework for creating elegant backends for website administration.
+
 ### Authentication
 
 We are using the great [Devise](https://github.com/plataformatec/devise) library by [PlataformaTec](http://plataformatec.com.br/)

@@ -15,10 +15,6 @@ class Api::V1::UserSerializer < ActiveModel::Serializer
     :wallet
   )
 
-  def api_key
-    object.decrypt(object.api_key)
-  end
-
   def picture_url
     return unless object.authenticated_with_splitwise
 

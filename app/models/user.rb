@@ -23,6 +23,14 @@ class User < ApplicationRecord
     sent_payments + received_payments
   end
 
+  def api_key
+    decrypt(self[:api_key])
+  end
+
+  def api_secret
+    decrypt(self[:api_secret])
+  end
+
   def api_key=(text)
     super(encrypt(text))
   end
