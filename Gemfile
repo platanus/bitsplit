@@ -21,7 +21,7 @@ gem 'oauth-plugin' # splitwise api requirements
 gem 'pg'
 gem 'power_api'
 gem 'power-types'
-gem 'puma', '~> 3.12'
+gem 'puma', '~> 4.3'
 gem 'rack-cors', '~> 1.1'
 gem 'rails', '~> 6.0.0'
 gem 'rails-i18n'
