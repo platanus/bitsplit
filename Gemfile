@@ -14,7 +14,7 @@ gem 'enumerize'
 gem 'exponent-server-sdk'
 gem 'firebase', '~> 0.2.8'
 gem 'has_secure_token'
-gem 'httparty', '~> 0.18.0'
+gem 'httparty', '~> 0.21.0'
 gem 'jbuilder', '~> 2.7'
 gem 'ledgerizer', github: 'platanus/ledgerizer', ref: 'master'
 gem 'oauth-plugin' # splitwise api requirements
